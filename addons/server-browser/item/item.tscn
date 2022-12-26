@@ -1,0 +1,94 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://addons/server-browser/item/item.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=2]
+[ext_resource path="res://addons/server-browser/item/bg.png" type="Texture" id=3]
+[ext_resource path="res://addons/server-browser/item/bg_press.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=5]
+
+[node name="item" type="Control"]
+margin_right = 600.0
+margin_bottom = 220.0
+rect_min_size = Vector2( 0, 220 )
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -20.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 17.0
+margin_right = -35.0
+margin_bottom = -16.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_right = 196.0
+margin_bottom = 167.0
+mouse_filter = 2
+
+[node name="host_name" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_right = 196.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 5 )
+text = "Name guild"
+
+[node name="player_slot" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_top = 44.0
+margin_right = 196.0
+margin_bottom = 72.0
+custom_fonts/font = ExtResource( 2 )
+text = "Name guild"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/HBoxContainer"]
+margin_left = 200.0
+margin_right = 341.0
+margin_bottom = 167.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="host_button" type="MarginContainer" parent="Panel/HBoxContainer"]
+margin_left = 345.0
+margin_top = 77.0
+margin_right = 545.0
+margin_bottom = 167.0
+rect_min_size = Vector2( 200, 90 )
+size_flags_vertical = 10
+
+[node name="btn" type="TextureButton" parent="Panel/HBoxContainer/host_button"]
+modulate = Color( 0, 0.592157, 0.0352941, 1 )
+margin_right = 200.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 100, 50 )
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+expand = true
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/host_button"]
+margin_top = 25.0
+margin_right = 200.0
+margin_bottom = 65.0
+custom_fonts/font = ExtResource( 5 )
+text = "Join"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Panel/HBoxContainer/host_button/btn" to="." method="_on_btn_pressed"]

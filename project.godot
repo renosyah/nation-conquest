@@ -1,0 +1,202 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Resource",
+"class": "BaseData",
+"language": "GDScript",
+"path": "res://data/BaseData.gd"
+}, {
+"base": "KinematicBody",
+"class": "BaseEntity",
+"language": "GDScript",
+"path": "res://entity/BaseEntity.gd"
+}, {
+"base": "Node",
+"class": "BaseGameplay",
+"language": "GDScript",
+"path": "res://gameplay/BaseGameplay.gd"
+}, {
+"base": "StaticBody",
+"class": "BaseMap",
+"language": "GDScript",
+"path": "res://map/BaseMap.gd"
+}, {
+"base": "Control",
+"class": "BaseUi",
+"language": "GDScript",
+"path": "res://assets/ui/BaseUi.gd"
+}, {
+"base": "KinematicBody",
+"class": "BaseUnit",
+"language": "GDScript",
+"path": "res://entity/unit/BaseUnit.gd"
+}, {
+"base": "Node",
+"class": "GDUUID",
+"language": "GDScript",
+"path": "res://addons/godot-uuid/uuid.gd"
+}, {
+"base": "InputEventAction",
+"class": "InputEventMultiScreenDrag",
+"language": "GDScript",
+"path": "res://addons/Godot-Touch-Input-Manager/CustomInputEvents/InputEventMultiScreenDrag.gd"
+}, {
+"base": "InputEventAction",
+"class": "InputEventScreenPinch",
+"language": "GDScript",
+"path": "res://addons/Godot-Touch-Input-Manager/CustomInputEvents/InputEventScreenPinch.gd"
+}, {
+"base": "InputEventAction",
+"class": "InputEventScreenTwist",
+"language": "GDScript",
+"path": "res://addons/Godot-Touch-Input-Manager/CustomInputEvents/InputEventScreenTwist.gd"
+}, {
+"base": "InputEventAction",
+"class": "InputEventSingleScreenDrag",
+"language": "GDScript",
+"path": "res://addons/Godot-Touch-Input-Manager/CustomInputEvents/InputEventSingleScreenDrag.gd"
+}, {
+"base": "InputEventAction",
+"class": "InputEventSingleScreenTap",
+"language": "GDScript",
+"path": "res://addons/Godot-Touch-Input-Manager/CustomInputEvents/InputEventSingleScreenTap.gd"
+}, {
+"base": "InputEventAction",
+"class": "InputEventSingleScreenTouch",
+"language": "GDScript",
+"path": "res://addons/Godot-Touch-Input-Manager/CustomInputEvents/InputEventSingleScreenTouch.gd"
+}, {
+"base": "NetworkConfiguration",
+"class": "NetworkClient",
+"language": "GDScript",
+"path": "res://addons/network/helper/NetworkClient.gd"
+}, {
+"base": "Node",
+"class": "NetworkConfiguration",
+"language": "GDScript",
+"path": "res://addons/network/helper/NetworkConfiguration.gd"
+}, {
+"base": "Node",
+"class": "NetworkPlayer",
+"language": "GDScript",
+"path": "res://addons/network/helper/NetworkPlayer.gd"
+}, {
+"base": "NetworkConfiguration",
+"class": "NetworkServer",
+"language": "GDScript",
+"path": "res://addons/network/helper/NetworkServer.gd"
+}, {
+"base": "Node",
+"class": "NoiseMaker",
+"language": "GDScript",
+"path": "res://map/noise_maker/NoiseMaker.gd"
+}, {
+"base": "BaseData",
+"class": "PlayerData",
+"language": "GDScript",
+"path": "res://data/player/PlayerData.gd"
+}, {
+"base": "Node",
+"class": "RandomNameGenerator",
+"language": "GDScript",
+"path": "res://addons/random-name/random_names.gd"
+}, {
+"base": "Spatial",
+"class": "RtsCamera",
+"language": "GDScript",
+"path": "res://assets/rts-camera/rts_camera.gd"
+}, {
+"base": "Node",
+"class": "SaveLoad",
+"language": "GDScript",
+"path": "res://addons/save_load/save_load.gd"
+}, {
+"base": "Node",
+"class": "ServerAdvertiser",
+"language": "GDScript",
+"path": "res://addons/LANServerBroadcast/server_advertiser/ServerAdvertiser.gd"
+}, {
+"base": "Node",
+"class": "ServerListener",
+"language": "GDScript",
+"path": "res://addons/LANServerBroadcast/server_listener/ServerListener.gd"
+}, {
+"base": "BaseEntity",
+"class": "Squad",
+"language": "GDScript",
+"path": "res://entity/squad/squad.gd"
+} ]
+_global_script_class_icons={
+"BaseData": "",
+"BaseEntity": "",
+"BaseGameplay": "",
+"BaseMap": "",
+"BaseUi": "",
+"BaseUnit": "",
+"GDUUID": "",
+"InputEventMultiScreenDrag": "",
+"InputEventScreenPinch": "",
+"InputEventScreenTwist": "",
+"InputEventSingleScreenDrag": "",
+"InputEventSingleScreenTap": "",
+"InputEventSingleScreenTouch": "",
+"NetworkClient": "",
+"NetworkConfiguration": "",
+"NetworkPlayer": "",
+"NetworkServer": "",
+"NoiseMaker": "",
+"PlayerData": "",
+"RandomNameGenerator": "",
+"RtsCamera": "",
+"SaveLoad": "",
+"ServerAdvertiser": "res://addons/LANServerBroadcast/server_advertiser/server_advertiser.png",
+"ServerListener": "res://addons/LANServerBroadcast/server_listener/server_listener.png",
+"Squad": ""
+}
+
+[application]
+
+config/name="Conquest : Nation"
+run/main_scene="res://main-menu/main_menu.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://global/global.gd"
+Network="*res://addons/network/Network.gd"
+NetworkLobbyManager="*res://addons/network/lobby-manager/NetworkLobbyManager.gd"
+
+[gui]
+
+common/drop_mouse_on_gui_input_disabled=true
+
+[input]
+
+left_click={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
+vram_compression/import_etc2=false
+environment/default_environment="res://default_env.tres"

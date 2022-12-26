@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://gameplay/mp/ui/ui.gd" type="Script" id=2]
+[ext_resource path="res://assets/ui/camera_control/camera_control.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/ui/fps_ping_displayer/fps_ping_displayer.tscn" type="PackedScene" id=5]
+
+[node name="ui" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="HBoxContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="MarginContainer2" type="Control" parent="CanvasLayer/Control"]
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="camera_control" parent="CanvasLayer/Control/MarginContainer2" instance=ExtResource( 4 )]
+mouse_filter = 2
+
+[node name="fps_ping_displayer" parent="CanvasLayer/Control/MarginContainer2" instance=ExtResource( 5 )]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -50.0
+margin_right = 160.0
+margin_bottom = 0.0
+size_flags_horizontal = 0
