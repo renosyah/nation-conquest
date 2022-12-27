@@ -13,7 +13,7 @@ export var max_hp :int = 5
 
 export var is_moving :bool = false
 export var move_to :Vector3
-export var margin :float = 0.3
+export var margin :float = 0.5
 export var speed :int = 2
 
 var _direction :Vector3

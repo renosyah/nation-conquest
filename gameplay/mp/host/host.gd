@@ -4,6 +4,7 @@ const units = [
 	preload("res://entity/unit/axeman/axeman.tscn"),
 	preload("res://entity/unit/militia/militia.tscn"),
 	preload("res://entity/unit/swordman/swordman.tscn"),
+	preload("res://entity/unit/spearman/spearman.tscn")
 ]
 
 var squad
