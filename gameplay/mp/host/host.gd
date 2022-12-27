@@ -1,9 +1,13 @@
 extends BaseGameplay
 
 var squad
+onready var node = $Node
 
-onready var squad_1 = $squad
-onready var squad_2 = $squad2
+var is_left = false
+var team = 1
+
+onready var positions_1 = $Position3D.translation
+onready var positions_2 = $Position3D2.translation
 
 func on_map_click(_pos :Vector3):
 	if not is_instance_valid(squad):
@@ -14,3 +18,19 @@ func on_map_click(_pos :Vector3):
 
 func _on_squad_selected(_squad):
 	squad = _squad
+
+func _on_Timer_timeout():
+	if node.get_child_count() > 1:
+		return
+		
+	is_left = not is_left
+	team += 1
+	
+	var spawn = preload("res://entity/squad/squad.tscn").instance()
+	spawn.unit = preload("res://entity/unit/militia/militia.tscn")
+	spawn.color = Color(randf(),randf(),randf(), 1.0)
+	spawn.team = team
+	spawn.connect("squad_selected", self,"_on_squad_selected")
+	node.add_child(spawn)
+	spawn.translation = positions_1 if is_left else positions_2
+	spawn.spawn_units()

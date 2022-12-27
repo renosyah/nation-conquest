@@ -3,6 +3,7 @@ extends BaseUnit
 onready var pivot = $pivot
 onready var body = $body
 onready var animation_weapon_state = $pivot/AnimationTree.get("parameters/playback")
+onready var animation_body_state = $AnimationTree.get("parameters/playback")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,4 +25,9 @@ func idle(delta :float):
 	
 	var _transform = pivot.transform.looking_at(dir, Vector3.UP)
 	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
+	
+	if is_moving or is_attacking:
+		animation_body_state.travel("moving")
+	else:
+		animation_body_state.travel("idle")
 

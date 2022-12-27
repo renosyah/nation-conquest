@@ -2,6 +2,7 @@ extends BaseEntity
 class_name Squad
 
 signal squad_selected(_squad)
+signal squad_update(_squad)
 signal squad_dead(_squad)
 
 export var unit :Resource
@@ -21,6 +22,7 @@ var _targets :Array = []
 var _velocity :Vector3
 
 puppet var _puppet_translation :Vector3
+
 onready var _input_detection = $input_detection
 onready var _sprite_3d =  $banner/Sprite3D
 onready var _agro_timer = $agro_timer
@@ -35,6 +37,7 @@ func _ready():
 	_unit_count.mesh = text_mesh
 	(_unit_count.mesh as TextMesh).text = str(max_unit)
 	
+func spawn_units():
 	var formations = get_formation_box()
 	var pos = 0
 	for i in range(max_unit):
@@ -88,13 +91,18 @@ remotesync func _erase_unit(_unit_path :NodePath):
 		emit_signal("squad_dead", self)
 		queue_free()
 		
+	emit_signal("squad_update", self)
+		
 func _on_formation_time_timeout():
 	var formations = get_formation_box()
 	for i in range(_units.size()):
 		if not is_instance_valid(_units[i]):
 			continue
 			
-		if _units[i].is_attacking and not _targets.empty():
+		if _targets.empty():
+			_units[i].is_attacking = false
+			
+		if _units[i].is_attacking:
 			continue
 			
 		_units[i].is_moving = true
