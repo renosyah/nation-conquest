@@ -110,15 +110,18 @@ func _on_formation_time_timeout():
 	
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
-	
 	if not is_moving:
 		return
-	
+		
+	_velocity = Vector3.ZERO
+
 	var is_arrive :bool = _move_to_position(move_to)
 	if is_arrive:
 		is_moving = false
-		return
-		
+	
+	_velocity.y -= speed
+	_velocity = move_and_slide(_velocity, Vector3.UP)
+	
 func puppet_moving(delta :float) -> void:
 	.puppet_moving(delta)
 	
@@ -131,8 +134,7 @@ func _move_to_position(to :Vector3) -> bool:
 		
 	var direction :Vector3 = translation.direction_to(to)
 	_velocity = direction * speed
-	_velocity.y -= speed
-	_velocity = move_and_slide(_velocity, Vector3.UP)
+	_velocity.y = 0
 	
 	return false
 	

@@ -52,9 +52,15 @@ func _on_input_detection_any_gesture(sig ,event):
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta :float):
+	_velocity = Vector3.ZERO
+	_direction = Vector3.ZERO
+	
 	attacking(delta)
 	moving(delta)
 	idle(delta)
+	
+	_velocity.y -= speed
+	_velocity = move_and_slide(_velocity, Vector3.UP)
 	
 func idle(delta :float):
 	pass
@@ -98,9 +104,6 @@ func take_damage(damage :int) -> void:
 	
 func moving(delta :float):
 	if not is_moving:
-		_velocity = Vector3.ZERO
-		_velocity.y -= speed
-		_velocity = move_and_slide(_velocity, Vector3.UP)
 		return
 	
 	var is_arrive :bool = _move_to_position(move_to)
@@ -109,6 +112,7 @@ func moving(delta :float):
 	
 func _move_to_position(to :Vector3) -> bool:
 	var distance :float = translation.distance_to(to)
+	
 	if distance <= attack_range and is_attacking:
 		return true
 		
@@ -117,8 +121,7 @@ func _move_to_position(to :Vector3) -> bool:
 		
 	_direction = translation.direction_to(to)
 	_velocity = _direction * speed
-	_velocity.y -= speed
-	_velocity = move_and_slide(_velocity, Vector3.UP)
+	_velocity.y = 0
 	
 	return false
 

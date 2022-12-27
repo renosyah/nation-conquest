@@ -21,13 +21,11 @@ func idle(delta :float):
 	dir.y = 0
 	
 	if dir.length() < 5.0:
+		animation_body_state.travel("idle")
 		return
+		
+	animation_body_state.travel("moving")
 	
 	var _transform = pivot.transform.looking_at(dir, Vector3.UP)
 	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
-	
-	if is_moving or is_attacking:
-		animation_body_state.travel("moving")
-	else:
-		animation_body_state.travel("idle")
 
