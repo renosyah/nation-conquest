@@ -7,14 +7,15 @@ signal unit_dead(_unit)
 export var is_dead :bool = false
 export var team :int = 0
 export var color :Color = Color.white
-export var hp :int = 1
-export var max_hp :int = 1
+export var hp :int = 5
+export var max_hp :int = 5
 
 export var is_moving :bool = false
 export var move_to :Vector3
 export var margin :float = 0.3
 export var speed :int = 2
 
+var _direction :Vector3
 var _velocity :Vector3
 
 export var is_attacking :bool = false
@@ -52,6 +53,10 @@ func _on_input_detection_any_gesture(sig ,event):
 func _process(delta :float):
 	attacking(delta)
 	moving(delta)
+	idle(delta)
+	
+func idle(delta :float):
+	pass
 	
 func attacking(delta :float):
 	if not is_attacking:
@@ -66,7 +71,7 @@ func attacking(delta :float):
 		perform_attack()
 		_attack_delay_timmer.wait_time = attack_delay
 		_attack_delay_timmer.start()
-	
+		
 func perform_attack():
 	if not is_instance_valid(attack_to):
 		is_attacking = false
@@ -85,7 +90,6 @@ func take_damage(damage :int) -> void:
 	hp -= damage
 	if hp < 1:
 		is_dead = true
-		
 		emit_signal("unit_dead", self)
 	
 func moving(delta :float):
@@ -107,8 +111,8 @@ func _move_to_position(to :Vector3) -> bool:
 	if distance <= margin and is_moving:
 		return true
 		
-	var direction :Vector3 = translation.direction_to(to)
-	_velocity = direction * speed
+	_direction = translation.direction_to(to)
+	_velocity = _direction * speed
 	_velocity.y -= speed
 	_velocity = move_and_slide(_velocity, Vector3.UP)
 	

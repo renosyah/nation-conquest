@@ -23,10 +23,15 @@ puppet var _puppet_translation :Vector3
 onready var _input_detection = $input_detection
 onready var _sprite_3d = $Sprite3D
 onready var _agro_timer = $agro_timer
+onready var _unit_count = $unit_count
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_sprite_3d.modulate = color
+	var text_mesh :TextMesh = _unit_count.mesh.duplicate()
+	
+	_unit_count.mesh = text_mesh
+	(_unit_count.mesh as TextMesh).text = str(max_unit)
 	
 	var formations = get_formation_box()
 	var pos = 0
@@ -63,18 +68,19 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	units.erase(_unit)
 	_unit.queue_free()
 	
+	(_unit_count.mesh as TextMesh).text = str(units.size())
+	
 	if units.empty():
 		emit_signal("squad_dead", self)
 		queue_free()
-	
+		
 func moving(_delta :float) -> void:
- 
 	var formations = get_formation_box()
 	for i in range(units.size()):
 		if not is_instance_valid(units[i]):
 			continue
 			
-		if units[i].is_attacking:
+		if units[i].is_attacking and not targets.empty():
 			continue
 			
 		units[i].is_moving = true
