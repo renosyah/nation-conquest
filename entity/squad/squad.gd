@@ -37,9 +37,6 @@ func _ready():
 	_unit_count.mesh = text_mesh
 	(_unit_count.mesh as TextMesh).text = str(max_unit)
 	
-	
-	
-func spawn_units():
 	var formations = get_formation_box()
 	var pos = 0
 	for i in range(max_unit):

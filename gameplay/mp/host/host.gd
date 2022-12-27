@@ -37,6 +37,6 @@ func _on_Timer_timeout():
 	spawn.color = Color(randf(),randf(),randf(), 1.0)
 	spawn.team = team
 	spawn.connect("squad_selected", self,"_on_squad_selected")
-	node.add_child(spawn)
 	spawn.translation = positions_1 if is_left else positions_2
-	spawn.spawn_units()
+	node.add_child(spawn)
+
