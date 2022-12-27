@@ -1,5 +1,11 @@
 extends BaseGameplay
 
+const units = [
+	preload("res://entity/unit/axeman/axeman.tscn"),
+	preload("res://entity/unit/militia/militia.tscn"),
+	preload("res://entity/unit/swordman/swordman.tscn"),
+]
+
 var squad
 onready var node = $Node
 
@@ -27,7 +33,7 @@ func _on_Timer_timeout():
 	team += 1
 	
 	var spawn = preload("res://entity/squad/squad.tscn").instance()
-	spawn.unit = preload("res://entity/unit/militia/militia.tscn")
+	spawn.unit = units[rand_range(0, units.size())]
 	spawn.color = Color(randf(),randf(),randf(), 1.0)
 	spawn.team = team
 	spawn.connect("squad_selected", self,"_on_squad_selected")

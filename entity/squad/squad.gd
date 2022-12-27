@@ -13,10 +13,10 @@ export var max_unit :int = 15
 export var is_moving :bool = false
 export var move_to :Vector3
 export var margin :float = 0.3
-export var speed :int = 2
 
 export var formation_space :int = 2
 
+var _speed :int = 2
 var _units :Array = []
 var _targets :Array = []
 var _velocity :Vector3
@@ -37,6 +37,8 @@ func _ready():
 	_unit_count.mesh = text_mesh
 	(_unit_count.mesh as TextMesh).text = str(max_unit)
 	
+	
+	
 func spawn_units():
 	var formations = get_formation_box()
 	var pos = 0
@@ -52,6 +54,8 @@ func spawn_units():
 		_unit.set_as_toplevel(true)
 		_unit.translation = formations[pos] + Vector3(0, 2, 0)
 		_units.append(_unit)
+		
+		_speed = _unit.speed
 		pos += 1
 		
 func _unit_selected(_unit):
@@ -119,7 +123,7 @@ func master_moving(delta :float) -> void:
 	if is_arrive:
 		is_moving = false
 	
-	_velocity.y -= speed
+	_velocity.y -= _speed
 	_velocity = move_and_slide(_velocity, Vector3.UP)
 	
 func puppet_moving(delta :float) -> void:
@@ -133,7 +137,7 @@ func _move_to_position(to :Vector3) -> bool:
 		return true
 		
 	var direction :Vector3 = translation.direction_to(to)
-	_velocity = direction * speed
+	_velocity = direction * _speed
 	_velocity.y = 0
 	
 	return false

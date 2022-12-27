@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://entity/unit/militia/sword.png" type="Texture" id=1]
-[ext_resource path="res://entity/unit/militia/body.png" type="Texture" id=2]
-[ext_resource path="res://entity/unit/militia/militia.gd" type="Script" id=3]
+[ext_resource path="res://entity/unit/swordman/swordman.gd" type="Script" id=1]
+[ext_resource path="res://entity/unit/swordman/sword.png" type="Texture" id=2]
+[ext_resource path="res://entity/unit/swordman/body.png" type="Texture" id=3]
+[ext_resource path="res://entity/unit/swordman/shield.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.397441
@@ -180,8 +181,11 @@ start_node = "idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=19]
 
-[node name="militia" type="KinematicBody"]
-script = ExtResource( 3 )
+[node name="swordman" type="KinematicBody"]
+script = ExtResource( 1 )
+hp = 10
+max_hp = 10
+attack_damage = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
@@ -189,14 +193,18 @@ shape = SubResource( 1 )
 
 [node name="body" type="Sprite3D" parent="."]
 alpha_cut = 2
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 
 [node name="pivot" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.386238, 0 )
 
 [node name="sword" type="Sprite3D" parent="pivot"]
 transform = Transform( -4.21812e-08, -1.14643e-08, 1, -0.262273, 0.964993, 0, -0.964993, -0.262273, -4.37114e-08, 0, 0, -0.594756 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
+
+[node name="shield" type="Sprite3D" parent="pivot"]
+transform = Transform( 0.816822, 0, -0.576889, 0, 0.999999, 0, 0.576888, 0, 0.816823, 0.426017, -0.442176, -0.267131 )
+texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="pivot"]
 autoplay = "idle"
