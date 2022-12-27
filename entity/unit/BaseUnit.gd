@@ -2,6 +2,7 @@ extends KinematicBody
 class_name BaseUnit
 
 signal unit_selected(_unit)
+signal unit_take_damage(_unit, _damage)
 signal unit_dead(_unit)
 
 export var is_dead :bool = false
@@ -91,6 +92,9 @@ func take_damage(damage :int) -> void:
 	if hp < 1:
 		is_dead = true
 		emit_signal("unit_dead", self)
+		return
+		
+	emit_signal("unit_take_damage", self, damage)
 	
 func moving(delta :float):
 	if not is_moving:
