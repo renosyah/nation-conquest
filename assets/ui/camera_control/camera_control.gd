@@ -1,7 +1,7 @@
 extends MarginContainer
 
 var _moving_direction :Vector2 = Vector2.ZERO
-var _zoom :float = 10.0
+var _zoom :float = 25.0
 var _touch_index : int = -1
 
 var events : Dictionary = {}

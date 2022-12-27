@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/maledeath4.wav-1667c0f16a1abb1e94f4d24ffb071dbd.sample"
+
+[deps]
+
+source_file="res://assets/sound/maledeath4.wav"
+dest_files=[ "res://.import/maledeath4.wav-1667c0f16a1abb1e94f4d24ffb071dbd.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

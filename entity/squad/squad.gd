@@ -12,7 +12,7 @@ export var max_unit :int = 15
 
 export var is_moving :bool = false
 export var move_to :Vector3
-export var margin :float = 0.3
+export var margin :float = 1
 
 export var formation_space :int = 2
 
@@ -24,18 +24,22 @@ var _velocity :Vector3
 puppet var _puppet_translation :Vector3
 
 onready var _input_detection = $input_detection
-onready var _sprite_3d =  $banner/Sprite3D
+onready var _banner = $banner/banner
 onready var _agro_timer = $agro_timer
 onready var _unit_count = $banner/unit_count
 onready var _hit_particle = $hit_particle
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_sprite_3d.modulate = color
+	var banner_mesh_material :SpatialMaterial = _banner.get_surface_material(0).duplicate()
 	var text_mesh :TextMesh = _unit_count.mesh.duplicate()
 	
 	_unit_count.mesh = text_mesh
+	_banner.set_surface_material(0, banner_mesh_material)
+	
 	(_unit_count.mesh as TextMesh).text = str(max_unit)
+	banner_mesh_material.albedo_color = color
+	banner_mesh_material.albedo_color.a = 0.6
 	
 	var formations = get_formation_box()
 	var pos = 0
@@ -90,7 +94,9 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	
 	if _units.empty():
 		emit_signal("squad_dead", self)
+		set_process(false)
 		queue_free()
+		return
 		
 	emit_signal("squad_update", self)
 		
@@ -108,9 +114,10 @@ func _on_formation_time_timeout():
 			
 		_units[i].is_moving = true
 		_units[i].move_to = formations[i]
-	
+		
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
+	
 	if not is_moving:
 		return
 		
@@ -121,7 +128,7 @@ func master_moving(delta :float) -> void:
 		is_moving = false
 	
 	_velocity.y -= _speed
-	_velocity = move_and_slide(_velocity, Vector3.UP)
+	_velocity = move_and_slide(_velocity, Vector3.UP, true)
 	
 func puppet_moving(delta :float) -> void:
 	.puppet_moving(delta)
@@ -167,7 +174,7 @@ func attack_targets():
 		return
 		
 	for i in range(_targets.size()):
-		if i > 2:
+		if i > 4:
 			return
 			
 		if i < _units.size():

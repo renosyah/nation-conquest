@@ -1,6 +1,9 @@
 extends KinematicBody
 class_name BaseUnit
 
+const hit_sounds :Array = [preload("res://assets/sound/fight1.wav"), preload("res://assets/sound/fight2.wav"), preload("res://assets/sound/fight3.wav"), preload("res://assets/sound/fight4.wav"), preload("res://assets/sound/fight5.wav")]
+const dead_sound :Array = [preload("res://assets/sound/maledeath1.wav"), preload("res://assets/sound/maledeath2.wav"), preload("res://assets/sound/maledeath3.wav"), preload("res://assets/sound/maledeath4.wav")]
+
 signal unit_selected(_unit)
 signal unit_take_damage(_unit, _damage)
 signal unit_dead(_unit)
@@ -13,7 +16,7 @@ export var max_hp :int = 5
 
 export var is_moving :bool = false
 export var move_to :Vector3
-export var margin :float = 0.5
+export var margin :float = 0.3
 export var speed :int = 2
 
 var _direction :Vector3
@@ -27,6 +30,7 @@ export var attack_range :float = 1
 
 var _attack_delay_timmer :Timer
 var _input_detection :Node
+var _sound :AudioStreamPlayer3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,6 +39,10 @@ func _ready():
 	_attack_delay_timmer.autostart = false
 	_attack_delay_timmer.one_shot = true
 	add_child(_attack_delay_timmer)
+	
+	_sound = AudioStreamPlayer3D.new()
+	_sound.unit_size = Global.sound_amplified
+	add_child(_sound)
 	
 	_input_detection = preload("res://addons/Godot-Touch-Input-Manager/input_detection.tscn").instance()
 	_input_detection.connect("any_gesture", self,"_on_input_detection_any_gesture")
@@ -49,7 +57,6 @@ func _on_input_detection_any_gesture(sig ,event):
 	if event is InputEventSingleScreenTap:
 		emit_signal("unit_selected", self)
 		
-		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta :float):
 	_velocity = Vector3.ZERO
@@ -60,7 +67,7 @@ func _process(delta :float):
 	idle(delta)
 	
 	_velocity.y -= speed
-	_velocity = move_and_slide(_velocity, Vector3.UP)
+	_velocity = move_and_slide(_velocity, Vector3.UP, true)
 	
 func idle(delta :float):
 	pass
@@ -96,11 +103,15 @@ func take_damage(damage :int) -> void:
 		
 	hp -= damage
 	if hp < 1:
+		set_process(false)
 		is_dead = true
-		emit_signal("unit_dead", self)
+		dead()
 		return
 		
 	emit_signal("unit_take_damage", self, damage)
+	
+func dead() -> void:
+	emit_signal("unit_dead", self)
 	
 func moving(delta :float):
 	if not is_moving:
@@ -111,7 +122,8 @@ func moving(delta :float):
 		is_moving = false
 	
 func _move_to_position(to :Vector3) -> bool:
-	var distance :float = translation.distance_to(to)
+	var _to = Vector3(to.x , translation.y,to.z)
+	var distance :float = translation.distance_to(_to)
 	
 	if distance <= attack_range and is_attacking:
 		return true
@@ -119,7 +131,7 @@ func _move_to_position(to :Vector3) -> bool:
 	if distance <= margin and is_moving:
 		return true
 		
-	_direction = translation.direction_to(to)
+	_direction = translation.direction_to(_to)
 	_velocity = _direction * speed
 	_velocity.y = 0
 	
