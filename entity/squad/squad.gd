@@ -60,7 +60,7 @@ func _ready():
 		_unit.translation = formations[pos] + Vector3(0, 2, 0)
 		_units.append(_unit)
 		
-		_speed = _unit.speed
+		_speed = (_unit.speed + 1)
 		pos += 1
 		
 func _unit_selected(_unit):
@@ -122,15 +122,13 @@ func _on_formation_time_timeout():
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
 	
-	if not is_moving:
-		return
-		
 	_velocity = Vector3.ZERO
-
-	var is_arrive :bool = _move_to_position(move_to)
-	if is_arrive:
-		is_moving = false
-		
+	
+	if is_moving:
+		var is_arrive :bool = _move_to_position(move_to)
+		if is_arrive:
+			is_moving = false
+			
 	if not is_on_floor():
 		_velocity.y -= _speed
 		_velocity = move_and_slide(_velocity, Vector3.UP, true)

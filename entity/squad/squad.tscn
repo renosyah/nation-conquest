@@ -36,8 +36,8 @@ flags_do_not_receive_shadows = true
 params_billboard_mode = 1
 
 [sub_resource type="CylinderShape" id=3]
-height = 8.0
-radius = 8.0
+height = 6.0
+radius = 4.0
 
 [node name="squad" type="KinematicBody"]
 collision_layer = 2
