@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://entity/projectile/arrow/arrow.gd" type="Script" id=1]
+[ext_resource path="res://entity/projectile/arrow/arrow_projectile.png" type="Texture" id=2]
+
+[node name="arrow" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 0.000663237, 0, 1, 0, 1, 0, -1, 0, 0.000663237, 0, 0, 0 )
+texture = ExtResource( 2 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="Sprite3D"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+texture = ExtResource( 2 )

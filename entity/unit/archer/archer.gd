@@ -1,6 +1,8 @@
 extends BaseUnit
 
-const hit_sounds :Array = [preload("res://assets/sound/fight1.wav"), preload("res://assets/sound/fight2.wav"), preload("res://assets/sound/fight3.wav"), preload("res://assets/sound/fight4.wav"), preload("res://assets/sound/fight5.wav")]
+const arrow_projectile = preload("res://entity/projectile/arrow/arrow.tscn")
+
+const hit_sounds :Array = [preload("res://assets/sound/stab1.wav"), preload("res://assets/sound/stab2.wav")]
 const dead_sound :Array = [preload("res://assets/sound/maledeath1.wav"), preload("res://assets/sound/maledeath2.wav"), preload("res://assets/sound/maledeath3.wav"), preload("res://assets/sound/maledeath4.wav")]
 
 var attack_animation :String
@@ -11,13 +13,21 @@ onready var animation_body_state = $AnimationTree.get("parameters/playback")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	attack_animation = "swing"
+	attack_animation = "shot"
 	body.modulate = color
 	
 func perform_attack():
-	.perform_attack()
-	animation_weapon_state.travel(attack_animation)
+	if is_instance_valid(attack_to):
+		var arrow = arrow_projectile.instance()
+		arrow.target = attack_to.global_transform.origin
+		add_child(arrow)
+		
+		yield(arrow, "hit")
 	
+	.perform_attack()
+	
+	animation_weapon_state.travel(attack_animation)
+
 	if _sound.playing:
 		return
 	

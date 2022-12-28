@@ -29,9 +29,12 @@ onready var _banner = $banner/banner
 onready var _agro_timer = $agro_timer
 onready var _unit_count = $banner/unit_count
 onready var _hit_particle = $hit_particle
+onready var _spotting_area = $Area/CollisionShape
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	var spotting_range :int = 8
 	
 	var banner_mesh_material :SpatialMaterial = _banner.get_surface_material(0).duplicate()
 	var text_mesh :TextMesh = _unit_count.mesh.duplicate()
@@ -61,8 +64,14 @@ func _ready():
 		_units.append(_unit)
 		
 		_speed = (_unit.speed + 1)
+		spotting_range = _unit.spotting_range
 		pos += 1
 		
+		
+	var shape :CylinderShape = _spotting_area.shape.duplicate() as CylinderShape
+	shape.radius = spotting_range
+	_spotting_area.shape = shape
+	
 func _unit_selected(_unit):
 	emit_signal("squad_selected", self)
 	

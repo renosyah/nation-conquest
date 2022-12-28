@@ -1,9 +1,6 @@
 extends KinematicBody
 class_name BaseUnit
 
-const hit_sounds :Array = [preload("res://assets/sound/fight1.wav"), preload("res://assets/sound/fight2.wav"), preload("res://assets/sound/fight3.wav"), preload("res://assets/sound/fight4.wav"), preload("res://assets/sound/fight5.wav")]
-const dead_sound :Array = [preload("res://assets/sound/maledeath1.wav"), preload("res://assets/sound/maledeath2.wav"), preload("res://assets/sound/maledeath3.wav"), preload("res://assets/sound/maledeath4.wav")]
-
 signal unit_selected(_unit)
 signal unit_take_damage(_unit, _damage)
 signal unit_dead(_unit)
@@ -27,6 +24,7 @@ var attack_to = null
 export var attack_damage :int = 1
 export var attack_delay :float = 0.4
 export var attack_range :float = 1
+export var spotting_range :float = 8
 
 var _attack_delay_timmer :Timer
 var _input_detection :Node
