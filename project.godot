@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/Godot-Touch-Input-Manager/CustomInputEvents/InputEventSingleScreenTouch.gd"
 }, {
+"base": "MarginContainer",
+"class": "MiniMap",
+"language": "GDScript",
+"path": "res://addons/mini-map/MiniMap.gd"
+}, {
 "base": "NetworkConfiguration",
 "class": "NetworkClient",
 "language": "GDScript",
@@ -160,6 +165,7 @@ _global_script_class_icons={
 "InputEventSingleScreenDrag": "",
 "InputEventSingleScreenTap": "",
 "InputEventSingleScreenTouch": "",
+"MiniMap": "",
 "NetworkClient": "",
 "NetworkConfiguration": "",
 "NetworkPlayer": "",

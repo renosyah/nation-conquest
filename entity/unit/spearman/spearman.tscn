@@ -185,6 +185,7 @@ script = ExtResource( 3 )
 hp = 6
 max_hp = 6
 attack_damage = 2
+attack_delay = 0.6
 attack_range = 2.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

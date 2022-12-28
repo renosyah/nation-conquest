@@ -1,6 +1,7 @@
 extends BaseUi
 
 onready var control = $CanvasLayer/Control
+onready var mini_map = $CanvasLayer/Control/MarginContainer2/MiniMap
 
 onready var camera_control = $CanvasLayer/Control/MarginContainer2/camera_control
 onready var fps_ping_displayer = $CanvasLayer/Control/MarginContainer2/fps_ping_displayer

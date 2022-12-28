@@ -40,15 +40,14 @@ func idle(delta :float):
 	.idle(delta)
 	
 	var origin = pivot.global_transform.origin
-	var dir = _direction * 100
-	dir.y = 0
+	var dir = Vector3(_velocity.x, 0, _velocity.z)
 	
-	if dir.length() < 5.0:
+	if clamp(dir.length(), 0.0, 1.0) < 1.0:
 		animation_body_state.travel("idle")
 		return
 		
 	animation_body_state.travel("moving")
 	
-	var _transform = pivot.transform.looking_at(dir, Vector3.UP)
+	var _transform = pivot.transform.looking_at(_direction * 100, Vector3.UP)
 	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
 

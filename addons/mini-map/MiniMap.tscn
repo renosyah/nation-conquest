@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/mini-map/MiniMap.gd" type="Script" id=1]
+[ext_resource path="res://addons/mini-map/border_no_transparent.png" type="Texture" id=2]
+[ext_resource path="res://addons/mini-map/troop.png" type="Texture" id=3]
+[ext_resource path="res://addons/mini-map/select_all.png" type="Texture" id=4]
+
+[node name="MiniMap" type="MarginContainer"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_right = 200.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 200, 200 )
+script = ExtResource( 1 )
+
+[node name="Frame" type="NinePatchRect" parent="."]
+margin_right = 200.0
+margin_bottom = 200.0
+texture = ExtResource( 2 )
+region_rect = Rect2( -23, -22.5227, 529, 386.149 )
+patch_margin_left = 82
+patch_margin_top = 73
+patch_margin_right = 62
+patch_margin_bottom = 51
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 200.0
+margin_bottom = 200.0
+mouse_filter = 2
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="Grid" type="ColorRect" parent="MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 190.0
+margin_bottom = 190.0
+mouse_filter = 2
+color = Color( 0.188235, 0.188235, 0.188235, 0.784314 )
+
+[node name="EntityMarker" type="Sprite" parent="MarginContainer/Grid"]
+visible = false
+texture = ExtResource( 3 )
+
+[node name="Camera" type="TextureRect" parent="MarginContainer/Grid"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -50.0
+margin_right = 50.0
+margin_bottom = 50.0
+texture = ExtResource( 4 )

@@ -4,8 +4,8 @@
 radiance_size = 0
 sky_top_color = Color( 0.129412, 0.690196, 1, 1 )
 sky_horizon_color = Color( 0.372549, 0.721569, 1, 1 )
-ground_bottom_color = Color( 0.145098, 0.145098, 0.145098, 1 )
-ground_horizon_color = Color( 0.219608, 0.219608, 0.219608, 1 )
+ground_bottom_color = Color( 0.129412, 0.690196, 1, 1 )
+ground_horizon_color = Color( 0.372549, 0.721569, 1, 1 )
 
 [sub_resource type="Environment" id=1]
 background_mode = 2
