@@ -43,7 +43,13 @@ color = Color( 0.188235, 0.188235, 0.188235, 0.784314 )
 visible = false
 texture = ExtResource( 3 )
 
+[node name="EntityMarker2" type="Sprite" parent="MarginContainer/Grid/EntityMarker"]
+show_behind_parent = true
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 3 )
+
 [node name="Camera" type="TextureRect" parent="MarginContainer/Grid"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -53,3 +59,9 @@ margin_top = -50.0
 margin_right = 50.0
 margin_bottom = 50.0
 texture = ExtResource( 4 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
