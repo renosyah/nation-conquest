@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://entity/projectile/arrow/arrow.gd" type="Script" id=1]
+[ext_resource path="res://entity/projectile/projectile.gd" type="Script" id=1]
 [ext_resource path="res://entity/projectile/arrow/arrow_projectile.png" type="Texture" id=2]
 
 [node name="arrow" type="Spatial"]

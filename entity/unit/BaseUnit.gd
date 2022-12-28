@@ -13,7 +13,7 @@ export var max_hp :int = 5
 
 export var is_moving :bool = false
 export var move_to :Vector3
-export var margin :float = 0.3
+export var margin :float = 0.6
 export var speed :int = 2
 
 var _direction :Vector3
@@ -73,9 +73,6 @@ func _process(delta :float):
 	else:
 		_velocity = move_and_slide(_velocity, Vector3.UP, true)
 	
-func idle(delta :float):
-	pass
-	
 func attacking(delta :float):
 	if not is_attacking:
 		return
@@ -84,12 +81,26 @@ func attacking(delta :float):
 		is_attacking = false
 		return
 		
-	var is_arrive :bool = _move_to_position(attack_to.global_transform.origin)
-	if is_arrive and _attack_delay_timmer.is_stopped():
-		perform_attack()
-		_attack_delay_timmer.wait_time = attack_delay
-		_attack_delay_timmer.start()
+	var is_arrive = _move_to_position(
+		attack_to.global_transform.origin, attack_range
+	)
+	if is_arrive:
+		if _attack_delay_timmer.is_stopped():
+			perform_attack()
+			_attack_delay_timmer.wait_time = attack_delay
+			_attack_delay_timmer.start()
 		
+func moving(delta :float):
+	if not is_moving:
+		return
+	
+	var is_arrive = _move_to_position(move_to, margin)
+	if is_arrive:
+		is_moving = false
+	
+func idle(delta :float):
+	pass
+	
 func perform_attack():
 	if not is_instance_valid(attack_to):
 		is_attacking = false
@@ -117,25 +128,14 @@ func take_damage(damage :int) -> void:
 func dead() -> void:
 	emit_signal("unit_dead", self)
 	
-func moving(delta :float):
-	if not is_moving:
-		return
-	
-	var is_arrive :bool = _move_to_position(move_to)
-	if is_arrive:
-		is_moving = false
-	
-func _move_to_position(to :Vector3) -> bool:
-	var _to = Vector3(to.x , translation.y,to.z)
-	var distance :float = translation.distance_to(_to)
-	
-	if distance <= attack_range and is_attacking:
+func _move_to_position(_at :Vector3, _margin :float) -> bool:
+	var pos = global_transform.origin
+	var to = Vector3(_at.x , pos.y, _at.z)
+	var distance :float = pos.distance_to(to)
+	if distance <= _margin:
 		return true
 		
-	if distance <= margin and is_moving:
-		return true
-		
-	_direction = translation.direction_to(_to)
+	_direction = translation.direction_to(to)
 	_velocity = _direction * speed
 	_velocity.y = 0
 	

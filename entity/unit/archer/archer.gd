@@ -17,22 +17,25 @@ func _ready():
 	body.modulate = color
 	
 func perform_attack():
-	if is_instance_valid(attack_to):
-		var arrow = arrow_projectile.instance()
-		arrow.target = attack_to.global_transform.origin
-		add_child(arrow)
-		
-		yield(arrow, "hit")
+	animation_weapon_state.travel(attack_animation)
 	
+	if not is_instance_valid(attack_to):
+		return
+		
+	var arrow = arrow_projectile.instance()
+	arrow.target = attack_to.global_transform.origin
+	arrow.connect("hit", self ,"_arrow_hit")
+	add_child(arrow)
+		
+func _arrow_hit():
 	.perform_attack()
 	
-	animation_weapon_state.travel(attack_animation)
-
 	if _sound.playing:
 		return
 	
 	_sound.stream = hit_sounds[rand_range(0, hit_sounds.size())]
 	_sound.play()
+	
 	
 func dead() -> void:
 	if _sound.playing:

@@ -39,7 +39,7 @@ func _on_Timer_timeout():
 	spawn.is_moving = true
 	spawn.move_to = get_rand_pos($Position5.translation)
 	
-	_ui.mini_map.add_object(spawn.get_path(), spawn.color)
+	_ui.add_minimap_object(spawn.get_path(), spawn.color)
 	
 	pos = pos + 1 if pos < positions.size() - 1 else 0
 	team += 1

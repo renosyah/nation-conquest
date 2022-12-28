@@ -13,7 +13,7 @@ export var max_unit :int = 8
 export var is_moving :bool = false
 export var move_to :Vector3
 export var margin :float = 1
-export var max_attack_unit : int = 2
+export var max_attack_unit : int = 4
 
 export var formation_space :int = 2
 
@@ -33,7 +33,6 @@ onready var _spotting_area = $Area/CollisionShape
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	var spotting_range :int = 8
 	
 	var banner_mesh_material :SpatialMaterial = _banner.get_surface_material(0).duplicate()
@@ -151,11 +150,12 @@ func puppet_moving(delta :float) -> void:
 	translation = translation.linear_interpolate(_puppet_translation, 5 * delta)
 	
 func _move_to_position(to :Vector3) -> bool:
-	var distance :float = translation.distance_to(to)
+	var pos = global_transform.origin
+	var distance :float = pos.distance_to(to)
 	if distance <= margin:
 		return true
 		
-	var direction :Vector3 = translation.direction_to(to)
+	var direction :Vector3 = pos.direction_to(to)
 	_velocity = direction * _speed
 	_velocity.y = 0
 	
@@ -188,24 +188,27 @@ func attack_targets():
 	if _targets.empty():
 		return
 		
-	for i in range(_targets.size()):
-		if i > max_attack_unit:
+	var pos :int = 0
+	
+	for unit in _units:
+		if pos >= max_attack_unit:
 			return
 			
-		if i < _units.size():
-			if not is_instance_valid(_units[i]):
-				_units.remove(i)
-				return
-				
-			if not is_instance_valid(_targets[i]):
-				_targets.remove(i)
-				return
-				
-			_units[i].is_moving = false
-			_units[i].is_attacking = true
-			_units[i].attack_to = _targets[i]
-
-
+		if pos > _targets.size() - 1:
+			return
+			
+		if not is_instance_valid(_targets[pos]):
+			_targets.remove(pos)
+			return
+			
+		if is_instance_valid(unit):
+			unit.is_moving = false
+			unit.is_attacking = true
+			unit.attack_to = _targets[pos]
+			
+		pos += 1
+	
+	
 func _on_Area_body_entered(body):
 	if body == self:
 		return
@@ -218,19 +221,12 @@ func _on_Area_body_entered(body):
 			return
 			
 		_targets.append(body)
-		
-	_agro_timer.start()
 
 func _on_Area_body_exited(body):
 	if body in _targets:
 		_targets.erase(body)
 		
 func _on_agro_timer_timeout():
-	if not _targets.empty():
-		_agro_timer.start()
-	else:
-		_agro_timer.stop()
-		
 	attack_targets()
 
 
