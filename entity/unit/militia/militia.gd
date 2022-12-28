@@ -65,7 +65,7 @@ func idle(delta :float):
 	.idle(delta)
 	
 	var dir = Vector3(_velocity.x, 0, _velocity.z)
-	if clamp(dir.length_squared(), 0.0, 1.0) < 1.0:
+	if dir == Vector3.ZERO:
 		animation_body_state.travel("idle")
 		return
 		
