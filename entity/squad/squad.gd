@@ -32,6 +32,7 @@ onready var _hit_particle = $hit_particle
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	var banner_mesh_material :SpatialMaterial = _banner.get_surface_material(0).duplicate()
 	var text_mesh :TextMesh = _unit_count.mesh.duplicate()
 	
@@ -46,6 +47,8 @@ func _ready():
 	var pos = 0
 	for i in range(max_unit):
 		var _unit = unit.instance()
+		_unit.name = "unit-" + str(pos)
+		_unit.set_network_master(get_network_master())
 		_unit.team = team
 		_unit.color = color
 		_unit.connect("unit_selected", self, "_unit_selected")

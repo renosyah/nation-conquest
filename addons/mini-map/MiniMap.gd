@@ -65,6 +65,7 @@ func _update_minimap():
 		else:
 			remove_object(object_path)
 			
+			
 func add_object(object_path :NodePath, color :Color = Color.white):
 	var object = get_node_or_null(object_path)
 	if not is_instance_valid(object):
@@ -86,7 +87,6 @@ func remove_object(object :NodePath):
 	
 func set_zoom(value :float):
 	_zoom = clamp(_zoom , 0.5, 5)
-
 
 func _on_Timer_timeout():
 	_timer.start()
