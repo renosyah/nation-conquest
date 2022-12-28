@@ -64,6 +64,7 @@ func _update_minimap():
 			
 		else:
 			remove_object(object_path)
+			return
 			
 			
 func add_object(object_path :NodePath, color :Color = Color.white):
