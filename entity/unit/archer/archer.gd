@@ -48,19 +48,37 @@ func dead() -> void:
 	
 	.dead()
 	
+func attacking(delta :float):
+	.attacking(delta)
+	
+	if not is_attacking:
+		return
+		
+	if not is_instance_valid(attack_to):
+		return
+		
+	var enemy_pos :Vector3 = attack_to.global_transform.origin
+	var pos = global_transform.origin
+	var at = Vector3(enemy_pos.x, pos.y, enemy_pos.z)
+	var dir = pos.direction_to(at)
+	
+	var _transform = pivot.transform.looking_at(dir * 100, Vector3.UP)
+	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
+	
+func moving(delta :float):
+	.moving(delta)
+	
+	if not is_moving:
+		return
+		
+	var _transform = pivot.transform.looking_at(_direction * 100, Vector3.UP)
+	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
 	
 func idle(delta :float):
 	.idle(delta)
 	
-	var origin = pivot.global_transform.origin
-	var dir = Vector3(_velocity.x, 0, _velocity.z)
-	
-	if clamp(dir.length(), 0.0, 1.0) < 1.0:
+	if clamp(_direction.length_squared(), 0.0, 1.0) < 1.0:
 		animation_body_state.travel("idle")
 		return
 		
 	animation_body_state.travel("moving")
-	
-	var _transform = pivot.transform.looking_at(_direction * 100, Vector3.UP)
-	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
-
