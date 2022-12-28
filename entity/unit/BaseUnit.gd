@@ -32,6 +32,8 @@ var _attack_delay_timmer :Timer
 var _input_detection :Node
 var _sound :AudioStreamPlayer3D
 
+onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_attack_delay_timmer = Timer.new()
@@ -66,8 +68,12 @@ func _process(delta :float):
 	moving(delta)
 	idle(delta)
 	
-	_velocity.y -= speed
-	_velocity = move_and_slide(_velocity, Vector3.UP, true)
+	if not is_on_floor():
+		_velocity.y -= _gravity
+		_velocity = move_and_slide(_velocity, Vector3.UP, true)
+		
+	else:
+		_velocity = move_and_slide(_velocity, Vector3.UP, true)
 	
 func idle(delta :float):
 	pass

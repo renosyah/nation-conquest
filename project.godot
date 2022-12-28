@@ -186,6 +186,12 @@ Global="*res://global/global.gd"
 Network="*res://addons/network/Network.gd"
 NetworkLobbyManager="*res://addons/network/lobby-manager/NetworkLobbyManager.gd"
 
+[display]
+
+window/size/width=600
+window/size/height=1024
+window/handheld/orientation="portrait"
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true

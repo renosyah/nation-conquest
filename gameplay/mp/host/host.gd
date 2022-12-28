@@ -10,11 +10,9 @@ const units = [
 var squad
 onready var node = $Node
 
-var is_left = false
-var team = 1
-
-onready var positions_1 = $Position3D.translation
-onready var positions_2 = $Position3D2.translation
+var team :int = 1
+var pos :int = 0
+onready var positions = [$Position1, $Position2, $Position3, $Position4]
 
 func on_map_click(_pos :Vector3):
 	if not is_instance_valid(squad):
@@ -27,17 +25,25 @@ func _on_squad_selected(_squad):
 	squad = _squad
 
 func _on_Timer_timeout():
-	if node.get_child_count() > 1:
+	if node.get_child_count() > 3:
 		return
 		
-	is_left = not is_left
-	team += 1
-	
 	var spawn = preload("res://entity/squad/squad.tscn").instance()
 	spawn.unit = units[rand_range(0, units.size())]
 	spawn.color = Color(randf(),randf(),randf(), 1.0)
 	spawn.team = team
 	spawn.connect("squad_selected", self,"_on_squad_selected")
-	spawn.translation = positions_1 if is_left else positions_2
+	spawn.translation = positions[pos].translation
 	node.add_child(spawn)
-
+	spawn.is_moving = true
+	spawn.move_to = get_rand_pos($Position5.translation)
+	
+	pos = pos + 1 if pos < positions.size() - 1 else 0
+	team += 1
+	
+func get_rand_pos(from :Vector3) -> Vector3:
+	var angle := rand_range(0, TAU)
+	var distance := rand_range(3, 4)
+	var posv2 = polar2cartesian(distance, angle)
+	var posv3 = from + Vector3(posv2.x, 4.0, posv2.y)
+	return posv3

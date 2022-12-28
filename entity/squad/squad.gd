@@ -8,11 +8,12 @@ signal squad_dead(_squad)
 export var unit :Resource
 export var team :int = 0
 export var color :Color = Color.white
-export var max_unit :int = 15
+export var max_unit :int = 8
 
 export var is_moving :bool = false
 export var move_to :Vector3
 export var margin :float = 1
+export var max_attack_unit : int = 2
 
 export var formation_space :int = 2
 
@@ -126,9 +127,13 @@ func master_moving(delta :float) -> void:
 	var is_arrive :bool = _move_to_position(move_to)
 	if is_arrive:
 		is_moving = false
-	
-	_velocity.y -= _speed
-	_velocity = move_and_slide(_velocity, Vector3.UP, true)
+		
+	if not is_on_floor():
+		_velocity.y -= _speed
+		_velocity = move_and_slide(_velocity, Vector3.UP, true)
+		
+	else:
+		_velocity = move_and_slide(_velocity, Vector3.UP, true)
 	
 func puppet_moving(delta :float) -> void:
 	.puppet_moving(delta)
@@ -174,7 +179,7 @@ func attack_targets():
 		return
 		
 	for i in range(_targets.size()):
-		if i > 4:
+		if i > max_attack_unit:
 			return
 			
 		if i < _units.size():

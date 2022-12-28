@@ -20,4 +20,3 @@ environment = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 0.307739, 0.951471, 0, -0.951471, 0.307739, 0, 0, 0 )
 shadow_enabled = true
 directional_shadow_mode = 0
-directional_shadow_depth_range = 1
