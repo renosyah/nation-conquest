@@ -29,6 +29,7 @@ onready var _agro_timer = $agro_timer
 onready var _unit_count = $banner/unit_count
 onready var _hit_particle = $hit_particle
 onready var _spotting_area = $Area/CollisionShape
+onready var _area = $Area
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -56,7 +57,6 @@ func _ready():
 		_unit.connect("unit_dead", self, "_unit_dead")
 		_unit.connect("unit_take_damage", self, "_unit_take_damage")
 		add_child(_unit)
-		
 		_unit.set_as_toplevel(true)
 		_unit.translation = formations[pos] + Vector3(0, 2, 0)
 		_units.append(_unit)
@@ -195,7 +195,7 @@ func get_formation_box():
 			
 	return formations
 
-func attack_targets():
+func _attack_targets():
 	if _targets.empty() or _units.empty():
 		return
 		
@@ -215,35 +215,36 @@ func attack_targets():
 			_targets.remove(pos)
 			return
 			
-		if not is_instance_valid(unit):
-			continue
-			
-		unit.is_moving = false
-		unit.is_attacking = true
-		unit.attack_to = _targets[pos]
+		if is_instance_valid(unit):
+			unit.is_moving = false
+			unit.is_attacking = true
+			unit.attack_to = _targets[pos]
 			
 		pos += 1
 	
+func _spotted_target():
+	_targets.clear()
 	
-func _on_Area_body_entered(body):
-	if body == self:
-		return
-		
-	if body is BaseUnit:
-		if body in _units:
+	for body in _area.get_overlapping_bodies():
+		if _targets.size() > 10:
 			return
 			
-		if body.team == team:
-			return
+		var valids :Array = []
+		if body == self:
+			continue
 			
-		_targets.append(body)
-
-func _on_Area_body_exited(body):
-	if body in _targets:
-		_targets.erase(body)
-		
+		if body is BaseUnit:
+			if body in _units:
+				continue
+				
+			if body.team == team:
+				continue
+				
+			_targets.append(body)
+			
 func _on_agro_timer_timeout():
-	attack_targets()
+	_spotted_target()
+	_attack_targets()
 
 
 

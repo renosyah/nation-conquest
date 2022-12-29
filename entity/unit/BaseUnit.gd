@@ -65,7 +65,7 @@ func _on_input_detection_any_gesture(sig ,event):
 		
 func set_selected(val :bool):
 	_higlight.visible = val
-		
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta :float):
 	_velocity = Vector3.ZERO

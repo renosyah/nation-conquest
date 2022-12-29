@@ -93,7 +93,5 @@ autostart = true
 
 [connection signal="input_event" from="." to="." method="_on_squad_input_event"]
 [connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
-[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
-[connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]
 [connection signal="timeout" from="agro_timer" to="." method="_on_agro_timer_timeout"]
 [connection signal="timeout" from="formation_time" to="." method="_on_formation_time_timeout"]
