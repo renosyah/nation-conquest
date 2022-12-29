@@ -22,6 +22,7 @@ var _targets :Array = []
 var _velocity :Vector3
 
 puppet var _puppet_translation :Vector3
+puppet var _puppet_velocity :Vector3
 
 onready var _input_detection = $input_detection
 onready var _banner = $banner/banner
@@ -31,6 +32,7 @@ onready var _hit_particle = $hit_particle
 onready var _spotting_area = $Area/CollisionShape
 onready var _area = $Area
 onready var _outline = $banner/outline
+onready var _pivot = $pivot
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -47,8 +49,12 @@ func _ready():
 	banner_mesh_material.albedo_color.a = 0.6
 	
 	var formations = get_formation_box()
-	var pos = 0
-	for i in range(max_unit):
+	for pos in formations:
+		var position3d = Position3D.new()
+		_pivot.add_child(position3d)
+		position3d.global_transform.origin = pos
+	
+	for pos in range(max_unit):
 		var _unit = unit.instance()
 		_unit.name = "unit-" + str(pos)
 		_unit.set_network_master(get_network_master())
@@ -57,15 +63,16 @@ func _ready():
 		_unit.connect("unit_selected", self, "_unit_selected")
 		_unit.connect("unit_dead", self, "_unit_dead")
 		_unit.connect("unit_take_damage", self, "_unit_take_damage")
+		_unit.move_to = _pivot.get_child(pos)
+		_unit.is_moving = true
+		_unit.squad = self
 		add_child(_unit)
 		_unit.set_as_toplevel(true)
-		_unit.translation = formations[pos] + Vector3(0, 2, 0)
+		_unit.translation = _pivot.get_child(pos).global_transform.origin + Vector3(0, 2, 0)
 		_units.append(_unit)
 		
-		_speed = _unit.speed
+		_speed = _unit.speed + 1
 		spotting_range = _unit.spotting_range
-		pos += 1
-		
 		
 	var shape :CylinderShape = _spotting_area.shape.duplicate() as CylinderShape
 	shape.radius = spotting_range
@@ -85,6 +92,7 @@ func _network_timmer_timeout() -> void:
 	
 	if _is_master and _is_online:
 		rset_unreliable("_puppet_translation", global_transform.origin)
+		rset_unreliable("_puppet_velocity", _velocity)
 		
 remotesync func _damage_unit(_unit_path :NodePath, _damage :int):
 	var _unit :BaseUnit = get_node_or_null(_unit_path)
@@ -131,12 +139,21 @@ func master_moving(delta :float) -> void:
 		
 	else:
 		_velocity = move_and_slide(_velocity, Vector3.UP, true)
+		
+	_formation_direction_facing(delta)
 	
 func puppet_moving(delta :float) -> void:
 	.puppet_moving(delta)
 	
 	translation = translation.linear_interpolate(_puppet_translation, 5 * delta)
+	_formation_direction_facing(delta)
 	
+func _formation_direction_facing(delta :float):
+	var _vel = Vector3(_velocity.x, 0 , _velocity.z)
+	if _vel != Vector3.ZERO:
+		var _transform = _pivot.transform.looking_at(_vel, Vector3.UP)
+		_pivot.transform = _pivot.transform.interpolate_with(_transform, 15 * delta)
+		
 func _move_to_position(_to :Vector3) -> bool:
 	var pos :Vector3 = global_transform.origin
 	var to :Vector3 = Vector3(_to.x, pos.y, _to.z)
@@ -220,41 +237,7 @@ func _spotted_target():
 				continue
 				
 			_targets.append(body)
-		
-func _move_order():
-	if _units.empty():
-		return
-	
-	var _no_target :bool = _targets.empty()
-	var _formations = get_formation_box()
-	for i in range(_units.size()):
-		var _unit = _units[i]
-		if not is_instance_valid(_unit):
-			continue
 			
-		var _unit_formation_pos :Vector3 = _formations[i]
-		
-		if is_moving:
-			var _unit_pos :Vector3 = _unit.global_transform.origin
-			if _unit_pos.distance_squared_to(_unit_formation_pos) > 4.0:
-				_unit.is_attacking = false
-				_unit.attack_to = null
-				_unit.is_moving = true
-				_unit.move_to = _unit_formation_pos
-				continue
-		else:
-			if _unit.is_attacking:
-				continue
-				
-			if _no_target:
-				_unit.is_attacking = false
-				_unit.attack_to = null
-				_unit.is_moving = true
-				_unit.move_to = _unit_formation_pos
-	
-func _on_formation_time_timeout():
-	_move_order()
-	
 func _on_agro_timer_timeout():
 	_spotted_target()
 	_attack_targets()

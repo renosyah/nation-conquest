@@ -12,10 +12,11 @@ export var hp :int = 5
 export var max_hp :int = 5
 
 export var is_moving :bool = false
-export var move_to :Vector3
+var move_to = null
 export var margin :float = 0.6
 export var speed :int = 2
 
+var squad = null
 var _direction :Vector3
 var _velocity :Vector3
 
@@ -86,8 +87,19 @@ func attacking(delta :float):
 		
 	if not is_instance_valid(attack_to):
 		is_attacking = false
+		is_moving = true
 		return
 		
+	if is_instance_valid(move_to) and is_instance_valid(squad):
+		if squad.is_moving:
+			var _unit_pos :Vector3 = global_transform.origin
+			var _unit_assign_pos :Vector3 = move_to.global_transform.origin
+			if _unit_pos.distance_squared_to(_unit_assign_pos) > 4.0:
+				is_attacking = false
+				attack_to = null
+				is_moving = true
+				return
+			
 	var is_arrive = _move_to_position(
 		attack_to.global_transform.origin, attack_range
 	)
@@ -100,10 +112,16 @@ func attacking(delta :float):
 func moving(delta :float):
 	if not is_moving:
 		return
-	
-	var is_arrive = _move_to_position(move_to, margin)
-	if is_arrive:
-		is_moving = false
+		
+	if not is_instance_valid(move_to):
+		return
+		
+	var _unit_pos :Vector3 = global_transform.origin
+	var _unit_assign_pos :Vector3 = move_to.global_transform.origin
+	if _unit_pos.distance_to(_unit_assign_pos) <= margin:
+		return
+		
+	_move_to_position(_unit_assign_pos, margin)
 	
 func idle(delta :float):
 	pass

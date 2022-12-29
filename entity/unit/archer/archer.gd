@@ -90,7 +90,7 @@ func attacking(delta :float):
 func moving(delta :float):
 	.moving(delta)
 	
-	if not is_moving:
+	if _direction == Vector3.ZERO:
 		return
 		
 	var _transform = pivot.transform.looking_at(_direction * 100, Vector3.UP)
