@@ -14,8 +14,12 @@ onready var node = $Node
 var team :int = 1
 var pos :int = 0
 onready var positions = [$Position1, $Position2, $Position3, $Position4]
+onready var tap = $tap
 
 func on_map_click(_pos :Vector3):
+	tap.translation = _pos
+	tap.tap()
+	
 	if not is_instance_valid(squad):
 		return
 		

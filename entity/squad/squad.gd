@@ -30,6 +30,7 @@ onready var _unit_count = $banner/unit_count
 onready var _hit_particle = $hit_particle
 onready var _spotting_area = $Area/CollisionShape
 onready var _area = $Area
+onready var _outline = $banner/outline
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -163,6 +164,8 @@ func set_selected(val :bool):
 			continue
 			
 		unit.set_selected(val)
+		
+	_outline.visible = val
 		
 func get_formation_box():
 	var formations = []

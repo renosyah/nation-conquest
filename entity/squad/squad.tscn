@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://entity/squad/squad.gd" type="Script" id=1]
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=2]
 [ext_resource path="res://entity/squad/banner.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
+[ext_resource path="res://entity/squad/banner_outline.obj" type="ArrayMesh" id=6]
 
 [sub_resource type="CapsuleShape" id=8]
 radius = 1.58073
@@ -68,6 +69,14 @@ software_skinning_transform_normals = false
 cast_shadow = 0
 generate_lightmap = false
 mesh = ExtResource( 3 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 6 )
+
+[node name="outline" type="MeshInstance" parent="banner"]
+visible = false
+cast_shadow = 0
+generate_lightmap = false
+mesh = ExtResource( 6 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 6 )
 

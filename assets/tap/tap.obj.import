@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/tap.obj-1ae273bba4c423fc17d1e598651d2779.mesh"
+
+[deps]
+
+files=[ "res://.import/tap.obj-1ae273bba4c423fc17d1e598651d2779.mesh" ]
+
+source_file="res://assets/tap/tap.obj"
+dest_files=[ "res://.import/tap.obj-1ae273bba4c423fc17d1e598651d2779.mesh", "res://.import/tap.obj-1ae273bba4c423fc17d1e598651d2779.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286
