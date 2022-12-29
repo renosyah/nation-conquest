@@ -111,36 +111,19 @@ remotesync func _erase_unit(_unit_path :NodePath):
 		
 	emit_signal("squad_update", self)
 		
-func _on_formation_time_timeout():
-	if _units.empty():
-		return
-		
-	var formations = get_formation_box()
-	for i in range(_units.size()):
-		if not is_instance_valid(_units[i]):
-			continue
-			
-		if _targets.empty():
-			_units[i].is_attacking = false
-			_units[i].attack_to = null
-			
-		if _units[i].is_attacking:
-			continue
-			
-		_units[i].is_moving = true
-		_units[i].move_to = formations[i]
-		
-	
+
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
 	
 	_velocity = Vector3.ZERO
 	
-	if is_moving:
-		var is_arrive :bool = _move_to_position(move_to)
-		if is_arrive:
-			is_moving = false
-			
+	if not is_moving:
+		return
+		
+	var is_arrive :bool = _move_to_position(move_to)
+	if is_arrive:
+		is_moving = false
+		
 	if not is_on_floor():
 		_velocity.y -= _speed
 		_velocity = move_and_slide(_velocity, Vector3.UP, true)
@@ -153,8 +136,10 @@ func puppet_moving(delta :float) -> void:
 	
 	translation = translation.linear_interpolate(_puppet_translation, 5 * delta)
 	
-func _move_to_position(to :Vector3) -> bool:
-	var pos = global_transform.origin
+func _move_to_position(_to :Vector3) -> bool:
+	var pos :Vector3 = global_transform.origin
+	var to :Vector3 = Vector3(_to.x, pos.y, _to.z)
+	
 	var distance :float = pos.distance_to(to)
 	if distance <= margin:
 		return true
@@ -198,7 +183,7 @@ func get_formation_box():
 func _attack_targets():
 	if _targets.empty() or _units.empty():
 		return
-
+		
 	var pos :int = 0
 	
 	for unit in _units:
@@ -232,7 +217,41 @@ func _spotted_target():
 				continue
 				
 			_targets.append(body)
+		
+func _move_order():
+	if _units.empty():
+		return
+	
+	var _no_target :bool = _targets.empty()
+	var _formations = get_formation_box()
+	for i in range(_units.size()):
+		var _unit = _units[i]
+		if not is_instance_valid(_unit):
+			continue
 			
+		var _unit_formation_pos :Vector3 = _formations[i]
+		
+		if is_moving:
+			var _unit_pos :Vector3 = _unit.global_transform.origin
+			if _unit_pos.distance_squared_to(_unit_formation_pos) > 8.0:
+				_unit.is_attacking = false
+				_unit.attack_to = null
+				_unit.is_moving = true
+				_unit.move_to = _unit_formation_pos
+				continue
+		else:
+			if _unit.is_attacking:
+				continue
+				
+			if _no_target:
+				_unit.is_attacking = false
+				_unit.attack_to = null
+				_unit.is_moving = true
+				_unit.move_to = _unit_formation_pos
+	
+func _on_formation_time_timeout():
+	_move_order()
+	
 func _on_agro_timer_timeout():
 	_spotted_target()
 	_attack_targets()
