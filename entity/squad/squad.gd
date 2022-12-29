@@ -8,7 +8,7 @@ signal squad_dead(_squad)
 export var unit :Resource
 export var team :int = 0
 export var color :Color = Color.white
-export var max_unit :int = 8
+export var max_unit :int = 15
 
 export var is_moving :bool = false
 export var move_to :Vector3
@@ -16,11 +16,14 @@ export var margin :float = 0.3
 
 export var formation_space :int = 1
 
+export var is_dead :bool = false
+
 var _speed :int = 2
 var _units :Array = []
 var _targets :Array = []
 var _velocity :Vector3
 
+puppet var _puppet_is_moving :bool
 puppet var _puppet_translation :Vector3
 puppet var _puppet_velocity :Vector3
 
@@ -52,7 +55,15 @@ func _ready():
 	for pos in formations:
 		var position3d = Position3D.new()
 		_pivot.add_child(position3d)
-		position3d.global_transform.origin = pos
+		position3d.translation = pos
+		
+	var delay = Timer.new()
+	delay.wait_time = 0.1
+	add_child(delay)
+	delay.start()
+	
+	yield(delay, "timeout")
+	delay.queue_free()
 	
 	for pos in range(max_unit):
 		var _unit = unit.instance()
@@ -66,6 +77,7 @@ func _ready():
 		_unit.move_to = _pivot.get_child(pos)
 		_unit.is_moving = true
 		_unit.squad = self
+		_unit.is_master = _is_master()
 		add_child(_unit)
 		_unit.set_as_toplevel(true)
 		_unit.translation = _pivot.get_child(pos).global_transform.origin + Vector3(0, 2, 0)
@@ -90,9 +102,13 @@ func _unit_dead(_unit :BaseUnit):
 func _network_timmer_timeout() -> void:
 	._network_timmer_timeout()
 	
+	if is_dead:
+		return
+	
 	if _is_master and _is_online:
 		rset_unreliable("_puppet_translation", global_transform.origin)
 		rset_unreliable("_puppet_velocity", _velocity)
+		rset_unreliable("_puppet_is_moving", is_moving)
 		
 remotesync func _damage_unit(_unit_path :NodePath, _damage :int):
 	var _unit :BaseUnit = get_node_or_null(_unit_path)
@@ -113,25 +129,32 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	(_unit_count.mesh as TextMesh).text = str(_units.size())
 	
 	if _units.empty():
-		emit_signal("squad_dead", self)
+		is_dead = true
 		set_process(false)
-		queue_free()
+		rpc("_squad_disband")
 		return
 		
 	emit_signal("squad_update", self)
 		
+		
+remotesync func _squad_disband():
+	is_dead = true
+	set_process(false)
+	emit_signal("squad_dead", self)
+	queue_free()
 
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
 	
+	if is_dead:
+		return
+	
 	_velocity = Vector3.ZERO
 	
-	if not is_moving:
-		return
-		
-	var is_arrive :bool = _move_to_position(move_to)
-	if is_arrive:
-		is_moving = false
+	if is_moving:
+		var is_arrive :bool = _move_to_position(move_to)
+		if is_arrive:
+			is_moving = false
 		
 	if not is_on_floor():
 		_velocity.y -= _speed
@@ -145,7 +168,12 @@ func master_moving(delta :float) -> void:
 func puppet_moving(delta :float) -> void:
 	.puppet_moving(delta)
 	
+	if is_dead:
+		return
+		
 	translation = translation.linear_interpolate(_puppet_translation, 5 * delta)
+	_velocity = _puppet_velocity
+	is_moving = _puppet_is_moving
 	_formation_direction_facing(delta)
 	
 func _formation_direction_facing(delta :float):
@@ -205,7 +233,6 @@ func _attack_targets():
 		return
 		
 	var pos :int = 0
-	
 	for unit in _units:
 		if not is_instance_valid(_targets[pos]):
 			_targets.remove(pos)

@@ -51,10 +51,14 @@ func on_map_click(_pos :Vector3):
 ################################################################
 # ui
 var _ui :BaseUi
+var _tap :Tap
 
 func setup_ui():
 	_ui = preload("res://gameplay/mp/ui/ui.tscn").instance()
 	add_child(_ui)
+	
+	_tap = preload("res://assets/tap/tap.tscn").instance()
+	add_child(_tap)
 	
 ################################################################
 # camera
@@ -92,6 +96,25 @@ func on_host_disconnected():
 	
 func all_player_ready():
 	_ui.loading(false)
+	
+	
+################################################################
+# squad spawner
+func spawn_squad(_squad :SquadData, _parent :NodePath, _at :Vector3):
+	rpc("_spawn_squad", _squad.to_dictionary(), _parent, _at)
+
+remotesync func _spawn_squad(_squad_data :Dictionary, _parent :NodePath, _at :Vector3):
+	var _squad = SquadData.new()
+	_squad.from_dictionary(_squad_data)
+	
+	var _squad_spawn = _squad.spawn(get_node_or_null(_parent))
+	_squad_spawn.connect("squad_selected", self,"on_squad_selected")
+	_squad_spawn.translation = _at
+	
+	_ui.add_minimap_object(_squad_spawn.get_path(), _squad.color)
+	
+func on_squad_selected(_squad :Squad):
+	pass
 	
 ################################################################
 # proccess

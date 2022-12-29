@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://main-menu/ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=2]
+[ext_resource path="res://addons/server-browser/server_browser.tscn" type="PackedScene" id=3]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -14,16 +15,59 @@ script = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="play" type="Button" parent="CanvasLayer/Control"]
+[node name="main_menu_buttons" type="VBoxContainer" parent="CanvasLayer/Control"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -99.5
-margin_top = -44.5
-margin_right = 99.5
-margin_bottom = 44.5
+margin_left = -115.0
+margin_top = -144.5
+margin_right = 115.0
+margin_bottom = 144.5
+
+[node name="host" type="Button" parent="CanvasLayer/Control/main_menu_buttons"]
+margin_right = 230.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 0, 80 )
+custom_fonts/font = ExtResource( 2 )
+text = "Host"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/main_menu_buttons"]
+margin_top = 84.0
+margin_right = 230.0
+margin_bottom = 108.0
+rect_min_size = Vector2( 0, 24 )
+
+[node name="join" type="Button" parent="CanvasLayer/Control/main_menu_buttons"]
+margin_top = 112.0
+margin_right = 230.0
+margin_bottom = 192.0
+rect_min_size = Vector2( 0, 80 )
+custom_fonts/font = ExtResource( 2 )
+text = "Join"
+
+[node name="host_menu_buttons" type="VBoxContainer" parent="CanvasLayer/Control"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -115.0
+margin_top = -144.5
+margin_right = 115.0
+margin_bottom = 144.5
+
+[node name="play" type="Button" parent="CanvasLayer/Control/host_menu_buttons"]
+margin_right = 230.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 0, 80 )
 custom_fonts/font = ExtResource( 2 )
 text = "Play"
 
-[connection signal="pressed" from="CanvasLayer/Control/play" to="." method="_on_play_pressed"]
+[node name="server_browser" parent="CanvasLayer/Control" instance=ExtResource( 3 )]
+visible = false
+
+[connection signal="pressed" from="CanvasLayer/Control/main_menu_buttons/host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/main_menu_buttons/join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/host_menu_buttons/play" to="." method="_on_play_pressed"]
+[connection signal="on_join" from="CanvasLayer/Control/server_browser" to="." method="_on_server_browser_on_join"]

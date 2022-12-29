@@ -1,60 +1,58 @@
 extends BaseGameplay
 
-const units = [
-	preload("res://entity/unit/axeman/axeman.tscn"),
-	preload("res://entity/unit/militia/militia.tscn"),
-	preload("res://entity/unit/swordman/swordman.tscn"),
-	preload("res://entity/unit/spearman/spearman.tscn"),
-	preload("res://entity/unit/archer/archer.tscn")
+const squads = [
+	preload("res://data/squad_data/squads/archer_squad.tres"),
+	preload("res://data/squad_data/squads/axeman_squad.tres"),
+	preload("res://data/squad_data/squads/militia_squad.tres"),
+	preload("res://data/squad_data/squads/spearman_squad.tres"),
+	preload("res://data/squad_data/squads/swordman_squad.tres"),
 ]
 
-var squad
-onready var node = $Node
+var selected_squad :Squad
+onready var squad_holder = $squad_holder
 
 var team :int = 1
 var pos :int = 0
 onready var positions = [$Position1, $Position2, $Position3, $Position4]
-onready var tap = $tap
 
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+	
 func on_map_click(_pos :Vector3):
-	if not is_instance_valid(squad):
+	.on_map_click(_pos)
+	
+	if not is_instance_valid(selected_squad):
 		return
 		
-	squad.is_moving = true
-	squad.move_to = _pos
+	selected_squad.is_moving = true
+	selected_squad.move_to = _pos
 	
-	tap.translation = _pos
-	tap.tap()
+	_tap.translation = _pos
+	_tap.tap()
 
-func _on_squad_selected(_squad):
-	if is_instance_valid(squad):
-		squad.set_selected(false)
+func on_squad_selected(_squad :Squad):
+	.on_squad_selected(_squad)
+	
+	if is_instance_valid(selected_squad):
+		selected_squad.set_selected(false)
 		
-	squad = _squad
-	squad.set_selected(true)
+	selected_squad = _squad
+	selected_squad.set_selected(true)
 
 func _on_Timer_timeout():
-	if node.get_child_count() > 3:
+	if team > 4:
 		return
-		
-	var spawn = preload("res://entity/squad/squad.tscn").instance()
-	spawn.unit = units[rand_range(0, units.size())]
-	spawn.color = Color(randf(),randf(),randf(), 1.0)
-	spawn.team = team
-	spawn.connect("squad_selected", self,"_on_squad_selected")
-	spawn.translation = positions[pos].translation
-	node.add_child(spawn)
-	spawn.is_moving = true
-	spawn.move_to = get_rand_pos($Position5.translation)
 	
-	_ui.add_minimap_object(spawn.get_path(), spawn.color)
+	var squad = squads[rand_range(0, squads.size())]
+	squad.node_name = GDUUID.v4()
+	squad.network_master = Network.PLAYER_HOST_ID
+	squad.color = Color(randf(),randf(),randf(), 1.0)
+	squad.team = team
+	spawn_squad(
+		squad, squad_holder.get_path(),
+		positions[pos].translation
+	)
 	
 	pos = pos + 1 if pos < positions.size() - 1 else 0
 	team += 1
-	
-func get_rand_pos(from :Vector3) -> Vector3:
-	var angle := rand_range(0, TAU)
-	var distance := rand_range(3, 4)
-	var posv2 = polar2cartesian(distance, angle)
-	var posv3 = from + Vector3(posv2.x, 4.0, posv2.y)
-	return posv3

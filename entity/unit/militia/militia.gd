@@ -46,10 +46,12 @@ func attacking(delta :float):
 		
 	var enemy_pos :Vector3 = attack_to.global_transform.origin
 	var pos = global_transform.origin
-	var at = Vector3(enemy_pos.x, pos.y, enemy_pos.z)
-	var dir = pos.direction_to(at)
-	
-	var _transform = pivot.transform.looking_at(dir * 100, Vector3.UP)
+	var to = Vector3(enemy_pos.x, pos.y, enemy_pos.z)
+	var dis = pos.distance_squared_to(to)
+	if dis < 2.0:
+		return
+		
+	var _transform = pivot.transform.looking_at(pos.direction_to(to) * 100, Vector3.UP)
 	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
 	
 func moving(delta :float):

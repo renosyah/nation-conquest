@@ -27,6 +27,8 @@ export var attack_delay :float = 0.4
 export var attack_range :float = 1
 export var spotting_range :float = 8
 
+export var is_master :bool = false
+
 var _attack_delay_timmer :Timer
 var _input_detection :Node
 var _sound :AudioStreamPlayer3D
@@ -69,6 +71,9 @@ func set_selected(val :bool):
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta :float):
+	if is_dead:
+		return
+		
 	_velocity = Vector3.ZERO
 	_direction = Vector3.ZERO
 	
@@ -128,14 +133,17 @@ func idle(delta :float):
 	
 func perform_attack():
 	if not is_instance_valid(attack_to):
+		is_moving = true
 		is_attacking = false
 		return
 		
 	if attack_to.is_dead:
+		is_moving = true
 		is_attacking = false
 		return
 		
-	attack_to.take_damage(attack_damage)
+	if is_master:
+		attack_to.take_damage(attack_damage)
 	
 func take_damage(damage :int) -> void:
 	if is_dead:
