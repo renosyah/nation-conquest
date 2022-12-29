@@ -17,14 +17,14 @@ onready var positions = [$Position1, $Position2, $Position3, $Position4]
 onready var tap = $tap
 
 func on_map_click(_pos :Vector3):
-	tap.translation = _pos
-	tap.tap()
-	
 	if not is_instance_valid(squad):
 		return
 		
 	squad.is_moving = true
 	squad.move_to = _pos
+	
+	tap.translation = _pos
+	tap.tap()
 
 func _on_squad_selected(_squad):
 	if is_instance_valid(squad):

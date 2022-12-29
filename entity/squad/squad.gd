@@ -12,7 +12,7 @@ export var max_unit :int = 8
 
 export var is_moving :bool = false
 export var move_to :Vector3
-export var margin :float = 1
+export var margin :float = 0.3
 
 export var formation_space :int = 1
 
@@ -62,7 +62,7 @@ func _ready():
 		_unit.translation = formations[pos] + Vector3(0, 2, 0)
 		_units.append(_unit)
 		
-		_speed = (_unit.speed + 1)
+		_speed = _unit.speed
 		spotting_range = _unit.spotting_range
 		pos += 1
 		
@@ -236,7 +236,7 @@ func _move_order():
 		
 		if is_moving:
 			var _unit_pos :Vector3 = _unit.global_transform.origin
-			if _unit_pos.distance_squared_to(_unit_formation_pos) > 8.0:
+			if _unit_pos.distance_squared_to(_unit_formation_pos) > 4.0:
 				_unit.is_attacking = false
 				_unit.attack_to = null
 				_unit.is_moving = true

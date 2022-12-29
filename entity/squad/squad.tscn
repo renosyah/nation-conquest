@@ -8,8 +8,8 @@
 [ext_resource path="res://entity/squad/banner_outline.obj" type="ArrayMesh" id=6]
 
 [sub_resource type="CapsuleShape" id=8]
-radius = 1.58073
-height = 0.901035
+radius = 0.742018
+height = 0.406574
 
 [sub_resource type="ConvexPolygonShape" id=7]
 points = PoolVector3Array( -1.00629, -0.0124112, -0.0162893, 1.00629, 1.00629, 0.0214465, 1.00629, -0.0124112, 0.0214465, 1.00629, 1.00629, -0.0162893, -1.00629, 1.00629, 0.0214465, 0.0124112, -1.00629, 0.0214465, 0.0124112, -1.00629, -0.0162893, -1.00629, 1.00629, -0.0162893, -1.00629, -0.0124112, 0.0214465, 1.00629, -0.0124112, -0.0162893 )
@@ -51,13 +51,13 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0
 shape = SubResource( 8 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="."]
-transform = Transform( 2, 0, 0, 0, 1.25517, 1.5571, 0, -1.5571, 1.25517, 0, 4, 0 )
+transform = Transform( 1.13162, 0, 0, 0, 0.674199, 0.836378, 0, -0.96984, 0.781783, 0, 2.90755, 0 )
 shape = SubResource( 7 )
 
 [node name="input_detection" parent="." instance=ExtResource( 2 )]
 
 [node name="banner" type="Spatial" parent="."]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 4, 0 )
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.90755, 0 )
 
 [node name="unit_count" type="MeshInstance" parent="banner"]
 generate_lightmap = false
