@@ -60,7 +60,6 @@ func _update_minimap():
 			obj_pos.x = clamp(obj_pos.x, 0, _grid.rect_size.x)
 			obj_pos.y = clamp(obj_pos.y, 0, _grid.rect_size.y)
 			_markers[object_path].position = obj_pos
-			_markers[object_path].visible = item.visible
 			
 		else:
 			remove_object(object_path)

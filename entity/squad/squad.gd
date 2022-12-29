@@ -36,9 +36,11 @@ onready var _spotting_area = $Area/CollisionShape
 onready var _area = $Area
 onready var _outline = $banner/outline
 onready var _pivot = $pivot
+onready var _visibility_notifier = $VisibilityNotifier
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	visible = false
 	var spotting_range :int = 8
 	
 	var banner_mesh_material :SpatialMaterial = _banner.get_surface_material(0).duplicate()
@@ -58,7 +60,7 @@ func _ready():
 		position3d.translation = pos
 		
 	var delay = Timer.new()
-	delay.wait_time = 0.1
+	delay.wait_time = 1
 	add_child(delay)
 	delay.start()
 	
@@ -68,7 +70,7 @@ func _ready():
 	for pos in range(max_unit):
 		var _unit = unit.instance()
 		_unit.name = "unit-" + str(pos)
-		_unit.set_network_master(get_network_master())
+		_unit.is_master = _is_master()
 		_unit.team = team
 		_unit.color = color
 		_unit.connect("unit_selected", self, "_unit_selected")
@@ -77,7 +79,6 @@ func _ready():
 		_unit.move_to = _pivot.get_child(pos)
 		_unit.is_moving = true
 		_unit.squad = self
-		_unit.is_master = _is_master()
 		add_child(_unit)
 		_unit.set_as_toplevel(true)
 		_unit.translation = _pivot.get_child(pos).global_transform.origin + Vector3(0, 2, 0)
@@ -89,6 +90,11 @@ func _ready():
 	var shape :CylinderShape = _spotting_area.shape.duplicate() as CylinderShape
 	shape.radius = spotting_range
 	_spotting_area.shape = shape
+	
+	_visibility_notifier.connect("camera_entered", self, "_on_VisibilityNotifier_camera_entered")
+	_visibility_notifier.connect("camera_exited", self, "_on_VisibilityNotifier_camera_exited")
+	
+	visible = true
 	
 func _unit_selected(_unit):
 	emit_signal("squad_selected", self)
@@ -270,4 +276,8 @@ func _on_agro_timer_timeout():
 	_attack_targets()
 
 
+func _on_VisibilityNotifier_camera_entered(camera):
+	visible = true
 
+func _on_VisibilityNotifier_camera_exited(camera):
+	visible = false
