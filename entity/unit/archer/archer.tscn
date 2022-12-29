@@ -266,6 +266,7 @@ start_node = "idle"
 [sub_resource type="AnimationNodeStateMachinePlayback" id=19]
 
 [node name="archer" type="KinematicBody"]
+collision_layer = 0
 script = ExtResource( 3 )
 hp = 3
 max_hp = 3

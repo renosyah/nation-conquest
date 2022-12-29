@@ -181,6 +181,7 @@ start_node = "idle"
 [sub_resource type="AnimationNodeStateMachinePlayback" id=19]
 
 [node name="axeman" type="KinematicBody"]
+collision_layer = 0
 script = ExtResource( 1 )
 speed = 4
 attack_damage = 4

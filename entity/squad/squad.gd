@@ -13,7 +13,6 @@ export var max_unit :int = 8
 export var is_moving :bool = false
 export var move_to :Vector3
 export var margin :float = 1
-export var max_attack_unit : int = 4
 
 export var formation_space :int = 2
 
@@ -113,6 +112,9 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	emit_signal("squad_update", self)
 		
 func _on_formation_time_timeout():
+	if _units.empty():
+		return
+		
 	var formations = get_formation_box()
 	for i in range(_units.size()):
 		if not is_instance_valid(_units[i]):
@@ -120,6 +122,7 @@ func _on_formation_time_timeout():
 			
 		if _targets.empty():
 			_units[i].is_attacking = false
+			_units[i].attack_to = null
 			
 		if _units[i].is_attacking:
 			continue
@@ -127,6 +130,7 @@ func _on_formation_time_timeout():
 		_units[i].is_moving = true
 		_units[i].move_to = formations[i]
 		
+	
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
 	
@@ -185,9 +189,10 @@ func get_formation_box():
 	return formations
 
 func attack_targets():
-	if _targets.empty():
+	if _targets.empty() or _units.empty():
 		return
 		
+	var max_attack_unit :int = int(_units.size() / 2)
 	var pos :int = 0
 	
 	for unit in _units:
@@ -201,10 +206,12 @@ func attack_targets():
 			_targets.remove(pos)
 			return
 			
-		if is_instance_valid(unit):
-			unit.is_moving = false
-			unit.is_attacking = true
-			unit.attack_to = _targets[pos]
+		if not is_instance_valid(unit):
+			continue
+			
+		unit.is_moving = false
+		unit.is_attacking = true
+		unit.attack_to = _targets[pos]
 			
 		pos += 1
 	

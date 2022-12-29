@@ -182,6 +182,7 @@ start_node = "idle"
 [sub_resource type="AnimationNodeStateMachinePlayback" id=19]
 
 [node name="swordman" type="KinematicBody"]
+collision_layer = 0
 script = ExtResource( 1 )
 hp = 10
 max_hp = 10
