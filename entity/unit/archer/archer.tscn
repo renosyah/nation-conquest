@@ -270,7 +270,6 @@ collision_layer = 0
 script = ExtResource( 3 )
 hp = 3
 max_hp = 3
-is_range_unit = true
 attack_delay = 1.0
 attack_range = 14.0
 spotting_range = 12.0

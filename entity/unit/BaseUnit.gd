@@ -16,8 +16,6 @@ export var move_to :Vector3
 export var margin :float = 0.6
 export var speed :int = 2
 
-export var is_range_unit :bool = false
-
 var _direction :Vector3
 var _velocity :Vector3
 

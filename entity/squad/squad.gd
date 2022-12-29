@@ -16,7 +16,6 @@ export var margin :float = 1
 
 export var formation_space :int = 1
 
-var _is_range_squad :bool = false
 var _speed :int = 2
 var _units :Array = []
 var _targets :Array = []
@@ -64,7 +63,6 @@ func _ready():
 		
 		_speed = (_unit.speed + 1)
 		spotting_range = _unit.spotting_range
-		_is_range_squad = _unit.is_range_unit
 		pos += 1
 		
 		
@@ -200,22 +198,10 @@ func get_formation_box():
 func _attack_targets():
 	if _targets.empty() or _units.empty():
 		return
-		
-	var max_attack_unit :int = 2
-	
-	if _is_range_squad:
-		max_attack_unit = _units.size()
-		
-	else:
-		max_attack_unit = int(_units.size() / 2)
-		max_attack_unit = 2 if max_attack_unit < 2 else max_attack_unit
-	
+
 	var pos :int = 0
 	
 	for unit in _units:
-		if pos >= max_attack_unit:
-			return
-			
 		if not is_instance_valid(_targets[pos]):
 			_targets.remove(pos)
 			return
