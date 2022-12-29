@@ -14,8 +14,9 @@ export var is_moving :bool = false
 export var move_to :Vector3
 export var margin :float = 1
 
-export var formation_space :int = 2
+export var formation_space :int = 1
 
+var _is_range_squad :bool = false
 var _speed :int = 2
 var _units :Array = []
 var _targets :Array = []
@@ -63,6 +64,7 @@ func _ready():
 		
 		_speed = (_unit.speed + 1)
 		spotting_range = _unit.spotting_range
+		_is_range_squad = _unit.is_range_unit
 		pos += 1
 		
 		
@@ -199,16 +201,19 @@ func _attack_targets():
 	if _targets.empty() or _units.empty():
 		return
 		
-	var max_attack_unit :int = int(_units.size() / 2)
-	max_attack_unit = 2 if max_attack_unit < 2 else max_attack_unit
+	var max_attack_unit :int = 2
+	
+	if _is_range_squad:
+		max_attack_unit = _units.size()
+		
+	else:
+		max_attack_unit = int(_units.size() / 2)
+		max_attack_unit = 2 if max_attack_unit < 2 else max_attack_unit
 	
 	var pos :int = 0
 	
 	for unit in _units:
 		if pos >= max_attack_unit:
-			return
-			
-		if pos > _targets.size() - 1:
 			return
 			
 		if not is_instance_valid(_targets[pos]):
@@ -220,16 +225,16 @@ func _attack_targets():
 			unit.is_attacking = true
 			unit.attack_to = _targets[pos]
 			
-		pos += 1
+		if pos < _targets.size() - 1:
+			pos += 1
 	
 func _spotted_target():
 	_targets.clear()
 	
 	for body in _area.get_overlapping_bodies():
-		if _targets.size() > 10:
+		if _targets.size() > 32:
 			return
 			
-		var valids :Array = []
 		if body == self:
 			continue
 			

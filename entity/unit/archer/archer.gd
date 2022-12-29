@@ -11,10 +11,33 @@ onready var body = $body
 onready var animation_weapon_state = $pivot/AnimationTree.get("parameters/playback")
 onready var animation_body_state = $AnimationTree.get("parameters/playback")
 
+var _arrows_pool :Array = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	attack_animation = "shot"
 	body.modulate = color
+	_create_arrow_pools()
+	
+func _create_arrow_pools():
+	for i in range(4):
+		_arrows_pool.append(_create_arrow())
+	
+func _get_arrow() -> BaseProjectile:
+	for arrow in _arrows_pool:
+		if not arrow.visible:
+			return arrow
+			
+	var arrow = _create_arrow()
+	_arrows_pool.append(arrow)
+	return arrow
+	
+func _create_arrow() -> BaseProjectile:
+	var arrow = arrow_projectile.instance()
+	
+	arrow.connect("hit", self ,"_arrow_hit")
+	add_child(arrow)
+	return arrow
 	
 func perform_attack():
 	animation_weapon_state.travel(attack_animation)
@@ -22,11 +45,11 @@ func perform_attack():
 	if not is_instance_valid(attack_to):
 		return
 		
-	var arrow = arrow_projectile.instance()
+	var arrow = _get_arrow()
+	arrow.translation = global_transform.origin
 	arrow.target = attack_to.global_transform.origin
-	arrow.connect("hit", self ,"_arrow_hit")
-	add_child(arrow)
-		
+	arrow.fire()
+	
 func _arrow_hit():
 	.perform_attack()
 	
@@ -50,7 +73,6 @@ func dead() -> void:
 	
 func attacking(delta :float):
 	.attacking(delta)
-	
 	if not is_attacking:
 		return
 		
@@ -64,7 +86,7 @@ func attacking(delta :float):
 	
 	var _transform = pivot.transform.looking_at(dir * 100, Vector3.UP)
 	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
-	
+ 
 func moving(delta :float):
 	.moving(delta)
 	

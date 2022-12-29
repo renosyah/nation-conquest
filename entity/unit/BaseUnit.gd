@@ -16,6 +16,8 @@ export var move_to :Vector3
 export var margin :float = 0.6
 export var speed :int = 2
 
+export var is_range_unit :bool = false
+
 var _direction :Vector3
 var _velocity :Vector3
 
@@ -77,10 +79,8 @@ func _process(delta :float):
 	
 	if not is_on_floor():
 		_velocity.y -= _gravity
-		_velocity = move_and_slide(_velocity, Vector3.UP, true)
 		
-	else:
-		_velocity = move_and_slide(_velocity, Vector3.UP, true)
+	_velocity = move_and_slide(_velocity, Vector3.UP, true)
 	
 func attacking(delta :float):
 	if not is_attacking:
@@ -138,8 +138,9 @@ func dead() -> void:
 	emit_signal("unit_dead", self)
 	
 func _move_to_position(_at :Vector3, _margin :float) -> bool:
-	var pos = global_transform.origin
-	var to = Vector3(_at.x , pos.y, _at.z)
+	var pos:Vector3 = global_transform.origin
+	var to:Vector3 = Vector3(_at.x , pos.y, _at.z)
+	
 	var distance :float = pos.distance_to(to)
 	if distance <= _margin:
 		return true
