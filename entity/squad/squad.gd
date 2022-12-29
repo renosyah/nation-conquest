@@ -172,6 +172,13 @@ func _on_input_detection_any_gesture(sig ,event):
 	if event is InputEventSingleScreenTap:
 		emit_signal("squad_selected", self)
 		
+func set_selected(val :bool):
+	for unit in _units:
+		if not is_instance_valid(unit):
+			continue
+			
+		unit.set_selected(val)
+		
 func get_formation_box():
 	var formations = []
 	var pos = global_transform.origin
@@ -193,6 +200,8 @@ func attack_targets():
 		return
 		
 	var max_attack_unit :int = int(_units.size() / 2)
+	max_attack_unit = 2 if max_attack_unit < 2 else max_attack_unit
+	
 	var pos :int = 0
 	
 	for unit in _units:

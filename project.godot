@@ -153,6 +153,11 @@ _global_script_classes=[ {
 "class": "Squad",
 "language": "GDScript",
 "path": "res://entity/squad/squad.gd"
+}, {
+"base": "MeshInstance",
+"class": "UnitHighlight",
+"language": "GDScript",
+"path": "res://assets/unit_highlight/unit_highlight.gd"
 } ]
 _global_script_class_icons={
 "BaseData": "",
@@ -183,7 +188,8 @@ _global_script_class_icons={
 "SaveLoad": "",
 "ServerAdvertiser": "res://addons/LANServerBroadcast/server_advertiser/server_advertiser.png",
 "ServerListener": "res://addons/LANServerBroadcast/server_listener/server_listener.png",
-"Squad": ""
+"Squad": "",
+"UnitHighlight": ""
 }
 
 [application]

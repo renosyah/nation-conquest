@@ -23,7 +23,11 @@ func on_map_click(_pos :Vector3):
 	squad.move_to = _pos
 
 func _on_squad_selected(_squad):
+	if is_instance_valid(squad):
+		squad.set_selected(false)
+		
 	squad = _squad
+	squad.set_selected(true)
 
 func _on_Timer_timeout():
 	if node.get_child_count() > 3:

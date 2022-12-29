@@ -83,6 +83,7 @@ func remove_object(object :NodePath):
 	if not _markers.has(object):
 		return
 		
+	_grid.remove_child(_markers[object])
 	_markers[object].queue_free()
 	_markers.erase(object)
 	

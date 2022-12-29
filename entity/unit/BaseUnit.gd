@@ -29,6 +29,7 @@ export var spotting_range :float = 8
 var _attack_delay_timmer :Timer
 var _input_detection :Node
 var _sound :AudioStreamPlayer3D
+var _higlight :UnitHighlight
 
 onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -50,12 +51,20 @@ func _ready():
 	
 	connect("input_event", self,"_on_unit_input_event")
 	
+	_higlight = preload("res://assets/unit_highlight/unit_highlight.tscn").instance()
+	add_child(_higlight)
+	_higlight.translation.y -= 0.5
+	_higlight.visible = false
+	
 func _on_unit_input_event(camera, event, position, normal, shape_idx):
 	_input_detection.check_input(event)
 	
 func _on_input_detection_any_gesture(sig ,event):
 	if event is InputEventSingleScreenTap:
 		emit_signal("unit_selected", self)
+		
+func set_selected(val :bool):
+	_higlight.visible = val
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta :float):
