@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://entity/unit/militia/militia.gd" type="Script" id=1]
-[ext_resource path="res://entity/unit/axeman/sword.png" type="Texture" id=2]
+[ext_resource path="res://entity/weapon/axe.tscn" type="PackedScene" id=2]
 [ext_resource path="res://entity/unit/axeman/body.png" type="Texture" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -11,7 +11,7 @@ height = 0.302872
 [sub_resource type="Animation" id=2]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("sword:translation")
+tracks/0/path = NodePath("axe:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -23,7 +23,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, -0.594756 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("sword:rotation_degrees")
+tracks/1/path = NodePath("axe:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -39,7 +39,7 @@ tracks/1/keys = {
 resource_name = "idle"
 length = 0.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("sword:translation")
+tracks/0/path = NodePath("axe:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -51,7 +51,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, -0.594756 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("sword:rotation_degrees")
+tracks/1/path = NodePath("axe:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -67,7 +67,7 @@ tracks/1/keys = {
 resource_name = "swing"
 length = 0.8
 tracks/0/type = "value"
-tracks/0/path = NodePath("sword:translation")
+tracks/0/path = NodePath("axe:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -79,7 +79,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, -0.594756 ), Vector3( -0.790133, 0.782713, 0.293512 ), Vector3( 0.0915241, -0.161941, -0.624949 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("sword:rotation_degrees")
+tracks/1/path = NodePath("axe:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -198,9 +198,7 @@ texture = ExtResource( 3 )
 [node name="pivot" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.386238, 0 )
 
-[node name="sword" type="Sprite3D" parent="pivot"]
-transform = Transform( -4.21812e-08, -1.14643e-08, 1, -0.262273, 0.964993, 0, -0.964993, -0.262273, -4.37114e-08, 0, 0, -0.594756 )
-texture = ExtResource( 2 )
+[node name="axe" parent="pivot" instance=ExtResource( 2 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="pivot"]
 autoplay = "idle"
