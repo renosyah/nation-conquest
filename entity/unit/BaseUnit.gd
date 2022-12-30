@@ -57,7 +57,7 @@ func _ready():
 	
 	_higlight = preload("res://assets/unit_highlight/unit_highlight.tscn").instance()
 	add_child(_higlight)
-	_higlight.translation.y -= 0.5
+	_higlight.translation.y -= 0.2
 	_higlight.visible = false
 	
 func _on_unit_input_event(camera, event, position, normal, shape_idx):

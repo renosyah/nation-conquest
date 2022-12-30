@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://entity/weapon/sword.obj" type="ArrayMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=20]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
+
+[sub_resource type="SpatialMaterial" id=21]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
+albedo_color = Color( 0.270588, 0.243137, 0.2, 1 )
+
+[node name="sword" type="MeshInstance"]
+transform = Transform( -4.21812e-08, -1.14643e-08, 1, -0.262273, 0.964993, 0, -0.964993, -0.262273, -4.37114e-08, 0, 0, -0.594756 )
+mesh = ExtResource( 1 )
+material/0 = SubResource( 20 )
+material/1 = SubResource( 21 )

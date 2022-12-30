@@ -1,10 +1,10 @@
 extends BaseGameplay
 
 const squads = [
-	preload("res://data/squad_data/squads/archer_squad.tres"),
-	preload("res://data/squad_data/squads/axeman_squad.tres"),
+#	preload("res://data/squad_data/squads/archer_squad.tres"),
+#	preload("res://data/squad_data/squads/axeman_squad.tres"),
 	preload("res://data/squad_data/squads/militia_squad.tres"),
-	preload("res://data/squad_data/squads/spearman_squad.tres"),
+#	preload("res://data/squad_data/squads/spearman_squad.tres"),
 	preload("res://data/squad_data/squads/swordman_squad.tres"),
 ]
 

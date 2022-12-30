@@ -5,7 +5,6 @@
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_unshaded = true
-flags_no_depth_test = true
 flags_do_not_receive_shadows = true
 flags_disable_ambient_light = true
 

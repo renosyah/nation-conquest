@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/mini-map/MiniMap.gd" type="Script" id=1]
 [ext_resource path="res://addons/mini-map/border_no_transparent.png" type="Texture" id=2]
 [ext_resource path="res://addons/mini-map/troop.png" type="Texture" id=3]
 [ext_resource path="res://addons/mini-map/select_all.png" type="Texture" id=4]
+[ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=5]
 
 [node name="MiniMap" type="MarginContainer"]
 self_modulate = Color( 1, 1, 1, 0 )
@@ -64,4 +65,8 @@ texture = ExtResource( 4 )
 wait_time = 0.4
 one_shot = true
 
+[node name="input_detection" parent="." instance=ExtResource( 5 )]
+
+[connection signal="gui_input" from="." to="." method="_on_MiniMap_gui_input"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]

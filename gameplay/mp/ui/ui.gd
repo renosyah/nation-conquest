@@ -1,7 +1,7 @@
 extends BaseUi
 
-onready var mini_map = $CanvasLayer/SafeArea/Control/MarginContainer2/MiniMap
-onready var camera_control = $CanvasLayer/SafeArea/Control/MarginContainer2/camera_control
+onready var mini_map = $CanvasLayer/SafeArea/Control/HBoxContainer/MiniMap
+onready var camera_control = $CanvasLayer/SafeArea/camera_control
 
 func _ready():
 	pass
