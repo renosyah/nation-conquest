@@ -198,12 +198,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.386238, 0 )
 
 [node name="sword" parent="pivot" instance=ExtResource( 2 )]
 transform = Transform( -4.21812e-08, -1.14643e-08, 1, -0.262273, 0.964993, 0, -0.964993, -0.262273, -4.37114e-08, 0, 0, -0.594756 )
-material/0 = null
-material/1 = null
 
 [node name="shield" parent="pivot" instance=ExtResource( 4 )]
-material/0 = null
-material/1 = null
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="pivot"]
 autoplay = "idle"
