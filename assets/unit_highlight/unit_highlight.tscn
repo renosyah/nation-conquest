@@ -5,10 +5,14 @@
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_unshaded = true
+flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 flags_disable_ambient_light = true
 
 [node name="unit_highlight" type="MeshInstance"]
+cast_shadow = 0
+generate_lightmap = false
 mesh = ExtResource( 1 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 1 )
 script = ExtResource( 2 )
