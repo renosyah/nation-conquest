@@ -85,7 +85,8 @@ func _process(delta :float):
 	if not is_on_floor():
 		_velocity.y -= _gravity
 		
-	_velocity = move_and_slide(_velocity, Vector3.UP, true)
+	if _velocity != Vector3.ZERO:
+		_velocity = move_and_slide(_velocity, Vector3.UP, true)
 	
 func attacking(delta :float):
 	if not is_attacking:

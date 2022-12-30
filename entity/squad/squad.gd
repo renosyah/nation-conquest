@@ -94,7 +94,7 @@ func _ready():
 		_unit.translation = _pivot.get_child(pos).global_transform.origin + Vector3(0, 2, 0)
 		_units.append(_unit)
 		
-		_speed = _unit.speed
+		_speed = _unit.speed + 1
 		spotting_range = _unit.spotting_range
 		
 	var shape :CylinderShape = _spotting_area.shape.duplicate() as CylinderShape
@@ -177,7 +177,9 @@ func master_moving(delta :float) -> void:
 	if not is_on_floor():
 		_velocity.y -= _gravity
 		
-	_velocity = move_and_slide(_velocity, Vector3.UP, true)
+	if _velocity != Vector3.ZERO:
+		_velocity = move_and_slide(_velocity, Vector3.UP, true)
+		
 	_formation_direction_facing(delta)
 	
 func puppet_moving(delta :float) -> void:
@@ -189,13 +191,14 @@ func puppet_moving(delta :float) -> void:
 	translation = translation.linear_interpolate(_puppet_translation, 5 * delta)
 	_velocity = _puppet_velocity
 	is_moving = _puppet_is_moving
+	
 	_formation_direction_facing(delta)
 	
 func _formation_direction_facing(delta :float):
 	var _vel = Vector3(_velocity.x, 0 , _velocity.z)
 	if _vel != Vector3.ZERO:
 		var _transform = _pivot.transform.looking_at(_vel, Vector3.UP)
-		_pivot.transform = _pivot.transform.interpolate_with(_transform, 35 * delta)
+		_pivot.transform = _pivot.transform.interpolate_with(_transform, 10 * delta)
 		
 func _move_to_position(_to :Vector3) -> bool:
 	var pos :Vector3 = global_transform.origin
