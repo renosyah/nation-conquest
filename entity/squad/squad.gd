@@ -37,7 +37,6 @@ onready var _unit_count = $banner/unit_count
 onready var _hit_particle = $hit_particle
 onready var _spotting_area = $Area/CollisionShape
 onready var _area = $Area
-onready var _outline = $banner/outline
 onready var _pivot = $pivot
 onready var _visibility_notifier = $VisibilityNotifier
 onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -50,12 +49,12 @@ func _ready():
 	var spotting_range :int = 8
 	
 	var banner_mesh_material :SpatialMaterial = _banner.get_surface_material(0).duplicate()
+	var outline_mesh_material :SpatialMaterial = _banner.get_surface_material(1).duplicate()
 	var text_mesh :TextMesh = _unit_count.mesh.duplicate()
-	var outline_mesh_material :SpatialMaterial = _outline.get_surface_material(0).duplicate()
-	
+
 	_unit_count.mesh = text_mesh
 	_banner.set_surface_material(0, banner_mesh_material)
-	_outline.set_surface_material(0, outline_mesh_material)
+	_banner.set_surface_material(1, outline_mesh_material)
 	
 	(_unit_count.mesh as TextMesh).text = str(max_unit)
 	banner_mesh_material.albedo_color = color
@@ -229,7 +228,7 @@ func set_selected(val :bool):
 		unit.set_selected(val)
 		
 	var color :Color = squad_selected_color if val else squad_unselected_color
-	(_outline.get_surface_material(0) as SpatialMaterial).albedo_color = color
+	(_banner.get_surface_material(1) as SpatialMaterial).albedo_color = color
 		
 func get_formation_box():
 	var formations = []

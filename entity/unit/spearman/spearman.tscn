@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://entity/unit/spearman/body.png" type="Texture" id=1]
 [ext_resource path="res://entity/weapon/spear.tscn" type="PackedScene" id=2]
@@ -63,6 +63,60 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 90, -15.205 ) ]
 }
 
+[sub_resource type="Animation" id=21]
+resource_name = "idle_ready"
+tracks/0/type = "value"
+tracks/0/path = NodePath("spear:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.249905, -0.0981694, -0.38103 ), Vector3( 0.249905, -0.0981694, -0.38103 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("spear:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 2.41306e-06, 90, -89.677 ), Vector3( 2.41306e-06, 90, -89.677 ) ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "ready"
+tracks/0/type = "value"
+tracks/0/path = NodePath("spear:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -0.594756 ), Vector3( 0.249905, -0.0981694, -0.38103 ), Vector3( 0.249905, -0.0981694, -0.38103 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("spear:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 90, -15.205 ), Vector3( 2.41306e-06, 90, -89.677 ), Vector3( 2.41306e-06, 90, -89.677 ) ]
+}
+
 [sub_resource type="Animation" id=4]
 resource_name = "trush"
 length = 0.8
@@ -91,24 +145,79 @@ tracks/1/keys = {
 "values": [ Vector3( 2.44955e-06, 116.608, -88.236 ), Vector3( 2.39621e-06, 116.608, -88.236 ), Vector3( 2.34288e-06, 116.608, -88.236 ) ]
 }
 
+[sub_resource type="Animation" id=22]
+resource_name = "unready"
+tracks/0/type = "value"
+tracks/0/path = NodePath("spear:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.249905, -0.0981694, -0.38103 ), Vector3( 0.249905, -0.0981694, -0.38103 ), Vector3( 0, 0, -0.594756 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("spear:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 2.41306e-06, 90, -89.677 ), Vector3( 2.41306e-06, 90, -89.677 ), Vector3( 0, 90, -15.205 ) ]
+}
+
 [sub_resource type="AnimationNodeAnimation" id=5]
 animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=23]
+animation = "idle_ready"
+
+[sub_resource type="AnimationNodeAnimation" id=24]
+animation = "ready"
 
 [sub_resource type="AnimationNodeAnimation" id=6]
 animation = "trush"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+[sub_resource type="AnimationNodeAnimation" id=25]
+animation = "unready"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
 switch_mode = 2
 auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachine" id=9]
 states/idle/node = SubResource( 5 )
-states/idle/position = Vector2( 303, 87 )
+states/idle/position = Vector2( 281, 140 )
+states/idle_ready/node = SubResource( 23 )
+states/idle_ready/position = Vector2( 711, 140 )
+states/ready/node = SubResource( 24 )
+states/ready/position = Vector2( 499, 73 )
 states/trush/node = SubResource( 6 )
-states/trush/position = Vector2( 491, 87.4444 )
-transitions = [ "idle", "trush", SubResource( 7 ), "trush", "idle", SubResource( 8 ) ]
+states/trush/position = Vector2( 893, 140 )
+states/unready/node = SubResource( 25 )
+states/unready/position = Vector2( 499, 234 )
+transitions = [ "idle", "ready", SubResource( 26 ), "unready", "idle", SubResource( 27 ), "ready", "unready", SubResource( 28 ), "ready", "idle_ready", SubResource( 29 ), "idle_ready", "unready", SubResource( 30 ), "idle_ready", "trush", SubResource( 31 ), "trush", "idle_ready", SubResource( 32 ) ]
 start_node = "idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=10]
@@ -183,10 +292,11 @@ start_node = "idle"
 [node name="spearman" type="KinematicBody"]
 collision_layer = 0
 script = ExtResource( 3 )
-hp = 6
-max_hp = 6
+hp = 10
+max_hp = 10
 attack_damage = 2
-attack_delay = 0.6
+attack_range = 6.0
+skill = 0.4
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
@@ -207,7 +317,10 @@ autoplay = "idle"
 playback_speed = 4.0
 anims/RESET = SubResource( 2 )
 anims/idle = SubResource( 3 )
+anims/idle_ready = SubResource( 21 )
+anims/ready = SubResource( 20 )
 anims/trush = SubResource( 4 )
+anims/unready = SubResource( 22 )
 
 [node name="AnimationTree" type="AnimationTree" parent="pivot"]
 tree_root = SubResource( 9 )

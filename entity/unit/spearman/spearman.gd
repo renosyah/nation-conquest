@@ -4,3 +4,12 @@ extends "res://entity/unit/militia/militia.gd"
 func _ready():
 	attack_animation = "trush"
 	body.modulate = color
+	
+func attacking(delta :float):
+	.attacking(delta)
+	
+	if not is_attacking:
+		animation_weapon_state.travel("idle")
+		return
+		
+	

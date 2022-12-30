@@ -5,7 +5,6 @@
 [ext_resource path="res://entity/squad/banner.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
-[ext_resource path="res://entity/squad/banner_outline.obj" type="ArrayMesh" id=6]
 
 [sub_resource type="CapsuleShape" id=8]
 radius = 0.742018
@@ -32,8 +31,16 @@ uppercase = true
 flags_transparent = true
 flags_unshaded = true
 flags_no_depth_test = true
-flags_albedo_tex_force_srgb = true
 flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
+params_billboard_mode = 1
+
+[sub_resource type="SpatialMaterial" id=9]
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
 params_billboard_mode = 1
 
 [sub_resource type="CylinderShape" id=3]
@@ -72,13 +79,7 @@ generate_lightmap = false
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 6 )
-
-[node name="outline" type="MeshInstance" parent="banner"]
-cast_shadow = 0
-generate_lightmap = false
-mesh = ExtResource( 6 )
-software_skinning_transform_normals = false
-material/0 = SubResource( 6 )
+material/1 = SubResource( 9 )
 
 [node name="hit_particle" parent="." instance=ExtResource( 5 )]
 max_pool = 8

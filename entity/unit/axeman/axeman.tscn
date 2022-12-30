@@ -185,7 +185,8 @@ collision_layer = 0
 script = ExtResource( 1 )
 speed = 4
 attack_damage = 4
-attack_delay = 0.2
+attack_delay = 0.5
+skill = 0.5
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
@@ -199,6 +200,7 @@ texture = ExtResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.386238, 0 )
 
 [node name="axe" parent="pivot" instance=ExtResource( 2 )]
+transform = Transform( -4.21812e-08, -1.14643e-08, 1, -0.262273, 0.964993, 0, -0.964993, -0.262273, -4.37114e-08, 0, 0, -0.594756 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="pivot"]
 autoplay = "idle"

@@ -17,14 +17,14 @@ export var margin :float = 0.6
 export var speed :int = 2
 
 var squad = null
-var _direction :Vector3
-var _velocity :Vector3
+var _direction :Vector3 = Vector3.ZERO
+var _velocity :Vector3 = Vector3.ZERO
 
 export var is_attacking :bool = false
 var attack_to = null
 export var attack_damage :int = 1
-export var attack_delay :float = 0.4
-export var attack_range :float = 1
+export var attack_delay :float = 1
+export var attack_range :float = 2
 export var spotting_range :float = 8
 export(float, 0.0 , 1.0) var skill :float = 0.2
 

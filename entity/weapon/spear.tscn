@@ -3,15 +3,13 @@
 [ext_resource path="res://entity/weapon/spear.obj" type="ArrayMesh" id=1]
 
 [sub_resource type="SpatialMaterial" id=20]
-flags_vertex_lighting = true
+flags_unshaded = true
 flags_do_not_receive_shadows = true
-flags_disable_ambient_light = true
+albedo_color = Color( 0.54902, 0.54902, 0.54902, 1 )
 
 [sub_resource type="SpatialMaterial" id=21]
-flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
-flags_disable_ambient_light = true
-albedo_color = Color( 0.352941, 0.298039, 0, 1 )
+albedo_color = Color( 0.427451, 0.227451, 0, 1 )
 
 [node name="spear" type="MeshInstance"]
 transform = Transform( -4.21812e-08, -1.14643e-08, 1, -0.262273, 0.964993, 0, -0.964993, -0.262273, -4.37114e-08, 0, 0, -0.594756 )
