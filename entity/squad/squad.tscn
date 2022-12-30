@@ -9,7 +9,7 @@
 
 [sub_resource type="CapsuleShape" id=8]
 radius = 0.742018
-height = 0.406574
+height = 0.150127
 
 [sub_resource type="ConvexPolygonShape" id=7]
 points = PoolVector3Array( -1.00629, -0.0124112, -0.0162893, 1.00629, 1.00629, 0.0214465, 1.00629, -0.0124112, 0.0214465, 1.00629, 1.00629, -0.0162893, -1.00629, 1.00629, 0.0214465, 0.0124112, -1.00629, 0.0214465, 0.0124112, -1.00629, -0.0162893, -1.00629, 1.00629, -0.0162893, -1.00629, -0.0124112, 0.0214465, 1.00629, -0.0124112, -0.0162893 )
@@ -74,7 +74,6 @@ software_skinning_transform_normals = false
 material/0 = SubResource( 6 )
 
 [node name="outline" type="MeshInstance" parent="banner"]
-visible = false
 cast_shadow = 0
 generate_lightmap = false
 mesh = ExtResource( 6 )

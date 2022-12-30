@@ -1,6 +1,9 @@
 extends BaseEntity
 class_name Squad
 
+const squad_selected_color :Color = Color(1, 1, 1, 1)
+const squad_unselected_color :Color = Color(1, 1, 1, 0.2)
+
 signal squad_selected(_squad)
 signal squad_update(_squad)
 signal squad_dead(_squad)
@@ -37,21 +40,28 @@ onready var _area = $Area
 onready var _outline = $banner/outline
 onready var _pivot = $pivot
 onready var _visibility_notifier = $VisibilityNotifier
+onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	visible = false
+	is_dead = true
+	
 	var spotting_range :int = 8
 	
 	var banner_mesh_material :SpatialMaterial = _banner.get_surface_material(0).duplicate()
 	var text_mesh :TextMesh = _unit_count.mesh.duplicate()
+	var outline_mesh_material :SpatialMaterial = _outline.get_surface_material(0).duplicate()
 	
 	_unit_count.mesh = text_mesh
 	_banner.set_surface_material(0, banner_mesh_material)
+	_outline.set_surface_material(0, outline_mesh_material)
 	
 	(_unit_count.mesh as TextMesh).text = str(max_unit)
 	banner_mesh_material.albedo_color = color
 	banner_mesh_material.albedo_color.a = 0.6
+	
+	outline_mesh_material.albedo_color = squad_unselected_color
 	
 	var formations = get_formation_box()
 	for pos in formations:
@@ -95,6 +105,7 @@ func _ready():
 	_visibility_notifier.connect("camera_exited", self, "_on_VisibilityNotifier_camera_exited")
 	
 	visible = true
+	is_dead = false
 	
 func _unit_selected(_unit):
 	emit_signal("squad_selected", self)
@@ -123,6 +134,7 @@ remotesync func _damage_unit(_unit_path :NodePath, _damage :int):
 		
 	_hit_particle.translation = _unit.global_transform.origin
 	_hit_particle.display_hit("-" + str(_damage))
+	
 	
 remotesync func _erase_unit(_unit_path :NodePath):
 	var _unit :BaseUnit = get_node_or_null(_unit_path)
@@ -163,12 +175,9 @@ func master_moving(delta :float) -> void:
 			is_moving = false
 		
 	if not is_on_floor():
-		_velocity.y -= _speed
-		_velocity = move_and_slide(_velocity, Vector3.UP, true)
+		_velocity.y -= _gravity
 		
-	else:
-		_velocity = move_and_slide(_velocity, Vector3.UP, true)
-		
+	_velocity = move_and_slide(_velocity, Vector3.UP, true)
 	_formation_direction_facing(delta)
 	
 func puppet_moving(delta :float) -> void:
@@ -216,7 +225,8 @@ func set_selected(val :bool):
 			
 		unit.set_selected(val)
 		
-	_outline.visible = val
+	var color :Color = squad_selected_color if val else squad_unselected_color
+	(_outline.get_surface_material(0) as SpatialMaterial).albedo_color = color
 		
 func get_formation_box():
 	var formations = []
@@ -235,7 +245,15 @@ func get_formation_box():
 	return formations
 
 func _attack_targets():
-	if _targets.empty() or _units.empty():
+	if _units.empty():
+		return
+		
+	if _targets.empty():
+		for unit in _units:
+			if is_instance_valid(unit):
+				unit.is_moving = true
+				unit.is_attacking = false
+				unit.attack_to = null
 		return
 		
 	var pos :int = 0

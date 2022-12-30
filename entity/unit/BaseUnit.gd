@@ -26,6 +26,7 @@ export var attack_damage :int = 1
 export var attack_delay :float = 0.4
 export var attack_range :float = 1
 export var spotting_range :float = 8
+export(float, 0.0 , 1.0) var skill :float = 0.2
 
 export var is_master :bool = false
 
@@ -142,7 +143,10 @@ func perform_attack():
 		is_attacking = false
 		return
 		
-	if is_master:
+	if not is_master:
+		return
+		
+	if randf() < skill:
 		attack_to.take_damage(attack_damage)
 	
 func take_damage(damage :int) -> void:
@@ -162,9 +166,8 @@ func dead() -> void:
 	emit_signal("unit_dead", self)
 	
 func _move_to_position(_at :Vector3, _margin :float) -> bool:
-	var pos:Vector3 = global_transform.origin
-	var to:Vector3 = Vector3(_at.x , pos.y, _at.z)
-	
+	var pos :Vector3 = global_transform.origin
+	var to :Vector3 = Vector3(_at.x , pos.y, _at.z)
 	var distance :float = pos.distance_to(to)
 	if distance <= _margin:
 		return true

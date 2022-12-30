@@ -8,16 +8,16 @@ script = ExtResource( 1 )
 [node name="squad_holder" type="Node" parent="."]
 
 [node name="Position1" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 4, -8 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 8, -12 )
 
 [node name="Position2" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, -8 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 8, -12 )
 
 [node name="Position3" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 4, 8 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 8, 12 )
 
 [node name="Position4" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 8 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 8, 12 )
 
 [node name="Position5" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
