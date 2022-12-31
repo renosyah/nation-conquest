@@ -275,6 +275,9 @@ func _attack_targets():
 func _spotted_target():
 	_targets.clear()
 	
+	if is_moving:
+		return
+	
 	for body in _area.get_overlapping_bodies():
 		if _targets.size() > 32:
 			return

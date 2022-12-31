@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/crossbow.obj-62a69d1be563804df04b46dfa6df1e8b.mesh"
+
+[deps]
+
+files=[ "res://.import/crossbow.obj-62a69d1be563804df04b46dfa6df1e8b.mesh" ]
+
+source_file="res://entity/weapon/crossbow.obj"
+dest_files=[ "res://.import/crossbow.obj-62a69d1be563804df04b46dfa6df1e8b.mesh", "res://.import/crossbow.obj-62a69d1be563804df04b46dfa6df1e8b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

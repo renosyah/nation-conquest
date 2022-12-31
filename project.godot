@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://entity/projectile/projectile.gd"
 }, {
+"base": "StaticBody",
+"class": "BaseResources",
+"language": "GDScript",
+"path": "res://entity/resources/BaseResources.gd"
+}, {
 "base": "Control",
 "class": "BaseUi",
 "language": "GDScript",
@@ -175,6 +180,7 @@ _global_script_class_icons={
 "BaseGameplay": "",
 "BaseMap": "",
 "BaseProjectile": "",
+"BaseResources": "",
 "BaseUi": "",
 "BaseUnit": "",
 "CustomTextParticle": "",

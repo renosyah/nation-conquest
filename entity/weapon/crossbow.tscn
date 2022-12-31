@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://entity/weapon/crossbow.obj" type="ArrayMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=20]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.435294, 0.223529, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=21]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0, 0, 0, 1 )
+
+[node name="crossbow" type="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 0.962341, -0.271844, 0, 0.271844, 0.962341, 0, -0.0762588, -0.646121 )
+cast_shadow = 0
+generate_lightmap = false
+mesh = ExtResource( 1 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 20 )
+material/1 = SubResource( 21 )

@@ -175,6 +175,10 @@ func _move_to_position(_at :Vector3, _margin :float) -> bool:
 		
 	_direction = translation.direction_to(to)
 	_velocity = _direction * speed
+	
+	if is_moving:
+		_velocity = _velocity * distance
+	
 	_velocity.y = 0
 	
 	return false

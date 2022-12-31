@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/bow.png-18be00e535822e1fad9a0061416622df.s3tc.stex"
-path.etc="res://.import/bow.png-18be00e535822e1fad9a0061416622df.etc.stex"
+path.s3tc="res://.import/arrow.png-88c499f385309335f1ee47367829897c.s3tc.stex"
+path.etc="res://.import/arrow.png-88c499f385309335f1ee47367829897c.etc.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://entity/unit/archer/bow.png"
-dest_files=[ "res://.import/bow.png-18be00e535822e1fad9a0061416622df.s3tc.stex", "res://.import/bow.png-18be00e535822e1fad9a0061416622df.etc.stex" ]
+source_file="res://entity/unit/crossbowman/arrow.png"
+dest_files=[ "res://.import/arrow.png-88c499f385309335f1ee47367829897c.s3tc.stex", "res://.import/arrow.png-88c499f385309335f1ee47367829897c.etc.stex" ]
 
 [params]
 
