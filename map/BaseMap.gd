@@ -72,7 +72,7 @@ func _create_spawns(inland_positions :Array) -> Array:
 	
 	var trim_inland_positions = _trim_array(inland_positions, 12)
 	for pos in trim_inland_positions:
-		if randf() > 0.3:
+		if rng.randf() > 0.3:
 			continue
 			
 		stuffs.append(pos)

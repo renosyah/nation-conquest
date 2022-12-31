@@ -9,7 +9,7 @@ const squads = [
 	preload("res://data/squad_data/squads/swordman_squad.tres"),
 ]
 
-var selected_squad :Squad
+var selected_squad :Array = []
 onready var squad_holder = $squad_holder
 
 var team :int = 1
@@ -23,24 +23,33 @@ func _ready():
 func on_map_click(_pos :Vector3):
 	.on_map_click(_pos)
 	
-	if not is_instance_valid(selected_squad):
+	if selected_squad.empty():
 		return
-		
-	selected_squad.is_moving = true
-	selected_squad.move_to = _pos
-	
-	_tap.translation = _pos
-	_tap.tap()
 
+	var formation = Utils.get_formation_box(
+		_pos, selected_squad.size(), 5
+	)
+	for i in range(selected_squad.size()):
+		if is_instance_valid(selected_squad[i]):
+			selected_squad[i].set_move_to(formation[i])
+	
 func on_squad_selected(_squad :Squad):
 	.on_squad_selected(_squad)
 	
-	if is_instance_valid(selected_squad):
-		selected_squad.set_selected(false)
+	var is_in_squad = selected_squad.has(_squad)
+	_squad.set_selected(not is_in_squad)
+	
+	if is_in_squad:
+		selected_squad.erase(_squad)
+	else:
+		selected_squad.append(_squad)
 		
-	selected_squad = _squad
-	selected_squad.set_selected(true)
-
+func on_squad_dead(_squad :Squad):
+	if selected_squad.has(_squad):
+		selected_squad.erase(_squad)
+		
+	.on_squad_dead(_squad)
+	
 func _on_Timer_timeout():
 	if team > 4:
 		return

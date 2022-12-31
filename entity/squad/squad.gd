@@ -38,8 +38,8 @@ onready var _hit_particle = $hit_particle
 onready var _spotting_area = $Area/CollisionShape
 onready var _area = $Area
 onready var _pivot = $pivot
-onready var _visibility_notifier = $VisibilityNotifier
 onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
+onready var _moving_indicator = $tap
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -61,8 +61,11 @@ func _ready():
 	banner_mesh_material.albedo_color.a = 0.6
 	
 	outline_mesh_material.albedo_color = squad_unselected_color
+	_moving_indicator.color = color
 	
-	var formations = get_formation_box()
+	var formations = Utils.get_formation_box(
+		global_transform.origin,max_unit,formation_space
+	)
 	for pos in formations:
 		var position3d = Position3D.new()
 		_pivot.add_child(position3d)
@@ -99,9 +102,6 @@ func _ready():
 	var shape :CylinderShape = _spotting_area.shape.duplicate() as CylinderShape
 	shape.radius = spotting_range
 	_spotting_area.shape = shape
-	
-	_visibility_notifier.connect("camera_entered", self, "_on_VisibilityNotifier_camera_entered")
-	_visibility_notifier.connect("camera_exited", self, "_on_VisibilityNotifier_camera_exited")
 	
 	visible = true
 	is_dead = false
@@ -158,7 +158,6 @@ remotesync func _squad_disband():
 	is_dead = true
 	set_process(false)
 	emit_signal("squad_dead", self)
-	queue_free()
 
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
@@ -196,8 +195,7 @@ func puppet_moving(delta :float) -> void:
 func _formation_direction_facing(delta :float):
 	var _vel = Vector3(_velocity.x, 0 , _velocity.z)
 	if _vel != Vector3.ZERO:
-		var _transform = _pivot.transform.looking_at(_vel, Vector3.UP)
-		_pivot.transform = _pivot.transform.interpolate_with(_transform, 10 * delta)
+		_pivot.look_at(_vel * 100, Vector3.UP)
 		
 func _move_to_position(_to :Vector3) -> bool:
 	var pos :Vector3 = global_transform.origin
@@ -229,22 +227,12 @@ func set_selected(val :bool):
 		
 	var color :Color = squad_selected_color if val else squad_unselected_color
 	(_banner.get_surface_material(1) as SpatialMaterial).albedo_color = color
-		
-func get_formation_box():
-	var formations = []
-	var pos = global_transform.origin
-	var s_side = round(sqrt(max_unit))
-	var unit_pos = pos - formation_space * Vector3(s_side/2,pos.y, s_side/2)
-	
-	for i in max_unit:
-		unit_pos.y = pos.y
-		formations.append(unit_pos)
-		unit_pos.x += formation_space
-		if unit_pos.x > (pos.x + s_side * formation_space / 2):
-			unit_pos.z += formation_space
-			unit_pos.x = pos.x - formation_space * s_side / 2
-			
-	return formations
+
+func set_move_to(to :Vector3):
+	move_to = to
+	is_moving = true
+	_moving_indicator.translation = to
+	_moving_indicator.tap()
 
 func _attack_targets():
 	if _units.empty():
@@ -297,10 +285,3 @@ func _spotted_target():
 func _on_agro_timer_timeout():
 	_spotted_target()
 	_attack_targets()
-
-
-func _on_VisibilityNotifier_camera_entered(camera):
-	visible = true
-
-func _on_VisibilityNotifier_camera_exited(camera):
-	visible = false

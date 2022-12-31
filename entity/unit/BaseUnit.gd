@@ -172,13 +172,12 @@ func _move_to_position(_at :Vector3, _margin :float) -> bool:
 	var distance :float = pos.distance_to(to)
 	if distance <= _margin:
 		return true
-		
+	
+	var _speed_modifer = speed * distance if is_moving else speed
+	_speed_modifer = clamp(_speed_modifer, 0, 5)
+	
 	_direction = translation.direction_to(to)
-	_velocity = _direction * speed
-	
-	if is_moving:
-		_velocity = _velocity * distance
-	
+	_velocity = _direction * _speed_modifer
 	_velocity.y = 0
 	
 	return false

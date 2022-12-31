@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://entity/squad/squad.gd" type="Script" id=1]
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=2]
 [ext_resource path="res://entity/squad/banner.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/tap/tap.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CapsuleShape" id=8]
 radius = 0.742018
@@ -97,7 +98,7 @@ shape = SubResource( 3 )
 wait_time = 0.5
 autostart = true
 
-[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
+[node name="tap" parent="." instance=ExtResource( 6 )]
 
 [connection signal="input_event" from="." to="." method="_on_squad_input_event"]
 [connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]

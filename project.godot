@@ -173,6 +173,11 @@ _global_script_classes=[ {
 "class": "UnitHighlight",
 "language": "GDScript",
 "path": "res://assets/unit_highlight/unit_highlight.gd"
+}, {
+"base": "Node",
+"class": "Utils",
+"language": "GDScript",
+"path": "res://global/util.gd"
 } ]
 _global_script_class_icons={
 "BaseData": "",
@@ -207,7 +212,8 @@ _global_script_class_icons={
 "Squad": "",
 "SquadData": "",
 "Tap": "",
-"UnitHighlight": ""
+"UnitHighlight": "",
+"Utils": ""
 }
 
 [application]

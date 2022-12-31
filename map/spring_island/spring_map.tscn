@@ -3,7 +3,6 @@
 [ext_resource path="res://map/spring_island/spring_map.gd" type="Script" id=1]
 
 [node name="spring_map" type="StaticBody"]
-collision_layer = 3
-collision_mask = 3
+collision_mask = 2
 script = ExtResource( 1 )
 map_sand_color = Color( 0.403922, 0.294118, 0, 1 )
