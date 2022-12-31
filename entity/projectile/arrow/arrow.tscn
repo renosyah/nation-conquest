@@ -11,3 +11,9 @@ transform = Transform( 0.000663237, 0, 1, 0, 1, 0, -1, 0, 0.000663237, 0, 0, 0 )
 cast_shadow = 0
 generate_lightmap = false
 texture = ExtResource( 2 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="Sprite3D"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+cast_shadow = 0
+generate_lightmap = false
+texture = ExtResource( 2 )

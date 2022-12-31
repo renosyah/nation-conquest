@@ -10,11 +10,8 @@ const squads = [
 ]
 
 var selected_squad :Array = []
-onready var squad_holder = $squad_holder
 
-var team :int = 1
 var pos :int = 0
-onready var positions = [$Position1, $Position2, $Position3, $Position4]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,13 +22,16 @@ func on_map_click(_pos :Vector3):
 	
 	if selected_squad.empty():
 		return
-
+	
 	var formation = Utils.get_formation_box(
 		_pos, selected_squad.size(), 5
 	)
 	for i in range(selected_squad.size()):
 		if is_instance_valid(selected_squad[i]):
+			selected_squad[i].set_selected(false)
 			selected_squad[i].set_move_to(formation[i])
+			
+	selected_squad.clear()
 	
 func on_squad_selected(_squad :Squad):
 	.on_squad_selected(_squad)
@@ -51,18 +51,19 @@ func on_squad_dead(_squad :Squad):
 	.on_squad_dead(_squad)
 	
 func _on_Timer_timeout():
-	if team > 4:
+	if $squad_holder.get_child_count() > 6:
 		return
-	
+		
+	var positions = [$Position1, $Position2, $Position3, $Position4]
+	var colors = [Color.red, Color.blue, Color.green, Color.yellow]
 	var squad = squads[rand_range(0, squads.size())]
 	squad.node_name = GDUUID.v4()
 	squad.network_master = Network.PLAYER_HOST_ID
-	squad.color = Color(randf(),randf(),randf(), 1.0)
-	squad.team = team
+	squad.color = colors[pos]
+	squad.team = pos
 	spawn_squad(
-		squad, squad_holder.get_path(),
+		squad, $squad_holder.get_path(),
 		positions[pos].translation
 	)
 	
 	pos = pos + 1 if pos < positions.size() - 1 else 0
-	team += 1

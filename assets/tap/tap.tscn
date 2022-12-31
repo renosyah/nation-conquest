@@ -7,7 +7,6 @@
 flags_unshaded = true
 flags_no_depth_test = true
 flags_do_not_receive_shadows = true
-flags_disable_ambient_light = true
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -69,7 +68,10 @@ script = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 visible = false
+cast_shadow = 0
+generate_lightmap = false
 mesh = ExtResource( 1 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

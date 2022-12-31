@@ -15,10 +15,11 @@ height = 0.150127
 points = PoolVector3Array( -1.00629, -0.0124112, -0.0162893, 1.00629, 1.00629, 0.0214465, 1.00629, -0.0124112, 0.0214465, 1.00629, 1.00629, -0.0162893, -1.00629, 1.00629, 0.0214465, 0.0124112, -1.00629, 0.0214465, 0.0124112, -1.00629, -0.0162893, -1.00629, 1.00629, -0.0162893, -1.00629, -0.0124112, 0.0214465, 1.00629, -0.0124112, -0.0162893 )
 
 [sub_resource type="SpatialMaterial" id=4]
+render_priority = 1
+flags_transparent = true
 flags_unshaded = true
 flags_no_depth_test = true
 flags_do_not_receive_shadows = true
-flags_disable_ambient_light = true
 params_billboard_mode = 1
 
 [sub_resource type="TextMesh" id=5]
@@ -29,23 +30,26 @@ font = ExtResource( 4 )
 uppercase = true
 
 [sub_resource type="SpatialMaterial" id=6]
+render_priority = 1
 flags_transparent = true
 flags_unshaded = true
 flags_no_depth_test = true
 flags_do_not_receive_shadows = true
-flags_disable_ambient_light = true
+params_depth_draw_mode = 2
 params_billboard_mode = 1
 
 [sub_resource type="SpatialMaterial" id=9]
+render_priority = 1
 flags_transparent = true
 flags_unshaded = true
 flags_no_depth_test = true
 flags_do_not_receive_shadows = true
 flags_disable_ambient_light = true
+params_depth_draw_mode = 2
 params_billboard_mode = 1
 
 [sub_resource type="CylinderShape" id=3]
-height = 6.0
+height = 10.0
 radius = 4.0
 
 [node name="squad" type="KinematicBody"]
@@ -69,6 +73,7 @@ shape = SubResource( 7 )
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.90755, 0 )
 
 [node name="unit_count" type="MeshInstance" parent="banner"]
+cast_shadow = 0
 generate_lightmap = false
 mesh = SubResource( 5 )
 skeleton = NodePath("../..")

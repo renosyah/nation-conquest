@@ -40,14 +40,18 @@ func _create_arrow() -> BaseProjectile:
 	return arrow
 	
 func perform_attack():
-	animation_weapon_state.travel(attack_animation)
-	
 	if not is_instance_valid(attack_to):
 		return
 		
+	var to = attack_to.global_transform.origin
+	if translation.distance_squared_to(to) < 50:
+		return
+		
+	animation_weapon_state.travel(attack_animation)
+	
 	var arrow = _get_arrow()
 	arrow.translation = global_transform.origin
-	arrow.target = attack_to.global_transform.origin
+	arrow.target = to
 	arrow.fire()
 	
 func _arrow_hit():
@@ -84,7 +88,7 @@ func attacking(delta :float):
 	var pos = global_transform.origin
 	var to = Vector3(enemy_pos.x, pos.y, enemy_pos.z)
 	var dis = pos.distance_squared_to(to)
-	if dis < 2.0:
+	if dis < 10.0:
 		return
 		
 	var _transform = pivot.transform.looking_at(pos.direction_to(to) * 100, Vector3.UP)

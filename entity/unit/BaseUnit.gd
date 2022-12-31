@@ -101,7 +101,7 @@ func attacking(delta :float):
 		if squad.is_moving:
 			var _unit_pos :Vector3 = global_transform.origin
 			var _unit_assign_pos :Vector3 = move_to.global_transform.origin
-			if _unit_pos.distance_squared_to(_unit_assign_pos) > 4.0:
+			if _unit_pos.distance_squared_to(_unit_assign_pos) > 50.0:
 				is_attacking = false
 				attack_to = null
 				is_moving = true

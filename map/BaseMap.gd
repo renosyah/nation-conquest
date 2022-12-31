@@ -67,14 +67,8 @@ func generate_map():
 func _create_spawns(inland_positions :Array) -> Array:
 	var stuffs = []
 	
-	var rng = RandomNumberGenerator.new()
-	rng.seed = map_seed * 2
-	
-	var trim_inland_positions = _trim_array(inland_positions, 12)
+	var trim_inland_positions = _trim_array(inland_positions, 22)
 	for pos in trim_inland_positions:
-		if rng.randf() > 0.3:
-			continue
-			
 		stuffs.append(pos)
 		
 	return stuffs
@@ -108,7 +102,7 @@ func _create_land(noise :NoiseMaker) -> Array:
 		var vertext = data_tool.get_vertex(i)
 		var value = noise.get_noise(vertext * map_scale)
 		vertext.y = value * map_height
-		if value > 0:
+		if value > 0 and vertext.distance_squared_to(translation) < map_size * 20:
 			inland_positions.append(vertext)
 			
 		data_tool.set_vertex(i, vertext)

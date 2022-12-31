@@ -48,7 +48,7 @@ func attacking(delta :float):
 	var pos = global_transform.origin
 	var to = Vector3(enemy_pos.x, pos.y, enemy_pos.z)
 	var dis = pos.distance_squared_to(to)
-	if dis < 2.0:
+	if dis < 10.0:
 		return
 		
 	var _transform = pivot.transform.looking_at(pos.direction_to(to) * 100, Vector3.UP)

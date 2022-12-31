@@ -45,18 +45,16 @@ func load_map():
 	var rng = RandomNumberGenerator.new()
 	rng.seed = NetworkLobbyManager.argument["seed"]
 	
+	var resources_scenes = [
+		preload("res://entity/resources/berry_bush/berry_bush.tscn"),
+		preload("res://entity/resources/trees/trees.tscn"),
+	]
 	for pos in _map.spawn_positions:
-		if rng.randf() > 0.5:
-			var berry_bush =  preload("res://entity/resources/berry_bush/berry_bush.tscn").instance()
-			add_child(berry_bush)
-			berry_bush.translation = pos
-			berry_bush.translation.y += 0.5
+		var resources =  resources_scenes[rng.randi_range(0, resources_scenes.size() - 1)].instance()
+		add_child(resources)
+		resources.translation = pos
+		resources.translation.y += 0.5
 			
-		else:
-			var tree = preload("res://entity/resources/trees/trees.tscn").instance()
-			add_child(tree)
-			tree.translation = pos
-			tree.translation.y += 0.5
 	
 func on_generate_map_completed():
 	NetworkLobbyManager.set_ready()
