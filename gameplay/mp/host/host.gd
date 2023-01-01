@@ -35,6 +35,7 @@ func all_player_ready():
 			squad.network_master = player.player_network_unique_id
 			squad.color = colors[player_index]
 			squad.team = 1
+			squad.is_selectable = player.player_network_unique_id == NetworkLobbyManager.get_id()
 			spawn_squad(
 				squad, player_squad_holder.get_path(),formation[i]
 			)

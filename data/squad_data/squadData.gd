@@ -10,6 +10,7 @@ export var team :int = 0
 export var color :Color = Color.white
 export var max_unit :int = 15
 export var formation_space :int = 1
+export var is_selectable :bool = false
 
 func from_dictionary(data : Dictionary):
 	node_name = data["node_name"]
@@ -19,6 +20,7 @@ func from_dictionary(data : Dictionary):
 	color = data["color"]
 	max_unit = data["max_unit"]
 	formation_space = data["formation_space"]
+	is_selectable = data["is_selectable"]
 	
 func to_dictionary() -> Dictionary :
 	var data = {}
@@ -29,6 +31,7 @@ func to_dictionary() -> Dictionary :
 	data["color"] = color
 	data["max_unit"] = max_unit
 	data["formation_space"] = formation_space
+	data["is_selectable"] = is_selectable
 	return data
 	
 func spawn(parent :Node) -> Squad:
@@ -38,6 +41,7 @@ func spawn(parent :Node) -> Squad:
 	squad.color = color
 	squad.max_unit = max_unit
 	squad.formation_space = formation_space
+	squad.is_selectable = is_selectable
 	squad.name = node_name
 	squad.set_network_master(network_master)
 	parent.add_child(squad)

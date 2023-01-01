@@ -20,6 +20,7 @@ export var combat_range :int = 4
 export var formation_space :int = 1
 
 export var is_dead :bool = false
+export var is_selectable :bool = false
 
 var _speed :int = 2
 var _units :Array = []
@@ -61,7 +62,7 @@ func _ready():
 	banner_mesh_material.albedo_color = color
 	banner_mesh_material.albedo_color.a = 0.6
 	
-	outline_mesh_material.albedo_color = squad_unselected_color
+	outline_mesh_material.albedo_color = squad_unselected_color if is_selectable else Color(1,1,1,0)
 	_moving_indicator.color = color
 	
 	var formations = Utils.get_formation_box(
@@ -234,6 +235,9 @@ func _on_input_detection_any_gesture(sig ,event):
 		emit_signal("squad_selected", self)
 		
 func set_selected(val :bool):
+	if not is_selectable:
+		return
+		
 	for unit in _units:
 		if not is_instance_valid(unit):
 			continue
