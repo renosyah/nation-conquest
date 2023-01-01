@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/sword.png-5bf23cf7cdaf62b35f6d716ee3b09239.s3tc.stex"
-path.etc="res://.import/sword.png-5bf23cf7cdaf62b35f6d716ee3b09239.etc.stex"
+path.s3tc="res://.import/body.png-5689ea3c87b5e869ef91d2b3b06b34d1.s3tc.stex"
+path.etc="res://.import/body.png-5689ea3c87b5e869ef91d2b3b06b34d1.etc.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://entity/unit/axeman/sword.png"
-dest_files=[ "res://.import/sword.png-5bf23cf7cdaf62b35f6d716ee3b09239.s3tc.stex", "res://.import/sword.png-5bf23cf7cdaf62b35f6d716ee3b09239.etc.stex" ]
+source_file="res://entity/unit/maceman/body.png"
+dest_files=[ "res://.import/body.png-5689ea3c87b5e869ef91d2b3b06b34d1.s3tc.stex", "res://.import/body.png-5689ea3c87b5e869ef91d2b3b06b34d1.etc.stex" ]
 
 [params]
 

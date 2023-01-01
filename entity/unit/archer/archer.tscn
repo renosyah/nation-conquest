@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://entity/unit/archer/body.png" type="Texture" id=1]
 [ext_resource path="res://entity/weapon/bow.tscn" type="PackedScene" id=2]
 [ext_resource path="res://entity/unit/archer/archer.gd" type="Script" id=3]
+[ext_resource path="res://entity/unit/archer/arrow.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.397441
@@ -35,7 +36,7 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 90, 10.63 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("bow/arrow:translation")
+tracks/2/path = NodePath("arrow:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -44,10 +45,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, -0.594756 ) ]
+"values": [ Vector3( 0, 0.0788074, -0.695804 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("bow/arrow:scale")
+tracks/3/path = NodePath("arrow:rotation_degrees")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -56,27 +57,15 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( 0.999999, 0.999999, 1 ) ]
+"values": [ Vector3( -5.42623e-07, 90, 12.513 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("bow/arrow:rotation_degrees")
+tracks/4/path = NodePath("arrow:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0, -1.22133e-12, 0 ) ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("bow/arrow:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
@@ -110,6 +99,42 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector3( -1.0914e-06, 90, 10.63 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("arrow:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0.0788074, -0.695804 ), Vector3( 0, 0.0342525, -0.723232 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("arrow:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -5.42623e-07, 90, 12.513 ), Vector3( -5.42623e-07, 90, 12.513 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("arrow:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "shot"
@@ -139,40 +164,54 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 90, 10.63 ), Vector3( -5.67665e-07, 90, 20.4325 ), Vector3( -5.67665e-07, 90, 20.4325 ), Vector3( 9.30664e-07, 90, -13.5865 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("bow/arrow:translation")
+tracks/2/path = NodePath("arrow:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.6 ),
+"times": PoolRealArray( 0, 0.734586 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0.176, 0, 0 ), Vector3( -0.0350139, 0.00646704, 0.0342421 ) ]
+"update": 1,
+"values": [ true, false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("bow/arrow:rotation_degrees")
+tracks/3/path = NodePath("arrow:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, -1.22133e-12, 0 ), Vector3( 0, -1.62844e-12, 0 ) ]
+"values": [ Vector3( 0.0427223, 0.0307086, -0.846471 ), Vector3( -0.118658, 0.265735, -0.542087 ), Vector3( -0.220184, 0.0935244, -0.348808 ), Vector3( 0, 0.332844, -0.96608 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("bow/arrow:visible")
+tracks/4/path = NodePath("arrow:rotation_degrees")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.1, 0.7 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
+"times": PoolRealArray( 0, 0.3, 0.6, 0.7, 0.701 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -4.18909e-07, 90, 10.581 ), Vector3( -9.67944e-07, 90, 22.736 ), Vector3( -9.67944e-07, 90, 22.736 ), Vector3( -9.67944e-07, 90, 22.736 ), Vector3( -9.67944e-07, 90, 22.736 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("..")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_animation_projectile_release"
+} ]
 }
 
 [sub_resource type="AnimationNodeAnimation" id=5]
@@ -285,6 +324,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.386238, 0 )
 
 [node name="bow" parent="pivot" instance=ExtResource( 2 )]
 transform = Transform( -4.29612e-08, 8.06326e-09, 1, 0.184466, 0.982838, 0, -0.982838, 0.184466, -4.37114e-08, 0, 0, -0.594756 )
+
+[node name="arrow" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.4725e-08, 2.24955e-10, 1, 0.216661, 0.976247, 9.47056e-09, -0.976247, 0.216661, -4.37114e-08, 0, 0.0788074, -0.695804 )
+visible = false
+texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="pivot"]
 autoplay = "idle"

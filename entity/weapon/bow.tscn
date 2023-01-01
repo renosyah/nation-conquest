@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://entity/weapon/bow.obj" type="ArrayMesh" id=1]
-[ext_resource path="res://entity/unit/archer/arrow.png" type="Texture" id=2]
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_vertex_lighting = true
@@ -21,8 +20,3 @@ mesh = ExtResource( 1 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 1 )
 material/1 = SubResource( 2 )
-
-[node name="arrow" type="Sprite3D" parent="."]
-transform = Transform( 0.999999, 0, -2.13162e-14, 0, 0.999999, 0, 2.13162e-14, 0, 1, 0, 0, -0.594756 )
-visible = false
-texture = ExtResource( 2 )

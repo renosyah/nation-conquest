@@ -40,6 +40,9 @@ func _create_arrow() -> BaseProjectile:
 	return arrow
 	
 func perform_attack():
+	animation_weapon_state.travel(attack_animation)
+	
+func _on_animation_projectile_release():
 	if not is_instance_valid(attack_to):
 		return
 		
@@ -47,8 +50,6 @@ func perform_attack():
 	if translation.distance_squared_to(to) < 50:
 		return
 		
-	animation_weapon_state.travel(attack_animation)
-	
 	var arrow = _get_arrow()
 	arrow.translation = global_transform.origin
 	arrow.target = to

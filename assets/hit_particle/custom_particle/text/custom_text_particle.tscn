@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/hit_particle/custom_particle/text/custom_text_particle.gd" type="Script" id=2]
+
+[sub_resource type="SpatialMaterial" id=11]
+flags_unshaded = true
+flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 1
+params_billboard_keep_scale = true
+
+[sub_resource type="TextMesh" id=12]
+material = SubResource( 11 )
+text = "Wack!"
+font = ExtResource( 1 )
+
+[sub_resource type="Curve" id=10]
+_data = [ Vector2( 0.0376569, 0.929545 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.464773 ), -1.58776, 0.0, 0, 0 ]
+
+[node name="CPUParticles" type="CPUParticles"]
+cast_shadow = 0
+generate_lightmap = false
+emitting = false
+amount = 4
+lifetime = 0.7
+one_shot = true
+explosiveness = 1.0
+randomness = 0.4
+lifetime_randomness = 0.6
+mesh = SubResource( 12 )
+direction = Vector3( 0, 16, 0 )
+gravity = Vector3( 0, -25, 0 )
+initial_velocity = 10.0
+initial_velocity_random = 0.2
+scale_amount_curve = SubResource( 10 )
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}

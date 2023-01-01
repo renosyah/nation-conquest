@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "CPUParticles",
+"class": "BaseCustomParticle",
+"language": "GDScript",
+"path": "res://assets/hit_particle/custom_particle/baseCustomParticle.gd"
+}, {
 "base": "Resource",
 "class": "BaseData",
 "language": "GDScript",
@@ -49,10 +54,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://entity/unit/BaseUnit.gd"
 }, {
-"base": "CPUParticles",
+"base": "BaseCustomParticle",
+"class": "CustomMeshParticle",
+"language": "GDScript",
+"path": "res://assets/hit_particle/custom_particle/mesh/custom_mesh_particle.gd"
+}, {
+"base": "BaseCustomParticle",
 "class": "CustomTextParticle",
 "language": "GDScript",
-"path": "res://assets/hit_particle/custom_particle/custom_text_particle.gd"
+"path": "res://assets/hit_particle/custom_particle/text/custom_text_particle.gd"
 }, {
 "base": "Node",
 "class": "GDUUID",
@@ -180,6 +190,7 @@ _global_script_classes=[ {
 "path": "res://global/util.gd"
 } ]
 _global_script_class_icons={
+"BaseCustomParticle": "",
 "BaseData": "",
 "BaseEntity": "",
 "BaseGameplay": "",
@@ -188,6 +199,7 @@ _global_script_class_icons={
 "BaseResources": "",
 "BaseUi": "",
 "BaseUnit": "",
+"CustomMeshParticle": "",
 "CustomTextParticle": "",
 "GDUUID": "",
 "HitParticle": "",

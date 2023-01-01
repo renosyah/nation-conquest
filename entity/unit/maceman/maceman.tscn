@@ -1,0 +1,230 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://entity/weapon/mace.tscn" type="PackedScene" id=1]
+[ext_resource path="res://entity/unit/militia/militia.gd" type="Script" id=2]
+[ext_resource path="res://entity/unit/axeman/body.png" type="Texture" id=3]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.457519
+height = 0.302872
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("mace:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, -0.0710919, -0.408118 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("mace:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -18.135, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("mace:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, -0.0710919, -0.408118 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("mace:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -18.135, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "swing"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("mace:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, -0.0710919, -0.408118 ), Vector3( 0, 0.408228, -0.184874 ), Vector3( 0, 0.0254526, -0.419247 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("mace:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -18.135, 0, 0 ), Vector3( 51.014, 0, 0 ), Vector3( -42.434, 0, 0 ) ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "swing"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachine" id=9]
+states/idle/node = SubResource( 5 )
+states/idle/position = Vector2( 303, 87 )
+states/swing/node = SubResource( 6 )
+states/swing/position = Vector2( 491, 87.4444 )
+transitions = [ "idle", "swing", SubResource( 7 ), "swing", "idle", SubResource( 8 ) ]
+start_node = "idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=10]
+
+[sub_resource type="Animation" id=11]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("body:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("body:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "moving"
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("body:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0.322678, 0 ) ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=14]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+
+[sub_resource type="AnimationNodeStateMachine" id=18]
+states/idle/node = SubResource( 14 )
+states/idle/position = Vector2( 237.667, 123 )
+states/moving/node = SubResource( 15 )
+states/moving/position = Vector2( 420.333, 122.556 )
+transitions = [ "idle", "moving", SubResource( 16 ), "moving", "idle", SubResource( 17 ) ]
+start_node = "idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
+
+[node name="maceman" type="KinematicBody"]
+collision_layer = 0
+script = ExtResource( 2 )
+hp = 10
+max_hp = 10
+speed = 4
+attack_damage = 3
+skill = 0.5
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="body" type="Sprite3D" parent="."]
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="pivot" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.386238, 0 )
+
+[node name="mace" parent="pivot" instance=ExtResource( 1 )]
+transform = Transform( 0.999999, 0, 0, 0, 0.950324, 0.311257, 0, -0.311256, 0.950325, 0, -0.0710919, -0.408118 )
+skeleton = NodePath("")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="pivot"]
+autoplay = "idle"
+playback_speed = 4.0
+anims/RESET = SubResource( 2 )
+anims/idle = SubResource( 3 )
+anims/swing = SubResource( 4 )
+
+[node name="AnimationTree" type="AnimationTree" parent="pivot"]
+tree_root = SubResource( 9 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 10 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 4.0
+anims/RESET = SubResource( 11 )
+anims/idle = SubResource( 12 )
+anims/moving = SubResource( 13 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 18 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 19 )
