@@ -5,25 +5,17 @@
 [node name="gameplay" type="Node"]
 script = ExtResource( 1 )
 
-[node name="squad_holder" type="Node" parent="."]
+[node name="player_squad_holder" type="Node" parent="."]
 
-[node name="Position1" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 8, -12 )
+[node name="enemy_squad_holder" type="Node" parent="."]
 
-[node name="Position2" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 8, -12 )
+[node name="attack_wave_timer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
 
-[node name="Position3" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 8, 12 )
-
-[node name="Position4" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 8, 12 )
-
-[node name="Position5" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
-
-[node name="Timer" type="Timer" parent="."]
+[node name="bot_attack_timer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
 
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="attack_wave_timer" to="." method="_on_attack_wave_timer_timeout"]
+[connection signal="timeout" from="bot_attack_timer" to="." method="_on_bot_attack_timer_timeout"]

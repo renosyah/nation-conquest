@@ -20,10 +20,7 @@ var squad = null
 
 var _direction :Vector3 = Vector3.ZERO
 var _velocity :Vector3 = Vector3.ZERO
-var _snap :Vector3 = Vector3.ZERO
-var _up_direction :Vector3 = Vector3.UP
 var _stop_on_slope :bool = true
-var _enable_snap :bool = true
 
 export var is_attacking :bool = false
 var attack_to = null
@@ -95,20 +92,11 @@ func _process(delta :float):
 	moving(delta)
 	idle(delta)
 	
-	var _is_on_floor :bool = is_on_floor()
-	var _inverse_floor_normal :Vector3 = - get_floor_normal()
-	
-	if _is_on_floor and _enable_snap:
-		_snap = _inverse_floor_normal - get_floor_velocity() * delta
-		
-	else:
-		_snap = Vector3.ZERO
+	if not is_on_floor():
 		_velocity.y -= _gravity
 		
 	if _velocity != Vector3.ZERO:
-		_velocity = move_and_slide_with_snap(
-			_velocity, _snap, _up_direction, _stop_on_slope, 4, _floor_max_angle
-		)
+		_velocity = move_and_slide(_velocity, Vector3.UP,_stop_on_slope)
 	
 func attacking(delta :float):
 	if not is_attacking:

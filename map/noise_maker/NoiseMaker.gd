@@ -16,7 +16,7 @@ func make_noise(noise_seed, noise_count :int):
 		noise.period = float(_rng.randi_range(70,80))
 		_noises.append(noise)
 		
-func get_noise(_at : Vector3):
+func get_noise(_at :Vector3):
 	var value :float = 0.0
 	
 	for _noise in _noises:
@@ -24,6 +24,6 @@ func get_noise(_at : Vector3):
 			_at.x ,_at.y ,_at.z 
 		)
 		value += (value + val) / 2
-		#value = clamp(value, 0, 1)
+		value = clamp(value, 0.2, 1.0)
 		
 	return value

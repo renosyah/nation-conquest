@@ -7,10 +7,7 @@
 [ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/tap/tap.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/hit_particle/custom_particle/mesh/custom_mesh_particle.tscn" type="PackedScene" id=7]
-
-[sub_resource type="CapsuleShape" id=8]
-radius = 0.742018
-height = 0.150127
+[ext_resource path="res://entity/squad/squad_collision.tres" type="Shape" id=8]
 
 [sub_resource type="ConvexPolygonShape" id=7]
 points = PoolVector3Array( -1.00629, -0.0124112, -0.0162893, 1.00629, 1.00629, 0.0214465, 1.00629, -0.0124112, 0.0214465, 1.00629, 1.00629, -0.0162893, -1.00629, 1.00629, 0.0214465, 0.0124112, -1.00629, 0.0214465, 0.0124112, -1.00629, -0.0162893, -1.00629, 1.00629, -0.0162893, -1.00629, -0.0124112, 0.0214465, 1.00629, -0.0124112, -0.0162893 )
@@ -50,7 +47,7 @@ params_depth_draw_mode = 2
 params_billboard_mode = 1
 
 [sub_resource type="CylinderShape" id=3]
-height = 10.0
+height = 20.0
 radius = 4.0
 
 [node name="squad" type="KinematicBody"]
@@ -62,7 +59,7 @@ script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 8 )
+shape = ExtResource( 8 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="."]
 transform = Transform( 1.13162, 0, 0, 0, 0.674199, 0.836378, 0, -0.96984, 0.781783, 0, 2.90755, 0 )

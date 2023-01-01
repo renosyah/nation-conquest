@@ -35,8 +35,8 @@ var _map :BaseMap
 func load_map():
 	_map = preload("res://map/spring_island/spring_map.tscn").instance()
 	_map.map_seed = NetworkLobbyManager.argument["seed"]
-	_map.map_size = 100
-	_map.map_scale = 1
+	_map.map_scale = NetworkLobbyManager.argument["scale"]
+	_map.map_size = 200
 	_map.connect("on_generate_map_completed", self, "on_generate_map_completed")
 	_map.connect("on_map_click", self , "on_map_click")
 	add_child(_map)
@@ -54,9 +54,16 @@ func load_map():
 		add_child(resources)
 		resources.translation = pos
 		resources.translation.y += 0.5
-			
-	
+		
 func on_generate_map_completed():
+	var delay = Timer.new()
+	delay.wait_time = 1
+	add_child(delay)
+	delay.start()
+	
+	yield(delay, "timeout")
+	delay.queue_free()
+	
 	NetworkLobbyManager.set_ready()
 	
 func on_map_click(_pos :Vector3):
@@ -128,6 +135,16 @@ func on_squad_selected(_squad :Squad):
 	pass
 	
 func on_squad_dead(_squad :Squad):
+	if not is_server():
+		return
+		
+	rpc("_on_squad_dead", _squad.get_path())
+	
+remotesync func _on_squad_dead(_squad_path :NodePath):
+	var _squad :Squad = get_node_or_null(_squad_path)
+	if not is_instance_valid(_squad):
+		return
+		
 	_squad.queue_free()
 	
 ################################################################

@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://entity/unit/BaseUnit.gd"
 }, {
+"base": "ImageTexture",
+"class": "CustomGradientTexture",
+"language": "GDScript",
+"path": "res://addons/maujoe.custom_gradient_texture/custom_gradient_texture.gd"
+}, {
 "base": "BaseCustomParticle",
 "class": "CustomMeshParticle",
 "language": "GDScript",
@@ -199,6 +204,7 @@ _global_script_class_icons={
 "BaseResources": "",
 "BaseUi": "",
 "BaseUnit": "",
+"CustomGradientTexture": "",
 "CustomMeshParticle": "",
 "CustomTextParticle": "",
 "GDUUID": "",

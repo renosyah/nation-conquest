@@ -3,10 +3,7 @@
 [ext_resource path="res://entity/weapon/sword.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entity/unit/militia/body.png" type="Texture" id=2]
 [ext_resource path="res://entity/unit/militia/militia.gd" type="Script" id=3]
-
-[sub_resource type="CapsuleShape" id=1]
-radius = 0.397441
-height = 0.302872
+[ext_resource path="res://entity/unit/unit_collision.tres" type="Shape" id=4]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -186,7 +183,7 @@ script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 1 )
+shape = ExtResource( 4 )
 
 [node name="body" type="Sprite3D" parent="."]
 alpha_cut = 2

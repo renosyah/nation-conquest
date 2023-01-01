@@ -16,7 +16,7 @@ export var max_unit :int = 15
 export var is_moving :bool = false
 export var move_to :Vector3
 export var margin :float = 0.3
-
+export var combat_range :int = 4
 export var formation_space :int = 1
 
 export var is_dead :bool = false
@@ -25,10 +25,7 @@ var _speed :int = 2
 var _units :Array = []
 var _targets :Array = []
 var _velocity :Vector3
-var _snap :Vector3 = Vector3.ZERO
-var _up_direction :Vector3 = Vector3.UP
 var _stop_on_slope :bool = true
-var _enable_snap :bool = true
 
 puppet var _puppet_is_moving :bool
 puppet var _puppet_translation :Vector3
@@ -51,8 +48,6 @@ onready var _floor_max_angle: float = deg2rad(45.0)
 func _ready():
 	visible = false
 	is_dead = true
-	
-	var spotting_range :int = 8
 	
 	var banner_mesh_material :SpatialMaterial = _banner.get_surface_material(0).duplicate()
 	var outline_mesh_material :SpatialMaterial = _banner.get_surface_material(1).duplicate()
@@ -85,25 +80,19 @@ func _ready():
 	yield(delay, "timeout")
 	delay.queue_free()
 	
+	var spotting_range :int = 8
+	
 	for pos in range(max_unit):
-		var _unit = unit.instance()
-		_unit.name = "unit-" + str(pos)
-		_unit.is_master = _is_master()
-		_unit.team = team
-		_unit.color = color
-		_unit.connect("unit_selected", self, "_unit_selected")
-		_unit.connect("unit_dead", self, "_unit_dead")
-		_unit.connect("unit_take_damage", self, "_unit_take_damage")
+		var _unit = _create_unit("unit-" + str(pos))
 		_unit.move_to = _pivot.get_child(pos)
 		_unit.is_moving = true
-		_unit.squad = self
-		add_child(_unit)
 		_unit.set_as_toplevel(true)
 		_unit.translation = _pivot.get_child(pos).global_transform.origin + Vector3(0, 2, 0)
 		_units.append(_unit)
 		
 		_speed = _unit.speed + 1
 		spotting_range = _unit.spotting_range
+		combat_range = _unit.attack_range
 		
 	var shape :CylinderShape = _spotting_area.shape.duplicate() as CylinderShape
 	shape.radius = spotting_range
@@ -111,6 +100,23 @@ func _ready():
 	
 	visible = true
 	is_dead = false
+	
+func _create_unit(unit_name :String) -> BaseUnit:
+	var _unit = unit.instance()
+	_unit.name = unit_name
+	_unit.is_master = _is_master()
+	_unit.team = team
+	_unit.color = color
+	_unit.connect("unit_selected", self, "_unit_selected")
+	_unit.connect("unit_dead", self, "_unit_dead")
+	_unit.connect("unit_take_damage", self, "_unit_take_damage")
+	_unit.squad = self
+	add_child(_unit)
+	return _unit
+	
+func _reassign_unit_formation():
+	for i in range(_units.size()):
+		_units[i].move_to = _pivot.get_child(i)
 	
 func _unit_selected(_unit):
 	emit_signal("squad_selected", self)
@@ -149,6 +155,8 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	_units.erase(_unit)
 	_unit.queue_free()
 	
+	_reassign_unit_formation()
+
 	(_unit_count.mesh as TextMesh).text = str(_units.size())
 	
 	if _units.empty():
@@ -177,20 +185,13 @@ func master_moving(delta :float) -> void:
 		var is_arrive :bool = _move_to_position(move_to)
 		if is_arrive:
 			is_moving = false
+			return
 		
-	var _is_on_floor :bool = is_on_floor()
-	var _inverse_floor_normal :Vector3 = - get_floor_normal()
-	
-	if _is_on_floor and _enable_snap:
-		_snap = _inverse_floor_normal - get_floor_velocity() * delta
-	else:
-		_snap = Vector3.ZERO
+	if not is_on_floor():
 		_velocity.y -= _gravity
 		
 	if _velocity != Vector3.ZERO:
-		_velocity = move_and_slide_with_snap(
-			_velocity, _snap, _up_direction, _stop_on_slope, 4, _floor_max_angle
-		)
+		_velocity = move_and_slide(_velocity, Vector3.UP,_stop_on_slope)
 		
 	_formation_direction_facing(delta)
 	
@@ -242,11 +243,16 @@ func set_selected(val :bool):
 	var color :Color = squad_selected_color if val else squad_unselected_color
 	(_banner.get_surface_material(1) as SpatialMaterial).albedo_color = color
 
-func set_move_to(to :Vector3):
+func set_move_to(to :Vector3, display_tap :bool = false):
 	move_to = to
 	is_moving = true
-	_moving_indicator.translation = to
-	_moving_indicator.tap()
+	
+	if display_tap:
+		_moving_indicator.translation = to
+		_moving_indicator.tap()
+
+func is_in_combat() -> bool:
+	return not _targets.empty()
 
 func _attack_targets():
 	if _units.empty():
@@ -262,10 +268,6 @@ func _attack_targets():
 		
 	var pos :int = 0
 	for unit in _units:
-		if not is_instance_valid(_targets[pos]):
-			_targets.remove(pos)
-			return
-			
 		if is_instance_valid(unit):
 			unit.is_moving = false
 			unit.is_attacking = true
@@ -279,13 +281,12 @@ func _spotted_target():
 	
 	if is_moving:
 		return
+		
+	var _unit_size = _units.size()
 	
 	for body in _area.get_overlapping_bodies():
-		if _targets.size() > 32:
+		if _targets.size() > _unit_size:
 			return
-			
-		if body == self:
-			continue
 			
 		if body is BaseUnit:
 			if body in _units:

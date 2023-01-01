@@ -35,6 +35,7 @@ margin_bottom = 200.0
 mouse_filter = 2
 
 [node name="MiniMap" parent="CanvasLayer/SafeArea/Control/HBoxContainer" instance=ExtResource( 1 )]
+mouse_filter = 2
 camera_offset = Vector2( 0, -10 )
 
 [node name="fps_ping_displayer" parent="CanvasLayer/SafeArea/Control" instance=ExtResource( 5 )]

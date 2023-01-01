@@ -16,59 +16,39 @@ script = ExtResource( 3 )
 shape = SubResource( 1 )
 
 [node name="tree" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.12776, -0.67017 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.19986, -0.0656769 )
 
 [node name="leave_3" type="Sprite3D" parent="tree"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.41396, 3.73333, 0.0709585 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.701505, 0.877004, 0.0709585 )
 modulate = Color( 0.113725, 0.431373, 0, 1 )
 billboard = 1
 texture = ExtResource( 2 )
 
 [node name="leave_2" type="Sprite3D" parent="tree"]
-transform = Transform( 1.49104, 0, 0, 0, 1.54115, 0, 0, 0, 1, 1.00986, 3.36344, 0.0709585 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.743241, 0.0803275, 0.169216 )
+modulate = Color( 0.113725, 0.431373, 0, 1 )
+billboard = 1
+texture = ExtResource( 2 )
+
+[node name="leave_4" type="Sprite3D" parent="tree"]
+transform = Transform( 1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0.234488, 2.89659, 0.0579141 )
+modulate = Color( 0.113725, 0.431373, 0, 1 )
+billboard = 1
+texture = ExtResource( 2 )
+
+[node name="leave_5" type="Sprite3D" parent="tree"]
+transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -0.751336, 2.36917, 0.0579141 )
+modulate = Color( 0.113725, 0.431373, 0, 1 )
+billboard = 1
+texture = ExtResource( 2 )
+
+[node name="leave_6" type="Sprite3D" parent="tree"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.843065, 2.07326, 0.0579141 )
 modulate = Color( 0.113725, 0.431373, 0, 1 )
 billboard = 1
 texture = ExtResource( 2 )
 
 [node name="trunk" type="Sprite3D" parent="tree"]
-modulate = Color( 0.403922, 0.227451, 0, 1 )
-texture = ExtResource( 1 )
-
-[node name="tree2" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.03564, 3.12776, 0.277942 )
-
-[node name="leave_1" type="Sprite3D" parent="tree2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.07257, 1.89316, 0.0709585 )
-modulate = Color( 0.113725, 0.431373, 0, 1 )
-billboard = 1
-texture = ExtResource( 2 )
-
-[node name="leave_2" type="Sprite3D" parent="tree2"]
-transform = Transform( 1.49104, 0, 0, 0, 1.54115, 0, 0, 0, 1, -1.58367, 2.29824, 0.0709585 )
-modulate = Color( 0.113725, 0.431373, 0, 1 )
-billboard = 1
-texture = ExtResource( 2 )
-
-[node name="trunk" type="Sprite3D" parent="tree2"]
-modulate = Color( 0.403922, 0.227451, 0, 1 )
-texture = ExtResource( 1 )
-
-[node name="tree3" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.971737, 3.12776, 0.712961 )
-
-[node name="leave_1" type="Sprite3D" parent="tree3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.968654, 1.04944, 0.0709585 )
-modulate = Color( 0.113725, 0.431373, 0, 1 )
-billboard = 1
-texture = ExtResource( 2 )
-
-[node name="leave_3" type="Sprite3D" parent="tree3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.41396, 3.31039, 0.0709585 )
-modulate = Color( 0.113725, 0.431373, 0, 1 )
-billboard = 1
-texture = ExtResource( 2 )
-
-[node name="trunk" type="Sprite3D" parent="tree3"]
 modulate = Color( 0.403922, 0.227451, 0, 1 )
 texture = ExtResource( 1 )
 

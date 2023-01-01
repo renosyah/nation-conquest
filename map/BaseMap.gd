@@ -1,6 +1,9 @@
 extends StaticBody
 class_name BaseMap
 
+const land_shader = preload("res://map/shadermaterial.tres")
+const water_shader = preload("res://map/water_shadermaterial.tres")
+
 signal on_generate_map_completed
 signal on_map_click(_pos)
 
@@ -18,7 +21,9 @@ var spawn_positions : Array = []
 
 var _input_detection :Node
 var _click_position :Vector3
-onready var _land_shader :ShaderMaterial = preload("res://map/shadermaterial.tres")
+
+onready var _land_shader :ShaderMaterial = land_shader
+onready var _water_shader :ShaderMaterial = water_shader
 
 func _ready():
 	map_land_color = Color(
@@ -60,6 +65,9 @@ func generate_map():
 	add_child(collision)
 	land_mesh.get_child(0).queue_free()
 	
+	var water = _create_water()
+	add_child(water)
+	
 	spawn_positions = _create_spawns(lands[1])
 	
 	emit_signal("on_generate_map_completed")
@@ -69,7 +77,8 @@ func _create_spawns(inland_positions :Array) -> Array:
 	
 	var trim_inland_positions = _trim_array(inland_positions, 22)
 	for pos in trim_inland_positions:
-		stuffs.append(pos)
+		if pos.distance_squared_to(translation) < map_size * 20:
+			stuffs.append(pos)
 		
 	return stuffs
 	
@@ -97,16 +106,31 @@ func _create_land(noise :NoiseMaker) -> Array:
 	
 	var data_tool = MeshDataTool.new()
 	data_tool.create_from_surface(array_plane, 0)
+	
+	var gradient = CustomGradientTexture.new()
+	gradient.gradient = Gradient.new()
+	gradient.type = CustomGradientTexture.GradientType.RADIAL
+	gradient.size = Vector2.ONE * map_size + Vector2.ONE
 
+	var data = gradient.get_data()
+	data.lock()
+	
 	for i in range(data_tool.get_vertex_count()):
 		var vertext = data_tool.get_vertex(i)
 		var value = noise.get_noise(vertext * map_scale)
-		vertext.y = value * map_height
-		if value > 0 and vertext.distance_squared_to(translation) < map_size * 20:
+		var gradient_value = data.get_pixel(
+			(vertext.x + map_size) * 0.5, (vertext.z + map_size) * 0.5
+		).r * 2.2
+		value -= gradient_value
+		value = clamp(value, -0.075, 1)
+		vertext.y = value *  (map_height + 2.0)
+		if value > 0.15:
 			inland_positions.append(vertext)
 			
 		data_tool.set_vertex(i, vertext)
 		
+	data.unlock()
+	
 	for i in range(array_plane.get_surface_count()):
 		array_plane.surface_remove(i)
 		
@@ -121,6 +145,20 @@ func _create_land(noise :NoiseMaker) -> Array:
 	land_mesh_instance.create_trimesh_collision()
 	
 	return [land_mesh_instance, inland_positions]
+	
+func _create_water() -> MeshInstance:
+	var water_mesh = PlaneMesh.new()
+	water_mesh.size = Vector2(map_size, map_size)
+	
+	var water_mesh_instance = MeshInstance.new()
+	water_mesh_instance.mesh = water_mesh
+	water_mesh_instance.set_surface_material(0, _water_shader)
+	
+	water_mesh_instance.cast_shadow = false
+	water_mesh_instance.generate_lightmap = false
+	water_mesh_instance.software_skinning_transform_normals = false
+	
+	return water_mesh_instance
 	
 func _input_event(camera, event, position, normal, shape_idx):
 	_click_position = position

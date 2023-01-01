@@ -7,7 +7,6 @@
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=5]
 
 [node name="MiniMap" type="MarginContainer"]
-self_modulate = Color( 1, 1, 1, 0 )
 margin_right = 200.0
 margin_bottom = 200.0
 rect_min_size = Vector2( 200, 200 )
@@ -59,6 +58,7 @@ margin_left = -50.0
 margin_top = -50.0
 margin_right = 50.0
 margin_bottom = 50.0
+mouse_filter = 2
 texture = ExtResource( 4 )
 
 [node name="Timer" type="Timer" parent="."]

@@ -38,7 +38,8 @@ func on_host_player_connected():
 	host_menu_buttons.visible = true
 	
 func _on_play_pressed():
-	NetworkLobbyManager.argument["seed"] = 1
+	NetworkLobbyManager.argument["seed"] = int(rand_range(1,100))
+	NetworkLobbyManager.argument["scale"] = int(rand_range(1,3))
 	NetworkLobbyManager.set_host_ready()
 	get_tree().change_scene("res://gameplay/mp/host/host.tscn")
 	

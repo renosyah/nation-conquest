@@ -4,10 +4,7 @@
 [ext_resource path="res://entity/weapon/crossbow.tscn" type="PackedScene" id=2]
 [ext_resource path="res://entity/unit/crossbowman/crossbowman.gd" type="Script" id=3]
 [ext_resource path="res://entity/unit/archer/arrow.png" type="Texture" id=4]
-
-[sub_resource type="CapsuleShape" id=1]
-radius = 0.397441
-height = 0.302872
+[ext_resource path="res://entity/unit/unit_collision.tres" type="Shape" id=5]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -315,7 +312,7 @@ spotting_range = 16.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 1 )
+shape = ExtResource( 5 )
 
 [node name="body" type="Sprite3D" parent="."]
 alpha_cut = 2
@@ -328,7 +325,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.386238, 0 )
 transform = Transform( 1, 0, 0, 0, 0.962341, -0.271843, 0, 0.271843, 0.962341, 0, -0.0762588, -0.646121 )
 
 [node name="arrow" type="Sprite3D" parent="pivot"]
-transform = Transform( -9.95232e-08, 1, -4.77867e-08, 0.316477, -1.38336e-08, -0.9486, -0.9486, -1.09531e-07, -0.316477, -0.034211, 0.00121218, -0.845283 )
+transform = Transform( 1.26641e-07, 1, 2.76673e-08, 0.316477, -1.38336e-08, -0.9486, -0.9486, 1.28887e-07, -0.316477, -0.034211, 0.00121218, -0.845283 )
 visible = false
 texture = ExtResource( 4 )
 
