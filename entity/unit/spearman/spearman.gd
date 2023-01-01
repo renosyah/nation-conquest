@@ -11,5 +11,3 @@ func attacking(delta :float):
 	if not is_attacking:
 		animation_weapon_state.travel("idle")
 		return
-		
-	

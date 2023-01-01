@@ -16,6 +16,7 @@ func _ready():
 	
 func perform_attack():
 	.perform_attack()
+	
 	animation_weapon_state.travel(attack_animation)
 	
 	if _sound.playing:

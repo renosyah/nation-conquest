@@ -17,8 +17,13 @@ export var margin :float = 0.6
 export var speed :int = 2
 
 var squad = null
+
 var _direction :Vector3 = Vector3.ZERO
 var _velocity :Vector3 = Vector3.ZERO
+var _snap :Vector3 = Vector3.ZERO
+var _up_direction :Vector3 = Vector3.UP
+var _stop_on_slope :bool = true
+var _enable_snap :bool = true
 
 export var is_attacking :bool = false
 var attack_to = null
@@ -31,11 +36,13 @@ export(float, 0.0 , 1.0) var skill :float = 0.2
 export var is_master :bool = false
 
 var _attack_delay_timmer :Timer
+var _stun_delay_timmer :Timer
 var _input_detection :Node
 var _sound :AudioStreamPlayer3D
 var _higlight :UnitHighlight
 
 onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
+onready var _floor_max_angle: float = deg2rad(45.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -44,6 +51,12 @@ func _ready():
 	_attack_delay_timmer.autostart = false
 	_attack_delay_timmer.one_shot = true
 	add_child(_attack_delay_timmer)
+	
+	_stun_delay_timmer = Timer.new()
+	_stun_delay_timmer.wait_time = 1.2
+	_stun_delay_timmer.autostart = false
+	_stun_delay_timmer.one_shot = true
+	add_child(_stun_delay_timmer)
 	
 	_sound = AudioStreamPlayer3D.new()
 	_sound.unit_size = Global.sound_amplified
@@ -82,14 +95,27 @@ func _process(delta :float):
 	moving(delta)
 	idle(delta)
 	
-	if not is_on_floor():
+	var _is_on_floor :bool = is_on_floor()
+	var _inverse_floor_normal :Vector3 = - get_floor_normal()
+	
+	if _is_on_floor and _enable_snap:
+		_snap = _inverse_floor_normal - get_floor_velocity() * delta
+		
+	else:
+		_snap = Vector3.ZERO
 		_velocity.y -= _gravity
 		
 	if _velocity != Vector3.ZERO:
-		_velocity = move_and_slide(_velocity, Vector3.UP, true)
+		_velocity = move_and_slide_with_snap(
+			_velocity, _snap, _up_direction, _stop_on_slope, 4, _floor_max_angle
+		)
 	
 func attacking(delta :float):
 	if not is_attacking:
+		return
+		
+	if not _stun_delay_timmer.is_stopped():
+		_velocity = Vector3.ZERO
 		return
 		
 	if not is_instance_valid(attack_to):
@@ -119,6 +145,10 @@ func attacking(delta :float):
 		
 func moving(delta :float):
 	if not is_moving:
+		return
+		
+	if not _stun_delay_timmer.is_stopped():
+		_velocity = Vector3.ZERO
 		return
 		
 	if not is_instance_valid(move_to):
@@ -155,6 +185,9 @@ func take_damage(damage :int) -> void:
 	if is_dead:
 		return
 		
+	_stun_delay_timmer.wait_time = damage
+	_stun_delay_timmer.start()
+		
 	hp -= damage
 	if hp < 1:
 		set_process(false)
@@ -163,7 +196,7 @@ func take_damage(damage :int) -> void:
 		return
 		
 	emit_signal("unit_take_damage", self, damage)
-	
+
 func dead() -> void:
 	emit_signal("unit_dead", self)
 	

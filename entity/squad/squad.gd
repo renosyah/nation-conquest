@@ -25,6 +25,10 @@ var _speed :int = 2
 var _units :Array = []
 var _targets :Array = []
 var _velocity :Vector3
+var _snap :Vector3 = Vector3.ZERO
+var _up_direction :Vector3 = Vector3.UP
+var _stop_on_slope :bool = true
+var _enable_snap :bool = true
 
 puppet var _puppet_is_moving :bool
 puppet var _puppet_translation :Vector3
@@ -38,8 +42,10 @@ onready var _hit_particle = $hit_particle
 onready var _spotting_area = $Area/CollisionShape
 onready var _area = $Area
 onready var _pivot = $pivot
-onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
 onready var _moving_indicator = $tap
+
+onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
+onready var _floor_max_angle: float = deg2rad(45.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -172,11 +178,19 @@ func master_moving(delta :float) -> void:
 		if is_arrive:
 			is_moving = false
 		
-	if not is_on_floor():
+	var _is_on_floor :bool = is_on_floor()
+	var _inverse_floor_normal :Vector3 = - get_floor_normal()
+	
+	if _is_on_floor and _enable_snap:
+		_snap = _inverse_floor_normal - get_floor_velocity() * delta
+	else:
+		_snap = Vector3.ZERO
 		_velocity.y -= _gravity
 		
 	if _velocity != Vector3.ZERO:
-		_velocity = move_and_slide(_velocity, Vector3.UP, true)
+		_velocity = move_and_slide_with_snap(
+			_velocity, _snap, _up_direction, _stop_on_slope, 4, _floor_max_angle
+		)
 		
 	_formation_direction_facing(delta)
 	
