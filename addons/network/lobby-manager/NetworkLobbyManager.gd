@@ -32,11 +32,14 @@ var _lobby_players :Array = []
 var _server_advertiser :ServerAdvertiser
 var _exit_delay :Timer
 
+var _is_ready :bool = false
+
 onready var _network :Node = get_node_or_null("/root/Network")
 
 # call to initiate lobby
 func init_lobby():
 	_lobby_players.clear()
+	_is_ready = false
 	
 	if _is_any_params_null():
 		return
@@ -187,7 +190,12 @@ remotesync func _request_update_player_joined_status(_player_network_unique_id :
 	for i in _lobby_players:
 		if i["player_status"] != NetworkPlayer.PLAYER_STATUS_READY:
 			return
+			
+	if _is_ready:
+		return
 		
+	_is_ready = true
+	
 	emit_signal("all_player_ready")
 	
 remotesync func _update_player_joined(data : Array):
@@ -212,11 +220,12 @@ remotesync func _kick_player(_player_network_unique_id :int):
 	emit_signal("lobby_player_update", get_players())
 	
 remotesync func _on_host_ready(data :Dictionary):
+	_is_ready = false
+	
 	if is_server():
 		return
 		
 	argument = data
-	
 	emit_signal("on_host_ready")
 	
 ################################################################

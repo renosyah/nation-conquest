@@ -29,7 +29,7 @@ func all_player_ready():
 	
 	for player in NetworkLobbyManager.get_players():
 		var formation = Utils.get_formation_box(spawn_pos, 4, 8)
-		for i in range(4):
+		for i in range(2):
 			var squad = squads[rand_range(0, squads.size())]
 			squad.node_name = GDUUID.v4()
 			squad.network_master = player.player_network_unique_id
