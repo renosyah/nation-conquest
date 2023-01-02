@@ -20,7 +20,6 @@ var squad = null
 
 var _direction :Vector3 = Vector3.ZERO
 var _velocity :Vector3 = Vector3.ZERO
-var _stop_on_slope :bool = true
 
 export var is_attacking :bool = false
 var attack_to = null
@@ -96,7 +95,7 @@ func _process(delta :float):
 		_velocity.y -= _gravity
 		
 	if _velocity != Vector3.ZERO:
-		_velocity = move_and_slide(_velocity, Vector3.UP,_stop_on_slope)
+		_velocity = move_and_slide(_velocity, Vector3.UP)
 	
 func attacking(delta :float):
 	if not is_attacking:

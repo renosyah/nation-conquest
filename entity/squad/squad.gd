@@ -26,7 +26,6 @@ var _speed :int = 2
 var _units :Array = []
 var _targets :Array = []
 var _velocity :Vector3
-var _stop_on_slope :bool = true
 
 puppet var _puppet_is_moving :bool
 puppet var _puppet_translation :Vector3
@@ -173,7 +172,7 @@ remotesync func _squad_disband():
 	is_dead = true
 	set_process(false)
 	emit_signal("squad_dead", self)
-
+	
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
 	
@@ -192,7 +191,7 @@ func master_moving(delta :float) -> void:
 		_velocity.y -= _gravity
 		
 	if _velocity != Vector3.ZERO:
-		_velocity = move_and_slide(_velocity, Vector3.UP,_stop_on_slope)
+		_velocity = move_and_slide(_velocity, Vector3.UP)
 		
 	_formation_direction_facing(delta)
 	

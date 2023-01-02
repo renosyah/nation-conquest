@@ -37,10 +37,12 @@ func all_player_ready():
 	
 	var spawn_pos = Vector3.UP * 15
 	var player_index = 0
+	var player_army_size = 4
+	var player_squad_size = 15
 	
 	for player in NetworkLobbyManager.get_players():
-		var formation = Utils.get_formation_box(spawn_pos, 4, 4)
-		for i in range(4):
+		var formation = Utils.get_formation_box(spawn_pos, player_army_size, 4)
+		for i in range(player_army_size):
 			var pos = rand_range(0, squads.size())
 			var squad = squads[pos]
 			squad.node_name = GDUUID.v4()
@@ -48,6 +50,7 @@ func all_player_ready():
 			squad.color = colors[player_index]
 			squad.team = 1
 			squad.icon = squad_icons[pos]
+			squad.max_unit = player_squad_size
 			spawn_squad(
 				squad, player_squad_holder.get_path(),formation[i]
 			)
