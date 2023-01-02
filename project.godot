@@ -179,6 +179,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/squad_data/squadData.gd"
 }, {
+"base": "MarginContainer",
+"class": "SquadIcon",
+"language": "GDScript",
+"path": "res://assets/ui/icon/squad_icon/squad_icon.gd"
+}, {
 "base": "Spatial",
 "class": "Tap",
 "language": "GDScript",
@@ -234,6 +239,7 @@ _global_script_class_icons={
 "ServerListener": "res://addons/LANServerBroadcast/server_listener/server_listener.png",
 "Squad": "",
 "SquadData": "",
+"SquadIcon": "",
 "Tap": "",
 "UnitHighlight": "",
 "Utils": "",

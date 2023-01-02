@@ -32,6 +32,10 @@ func _ready():
 	else:
 		set_process(true)
 	
+func set_color(val :Color):
+	border_color = val
+	_frame.self_modulate = border_color
+	
 func _process(_delta):
 	_update_minimap()
 	

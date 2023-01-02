@@ -130,16 +130,30 @@ remotesync func _spawn_squad(_squad_data :Dictionary, _parent :NodePath, _at :Ve
 	_squad.from_dictionary(_squad_data)
 	
 	var _squad_spawn = _squad.spawn(get_node_or_null(_parent))
+	_squad_spawn.connect("squad_update", self, "on_squad_update")
 	_squad_spawn.connect("squad_selected", self,"on_squad_selected")
 	_squad_spawn.connect("squad_dead", self, "on_squad_dead")
 	_squad_spawn.translation = _at
 	
 	_ui.add_minimap_object(_squad_spawn.get_path(), _squad.color)
+	on_squad_spawn(_squad_spawn, _squad.icon)
+	
+func on_squad_spawn(_squad :Squad, _icon :Resource):
+	if _squad.get_network_master() != NetworkLobbyManager.get_id()  or _squad.team != 1:
+		return
+		
+	_ui.on_squad_spawn(_squad, _icon)
+	
+func on_squad_update(_squad :Squad):
+	_ui.on_squad_update(_squad)
 	
 func on_squad_selected(_squad :Squad):
 	pass
 	
 func on_squad_dead(_squad :Squad):
+	if _squad.get_network_master() == NetworkLobbyManager.get_id() and _squad.team == 1:
+		_ui.on_squad_dead(_squad)
+	
 	if not is_server():
 		return
 		

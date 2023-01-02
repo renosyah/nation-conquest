@@ -20,10 +20,7 @@ func on_map_click(_pos :Vector3):
 	)
 	for i in range(selected_squad.size()):
 		if is_instance_valid(selected_squad[i]):
-			selected_squad[i].set_selected(false)
 			selected_squad[i].set_move_to(formation[i], true)
-			
-	selected_squad.clear()
 	
 func on_squad_selected(_squad :Squad):
 	.on_squad_selected(_squad)
@@ -32,11 +29,13 @@ func on_squad_selected(_squad :Squad):
 		return
 		
 	var is_in_squad = selected_squad.has(_squad)
-	_squad.set_selected(not is_in_squad)
-	
 	if is_in_squad:
+		_squad.set_selected(false)
+		_ui.on_squad_selected(_squad, false)
 		selected_squad.erase(_squad)
 	else:
+		_squad.set_selected(true)
+		_ui.on_squad_selected(_squad, true)
 		selected_squad.append(_squad)
 		
 func on_squad_dead(_squad :Squad):

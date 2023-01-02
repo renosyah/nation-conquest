@@ -11,6 +11,17 @@ const squads = [
 	preload("res://data/squad_data/squads/swordman_squad.tres"),
 ]
 
+const squad_icons = [
+	preload("res://assets/ui/icon/squad_icon/icon_squad_pikeman.png"),
+	preload("res://assets/ui/icon/squad_icon/icon_squad_maceman.png"),
+	preload("res://assets/ui/icon/squad_icon/icon_squad_crossbowman.png"),
+	preload("res://assets/ui/icon/squad_icon/icon_squad_archer.png"),
+	preload("res://assets/ui/icon/squad_icon/icon_squad_axeman.png"),
+	preload("res://assets/ui/icon/squad_icon/icon_squad_man_at_arms.png"),
+	preload("res://assets/ui/icon/squad_icon/icon_squad_spearman.png"),
+	preload("res://assets/ui/icon/squad_icon/icon_squad_swordman.png"),
+]
+
 var selected_squad :Array = []
 var colors = [Color.red, Color.blue, Color.green, Color.yellow]
 
@@ -30,11 +41,13 @@ func all_player_ready():
 	for player in NetworkLobbyManager.get_players():
 		var formation = Utils.get_formation_box(spawn_pos, 4, 8)
 		for i in range(4):
-			var squad = squads[rand_range(0, squads.size())]
+			var pos = rand_range(0, squads.size())
+			var squad = squads[pos]
 			squad.node_name = GDUUID.v4()
 			squad.network_master = player.player_network_unique_id
 			squad.color = colors[player_index]
 			squad.team = 1
+			squad.icon = squad_icons[pos]
 			squad.is_selectable = player.player_network_unique_id == NetworkLobbyManager.get_id()
 			spawn_squad(
 				squad, player_squad_holder.get_path(),formation[i]
@@ -54,23 +67,22 @@ func on_map_click(_pos :Vector3):
 	)
 	for i in range(selected_squad.size()):
 		if is_instance_valid(selected_squad[i]):
-			selected_squad[i].set_selected(false)
 			selected_squad[i].set_move_to(formation[i], true)
 			
-	selected_squad.clear()
-	
 func on_squad_selected(_squad :Squad):
 	.on_squad_selected(_squad)
 	
 	if _squad.get_network_master() != NetworkLobbyManager.get_id()  or _squad.team != 1:
 		return
-	
+		
 	var is_in_squad = selected_squad.has(_squad)
-	_squad.set_selected(not is_in_squad)
-	
 	if is_in_squad:
+		_squad.set_selected(false)
+		_ui.on_squad_selected(_squad, false)
 		selected_squad.erase(_squad)
 	else:
+		_squad.set_selected(true)
+		_ui.on_squad_selected(_squad, true)
 		selected_squad.append(_squad)
 		
 func on_squad_dead(_squad :Squad):

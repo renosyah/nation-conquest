@@ -258,6 +258,9 @@ func set_move_to(to :Vector3, display_tap :bool = false):
 func is_in_combat() -> bool:
 	return not _targets.empty()
 
+func unit_size() -> int:
+	return _units.size()
+
 func _attack_targets():
 	if _units.empty():
 		return
