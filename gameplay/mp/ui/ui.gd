@@ -39,7 +39,11 @@ func on_squad_selected(_squad :Squad, is_selected :bool):
 	squads[_squad].set_selected(is_selected)
 	
 func on_squad_dead(_squad :Squad):
-	pass
+	if not squads.has(_squad):
+		return
+		
+	squads[_squad].queue_free()
+	squads.erase(_squad)
 	
 func get_camera_moving_direction() -> Vector2:
 	return camera_control.get_moving_direction()
