@@ -129,6 +129,9 @@ remotesync func _spawn_squad(_squad_data :Dictionary, _parent :NodePath, _at :Ve
 	var _squad = SquadData.new()
 	_squad.from_dictionary(_squad_data)
 	
+	# players own squad
+	_squad.is_selectable = _squad_data.network_master == NetworkLobbyManager.get_id() and _squad.team == 1
+	
 	var _squad_spawn = _squad.spawn(get_node_or_null(_parent))
 	_squad_spawn.connect("squad_update", self, "on_squad_update")
 	_squad_spawn.connect("squad_selected", self,"on_squad_selected")

@@ -39,7 +39,7 @@ func all_player_ready():
 	var player_index = 0
 	
 	for player in NetworkLobbyManager.get_players():
-		var formation = Utils.get_formation_box(spawn_pos, 4, 8)
+		var formation = Utils.get_formation_box(spawn_pos, 4, 4)
 		for i in range(4):
 			var pos = rand_range(0, squads.size())
 			var squad = squads[pos]
@@ -48,7 +48,6 @@ func all_player_ready():
 			squad.color = colors[player_index]
 			squad.team = 1
 			squad.icon = squad_icons[pos]
-			squad.is_selectable = player.player_network_unique_id == NetworkLobbyManager.get_id()
 			spawn_squad(
 				squad, player_squad_holder.get_path(),formation[i]
 			)
