@@ -118,7 +118,7 @@ func _create_land(noise :NoiseMaker) -> Array:
 		).r * 2.2
 		value -= gradient_value
 		value = clamp(value, -0.075, 1)
-		vertext.y = value *  (map_height + 2.0)
+		vertext.y = value * map_height
 		if value > 0.15:
 			inland_positions.append(vertext)
 			

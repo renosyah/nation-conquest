@@ -12,10 +12,10 @@ var zoom_sensitivity : float = 10.0
 var zoom_speed : float = 0.05
 
 var last_drag_distance : float = 0.0
-var drag_speed : float = 0.0025
+var drag_speed : float = 0.055
 
 func get_moving_direction() -> Vector2:
-	return _moving_direction * (_zoom * drag_speed) * 0.45
+	return _moving_direction * _zoom * drag_speed
 	
 func get_zoom() -> float:
 	return _zoom
