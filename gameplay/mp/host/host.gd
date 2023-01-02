@@ -23,8 +23,6 @@ const squad_icons = [
 ]
 
 var selected_squad :Array = []
-var colors = [Color.red, Color.blue, Color.green, Color.yellow]
-
 onready var player_squad_holder = $player_squad_holder
 onready var enemy_squad_holder = $enemy_squad_holder
 
@@ -36,18 +34,18 @@ func all_player_ready():
 	.all_player_ready()
 	
 	var spawn_pos = Vector3.UP * 15
-	var player_index = 0
 	var player_army_size = 4
 	var player_squad_size = 15
 	
 	for player in NetworkLobbyManager.get_players():
 		var formation = Utils.get_formation_box(spawn_pos, player_army_size, 4)
+		var color = Color(randf(), randf(), randf(), 1)
 		for i in range(player_army_size):
 			var pos = rand_range(0, squads.size())
 			var squad = squads[pos]
 			squad.node_name = GDUUID.v4()
 			squad.network_master = player.player_network_unique_id
-			squad.color = colors[player_index]
+			squad.color = color
 			squad.team = 1
 			squad.icon = squad_icons[pos]
 			squad.max_unit = player_squad_size
@@ -56,7 +54,6 @@ func all_player_ready():
 			)
 			
 		spawn_pos += Vector3(spawn_pos.x - 3, spawn_pos.y, spawn_pos.z)
-		player_index += 1
 	
 func on_map_click(_pos :Vector3):
 	.on_map_click(_pos)
