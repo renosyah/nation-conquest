@@ -2,7 +2,6 @@ extends StaticBody
 class_name BaseMap
 
 const land_shader = preload("res://map/shadermaterial.tres")
-const water_shader = preload("res://map/water_shadermaterial.tres")
 
 signal on_generate_map_completed
 signal on_map_click(_pos)
@@ -23,7 +22,6 @@ var _input_detection :Node
 var _click_position :Vector3
 
 onready var _land_shader :ShaderMaterial = land_shader
-onready var _water_shader :ShaderMaterial = water_shader
 
 func _ready():
 	map_land_color = Color(
@@ -64,9 +62,6 @@ func generate_map():
 	land_mesh.get_child(0).remove_child(collision)
 	add_child(collision)
 	land_mesh.get_child(0).queue_free()
-	
-	var water = _create_water()
-	add_child(water)
 	
 	spawn_positions = _create_spawns(lands[1])
 	
@@ -146,20 +141,7 @@ func _create_land(noise :NoiseMaker) -> Array:
 	
 	return [land_mesh_instance, inland_positions]
 	
-func _create_water() -> MeshInstance:
-	var water_mesh = PlaneMesh.new()
-	water_mesh.size = Vector2(map_size, map_size)
-	
-	var water_mesh_instance = MeshInstance.new()
-	water_mesh_instance.mesh = water_mesh
-	water_mesh_instance.set_surface_material(0, _water_shader)
-	
-	water_mesh_instance.cast_shadow = false
-	water_mesh_instance.generate_lightmap = false
-	water_mesh_instance.software_skinning_transform_normals = false
-	
-	return water_mesh_instance
-	
+
 func _input_event(camera, event, position, normal, shape_idx):
 	_click_position = position
 	_input_detection.check_input(event)

@@ -31,8 +31,13 @@ func on_back_pressed():
 ################################################################
 
 var _map :BaseMap
+var _water :Water
 
 func load_map():
+	_water = preload("res://map/water/water.tscn").instance()
+	_water.size = 200
+	add_child(_water)
+	
 	_map = preload("res://map/spring_island/spring_map.tscn").instance()
 	_map.map_seed = NetworkLobbyManager.argument["seed"]
 	_map.map_scale = NetworkLobbyManager.argument["scale"]

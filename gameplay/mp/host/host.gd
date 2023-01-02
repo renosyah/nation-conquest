@@ -29,7 +29,7 @@ func all_player_ready():
 	
 	for player in NetworkLobbyManager.get_players():
 		var formation = Utils.get_formation_box(spawn_pos, 4, 8)
-		for i in range(2):
+		for i in range(4):
 			var squad = squads[rand_range(0, squads.size())]
 			squad.node_name = GDUUID.v4()
 			squad.network_master = player.player_network_unique_id
@@ -95,6 +95,7 @@ func _on_attack_wave_timer_timeout():
 	squad.network_master = Network.PLAYER_HOST_ID
 	squad.color = Color(randf(), randf(), randf(), 1.0)
 	squad.team = 2
+	squad.max_unit = int(rand_range(4, 8))
 	spawn_squad(
 		squad, enemy_squad_holder.get_path(), get_invasion_spawn_pos()
 	)

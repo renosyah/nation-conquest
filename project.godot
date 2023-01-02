@@ -193,6 +193,11 @@ _global_script_classes=[ {
 "class": "Utils",
 "language": "GDScript",
 "path": "res://global/util.gd"
+}, {
+"base": "StaticBody",
+"class": "Water",
+"language": "GDScript",
+"path": "res://map/water/water.gd"
 } ]
 _global_script_class_icons={
 "BaseCustomParticle": "",
@@ -231,7 +236,8 @@ _global_script_class_icons={
 "SquadData": "",
 "Tap": "",
 "UnitHighlight": "",
-"Utils": ""
+"Utils": "",
+"Water": ""
 }
 
 [application]
