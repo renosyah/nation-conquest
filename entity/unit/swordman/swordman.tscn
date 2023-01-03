@@ -181,10 +181,11 @@ start_node = "idle"
 [node name="swordman" type="KinematicBody"]
 collision_layer = 0
 script = ExtResource( 1 )
-hp = 20
-max_hp = 20
-attack_damage = 2
+hp = 80
+max_hp = 80
+attack_damage = 20
 skill = 0.6
+unit_tier = 1
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )

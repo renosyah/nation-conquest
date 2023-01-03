@@ -28,6 +28,9 @@ export var attack_range :float = 2
 export var spotting_range :float = 8
 export(float, 0.0 , 1.0) var skill :float = 0.2
 
+export var unit_tier :int
+export var unit_role :int
+
 export var is_master :bool = false
 
 var _attack_delay_timmer :Timer
@@ -154,7 +157,14 @@ func perform_attack():
 		return
 		
 	if randf() < skill:
-		attack_to.take_damage(attack_damage)
+		var counter = CounterData.new()
+		counter.unit_role = unit_role
+		counter.unit_tier = unit_tier
+		attack_to.take_damage(
+			counter.get_attack_modifier(
+				attack_to.unit_tier, attack_to.unit_role, attack_damage
+			)
+		)
 	
 func take_damage(damage :int) -> void:
 	if is_dead:

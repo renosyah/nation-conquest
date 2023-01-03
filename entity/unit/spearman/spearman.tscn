@@ -289,11 +289,12 @@ start_node = "idle"
 [node name="spearman" type="KinematicBody"]
 collision_layer = 0
 script = ExtResource( 3 )
-hp = 10
-max_hp = 10
-attack_damage = 2
+hp = 50
+max_hp = 50
+attack_damage = 15
 attack_range = 6.0
 skill = 0.4
+unit_role = 1
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )

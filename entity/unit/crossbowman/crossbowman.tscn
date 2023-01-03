@@ -303,12 +303,14 @@ start_node = "idle"
 [node name="crossbowman" type="KinematicBody"]
 collision_layer = 0
 script = ExtResource( 3 )
-hp = 3
-max_hp = 3
-attack_damage = 5
+hp = 60
+max_hp = 60
+attack_damage = 15
 attack_delay = 3.0
 attack_range = 14.0
 spotting_range = 16.0
+unit_tier = 1
+unit_role = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )

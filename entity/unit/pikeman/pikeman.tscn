@@ -292,11 +292,13 @@ script = ExtResource( 3 )
 __meta__ = {
 "_editor_description_": ""
 }
-hp = 15
-max_hp = 15
-attack_damage = 2
+hp = 70
+max_hp = 70
+attack_damage = 25
 attack_range = 6.0
 skill = 0.4
+unit_tier = 1
+unit_role = 1
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )

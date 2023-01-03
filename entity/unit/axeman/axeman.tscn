@@ -180,10 +180,13 @@ start_node = "idle"
 [node name="axeman" type="KinematicBody"]
 collision_layer = 0
 script = ExtResource( 1 )
+hp = 45
+max_hp = 45
 speed = 4
-attack_damage = 4
+attack_damage = 15
 attack_delay = 0.5
 skill = 0.5
+unit_role = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )

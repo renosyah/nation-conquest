@@ -180,11 +180,13 @@ start_node = "idle"
 [node name="maceman" type="KinematicBody"]
 collision_layer = 0
 script = ExtResource( 2 )
-hp = 10
-max_hp = 10
+hp = 55
+max_hp = 55
 speed = 4
-attack_damage = 3
+attack_damage = 35
 skill = 0.5
+unit_tier = 1
+unit_role = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
