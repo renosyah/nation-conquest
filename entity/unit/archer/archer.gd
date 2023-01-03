@@ -46,13 +46,9 @@ func _on_animation_projectile_release():
 	if not is_instance_valid(attack_to):
 		return
 		
-	var to = attack_to.global_transform.origin
-	if translation.distance_squared_to(to) < 50:
-		return
-		
 	var arrow = _get_arrow()
 	arrow.translation = global_transform.origin
-	arrow.target = to
+	arrow.target = attack_to.global_transform.origin
 	arrow.fire()
 	
 func _arrow_hit():

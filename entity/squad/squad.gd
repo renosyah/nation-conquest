@@ -107,7 +107,6 @@ func _create_unit(unit_name :String) -> BaseUnit:
 	_unit.is_master = _is_master()
 	_unit.team = team
 	_unit.color = color
-	_unit.connect("unit_selected", self, "_unit_selected")
 	_unit.connect("unit_dead", self, "_unit_dead")
 	_unit.connect("unit_take_damage", self, "_unit_take_damage")
 	_unit.squad = self
@@ -117,14 +116,14 @@ func _create_unit(unit_name :String) -> BaseUnit:
 func _reassign_unit_formation():
 	for i in range(_units.size()):
 		_units[i].move_to = _pivot.get_child(i)
-	
-func _unit_selected(_unit):
-	emit_signal("squad_selected", self)
-	
+		
 func _unit_take_damage(_unit :BaseUnit, _damage :int):
 	rpc_unreliable("_damage_unit", _unit.get_path(), _damage)
 	
 func _unit_dead(_unit :BaseUnit):
+	if not _is_master:
+		return
+		
 	rpc("_erase_unit", _unit.get_path())
 	
 func _network_timmer_timeout() -> void:
@@ -162,7 +161,9 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	if _units.empty():
 		is_dead = true
 		set_process(false)
-		rpc("_squad_disband")
+		
+		if _is_master:
+			rpc("_squad_disband")
 		return
 		
 	emit_signal("squad_update", self)

@@ -1,7 +1,6 @@
 extends KinematicBody
 class_name BaseUnit
 
-signal unit_selected(_unit)
 signal unit_take_damage(_unit, _damage)
 signal unit_dead(_unit)
 
@@ -33,7 +32,6 @@ export var is_master :bool = false
 
 var _attack_delay_timmer :Timer
 var _stun_delay_timmer :Timer
-var _input_detection :Node
 var _sound :AudioStreamPlayer3D
 var _higlight :UnitHighlight
 
@@ -57,25 +55,15 @@ func _ready():
 	_sound = AudioStreamPlayer3D.new()
 	_sound.unit_size = Global.sound_amplified
 	add_child(_sound)
-	
-	_input_detection = preload("res://addons/Godot-Touch-Input-Manager/input_detection.tscn").instance()
-	_input_detection.connect("any_gesture", self,"_on_input_detection_any_gesture")
-	add_child(_input_detection)
-	
-	connect("input_event", self,"_on_unit_input_event")
-	
+
 	_higlight = preload("res://assets/unit_highlight/unit_highlight.tscn").instance()
 	add_child(_higlight)
-	_higlight.translation.y -= 0.2
+	_higlight.translation.y -= 0.3
 	_higlight.visible = false
 	
-func _on_unit_input_event(camera, event, position, normal, shape_idx):
-	_input_detection.check_input(event)
+	input_ray_pickable = false
 	
-func _on_input_detection_any_gesture(sig ,event):
-	if event is InputEventSingleScreenTap:
-		emit_signal("unit_selected", self)
-		
+	
 func set_selected(val :bool):
 	_higlight.visible = val
 	

@@ -18,7 +18,7 @@ func _ready():
 	set_process(false)
 	
 func fire():
-	_target = Vector3(target.x, target.y + 10 if curve else 0, target.z)
+	_target = Vector3(target.x, target.y + (10 if curve else 0), target.z)
 	look_at(_target, Vector3.UP)
 	visible = true
 	set_process(true)
