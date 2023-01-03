@@ -129,12 +129,25 @@ func _on_bot_attack_timer_timeout():
 	if not is_instance_valid(squad):
 		return
 	
-	if player_squad_holder.get_child_count() < 1:
+	if player_squad_holder.get_children().empty():
 		return
 	
-	var target :Squad = player_squad_holder.get_child(
-		rand_range(0, player_squad_holder.get_child_count())
-	)
+	var target :Squad = player_squad_holder.get_child(0)
+	for s in player_squad_holder.get_children():
+		if not is_instance_valid(target):
+			continue
+			
+		if not is_instance_valid(s):
+			continue
+			
+		var dis_1 = target.translation.distance_to(squad.translation)
+		var dis_2 = target.translation.distance_to(s.translation)
+		if dis_2 < dis_1:
+			target = s
+			
+	if not is_instance_valid(target):
+		return
+		
 	var attack_pos = target.translation.direction_to(
 		squad.translation
 	) * squad.combat_range

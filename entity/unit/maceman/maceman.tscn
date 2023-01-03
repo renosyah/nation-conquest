@@ -184,7 +184,7 @@ hp = 55
 max_hp = 55
 speed = 4
 attack_damage = 35
-skill = 0.5
+skill = 0.7
 unit_tier = 1
 unit_role = 3
 

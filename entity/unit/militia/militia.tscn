@@ -183,6 +183,7 @@ script = ExtResource( 3 )
 hp = 40
 max_hp = 40
 attack_damage = 10
+skill = 0.5
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )

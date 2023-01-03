@@ -54,7 +54,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://entity/unit/BaseUnit.gd"
 }, {
-"base": "Node",
+"base": "BaseData",
 "class": "CounterData",
 "language": "GDScript",
 "path": "res://data/counter/CounterData.gd"

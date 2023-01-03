@@ -310,6 +310,7 @@ max_hp = 30
 attack_damage = 15
 attack_range = 14.0
 spotting_range = 16.0
+skill = 0.6
 unit_role = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

@@ -48,7 +48,7 @@ func _on_animation_projectile_release():
 		
 	var arrow = _get_arrow()
 	arrow.translation = global_transform.origin
-	arrow.target = attack_to.global_transform.origin
+	arrow.target = attack_to.get_prediction_path()
 	arrow.accuration = skill
 	arrow.fire()
 	

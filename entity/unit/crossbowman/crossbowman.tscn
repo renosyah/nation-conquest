@@ -309,6 +309,7 @@ attack_damage = 15
 attack_delay = 3.0
 attack_range = 14.0
 spotting_range = 16.0
+skill = 0.7
 unit_tier = 1
 unit_role = 2
 

@@ -296,7 +296,7 @@ hp = 70
 max_hp = 70
 attack_damage = 25
 attack_range = 6.0
-skill = 0.4
+skill = 0.7
 unit_tier = 1
 unit_role = 1
 

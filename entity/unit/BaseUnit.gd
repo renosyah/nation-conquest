@@ -39,7 +39,7 @@ var _sound :AudioStreamPlayer3D
 var _higlight :UnitHighlight
 
 onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
-onready var _floor_max_angle: float = deg2rad(45.0)
+onready var _counter :CounterData = CounterData.new(unit_role, unit_tier, skill)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -156,15 +156,13 @@ func perform_attack():
 	if not is_master:
 		return
 		
-	if randf() < skill:
-		var counter = CounterData.new()
-		counter.unit_role = unit_role
-		counter.unit_tier = unit_tier
-		attack_to.take_damage(
-			counter.get_attack_modifier(
-				attack_to.unit_tier, attack_to.unit_role, attack_damage
-			)
+	attack_to.take_damage(
+		_counter.get_attack_modifier(
+			attack_to.unit_tier, 
+			attack_to.unit_role,
+			attack_damage
 		)
+	)
 	
 func take_damage(damage :int) -> void:
 	if is_dead:
@@ -184,6 +182,9 @@ func take_damage(damage :int) -> void:
 
 func dead() -> void:
 	emit_signal("unit_dead", self)
+	
+func get_prediction_path() -> Vector3:
+	return global_transform.origin + _velocity
 	
 func _move_to_position(_at :Vector3, _margin :float) -> bool:
 	var pos :Vector3 = global_transform.origin
