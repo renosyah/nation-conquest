@@ -22,7 +22,6 @@ func get_attack_modifier(tier_to_counter :int, role_to_counter :int, current_dam
 	if unit_tier > tier_to_counter:
 		# got 25 % bonus damage
 		bonus += int(current_damage * 0.25)
-		
 		bonus += _get_attack_modifier_by_role(
 			tier_to_counter, role_to_counter, current_damage
 		)
@@ -31,12 +30,12 @@ func get_attack_modifier(tier_to_counter :int, role_to_counter :int, current_dam
 	elif unit_tier < tier_to_counter:
 		
 		# lose 25 % bonus damage
-		bonus = bonus - int(current_damage * 0.25)
-		
+		bonus -= int(current_damage * 0.25)
 		bonus += _get_attack_modifier_by_role(
 			tier_to_counter, role_to_counter, current_damage
 		)
 		
+	# current tier same
 	else:
 		bonus += _get_attack_modifier_by_role(
 			tier_to_counter, role_to_counter, current_damage
