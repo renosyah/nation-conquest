@@ -92,10 +92,6 @@ func attacking(delta :float):
 	if not is_attacking:
 		return
 		
-	if not _stun_delay_timmer.is_stopped():
-		_velocity = Vector3.ZERO
-		return
-		
 	if not is_instance_valid(attack_to):
 		is_attacking = false
 		is_moving = true
@@ -123,10 +119,6 @@ func attacking(delta :float):
 		
 func moving(delta :float):
 	if not is_moving:
-		return
-		
-	if not _stun_delay_timmer.is_stopped():
-		_velocity = Vector3.ZERO
 		return
 		
 	if not is_instance_valid(move_to):
@@ -168,8 +160,9 @@ func take_damage(damage :int) -> void:
 	if is_dead:
 		return
 		
-	_stun_delay_timmer.wait_time = damage
-	_stun_delay_timmer.start()
+	if _stun_delay_timmer.is_stopped():
+		_stun_delay_timmer.wait_time = damage
+		_stun_delay_timmer.start()
 		
 	hp -= damage
 	if hp < 1:
@@ -194,6 +187,9 @@ func _move_to_position(_at :Vector3, _margin :float) -> bool:
 		return true
 	
 	var _speed_modifer = speed * distance if is_moving else speed
+	if not _stun_delay_timmer.is_stopped():
+		_speed_modifer = _speed_modifer * 0.25
+		
 	_speed_modifer = clamp(_speed_modifer, 0, 5)
 	
 	_direction = translation.direction_to(to)

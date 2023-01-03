@@ -50,7 +50,10 @@ func _process(delta):
 	if curve:
 		var is_half_distance :bool = _initial_distance / 2 < distance
 		direction.y += 0.5 if is_half_distance else -0.5
-		_target.y = lerp(_target.y, target.y, (speed / 2) * delta)
+		
+		if is_half_distance:
+			_target.y = lerp(_target.y, target.y, (speed / 2) * delta)
+			
 		look_at(_target, Vector3.UP)
 	
 	translation += direction * speed * delta
