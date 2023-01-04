@@ -121,9 +121,6 @@ func _unit_take_damage(_unit :BaseUnit, _damage :int):
 	rpc_unreliable("_damage_unit", _unit.get_path(), _damage)
 	
 func _unit_dead(_unit :BaseUnit):
-	if not _is_master:
-		return
-		
 	rpc("_erase_unit", _unit.get_path())
 	
 func _network_timmer_timeout() -> void:
