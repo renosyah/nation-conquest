@@ -48,8 +48,13 @@ func _on_animation_projectile_release():
 		
 	var arrow = _get_arrow()
 	arrow.translation = global_transform.origin
-	arrow.target = attack_to.get_prediction_path()
 	arrow.accuration = skill
+	
+	if attack_to.has_method("get_prediction_path"):
+		arrow.target = attack_to.get_prediction_path()
+	else:
+		arrow.target = attack_to.global_transform.origin
+		
 	arrow.fire()
 	
 func _arrow_hit():
