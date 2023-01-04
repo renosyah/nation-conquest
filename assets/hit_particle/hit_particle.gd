@@ -6,7 +6,6 @@ export var max_pool :int = 6
 var particles :Array = []
 
 func _ready():
-	set_as_toplevel(true)
 	for i in range(max_pool):
 		particles.append(_create_particle())
 	
@@ -15,15 +14,17 @@ func _create_particle() -> BaseCustomParticle:
 	add_child(custom_particle)
 	return custom_particle
 	
-func display_hit(s :String, color :Color):
+func display_hit(s :String, color :Color, at :Vector3):
 	for i in particles:
 		if not i.is_emitting():
 			if i is CustomTextParticle:
 				i.text = s
+				i.translation = at
 				i.display()
 				
 			elif i is CustomMeshParticle:
 				i.color = color
+				i.translation = at
 				i.display()
 				
 			return

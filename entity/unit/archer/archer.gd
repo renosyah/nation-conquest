@@ -34,7 +34,7 @@ func _get_arrow() -> BaseProjectile:
 	
 func _create_arrow() -> BaseProjectile:
 	var arrow = arrow_projectile.instance()
-	
+	arrow.speed = 12
 	arrow.connect("hit", self ,"_arrow_hit")
 	add_child(arrow)
 	return arrow

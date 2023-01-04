@@ -40,11 +40,17 @@ func _add_offset():
 	var offset = (1 - accuration)
 	var rand_offset = rand_range(-offset, offset) + 0.5
 	target = target + (Vector3(1, 0, 1) * rand_offset)
-	target.y -= -0.1
+	target.y -= -0.5
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var distance :float = translation.distance_squared_to(target)
+	var _translation = translation
+	_translation.y = 0
+	
+	var _target = target
+	_target.y = 0
+	
+	var distance :float = _translation.distance_squared_to(_target)
 	if distance <= margin:
 		emit_signal("hit")
 		set_process(false)

@@ -30,3 +30,5 @@ func _ready():
 	water_mesh_instance.get_child(0).remove_child(collision)
 	add_child(collision)
 	water_mesh_instance.get_child(0).queue_free()
+	
+	water_mesh_instance.translation.y += 0.5

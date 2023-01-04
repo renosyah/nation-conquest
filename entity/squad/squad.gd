@@ -142,9 +142,9 @@ remotesync func _damage_unit(_unit_path :NodePath, _damage :int):
 	if not is_instance_valid(_unit):
 		return
 		
-	_hit_particle.translation = _unit.global_transform.origin
-	_hit_particle.display_hit("-" + str(_damage), color)
-	
+	_hit_particle.display_hit(
+		"-" + str(_damage), color, _unit.global_transform.origin
+	)
 	
 remotesync func _erase_unit(_unit_path :NodePath):
 	var _unit :BaseUnit = get_node_or_null(_unit_path)
