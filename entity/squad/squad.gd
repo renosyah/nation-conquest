@@ -92,7 +92,7 @@ func _ready():
 		
 		_speed = _unit.speed + 1
 		spotting_range = _unit.spotting_range
-		combat_range = _unit.attack_range
+		combat_range = _unit.spotting_range - 1
 		
 	var shape :CylinderShape = _spotting_area.shape.duplicate() as CylinderShape
 	shape.radius = spotting_range

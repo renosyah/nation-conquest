@@ -9,8 +9,7 @@ export var margin :int = 1
 export var curve :bool = true
 export var accuration :float = 1.0
 
-onready var _initial_distance :float = translation.distance_squared_to(target)
-var _target :Vector3
+var _trajectory_aim :Vector3
 var _arrow_stick :Timer
 
 # Called when the node enters the scene tree for the first time.
@@ -27,8 +26,11 @@ func _ready():
 	
 func fire():
 	_add_offset()
-	_target = Vector3(target.x, target.y + (10 if curve else 0), target.z)
-	look_at(_target, Vector3.UP)
+	var _initial_distance :float = translation.distance_to(target)
+	_trajectory_aim = Vector3(
+		target.x, target.y + (_initial_distance if curve else 0), target.z
+	)
+	look_at(_trajectory_aim, Vector3.UP)
 	visible = true
 	set_process(true)
 	
@@ -36,6 +38,7 @@ func _add_offset():
 	var offset = (1 - accuration)
 	var rand_offset = rand_range(-offset, offset)
 	target = target + (Vector3(1, 0, 1) * rand_offset)
+	target.y = -0.5
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -46,17 +49,13 @@ func _process(delta):
 		_arrow_stick.start()
 		return
 		
-	var direction :Vector3 = translation.direction_to(target)
-	if curve:
-		var is_half_distance :bool = _initial_distance / 2 < distance
-		direction.y += 0.5 if is_half_distance else -0.5
-		
-		if is_half_distance:
-			_target.y = lerp(_target.y, target.y, (speed / 2) * delta)
-			
-		look_at(_target, Vector3.UP)
+	var arrow_direction :Vector3 = translation.direction_to(_trajectory_aim)
+	translation += arrow_direction * speed * delta
+	look_at(arrow_direction * 100, Vector3.UP)
 	
-	translation += direction * speed * delta
+	if curve:
+		var trajectory_direction :Vector3 = _trajectory_aim.direction_to(target)
+		_trajectory_aim += trajectory_direction * speed * delta
 	
 func _arrow_stick_timeout():
 	visible = false

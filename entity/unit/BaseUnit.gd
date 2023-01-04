@@ -161,7 +161,7 @@ func take_damage(damage :int) -> void:
 		return
 		
 	if _stun_delay_timmer.is_stopped():
-		_stun_delay_timmer.wait_time = damage
+		_stun_delay_timmer.wait_time = 1 + damage
 		_stun_delay_timmer.start()
 		
 	hp -= damage
