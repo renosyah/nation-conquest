@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/tower.obj-4c50d44bf8ba6937ce946dc929fffa74.mesh"
+
+[deps]
+
+files=[ "res://.import/tower.obj-4c50d44bf8ba6937ce946dc929fffa74.mesh" ]
+
+source_file="res://entity/building/archer_tower/tower.obj"
+dest_files=[ "res://.import/tower.obj-4c50d44bf8ba6937ce946dc929fffa74.mesh", "res://.import/tower.obj-4c50d44bf8ba6937ce946dc929fffa74.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

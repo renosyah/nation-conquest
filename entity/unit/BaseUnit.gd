@@ -10,6 +10,8 @@ export var color :Color = Color.white
 export var hp :int = 5
 export var max_hp :int = 5
 
+export var enable_moving :bool = true
+
 export var is_moving :bool = false
 var move_to = null
 export var margin :float = 0.6
@@ -82,6 +84,9 @@ func _process(delta :float):
 	moving(delta)
 	idle(delta)
 	
+	if not enable_moving:
+		return
+	
 	if not is_on_floor():
 		_velocity.y -= _gravity
 		
@@ -107,9 +112,15 @@ func attacking(delta :float):
 				is_moving = true
 				return
 			
-	var is_arrive = _move_to_position(
-		attack_to.global_transform.origin, attack_range
-	)
+	var is_arrive :bool = false
+	
+	if enable_moving:
+		is_arrive = _move_to_position(
+			attack_to.global_transform.origin, attack_range
+		)
+	else:
+		is_arrive = true
+	
 	if is_arrive:
 		if _attack_delay_timmer.is_stopped():
 			perform_attack()
@@ -118,6 +129,9 @@ func attacking(delta :float):
 			_attack_delay_timmer.start()
 		
 func moving(delta :float):
+	if not enable_moving:
+		return
+		
 	if not is_moving:
 		return
 		
@@ -148,13 +162,16 @@ func perform_attack():
 	if not is_master:
 		return
 		
-	attack_to.take_damage(
-		_counter.get_attack_modifier(
-			attack_to.unit_tier, 
-			attack_to.unit_role,
-			attack_damage
+	if attack_to is BaseBuilding:
+		attack_to.take_damage(attack_damage)
+	else:
+		attack_to.take_damage(
+			_counter.get_attack_modifier(
+				attack_to.unit_tier, 
+				attack_to.unit_role,
+				attack_damage
+			)
 		)
-	)
 	
 func take_damage(damage :int) -> void:
 	if is_dead:

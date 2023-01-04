@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "BaseEntity",
+"class": "BaseBuilding",
+"language": "GDScript",
+"path": "res://entity/building/BaseBuilding.gd"
+}, {
 "base": "CPUParticles",
 "class": "BaseCustomParticle",
 "language": "GDScript",
@@ -83,6 +88,11 @@ _global_script_classes=[ {
 "class": "HitParticle",
 "language": "GDScript",
 "path": "res://assets/hit_particle/hit_particle.gd"
+}, {
+"base": "Sprite3D",
+"class": "HpBar3D",
+"language": "GDScript",
+"path": "res://assets/ui/bar-3d/hp_bar_3d.gd"
 }, {
 "base": "InputEventAction",
 "class": "InputEventMultiScreenDrag",
@@ -210,6 +220,7 @@ _global_script_classes=[ {
 "path": "res://map/water/water.gd"
 } ]
 _global_script_class_icons={
+"BaseBuilding": "",
 "BaseCustomParticle": "",
 "BaseData": "",
 "BaseEntity": "",
@@ -225,6 +236,7 @@ _global_script_class_icons={
 "CustomTextParticle": "",
 "GDUUID": "",
 "HitParticle": "",
+"HpBar3D": "",
 "InputEventMultiScreenDrag": "",
 "InputEventScreenPinch": "",
 "InputEventScreenTwist": "",

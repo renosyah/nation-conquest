@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://entity/unit/militia/militia.gd" type="Script" id=1]
+[ext_resource path="res://entity/unit/swordman/swordman.gd" type="Script" id=1]
 [ext_resource path="res://entity/weapon/sword.tscn" type="PackedScene" id=2]
 [ext_resource path="res://entity/unit/swordman/body.png" type="Texture" id=3]
 [ext_resource path="res://entity/weapon/shield.tscn" type="PackedScene" id=4]
@@ -183,7 +183,7 @@ collision_layer = 0
 script = ExtResource( 1 )
 hp = 80
 max_hp = 80
-attack_damage = 20
+attack_damage = 25
 skill = 0.8
 unit_tier = 1
 

@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://entity/building/archer_tower/tower.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://entity/building/archer_tower/archer_tower.gd" type="Script" id=2]
+[ext_resource path="res://entity/unit/archer/archer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/hit_particle/custom_particle/text/custom_text_particle.tscn" type="PackedScene" id=6]
+
+[sub_resource type="SpatialMaterial" id=5]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.478431, 0.223529, 0, 1 )
+
+[sub_resource type="ConvexPolygonShape" id=4]
+points = PoolVector3Array( 0.0539688, 5.28355, -0.0541373, -1, -0.960609, -1, -1, -0.960609, 0.999636, 1, -0.961136, 0.999804, 0.999831, -0.960609, -1, -1, 4.41922, 0.999831, 0.999804, 4.4196, 1, -1, 4.41922, -1, 0.999831, 4.41922, -1, 1.01835, 4.46094, -0.277821, -0.0543294, 5.28337, 0.0541609, 0.0539684, 5.28352, 0.0541635, -0.888795, 4.52417, -0.888795, -0.851827, 4.55781, 0.851658, -0.0543294, 5.28337, -0.0541343, 0.851699, 4.55792, 0.851699, 0.888627, 4.52417, -0.888795 )
+
+[sub_resource type="CylinderShape" id=3]
+height = 20.0
+radius = 4.0
+
+[node name="archer_tower" type="KinematicBody"]
+collision_layer = 0
+script = ExtResource( 2 )
+team = 3
+status = 2
+unit = ExtResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = SubResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 4 )
+
+[node name="Area" type="Area" parent="."]
+collision_mask = 0
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.696755, 0 )
+shape = SubResource( 3 )
+
+[node name="Position3D" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.09719, 0 )
+
+[node name="garrison_replenis_timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="agro_timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="hpBar" parent="." instance=ExtResource( 4 )]
+transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.09992, 0 )
+
+[node name="hit_particle" parent="." instance=ExtResource( 5 )]
+custom_particle_scene = ExtResource( 6 )
+
+[connection signal="timeout" from="garrison_replenis_timer" to="." method="_on_garrison_replenis_timer_timeout"]
+[connection signal="timeout" from="agro_timer" to="." method="_on_agro_timer_timeout"]

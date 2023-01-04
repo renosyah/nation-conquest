@@ -37,15 +37,10 @@ margin_top = 10.0
 margin_right = 190.0
 margin_bottom = 190.0
 mouse_filter = 2
-color = Color( 0.188235, 0.188235, 0.188235, 0.784314 )
+color = Color( 0, 0, 0, 0.92549 )
 
 [node name="EntityMarker" type="Sprite" parent="MarginContainer/Grid"]
 visible = false
-texture = ExtResource( 3 )
-
-[node name="EntityMarker2" type="Sprite" parent="MarginContainer/Grid/EntityMarker"]
-show_behind_parent = true
-scale = Vector2( 1.2, 1.2 )
 texture = ExtResource( 3 )
 
 [node name="Camera" type="TextureRect" parent="MarginContainer/Grid"]

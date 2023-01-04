@@ -72,21 +72,12 @@ func _ready():
 		_pivot.add_child(position3d)
 		position3d.translation = pos
 		
-	var delay = Timer.new()
-	delay.wait_time = 1
-	add_child(delay)
-	delay.start()
-	
-	yield(delay, "timeout")
-	delay.queue_free()
-	
 	var spotting_range :int = 8
 	
 	for pos in range(max_unit):
 		var _unit = _create_unit("unit-" + str(pos))
 		_unit.move_to = _pivot.get_child(pos)
 		_unit.is_moving = true
-		_unit.set_as_toplevel(true)
 		_unit.translation = _pivot.get_child(pos).global_transform.origin + Vector3(0, 2, 0)
 		_units.append(_unit)
 		
@@ -97,6 +88,17 @@ func _ready():
 	var shape :CylinderShape = _spotting_area.shape.duplicate() as CylinderShape
 	shape.radius = spotting_range
 	_spotting_area.shape = shape
+	
+	var delay = Timer.new()
+	delay.wait_time = 1
+	add_child(delay)
+	delay.start()
+	
+	yield(delay, "timeout")
+	delay.queue_free()
+	
+	for _unit in _units:
+		_unit.set_as_toplevel(true)
 	
 	visible = true
 	is_dead = false
@@ -152,7 +154,7 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	_unit.queue_free()
 	
 	_reassign_unit_formation()
-
+	
 	(_unit_count.mesh as TextMesh).text = str(_units.size())
 	
 	if _units.empty():
@@ -258,6 +260,12 @@ func is_in_combat() -> bool:
 func unit_size() -> int:
 	return _units.size()
 
+func disband():
+	if not _is_master:
+		return
+		
+	rpc("_squad_disband")
+
 func _attack_targets():
 	if _units.empty():
 		return
@@ -299,7 +307,20 @@ func _spotted_target():
 			if body.team == team:
 				continue
 				
+			if body.is_dead:
+				continue
+				
 			_targets.append(body)
+			
+		elif body is BaseBuilding:
+			if body.team == team:
+				continue
+				
+			if body.is_dead:
+				continue
+				
+			_targets.append(body)
+			
 			
 func _on_agro_timer_timeout():
 	_spotted_target()

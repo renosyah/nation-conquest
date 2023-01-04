@@ -75,12 +75,14 @@ func _update_minimap():
 func _is_position_in_rect(obj_pos :Vector2) -> bool:
 	return _grid.get_rect().has_point(obj_pos + _grid.rect_position)
 	
-func add_object(object_path :NodePath, color :Color = Color.white):
+func add_object(object_path :NodePath, color :Color = Color.white, _icon :Resource = preload("res://addons/mini-map/troop.png")):
 	var object = get_node_or_null(object_path)
 	if not is_instance_valid(object):
 		return
 		
 	var new_marker = _entity_marker_template.duplicate()
+	new_marker.texture = _icon
+	
 	new_marker.self_modulate = color
 	new_marker.show()
 	_grid.add_child(new_marker)

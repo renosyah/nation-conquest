@@ -32,6 +32,7 @@ func on_back_pressed():
 
 var _map :BaseMap
 var _water :Water
+var _towers = []
 
 func load_map():
 	_water = preload("res://map/water/water.tscn").instance()
@@ -50,11 +51,33 @@ func load_map():
 	var rng = RandomNumberGenerator.new()
 	rng.seed = NetworkLobbyManager.argument["seed"]
 	
+	var positions_copy = _map.spawn_positions.duplicate()
+	
+	for i in range(4):
+		var tower_pos = positions_copy[rng.randi_range(0, positions_copy.size() - 1)]
+		var tower = preload("res://entity/building/archer_tower/archer_tower.tscn").instance()
+		tower.color = Color.blue
+		tower.team = 1
+		tower.name = "tower-" + str(i)
+		tower.set_network_master(Network.PLAYER_HOST_ID)
+		tower.connect("building_destroyed", self, "on_building_destroyed")
+		add_child(tower)
+		tower.set_process(false)
+		tower.translation = tower_pos
+		_towers.append(tower)
+		
+		_ui.add_minimap_object(
+			tower.get_path(), tower.color, preload("res://entity/building/archer_tower/tower.png")
+		)
+		
+		positions_copy.erase(tower_pos)
+	
+	
 	var resources_scenes = [
 		preload("res://entity/resources/berry_bush/berry_bush.tscn"),
 		preload("res://entity/resources/trees/trees.tscn"),
 	]
-	for pos in _map.spawn_positions:
+	for pos in positions_copy:
 		var resources =  resources_scenes[rng.randi_range(0, resources_scenes.size() - 1)].instance()
 		add_child(resources)
 		resources.translation = pos
@@ -73,6 +96,9 @@ func on_generate_map_completed():
 	
 func on_map_click(_pos :Vector3):
 	pass
+	
+func on_building_destroyed(_building :BaseBuilding):
+	_building.queue_free()
 	
 ################################################################
 # ui

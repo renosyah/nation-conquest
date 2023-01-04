@@ -51,5 +51,5 @@ func get_camera_moving_direction() -> Vector2:
 func get_camera_zoom() -> float:
 	return camera_control.get_zoom()
 	
-func add_minimap_object(object_path :NodePath, color :Color = Color.white):
-	mini_map.add_object(object_path, color)
+func add_minimap_object(object_path :NodePath, color :Color = Color.white, _icon :Resource = preload("res://addons/mini-map/troop.png")):
+	mini_map.add_object(object_path, color, _icon)

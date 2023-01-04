@@ -36,16 +36,17 @@ func all_player_ready():
 	var spawn_pos = Vector3.UP * 15
 	var player_army_size = 4
 	var player_squad_size = 15
+	var color = [Color.blue, Color.green, Color.yellow, Color.purple]
+	var player_index = 0
 	
 	for player in NetworkLobbyManager.get_players():
 		var formation = Utils.get_formation_box(spawn_pos, player_army_size, 4)
-		var color = Color(randf(), randf(), randf(), 1)
 		for i in range(player_army_size):
 			var pos = rand_range(0, squads.size())
 			var squad = squads[pos]
 			squad.node_name = GDUUID.v4()
 			squad.network_master = player.player_network_unique_id
-			squad.color = color
+			squad.color = color[player_index]
 			squad.team = 1
 			squad.icon = squad_icons[pos]
 			squad.max_unit = player_squad_size
@@ -54,6 +55,7 @@ func all_player_ready():
 			)
 			
 		spawn_pos += Vector3(spawn_pos.x - 3, spawn_pos.y, spawn_pos.z)
+		player_index += 1
 	
 func on_map_click(_pos :Vector3):
 	.on_map_click(_pos)
@@ -104,7 +106,7 @@ func _on_attack_wave_timer_timeout():
 	var squad = squads[rand_range(0, squads.size())]
 	squad.node_name = GDUUID.v4()
 	squad.network_master = Network.PLAYER_HOST_ID
-	squad.color = Color(randf(), randf(), randf(), 1.0)
+	squad.color = Color.red
 	squad.team = 2
 	squad.max_unit = int(rand_range(6, 8))
 	spawn_squad(
@@ -132,8 +134,9 @@ func _on_bot_attack_timer_timeout():
 	if player_squad_holder.get_children().empty():
 		return
 	
-	var target :Squad = player_squad_holder.get_child(0)
-	for s in player_squad_holder.get_children():
+	var target = player_squad_holder.get_child(0)
+	var targets = player_squad_holder.get_children() + _towers
+	for s in targets:
 		if not is_instance_valid(target):
 			continue
 			
