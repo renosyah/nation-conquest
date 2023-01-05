@@ -21,7 +21,12 @@ func get_zoom() -> float:
 	return _zoom
 	
 func _process(delta):
-	_moving_direction = _moving_direction.linear_interpolate(Vector2.ZERO, 25 * delta)
+	if Engine.get_frames_per_second() > 25:
+		_moving_direction = _moving_direction.linear_interpolate(
+			Vector2.ZERO, 25 * delta
+		)
+	else:
+		_moving_direction = Vector2.ZERO
 	
 func _draging(event: InputEvent):
 	if event is InputEventScreenTouch:

@@ -86,12 +86,18 @@ func _process(delta :float):
 	
 	if not enable_moving:
 		return
-	
-	if not is_on_floor():
-		_velocity.y -= _gravity
 		
-	if _velocity != Vector3.ZERO:
+	var _is_on_floor = is_on_floor()
+	
+	if not _is_on_floor:
+		_velocity.y -= _gravity
 		_velocity = move_and_slide(_velocity, Vector3.UP)
+		return
+		
+	var _empty_velocity = _velocity != Vector3.ZERO
+	if _empty_velocity and _is_on_floor:
+		_velocity = move_and_slide(_velocity, Vector3.UP)
+		
 	
 func attacking(delta :float):
 	if not is_attacking:
@@ -102,15 +108,12 @@ func attacking(delta :float):
 		is_moving = true
 		return
 		
-	if is_instance_valid(move_to) and is_instance_valid(squad):
+	if is_instance_valid(squad):
 		if squad.is_moving:
-			var _unit_pos :Vector3 = global_transform.origin
-			var _unit_assign_pos :Vector3 = move_to.global_transform.origin
-			if _unit_pos.distance_squared_to(_unit_assign_pos) > 50.0:
-				is_attacking = false
-				attack_to = null
-				is_moving = true
-				return
+			is_attacking = false
+			attack_to = null
+			is_moving = true
+			return
 			
 	var is_arrive :bool = false
 	
@@ -138,12 +141,7 @@ func moving(delta :float):
 	if not is_instance_valid(move_to):
 		return
 		
-	var _unit_pos :Vector3 = global_transform.origin
-	var _unit_assign_pos :Vector3 = move_to.global_transform.origin
-	if _unit_pos.distance_to(_unit_assign_pos) <= margin:
-		return
-		
-	_move_to_position(_unit_assign_pos, margin)
+	_move_to_position(move_to.global_transform.origin, margin)
 	
 func idle(delta :float):
 	pass
