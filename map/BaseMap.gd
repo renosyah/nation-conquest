@@ -54,6 +54,8 @@ func generate_map():
 	land_mesh = lands[0]
 	add_child(land_mesh)
 	
+	land_mesh.create_trimesh_collision()
+	
 	land_mesh.cast_shadow = false
 	land_mesh.generate_lightmap = false
 	land_mesh.software_skinning_transform_normals = false
@@ -89,13 +91,13 @@ func _trim_array(arr :Array, step :int) -> Array:
 func _create_land(noise :NoiseMaker) -> Array:
 	var inland_positions :Array = []
 	
-	var land_mesh = PlaneMesh.new()
-	land_mesh.size = Vector2(map_size, map_size)
-	land_mesh.subdivide_width = map_size * 0.5
-	land_mesh.subdivide_depth = map_size * 0.5
+	var _land_mesh = PlaneMesh.new()
+	_land_mesh.size = Vector2(map_size, map_size)
+	_land_mesh.subdivide_width = map_size * 0.5
+	_land_mesh.subdivide_depth = map_size * 0.5
 
 	var surface_tool = SurfaceTool.new()
-	surface_tool.create_from(land_mesh, 0)
+	surface_tool.create_from(_land_mesh, 0)
 	
 	var array_plane = surface_tool.commit()
 	
@@ -134,12 +136,11 @@ func _create_land(noise :NoiseMaker) -> Array:
 	surface_tool.create_from(array_plane, 0)
 	surface_tool.generate_normals()
 	
-	var land_mesh_instance = MeshInstance.new()
-	land_mesh_instance.mesh = surface_tool.commit()
-	land_mesh_instance.set_surface_material(0, _land_shader)
-	land_mesh_instance.create_trimesh_collision()
+	var _land_mesh_instance = MeshInstance.new()
+	_land_mesh_instance.mesh = surface_tool.commit()
+	_land_mesh_instance.set_surface_material(0, _land_shader)
 	
-	return [land_mesh_instance, inland_positions]
+	return [_land_mesh_instance, inland_positions]
 	
 
 func _input_event(camera, event, position, normal, shape_idx):

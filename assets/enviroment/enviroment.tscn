@@ -11,6 +11,10 @@ texture_size = 0
 [sub_resource type="Environment" id=1]
 background_mode = 2
 background_sky = SubResource( 2 )
+fog_color = Color( 0.12549, 0.560784, 1, 1 )
+fog_sun_color = Color( 1, 0.901961, 0.701961, 1 )
+fog_depth_curve = 0.258816
+dof_blur_far_distance = 25.0
 
 [node name="enviroment" type="Node"]
 

@@ -37,7 +37,7 @@ margin_top = 10.0
 margin_right = 190.0
 margin_bottom = 190.0
 mouse_filter = 2
-color = Color( 0, 0, 0, 0.92549 )
+color = Color( 0.0980392, 0.0980392, 0.0980392, 1 )
 
 [node name="EntityMarker" type="Sprite" parent="MarginContainer/Grid"]
 visible = false

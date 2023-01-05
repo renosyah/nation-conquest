@@ -35,7 +35,6 @@ func on_back_pressed():
 var _map :BaseMap
 var _water :Water
 var _towers :Array = []
-var _spawn_pos :Array = []
 
 func load_map():
 	_water = preload("res://map/water/water.tscn").instance()
@@ -46,59 +45,19 @@ func load_map():
 	_map.map_seed = NetworkLobbyManager.argument["seed"]
 	_map.map_scale = NetworkLobbyManager.argument["scale"]
 	_map.map_size = 200
+	_map.map_height = 15
 	_map.connect("on_generate_map_completed", self, "on_generate_map_completed")
 	_map.connect("on_map_click", self , "on_map_click")
 	add_child(_map)
 	_map.generate_map()
-	
+
 	var rng = RandomNumberGenerator.new()
 	rng.seed = NetworkLobbyManager.argument["seed"]
 	
 	var positions_copy = _map.spawn_positions.duplicate()
+	var _spawn_points = _generate_spawn_points(positions_copy)
 	
-	var pos_1 = Vector3(-100, 0, -100)
-	_spawn_pos.append(Vector3.ZERO)
-	for pos in positions_copy:
-		var close_1 = _spawn_pos[0].distance_squared_to(pos_1)
-		var close_2 = pos.distance_squared_to(pos_1)
-		if close_2 < close_1 and pos.y > 2:
-			_spawn_pos[0] = pos
-			
-	positions_copy.erase(_spawn_pos[0])
-	
-	
-	var pos_2 = Vector3(100, 0, -100)
-	_spawn_pos.append(Vector3.ZERO)
-	for pos in positions_copy:
-		var close_1 = _spawn_pos[1].distance_squared_to(pos_2)
-		var close_2 = pos.distance_squared_to(pos_2)
-		if close_2 < close_1 and pos.y > 2:
-			_spawn_pos[1] = pos
-			
-	positions_copy.erase(_spawn_pos[1])
-	
-	var pos_3 = Vector3(-100, 0, 100)
-	_spawn_pos.append(Vector3.ZERO)
-	for pos in positions_copy:
-		var close_1 = _spawn_pos[2].distance_squared_to(pos_3)
-		var close_2 = pos.distance_squared_to(pos_3)
-		if close_2 < close_1 and pos.y > 2:
-			_spawn_pos[2] = pos
-			
-	positions_copy.erase(_spawn_pos[2])
-	
-	var pos_4 = Vector3(100, 0, 100)
-	_spawn_pos.append(Vector3.ZERO)
-	for pos in positions_copy:
-		var close_1 = _spawn_pos[3].distance_squared_to(pos_4)
-		var close_2 = pos.distance_squared_to(pos_4)
-		if close_2 < close_1 and pos.y > 2:
-			_spawn_pos[3] = pos
-			positions_copy.erase(pos)
-			break
-	
-	for i in range(4):
-		#var tower_pos = positions_copy[rng.randi_range(0, positions_copy.size() - 1)]
+	for i in range(5):
 		var tower = preload("res://entity/building/archer_tower/archer_tower.tscn").instance()
 		tower.color = Color.blue
 		tower.team = 1
@@ -107,25 +66,23 @@ func load_map():
 		tower.connect("building_destroyed", self, "on_building_destroyed")
 		add_child(tower)
 		tower.set_process(false)
-		tower.translation = _spawn_pos[i]
+		tower.translation = _spawn_points[i]
 		_towers.append(tower)
 		
 		_ui.add_minimap_object(
 			tower.get_path(), tower.color, preload("res://entity/building/archer_tower/tower.png")
 		)
 		
-		#positions_copy.erase(tower_pos)
-	
-	
+		
 	var resources_scenes = [
 		preload("res://entity/resources/berry_bush/berry_bush.tscn"),
 		preload("res://entity/resources/trees/trees.tscn"),
 	]
 	for pos in positions_copy:
 		var resources =  resources_scenes[rng.randi_range(0, resources_scenes.size() - 1)].instance()
+		resources.rng = rng
 		add_child(resources)
 		resources.translation = pos
-		resources.translation.y += 0.5
 		
 func on_generate_map_completed():
 	var delay = Timer.new()
@@ -144,6 +101,40 @@ func on_map_click(_pos :Vector3):
 func on_building_destroyed(_building :BaseBuilding):
 	_towers.erase(_building)
 	_building.queue_free()
+	
+func _generate_spawn_points(positions_copy :Array) -> Array:
+	var edges = [
+		Vector3(-100, 0, -100),
+		Vector3(100, 0, -100),
+		Vector3(-100, 0, 100),
+		Vector3(100, 0, 100),
+	]
+	var _spawn_points :Array = [
+		Vector3.ZERO,
+		Vector3.ZERO,
+		Vector3.ZERO,
+		Vector3.ZERO,
+		Vector3.ZERO,
+	]
+	
+	var index :int = 0
+	for edge in edges:
+		for pos in positions_copy:
+			var close_1 = _spawn_points[index].distance_squared_to(edge)
+			var close_2 = pos.distance_squared_to(edge)
+			if close_2 < close_1 and pos.y > 2:
+				_spawn_points[index] = pos
+				
+		positions_copy.erase(_spawn_points[index])
+		index += 1
+		
+	for pos in positions_copy:
+		if _spawn_points[4].y < pos.y:
+			_spawn_points[4] = pos
+			
+	positions_copy.erase(_spawn_points[4])
+		
+	return _spawn_points
 	
 ################################################################
 # ui
