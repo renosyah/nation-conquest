@@ -198,7 +198,7 @@ remotesync func _on_squad_dead(_squad_path :NodePath):
 ################################################################
 # proccess
 func _process(delta):
-	_camera.set_moving_direction(_ui.get_camera_moving_direction(), delta)
+	_camera.set_moving_direction(_ui.get_camera_moving_direction() * delta)
 	_camera.set_zoom(_ui.get_camera_zoom())
 	
 ################################################################

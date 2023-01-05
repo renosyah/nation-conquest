@@ -17,9 +17,10 @@ func _ready():
 	var attack_range = 8
 	for pos in range(max_unit):
 		var _unit = _create_unit("garrison-unit-" + str(pos))
-		attack_range = _unit.attack_range
 		_unit.translation = get_garrison_spawn_pos()
 		_units.append(_unit)
+		
+		attack_range = _unit.attack_range
 		
 	var shape :CylinderShape = _spotting_area.shape.duplicate() as CylinderShape
 	shape.radius = attack_range
@@ -29,7 +30,7 @@ func _ready():
 	
 func get_garrison_spawn_pos() -> Vector3:
 	var angle := rand_range(0, TAU)
-	var distance := rand_range(0.5, 0.8)
+	var distance := rand_range(0.5, 1)
 	var posv2 = polar2cartesian(distance, angle)
 	var posv3 =_garrison_position.translation  + Vector3(posv2.x, 0, posv2.y)
 	return posv3
@@ -38,10 +39,19 @@ func _on_garrison_replenis_timer_timeout():
 	if is_dead:
 		return
 		
+	if not _is_master:
+		return
+		
+	if status != status_deployed:
+		return
+		
 	if _units.size() >= max_unit:
 		return
 		
-	var _unit = _create_unit("garrison-unit-" + str(_units.size() + 1))
+	rpc("_spawn_garrison", "garrison-unit-" + str(_units.size() + 1))
+		
+remotesync func _spawn_garrison(_node_name :String):
+	var _unit = _create_unit(_node_name)
 	_unit.translation = get_garrison_spawn_pos()
 	_units.append(_unit)
 	

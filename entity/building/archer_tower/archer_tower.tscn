@@ -10,10 +10,10 @@
 [sub_resource type="SpatialMaterial" id=5]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
-albedo_color = Color( 0.478431, 0.223529, 0, 1 )
+albedo_color = Color( 0.364706, 0.180392, 0, 1 )
 
-[sub_resource type="ConvexPolygonShape" id=4]
-points = PoolVector3Array( 0.0539688, 5.28355, -0.0541373, -1, -0.960609, -1, -1, -0.960609, 0.999636, 1, -0.961136, 0.999804, 0.999831, -0.960609, -1, -1, 4.41922, 0.999831, 0.999804, 4.4196, 1, -1, 4.41922, -1, 0.999831, 4.41922, -1, 1.01835, 4.46094, -0.277821, -0.0543294, 5.28337, 0.0541609, 0.0539684, 5.28352, 0.0541635, -0.888795, 4.52417, -0.888795, -0.851827, 4.55781, 0.851658, -0.0543294, 5.28337, -0.0541343, 0.851699, 4.55792, 0.851699, 0.888627, 4.52417, -0.888795 )
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 1.68065, 3.10908, 1.78517 )
 
 [sub_resource type="CylinderShape" id=3]
 height = 20.0
@@ -23,6 +23,8 @@ radius = 4.0
 collision_layer = 0
 script = ExtResource( 2 )
 team = 3
+hp = 5000
+max_hp = 5000
 status = 2
 unit = ExtResource( 3 )
 
@@ -31,7 +33,8 @@ mesh = ExtResource( 1 )
 material/0 = SubResource( 5 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 4 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01911, 0 )
+shape = SubResource( 6 )
 
 [node name="Area" type="Area" parent="."]
 collision_mask = 0

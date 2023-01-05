@@ -40,6 +40,10 @@ func _draging(event: InputEvent):
 			_moving_direction = event.relative
 			#get_tree().set_input_as_handled()
 			
+		else:
+			_moving_direction = Vector2.ZERO
+			
+			
 func _zooming(event: InputEvent):
 	if event is InputEventMouseButton:
 		if event.pressed and _is_point_inside_area(event.position):
