@@ -51,7 +51,7 @@ func all_player_ready():
 			squad.icon = squad_icons[pos]
 			squad.max_unit = player_squad_size
 			spawn_squad(
-				squad, player_squad_holder.get_path(),formation[i]
+				squad, player_squad_holder.get_path(), formation[i]
 			)
 			
 		spawn_pos += Vector3(spawn_pos.x - 3, spawn_pos.y, spawn_pos.z)
@@ -145,8 +145,8 @@ func _on_bot_attack_timer_timeout():
 		if not is_instance_valid(s):
 			continue
 			
-		var dis_1 = target.translation.distance_to(squad.translation)
-		var dis_2 = target.translation.distance_to(s.translation)
+		var dis_1 = target.translation.distance_squared_to(squad.translation)
+		var dis_2 = target.translation.distance_squared_to(s.translation)
 		if dis_2 < dis_1:
 			target = s
 			

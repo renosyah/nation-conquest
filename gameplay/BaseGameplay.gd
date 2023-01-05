@@ -34,7 +34,8 @@ func on_back_pressed():
 
 var _map :BaseMap
 var _water :Water
-var _towers = []
+var _towers :Array = []
+var _spawn_pos :Array = []
 
 func load_map():
 	_water = preload("res://map/water/water.tscn").instance()
@@ -55,8 +56,49 @@ func load_map():
 	
 	var positions_copy = _map.spawn_positions.duplicate()
 	
+	var pos_1 = Vector3(-100, 0, -100)
+	_spawn_pos.append(Vector3.ZERO)
+	for pos in positions_copy:
+		var close_1 = _spawn_pos[0].distance_squared_to(pos_1)
+		var close_2 = pos.distance_squared_to(pos_1)
+		if close_2 < close_1 and pos.y > 2:
+			_spawn_pos[0] = pos
+			
+	positions_copy.erase(_spawn_pos[0])
+	
+	
+	var pos_2 = Vector3(100, 0, -100)
+	_spawn_pos.append(Vector3.ZERO)
+	for pos in positions_copy:
+		var close_1 = _spawn_pos[1].distance_squared_to(pos_2)
+		var close_2 = pos.distance_squared_to(pos_2)
+		if close_2 < close_1 and pos.y > 2:
+			_spawn_pos[1] = pos
+			
+	positions_copy.erase(_spawn_pos[1])
+	
+	var pos_3 = Vector3(-100, 0, 100)
+	_spawn_pos.append(Vector3.ZERO)
+	for pos in positions_copy:
+		var close_1 = _spawn_pos[2].distance_squared_to(pos_3)
+		var close_2 = pos.distance_squared_to(pos_3)
+		if close_2 < close_1 and pos.y > 2:
+			_spawn_pos[2] = pos
+			
+	positions_copy.erase(_spawn_pos[2])
+	
+	var pos_4 = Vector3(100, 0, 100)
+	_spawn_pos.append(Vector3.ZERO)
+	for pos in positions_copy:
+		var close_1 = _spawn_pos[3].distance_squared_to(pos_4)
+		var close_2 = pos.distance_squared_to(pos_4)
+		if close_2 < close_1 and pos.y > 2:
+			_spawn_pos[3] = pos
+			positions_copy.erase(pos)
+			break
+	
 	for i in range(4):
-		var tower_pos = positions_copy[rng.randi_range(0, positions_copy.size() - 1)]
+		#var tower_pos = positions_copy[rng.randi_range(0, positions_copy.size() - 1)]
 		var tower = preload("res://entity/building/archer_tower/archer_tower.tscn").instance()
 		tower.color = Color.blue
 		tower.team = 1
@@ -65,14 +107,14 @@ func load_map():
 		tower.connect("building_destroyed", self, "on_building_destroyed")
 		add_child(tower)
 		tower.set_process(false)
-		tower.translation = tower_pos
+		tower.translation = _spawn_pos[i]
 		_towers.append(tower)
 		
 		_ui.add_minimap_object(
 			tower.get_path(), tower.color, preload("res://entity/building/archer_tower/tower.png")
 		)
 		
-		positions_copy.erase(tower_pos)
+		#positions_copy.erase(tower_pos)
 	
 	
 	var resources_scenes = [
