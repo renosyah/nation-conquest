@@ -2,6 +2,8 @@ extends Node
 class_name BaseGameplay
 
 func _ready():
+	randomize()
+	
 	set_process(false)
 	
 	get_tree().set_quit_on_go_back(false)
@@ -98,6 +100,7 @@ func on_map_click(_pos :Vector3):
 	pass
 	
 func on_building_destroyed(_building :BaseBuilding):
+	_towers.erase(_building)
 	_building.queue_free()
 	
 ################################################################

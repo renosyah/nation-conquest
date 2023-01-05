@@ -130,12 +130,14 @@ func _on_bot_attack_timer_timeout():
 		
 	if not is_instance_valid(squad):
 		return
-	
-	if player_squad_holder.get_children().empty():
+		
+	var targets :Array = player_squad_holder.get_children().duplicate() + _towers.duplicate()
+	if targets.empty():
 		return
+		
+	targets.shuffle()
 	
 	var target = player_squad_holder.get_child(0)
-	var targets = player_squad_holder.get_children() + _towers
 	for s in targets:
 		if not is_instance_valid(target):
 			continue
