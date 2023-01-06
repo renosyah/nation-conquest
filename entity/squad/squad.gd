@@ -150,6 +150,8 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	if not is_instance_valid(_unit):
 		return
 		
+	_unit.visible = false
+	
 	_units.erase(_unit)
 	_unit.queue_free()
 	
@@ -187,19 +189,15 @@ func master_moving(delta :float) -> void:
 			is_moving = false
 			return
 		
-	var _is_on_floor = is_on_floor()
-	
-	if not _is_on_floor:
+	if not is_on_floor():
 		_velocity.y -= _gravity
-		_velocity = move_and_slide(_velocity, Vector3.UP)
-		_formation_direction_facing(delta)
-		return
 		
-	
-	var _empty_velocity = _velocity != Vector3.ZERO
-	if _empty_velocity and _is_on_floor:
-		_velocity = move_and_slide(_velocity, Vector3.UP)
-		_formation_direction_facing(delta)
+	if _velocity != Vector3.ZERO:
+		_velocity = move_and_slide(
+			_velocity, Vector3.UP , false, 4, deg2rad(60.0), true
+		)
+		
+	_formation_direction_facing(delta)
 	
 func puppet_moving(delta :float) -> void:
 	.puppet_moving(delta)

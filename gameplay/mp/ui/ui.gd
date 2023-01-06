@@ -6,6 +6,9 @@ onready var mini_map = $CanvasLayer/SafeArea/Control/HBoxContainer/MiniMap
 onready var camera_control = $CanvasLayer/SafeArea/camera_control
 onready var squad_icon_holder = $CanvasLayer/SafeArea/Control/VBoxContainer/HBoxContainer2
 
+onready var score_ui = $CanvasLayer/SafeArea/Control/HBoxContainer/score
+
+var score :int = 0
 var squads = {}
 
 func _ready():
@@ -27,6 +30,10 @@ func _on_squad_icon_click(_icon :SquadIcon, _squad :Squad):
 	_squad.emit_signal("squad_selected", _squad)
 	
 func on_squad_update(_squad :Squad):
+	if _squad.team == 2:
+		score += 1
+		score_ui.text = "Score : " + str(score)
+		
 	if not squads.has(_squad):
 		return
 		

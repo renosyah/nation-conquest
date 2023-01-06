@@ -43,9 +43,9 @@ func load_map():
 	
 	_map = preload("res://map/spring_island/spring_map.tscn").instance()
 	_map.map_seed = NetworkLobbyManager.argument["seed"]
-	_map.map_scale = NetworkLobbyManager.argument["scale"]
-	_map.map_size = 200
-	_map.map_height = 15
+	_map.map_scale = 1
+	_map.map_size = 100
+	_map.map_height = 20
 	_map.connect("on_generate_map_completed", self, "on_generate_map_completed")
 	_map.connect("on_map_click", self , "on_map_click")
 	add_child(_map)

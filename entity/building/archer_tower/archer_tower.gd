@@ -23,7 +23,7 @@ func _ready():
 		attack_range = _unit.attack_range
 		
 	var shape :CylinderShape = _spotting_area.shape.duplicate() as CylinderShape
-	shape.radius = attack_range + 8
+	shape.radius = attack_range + 2
 	_spotting_area.shape = shape
 	
 	_hp_bar.update_bar(hp, max_hp)
@@ -62,7 +62,7 @@ func _create_unit(unit_name :String) -> BaseUnit:
 	_unit.team = team
 	_unit.hp = 200
 	_unit.max_hp = 200
-	_unit.attack_range += 8
+	_unit.attack_range += 2
 	_unit.color = color
 	_unit.enable_moving = false
 	_unit.connect("unit_dead", self, "_unit_dead")

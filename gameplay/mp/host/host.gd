@@ -94,9 +94,9 @@ func on_squad_dead(_squad :Squad):
 
 func get_invasion_spawn_pos() -> Vector3:
 	var angle := rand_range(0, TAU)
-	var distance := rand_range(50, 60)
+	var distance := rand_range(35, 40)
 	var posv2 = polar2cartesian(distance, angle)
-	var posv3 = _map.global_transform.origin + Vector3(posv2.x, 8, posv2.y)
+	var posv3 = _map.global_transform.origin + Vector3(posv2.x, 15, posv2.y)
 	return posv3
 	
 func _on_attack_wave_timer_timeout():

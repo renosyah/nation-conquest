@@ -14,7 +14,7 @@ export var enable_moving :bool = true
 
 export var is_moving :bool = false
 var move_to = null
-export var margin :float = 0.6
+export var margin :float = 0.8
 export var speed :int = 2
 
 var squad = null
@@ -87,18 +87,14 @@ func _process(delta :float):
 	if not enable_moving:
 		return
 		
-	var _is_on_floor = is_on_floor()
-	
-	if not _is_on_floor:
+	if not is_on_floor():
 		_velocity.y -= _gravity
-		_velocity = move_and_slide(_velocity, Vector3.UP)
-		return
+
+	if _velocity != Vector3.ZERO:
+		_velocity = move_and_slide(
+			_velocity, Vector3.UP ,false, 4, deg2rad(60.0), true
+		)
 		
-	var _empty_velocity = _velocity != Vector3.ZERO
-	if _empty_velocity and _is_on_floor:
-		_velocity = move_and_slide(_velocity, Vector3.UP)
-		
-	
 func attacking(delta :float):
 	if not is_attacking:
 		return
@@ -187,7 +183,7 @@ func take_damage(damage :int) -> void:
 		return
 		
 	emit_signal("unit_take_damage", self, damage)
-
+	
 func dead() -> void:
 	emit_signal("unit_dead", self)
 	
