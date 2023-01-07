@@ -48,6 +48,7 @@ material/0 = SubResource( 7 )
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01911, 0 )
 shape = SubResource( 6 )
+disabled = true
 
 [node name="Area" type="Area" parent="."]
 collision_mask = 0

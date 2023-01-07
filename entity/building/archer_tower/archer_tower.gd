@@ -3,6 +3,8 @@ extends BaseBuilding
 export var unit :Resource
 export var max_unit :int = 4
 
+onready var _collision_shape = $CollisionShape
+
 onready var _garrison_position = $Position3D
 onready var _spotting_area = $Area/CollisionShape
 onready var _area = $Area
@@ -32,6 +34,8 @@ remotesync func _start_building():
 	
 	_mesh_instance.visible = true
 	_mesh_instance.translation.y -= 20
+	_collision_shape.set_deferred("disabled", false)
+	
 	_tween.interpolate_property(
 		_mesh_instance, "translation:y", _mesh_instance.translation.y,
 		 _mesh_instance.translation.y + 20, building_time
