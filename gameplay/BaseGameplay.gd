@@ -79,38 +79,15 @@ func on_generate_map_completed():
 	NetworkLobbyManager.set_ready()
 	
 func on_map_click(_pos :Vector3):
-	pass
+	if selected_squad.empty():
+		return
 	
-################################################################
-
-var _building_to_build :Dictionary = {}
-var _buildings :Array = []
-var _spawn_points :Array = []
-
-func on_deploying_building(_building_data :BuildingData):
-	rpc("_on_deploying_building", _building_data.to_dictionary())
-	
-remotesync func _on_deploying_building(_building_data_dic :Dictionary):
-	var _building_data :BuildingData = BuildingData.new()
-	_building_data.from_dictionary(_building_data_dic)
-	
-	_building_to_build[_building_data.network_master] = _building_data.spawn(self)
-	
-	var _build :BaseBuilding = _building_to_build[_building_data.network_master]
-	_build.connect("building_deployed", self, "on_building_deployed")
-	_build.connect("building_destroyed", self, "on_building_destroyed")
-	
-func on_building_deployed(_building :BaseBuilding):
-	_buildings.append(_building)
-	_ui.add_minimap_object(
-		_building.get_path(), 
-		_building.color, 
-		preload("res://entity/building/archer_tower/tower.png")
+	var formation = Utils.get_formation_box(
+		_pos, selected_squad.size(), 5
 	)
-	
-func on_building_destroyed(_building :BaseBuilding):
-	_buildings.erase(_building)
-	_building.queue_free()
+	for i in range(selected_squad.size()):
+		if is_instance_valid(selected_squad[i]):
+			selected_squad[i].set_move_to(formation[i], true)
 	
 func _generate_spawn_points(positions_copy :Array) -> Array:
 	var edges = [
@@ -233,13 +210,44 @@ func on_host_disconnected():
 func all_player_ready():
 	_ui.loading(false)
 	
+################################################################
+var _building_to_build :Dictionary = {}
+var _buildings :Array = []
+var _spawn_points :Array = []
+
+func on_deploying_building(_building_data :BuildingData):
+	rpc("_on_deploying_building", _building_data.to_dictionary())
+	
+remotesync func _on_deploying_building(_building_data_dic :Dictionary):
+	var _building_data :BuildingData = BuildingData.new()
+	_building_data.from_dictionary(_building_data_dic)
+	
+	_building_to_build[_building_data.network_master] = _building_data.spawn(self)
+	
+	var _build :BaseBuilding = _building_to_build[_building_data.network_master]
+	_build.connect("building_deployed", self, "on_building_deployed")
+	_build.connect("building_destroyed", self, "on_building_destroyed")
+	
+func on_building_deployed(_building :BaseBuilding):
+	_buildings.append(_building)
+	_ui.add_minimap_object(
+		_building.get_path(), 
+		_building.color, 
+		preload("res://entity/building/archer_tower/tower.png")
+	)
+	
+func on_building_destroyed(_building :BaseBuilding):
+	_buildings.erase(_building)
+	_building.queue_free()
 	
 ################################################################
-# squad spawner
-func spawn_squad(_squad :SquadData, _parent :NodePath, _at :Vector3):
-	rpc("_spawn_squad", _squad.to_dictionary(), _parent, _at)
+onready var selected_squad :Array = []
 
-remotesync func _spawn_squad(_squad_data :Dictionary, _parent :NodePath, _at :Vector3):
+# squad spawner
+func spawn_squad(_squad :SquadData, _at :Vector3, _parent :NodePath = get_path()):
+	rpc("_spawn_squad", _squad.to_dictionary(), _at, _parent)
+
+remotesync func _spawn_squad(_squad_data :Dictionary, _at :Vector3, _parent :NodePath):
 	var _squad = SquadData.new()
 	_squad.from_dictionary(_squad_data)
 	
@@ -265,9 +273,23 @@ func on_squad_update(_squad :Squad):
 	_ui.on_squad_update(_squad)
 	
 func on_squad_selected(_squad :Squad):
-	pass
+	if _squad.get_network_master() != NetworkLobbyManager.get_id()  or _squad.team != 1:
+		return
+		
+	var is_in_squad = selected_squad.has(_squad)
+	if is_in_squad:
+		_squad.set_selected(false)
+		_ui.on_squad_selected(_squad, false)
+		selected_squad.erase(_squad)
+	else:
+		_squad.set_selected(true)
+		_ui.on_squad_selected(_squad, true)
+		selected_squad.append(_squad)
 	
 func on_squad_dead(_squad :Squad):
+	if selected_squad.has(_squad):
+		selected_squad.erase(_squad)
+		
 	if _squad.get_network_master() == NetworkLobbyManager.get_id() and _squad.team == 1:
 		_ui.on_squad_dead(_squad)
 	
@@ -290,14 +312,15 @@ func _process(delta):
 	_camera.set_zoom(_ui.get_camera_zoom())
 	
 	var id = NetworkLobbyManager.get_id()
-	if not _building_to_build.has(id):
-		return
-		
-	var _build = _building_to_build[id]
-	if is_instance_valid(_build):
-		update_camera_aiming_at()
-		_build.translation = _camera_last_aim_pos
-		_ui.can_build(_build.can_build)
+	if _building_to_build.has(id):
+		var _build = _building_to_build[id]
+		if is_instance_valid(_build):
+			update_camera_aiming_at()
+			_build.translation = _camera_last_aim_pos
+			_build.rotation_degrees.y = _ui.building_rotation
+			_ui.can_build(_build.can_build)
+			
+	
 		
 ################################################################
 # exit

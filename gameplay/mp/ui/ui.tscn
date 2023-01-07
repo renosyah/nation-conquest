@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://addons/mini-map/MiniMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gameplay/mp/ui/ui.gd" type="Script" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=10]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=11]
 [ext_resource path="res://assets/ui/icon/squad_icon/icon_empty.png" type="Texture" id=12]
+[ext_resource path="res://assets/ui/icon/rotate_r.png" type="Texture" id=13]
+[ext_resource path="res://assets/ui/icon/rotate_l.png" type="Texture" id=14]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -84,57 +86,81 @@ expand_icon = true
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control"]
 margin_top = 168.0
 margin_right = 600.0
-margin_bottom = 748.0
+margin_bottom = 664.0
 mouse_filter = 2
 size_flags_vertical = 3
 
 [node name="build_menu" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control"]
-visible = false
-margin_top = 728.0
+margin_top = 668.0
 margin_right = 600.0
-margin_bottom = 808.0
+margin_bottom = 748.0
+mouse_filter = 2
 alignment = 1
 
 [node name="build_confirm" type="Button" parent="CanvasLayer/SafeArea/Control/build_menu"]
-margin_left = 156.0
-margin_right = 276.0
+margin_left = 70.0
+margin_right = 190.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 120, 80 )
 custom_fonts/font = ExtResource( 10 )
 text = "Build"
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/build_menu"]
-margin_left = 280.0
-margin_right = 320.0
+margin_left = 194.0
+margin_right = 214.0
 margin_bottom = 80.0
-rect_min_size = Vector2( 40, 0 )
+rect_min_size = Vector2( 20, 0 )
+mouse_filter = 2
+
+[node name="rotate_l" type="Button" parent="CanvasLayer/SafeArea/Control/build_menu"]
+margin_left = 218.0
+margin_right = 298.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+custom_fonts/font = ExtResource( 10 )
+icon = ExtResource( 14 )
+flat = true
+expand_icon = true
+
+[node name="rotate_r" type="Button" parent="CanvasLayer/SafeArea/Control/build_menu"]
+margin_left = 302.0
+margin_right = 382.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+custom_fonts/font = ExtResource( 10 )
+icon = ExtResource( 13 )
+flat = true
+expand_icon = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/build_menu"]
+margin_left = 386.0
+margin_right = 406.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 20, 0 )
+mouse_filter = 2
 
 [node name="build_cancel" type="Button" parent="CanvasLayer/SafeArea/Control/build_menu"]
-margin_left = 324.0
-margin_right = 444.0
+margin_left = 410.0
+margin_right = 530.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 120, 80 )
 custom_fonts/font = ExtResource( 10 )
 text = "Cancel"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control"]
 margin_top = 752.0
 margin_right = 600.0
 margin_bottom = 970.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2"]
-margin_right = 600.0
-margin_bottom = 218.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/VBoxContainer"]
 margin_right = 600.0
 margin_bottom = 10.0
 rect_min_size = Vector2( 0, 10 )
 mouse_filter = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/VBoxContainer"]
 margin_top = 14.0
 margin_right = 600.0
 margin_bottom = 174.0
@@ -143,7 +169,7 @@ mouse_filter = 2
 size_flags_vertical = 0
 alignment = 1
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/HBoxContainer2"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/VBoxContainer/HBoxContainer2"]
 margin_left = 255.0
 margin_right = 255.0
 margin_bottom = 100.0
@@ -152,7 +178,7 @@ mouse_filter = 2
 size_flags_vertical = 0
 alignment = 1
 
-[node name="add_squad" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/HBoxContainer2"]
+[node name="add_squad" type="Button" parent="CanvasLayer/SafeArea/Control/VBoxContainer/HBoxContainer2"]
 margin_left = 259.0
 margin_right = 344.0
 margin_bottom = 160.0
@@ -164,7 +190,7 @@ flat = true
 icon_align = 1
 expand_icon = true
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/VBoxContainer"]
 margin_top = 178.0
 margin_right = 600.0
 margin_bottom = 218.0
@@ -219,5 +245,5 @@ rect_min_size = Vector2( 0, 20 )
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer/main_menu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/build_menu/build_confirm" to="." method="_on_build_confirm_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/build_menu/build_cancel" to="." method="_on_build_cancel_pressed"]
-[connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/HBoxContainer2/add_squad" to="." method="_on_add_squad_pressed"]
+[connection signal="pressed" from="CanvasLayer/SafeArea/Control/VBoxContainer/HBoxContainer2/add_squad" to="." method="_on_add_squad_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/minimap_panel/VBoxContainer/close_minimap" to="." method="_on_close_minimap_pressed"]

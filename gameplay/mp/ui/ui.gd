@@ -11,21 +11,30 @@ const squad_icon_scene = preload("res://assets/ui/icon/squad_icon/squad_icon.tsc
 
 onready var mini_map = $CanvasLayer/SafeArea/minimap_panel/MiniMap
 onready var camera_control = $CanvasLayer/SafeArea/camera_control
-onready var squad_icon_holder = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/HBoxContainer2/HBoxContainer3
+onready var squad_icon_holder = $CanvasLayer/SafeArea/Control/VBoxContainer/HBoxContainer2/HBoxContainer3
 
 onready var minimap_panel = $CanvasLayer/SafeArea/minimap_panel
 onready var control = $CanvasLayer/SafeArea/Control
 
+onready var build_confirm = $CanvasLayer/SafeArea/Control/build_menu/build_confirm
 onready var build_menu = $CanvasLayer/SafeArea/Control/build_menu
-onready var add_squad = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/HBoxContainer2/add_squad
+onready var add_squad = $CanvasLayer/SafeArea/Control/VBoxContainer/HBoxContainer2/add_squad
+
+onready var rotate_l = $CanvasLayer/SafeArea/Control/build_menu/rotate_l
+onready var rotate_r = $CanvasLayer/SafeArea/Control/build_menu/rotate_r
 
 var squads = {}
+var building_rotation :float = 0
 
 func _ready():
 	minimap_panel.visible = false
 	control.visible = true
 	
 	build_menu.visible = false
+	
+func _process(delta):
+	var value = -45 if rotate_l.pressed else 45 if rotate_r.pressed else 0
+	building_rotation += value * delta
 	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
 	var instance :SquadIcon = squad_icon_scene.instance()
@@ -112,8 +121,6 @@ func _on_add_squad_pressed():
 		preload("res://assets/ui/icon/squad_icon/icon_squad_swordman.png"),
 	]
 	var pos = int(rand_range(0, squad_datas.size()))
-	
-	
 	emit_signal("recruit_squad", 
 		squad_datas[pos],
 		squad_icons[pos]
@@ -126,7 +133,7 @@ func _on_open_building_pressed():
 	)
 
 func can_build(val :bool):
-	$CanvasLayer/SafeArea/Control/build_menu/build_confirm.disabled = not val
+	build_confirm.disabled = not val
 
 func _on_build_confirm_pressed():
 	build_menu.visible = false
@@ -135,13 +142,6 @@ func _on_build_confirm_pressed():
 func _on_build_cancel_pressed():
 	build_menu.visible = false
 	emit_signal("cancel_building")
-
-
-
-
-
-
-
 
 
 
