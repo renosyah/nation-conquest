@@ -34,7 +34,6 @@ func on_back_pressed():
 
 var _map :BaseMap
 var _water :Water
-var _towers :Array = []
 
 func load_map():
 	_water = preload("res://map/water/water.tscn").instance()
@@ -44,8 +43,8 @@ func load_map():
 	_map = preload("res://map/spring_island/spring_map.tscn").instance()
 	_map.map_seed = NetworkLobbyManager.argument["seed"]
 	_map.map_scale = 1
-	_map.map_size = 100
-	_map.map_height = 20
+	_map.map_size = 200
+	_map.map_height = 10
 	_map.connect("on_generate_map_completed", self, "on_generate_map_completed")
 	_map.connect("on_map_click", self , "on_map_click")
 	add_child(_map)
@@ -55,28 +54,12 @@ func load_map():
 	rng.seed = NetworkLobbyManager.argument["seed"]
 	
 	var positions_copy = _map.spawn_positions.duplicate()
-	var _spawn_points = _generate_spawn_points(positions_copy)
+	_spawn_points = _generate_spawn_points(positions_copy)
 	
-	for i in range(5):
-		var tower = preload("res://entity/building/archer_tower/archer_tower.tscn").instance()
-		tower.color = Color.blue
-		tower.team = 1
-		tower.name = "tower-" + str(i)
-		tower.set_network_master(Network.PLAYER_HOST_ID)
-		tower.connect("building_destroyed", self, "on_building_destroyed")
-		add_child(tower)
-		tower.set_process(false)
-		tower.translation = _spawn_points[i]
-		_towers.append(tower)
-		
-		_ui.add_minimap_object(
-			tower.get_path(), tower.color, preload("res://entity/building/archer_tower/tower.png")
-		)
-		
-		
 	var resources_scenes = [
 		preload("res://entity/resources/berry_bush/berry_bush.tscn"),
 		preload("res://entity/resources/trees/trees.tscn"),
+		preload("res://entity/resources/rock/rock.tscn"),
 	]
 	for pos in positions_copy:
 		var resources =  resources_scenes[rng.randi_range(0, resources_scenes.size() - 1)].instance()
@@ -98,8 +81,34 @@ func on_generate_map_completed():
 func on_map_click(_pos :Vector3):
 	pass
 	
+################################################################
+
+var _building_to_build :Dictionary = {}
+var _buildings :Array = []
+var _spawn_points :Array = []
+	
+remotesync func _on_deploying_building(_node_name :String, _network_master :int, _building_resource_path :String):
+	_building_to_build[_network_master] = load(_building_resource_path).instance()
+	var _build :BaseBuilding = _building_to_build[_network_master]
+	
+	_build.color = Color.blue
+	_build.team = 1
+	_build.name = _node_name
+	_build.set_network_master(_network_master)
+	_build.connect("building_deployed", self, "on_building_deployed")
+	_build.connect("building_destroyed", self, "on_building_destroyed")
+	add_child(_build)
+	
+func on_building_deployed(_building :BaseBuilding):
+	_buildings.append(_building)
+	_ui.add_minimap_object(
+		_building.get_path(), 
+		_building.color, 
+		preload("res://entity/building/archer_tower/tower.png")
+	)
+	
 func on_building_destroyed(_building :BaseBuilding):
-	_towers.erase(_building)
+	_buildings.erase(_building)
 	_building.queue_free()
 	
 func _generate_spawn_points(positions_copy :Array) -> Array:
@@ -142,15 +151,60 @@ var _ui :BaseUi
 
 func setup_ui():
 	_ui = preload("res://gameplay/mp/ui/ui.tscn").instance()
+	_ui.connect("main_menu_press", self, "on_main_menu_press")
+	_ui.connect("deploy_building", self, "_on_deploy_building")
+	_ui.connect("start_building", self, "_on_start_building")
+	_ui.connect("cancel_building", self, "_on_cancel_building")
+	_ui.connect("recruit_squad", self, "_on_recruit_squad")
 	add_child(_ui)
+	
+func on_main_menu_press():
+	on_exit_game_session()
+	
+func _on_recruit_squad(_squad :SquadData, _icon :Resource):
+	pass
+	
+func _on_deploy_building(_building :Resource):
+	_on_cancel_building()
+	rpc("_on_deploying_building",
+		GDUUID.v4(), NetworkLobbyManager.get_id(), _building.resource_path
+	)
+	
+func _on_start_building():
+	var id = NetworkLobbyManager.get_id()
+	if not _building_to_build.has(id):
+		return
+		
+	var _build = _building_to_build[id]
+	if is_instance_valid(_build):
+		_build.start_building()
+		_building_to_build.erase(id)
+	
+func _on_cancel_building():
+	var id = NetworkLobbyManager.get_id()
+	if not _building_to_build.has(id):
+		return
+		
+	var _build = _building_to_build[id]
+	if is_instance_valid(_build):
+		_build.demolish()
+		_building_to_build.erase(id)
 	
 ################################################################
 # camera
 var _camera :RtsCamera
+var _camera_last_aim_pos :Vector3
 
 func setup_camera():
 	_camera = preload("res://assets/rts-camera/rts_camera.tscn").instance()
 	add_child(_camera)
+	
+func update_camera_aiming_at():
+	var _cam_aim :CameraAimingData = _camera.get_camera_aiming_at(_ui.get_center_screen())
+	if _cam_aim.collider == _water:
+		return
+		
+	_camera_last_aim_pos = _cam_aim.position
 	
 ################################################################
 # directional light
@@ -237,6 +291,16 @@ func _process(delta):
 	_camera.set_moving_direction(_ui.get_camera_moving_direction() * delta)
 	_camera.set_zoom(_ui.get_camera_zoom())
 	
+	var id = NetworkLobbyManager.get_id()
+	if not _building_to_build.has(id):
+		return
+		
+	var _build = _building_to_build[id]
+	if is_instance_valid(_build):
+		update_camera_aiming_at()
+		_build.translation = _camera_last_aim_pos
+		_ui.can_build(_build.can_build)
+		
 ################################################################
 # exit
 func on_exit_game_session():

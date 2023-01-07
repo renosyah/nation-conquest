@@ -327,5 +327,8 @@ func _spotted_target():
 			
 			
 func _on_agro_timer_timeout():
+	if is_moving:
+		return
+		
 	_spotted_target()
 	_attack_targets()

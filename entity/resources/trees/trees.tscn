@@ -9,6 +9,7 @@ radius = 0.833359
 [node name="trees" type="StaticBody"]
 collision_layer = 0
 script = ExtResource( 3 )
+type_resource = 1
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )

@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://entity/resources/berry_bush/berry_bush.gd" type="Script" id=1]
+[ext_resource path="res://entity/resources/rock/rock.gd" type="Script" id=1]
 
 [sub_resource type="CylinderShape" id=1]
 height = 0.704676
 radius = 0.833359
 
-[node name="berry_bush" type="StaticBody"]
+[node name="rock" type="StaticBody"]
 collision_layer = 0
 script = ExtResource( 1 )
-type_resource = 2
+type_resource = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )

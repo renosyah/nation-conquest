@@ -1,6 +1,7 @@
 extends BaseEntity
 class_name BaseBuilding
 
+signal building_deployed(_building)
 signal building_take_damage(_building, _damage)
 signal building_destroyed(_building)
 
@@ -18,9 +19,12 @@ export var building_time :int = 10
 
 export var is_dead :bool = false
 export var status :int = status_deploying
+export var can_build :bool = false
 
 puppet var _puppet_translation :Vector3
 puppet var _puppet_rotation :Vector3
+
+var _building_timmer :Timer
 
 ############################################################
 # multiplayer func
@@ -29,11 +33,48 @@ func _network_timmer_timeout() -> void:
 	
 	if is_dead:
 		return
+		
+	if [status_deployed, status_building].has(status):
+		return
 	
 	if _is_master and _is_online:
 		rset_unreliable("_puppet_translation", global_transform.origin)
 		rset_unreliable("_puppet_rotation", global_transform.basis.get_euler())
+	
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	status = status_deploying
+	_building_timmer = Timer.new()
+	_building_timmer.wait_time = building_time
+	_building_timmer.connect("timeout", self , "_building_timmer_timeout")
+	_building_timmer.autostart = false
+	_building_timmer.one_shot = true
+	add_child(_building_timmer)
+	
+func start_building():
+	if not _is_master:
+		return
 		
+	rpc("_start_building")
+	
+remotesync func _start_building():
+	status = status_building
+	_building_timmer.wait_time = building_time
+	_building_timmer.start()
+	
+remotesync func _finish_building():
+	status = status_deployed
+	emit_signal("building_deployed", self)
+	
+func _building_timmer_timeout():
+	if not _is_master:
+		return
+		
+	rpc("_finish_building")
+	
+func get_build_progress() -> float:
+	return _building_timmer.time_left
+	
 func puppet_moving(delta :float) -> void:
 	.puppet_moving(delta)
 	
@@ -44,20 +85,22 @@ func puppet_moving(delta :float) -> void:
 	rotation.x = lerp_angle(rotation.x, _puppet_rotation.x, 5 * delta)
 	rotation.y = lerp_angle(rotation.y, _puppet_rotation.y, 5 * delta)
 	rotation.z = lerp_angle(rotation.z, _puppet_rotation.z, 5 * delta)
-	
+
 func take_damage(damage :int) -> void:
 	if is_dead:
 		return
 		
 	hp -= damage
 	if hp < 1:
-		set_process(false)
-		is_dead = true
-		dead()
+		rpc("_dead")
 		return
 		
 	emit_signal("building_take_damage", self, damage)
 	
-func dead() -> void:
+func demolish() -> void:
+	rpc("_dead")
+	
+remotesync func _dead() -> void:
+	set_process(false)
+	is_dead = true
 	emit_signal("building_destroyed", self)
-

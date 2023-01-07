@@ -1,29 +1,9 @@
 extends BaseGameplay
 
-const squads = [
-	preload("res://data/squad_data/squads/pikeman_squad.tres"),
-	preload("res://data/squad_data/squads/maceman_squad.tres"),
-	preload("res://data/squad_data/squads/crossbowman_squad.tres"),
-	preload("res://data/squad_data/squads/archer_squad.tres"),
-	preload("res://data/squad_data/squads/axeman_squad.tres"),
-	preload("res://data/squad_data/squads/militia_squad.tres"),
-	preload("res://data/squad_data/squads/spearman_squad.tres"),
-	preload("res://data/squad_data/squads/swordman_squad.tres"),
-]
-
-const squad_icons = [
-	preload("res://assets/ui/icon/squad_icon/icon_squad_pikeman.png"),
-	preload("res://assets/ui/icon/squad_icon/icon_squad_maceman.png"),
-	preload("res://assets/ui/icon/squad_icon/icon_squad_crossbowman.png"),
-	preload("res://assets/ui/icon/squad_icon/icon_squad_archer.png"),
-	preload("res://assets/ui/icon/squad_icon/icon_squad_axeman.png"),
-	preload("res://assets/ui/icon/squad_icon/icon_squad_man_at_arms.png"),
-	preload("res://assets/ui/icon/squad_icon/icon_squad_spearman.png"),
-	preload("res://assets/ui/icon/squad_icon/icon_squad_swordman.png"),
-]
-
-var selected_squad :Array = []
+onready var selected_squad :Array = []
 onready var player_squad_holder = $player_squad_holder
+onready var color :Color = Color(randf(), randf(), randf(), 1)
+
 onready var enemy_squad_holder = $enemy_squad_holder
 
 # Called when the node enters the scene tree for the first time.
@@ -33,29 +13,21 @@ func _ready():
 func all_player_ready():
 	.all_player_ready()
 	
-	var spawn_pos = Vector3.UP * 15
-	var player_army_size = 4
-	var player_squad_size = 15
-	var color = [Color.blue, Color.green, Color.yellow, Color.purple]
-	var player_index = 0
+func _on_recruit_squad(_squad :SquadData, _icon :Resource):
+	._on_recruit_squad(_squad, _icon)
+	var squad = _squad
+	squad.node_name = GDUUID.v4()
+	squad.network_master = NetworkLobbyManager.get_id()
+	squad.color = color
+	squad.team = 1
+	squad.icon = _icon
 	
-	for player in NetworkLobbyManager.get_players():
-		var formation = Utils.get_formation_box(spawn_pos, player_army_size, 4)
-		for i in range(player_army_size):
-			var pos = rand_range(0, squads.size())
-			var squad = squads[pos]
-			squad.node_name = GDUUID.v4()
-			squad.network_master = player.player_network_unique_id
-			squad.color = color[player_index]
-			squad.team = 1
-			squad.icon = squad_icons[pos]
-			squad.max_unit = player_squad_size
-			spawn_squad(
-				squad, player_squad_holder.get_path(), formation[i]
-			)
-			
-		spawn_pos += Vector3(spawn_pos.x - 3, spawn_pos.y, spawn_pos.z)
-		player_index += 1
+	update_camera_aiming_at()
+	
+	spawn_squad(
+		squad, player_squad_holder.get_path(),
+		 _camera_last_aim_pos + Vector3(0, 15, 0)
+	)
 	
 func on_map_click(_pos :Vector3):
 	.on_map_click(_pos)
@@ -94,21 +66,32 @@ func on_squad_dead(_squad :Squad):
 
 func get_invasion_spawn_pos() -> Vector3:
 	var angle := rand_range(0, TAU)
-	var distance := rand_range(35, 40)
+	var distance := _map.map_size * 0.25
 	var posv2 = polar2cartesian(distance, angle)
 	var posv3 = _map.global_transform.origin + Vector3(posv2.x, 15, posv2.y)
 	return posv3
 	
 func _on_attack_wave_timer_timeout():
-	if enemy_squad_holder.get_child_count() > 3:
+	if enemy_squad_holder.get_child_count() > 6:
 		return
 		
-	var squad = squads[rand_range(0, squads.size())]
+	var squad_datas = [
+		preload("res://data/squad_data/squads/pikeman_squad.tres"),
+		preload("res://data/squad_data/squads/maceman_squad.tres"),
+		preload("res://data/squad_data/squads/crossbowman_squad.tres"),
+		preload("res://data/squad_data/squads/archer_squad.tres"),
+		preload("res://data/squad_data/squads/axeman_squad.tres"),
+		preload("res://data/squad_data/squads/militia_squad.tres"),
+		preload("res://data/squad_data/squads/spearman_squad.tres"),
+		preload("res://data/squad_data/squads/swordman_squad.tres"),
+	]
+	
+	var squad = squad_datas[rand_range(0, squad_datas.size())]
 	squad.node_name = GDUUID.v4()
 	squad.network_master = Network.PLAYER_HOST_ID
 	squad.color = Color.red
 	squad.team = 2
-	squad.max_unit = int(rand_range(6, 8))
+	squad.max_unit = int(rand_range(6, 8)) if squad.max_unit >= 15 else squad.max_unit
 	spawn_squad(
 		squad, enemy_squad_holder.get_path(), get_invasion_spawn_pos()
 	)
@@ -131,7 +114,7 @@ func _on_bot_attack_timer_timeout():
 	if not is_instance_valid(squad):
 		return
 		
-	var targets :Array = player_squad_holder.get_children().duplicate() + _towers.duplicate()
+	var targets :Array = player_squad_holder.get_children().duplicate() + _buildings
 	if targets.empty():
 		return
 		

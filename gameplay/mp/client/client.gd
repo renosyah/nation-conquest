@@ -1,6 +1,8 @@
 extends BaseGameplay
 
-var selected_squad :Array = []
+onready var selected_squad :Array = []
+onready var player_squad_holder = $player_squad_holder
+onready var color :Color = Color(randf(), randf(), randf(), 1)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -8,6 +10,22 @@ func _ready():
 	
 func all_player_ready():
 	.all_player_ready()
+	
+func _on_recruit_squad(_squad :SquadData, _icon :Resource):
+	._on_recruit_squad(_squad, _icon)
+	var squad = _squad
+	squad.node_name = GDUUID.v4()
+	squad.network_master = NetworkLobbyManager.get_id()
+	squad.color = color
+	squad.team = 1
+	squad.icon = _icon
+	
+	update_camera_aiming_at()
+	
+	spawn_squad(
+		squad, player_squad_holder.get_path(),
+		 _camera_last_aim_pos + Vector3(0, 15, 0)
+	)
 	
 func on_map_click(_pos :Vector3):
 	.on_map_click(_pos)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://entity/building/archer_tower/tower.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://entity/building/archer_tower/archer_tower.gd" type="Script" id=2]
@@ -12,6 +12,13 @@ flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.364706, 0.180392, 0, 1 )
 
+[sub_resource type="SpatialMaterial" id=7]
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 1, 1, 1, 0.647059 )
+
 [sub_resource type="BoxShape" id=6]
 extents = Vector3( 1.68065, 3.10908, 1.78517 )
 
@@ -19,18 +26,24 @@ extents = Vector3( 1.68065, 3.10908, 1.78517 )
 height = 20.0
 radius = 4.0
 
+[sub_resource type="BoxShape" id=8]
+extents = Vector3( 1.63249, 1.55676, 1.60521 )
+
 [node name="archer_tower" type="KinematicBody"]
 collision_layer = 0
 script = ExtResource( 2 )
 team = 3
 hp = 5000
 max_hp = 5000
-status = 2
 unit = ExtResource( 3 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = ExtResource( 1 )
 material/0 = SubResource( 5 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = SubResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01911, 0 )
@@ -44,6 +57,15 @@ monitorable = false
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.696755, 0 )
 shape = SubResource( 3 )
+
+[node name="area_build" type="Area" parent="."]
+collision_mask = 0
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="area_build"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53541, 0 )
+shape = SubResource( 8 )
 
 [node name="Position3D" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.09719, 0 )
@@ -61,6 +83,8 @@ transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.09992, 0 )
 
 [node name="hit_particle" parent="." instance=ExtResource( 5 )]
 custom_particle_scene = ExtResource( 6 )
+
+[node name="Tween" type="Tween" parent="."]
 
 [connection signal="timeout" from="garrison_replenis_timer" to="." method="_on_garrison_replenis_timer_timeout"]
 [connection signal="timeout" from="agro_timer" to="." method="_on_agro_timer_timeout"]
