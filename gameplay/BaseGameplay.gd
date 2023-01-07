@@ -86,18 +86,19 @@ func on_map_click(_pos :Vector3):
 var _building_to_build :Dictionary = {}
 var _buildings :Array = []
 var _spawn_points :Array = []
+
+func on_deploying_building(_building_data :BuildingData):
+	rpc("_on_deploying_building", _building_data.to_dictionary())
 	
-remotesync func _on_deploying_building(_node_name :String, _network_master :int, _building_resource_path :String):
-	_building_to_build[_network_master] = load(_building_resource_path).instance()
-	var _build :BaseBuilding = _building_to_build[_network_master]
+remotesync func _on_deploying_building(_building_data_dic :Dictionary):
+	var _building_data :BuildingData = BuildingData.new()
+	_building_data.from_dictionary(_building_data_dic)
 	
-	_build.color = Color.blue
-	_build.team = 1
-	_build.name = _node_name
-	_build.set_network_master(_network_master)
+	_building_to_build[_building_data.network_master] = _building_data.spawn(self)
+	
+	var _build :BaseBuilding = _building_to_build[_building_data.network_master]
 	_build.connect("building_deployed", self, "on_building_deployed")
 	_build.connect("building_destroyed", self, "on_building_destroyed")
-	add_child(_build)
 	
 func on_building_deployed(_building :BaseBuilding):
 	_buildings.append(_building)
@@ -152,25 +153,22 @@ var _ui :BaseUi
 func setup_ui():
 	_ui = preload("res://gameplay/mp/ui/ui.tscn").instance()
 	_ui.connect("main_menu_press", self, "on_main_menu_press")
-	_ui.connect("deploy_building", self, "_on_deploy_building")
-	_ui.connect("start_building", self, "_on_start_building")
-	_ui.connect("cancel_building", self, "_on_cancel_building")
-	_ui.connect("recruit_squad", self, "_on_recruit_squad")
+	_ui.connect("deploy_building", self, "_on_ui_deploy_building")
+	_ui.connect("start_building", self, "_on_ui_start_building")
+	_ui.connect("cancel_building", self, "_on_ui_cancel_building")
+	_ui.connect("recruit_squad", self, "_on_ui_recruit_squad")
 	add_child(_ui)
 	
 func on_main_menu_press():
 	on_exit_game_session()
 	
-func _on_recruit_squad(_squad :SquadData, _icon :Resource):
+func _on_ui_recruit_squad(_squad :SquadData, _icon :Resource):
 	pass
 	
-func _on_deploy_building(_building :Resource):
-	_on_cancel_building()
-	rpc("_on_deploying_building",
-		GDUUID.v4(), NetworkLobbyManager.get_id(), _building.resource_path
-	)
+func _on_ui_deploy_building(_building_data :BuildingData):
+	_on_ui_cancel_building()
 	
-func _on_start_building():
+func _on_ui_start_building():
 	var id = NetworkLobbyManager.get_id()
 	if not _building_to_build.has(id):
 		return
@@ -180,7 +178,7 @@ func _on_start_building():
 		_build.start_building()
 		_building_to_build.erase(id)
 	
-func _on_cancel_building():
+func _on_ui_cancel_building():
 	var id = NetworkLobbyManager.get_id()
 	if not _building_to_build.has(id):
 		return

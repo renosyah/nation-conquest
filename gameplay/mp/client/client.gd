@@ -11,21 +11,29 @@ func _ready():
 func all_player_ready():
 	.all_player_ready()
 	
-func _on_recruit_squad(_squad :SquadData, _icon :Resource):
-	._on_recruit_squad(_squad, _icon)
-	var squad = _squad
-	squad.node_name = GDUUID.v4()
-	squad.network_master = NetworkLobbyManager.get_id()
-	squad.color = color
-	squad.team = 1
-	squad.icon = _icon
+func _on_ui_recruit_squad(_squad :SquadData, _icon :Resource):
+	._on_ui_recruit_squad(_squad, _icon)
 	
-	update_camera_aiming_at()
+	_squad.node_name = GDUUID.v4()
+	_squad.network_master = NetworkLobbyManager.get_id()
+	_squad.color = color
+	_squad.team = 1
+	_squad.icon = _icon
 	
 	spawn_squad(
-		squad, player_squad_holder.get_path(),
-		 _camera_last_aim_pos + Vector3(0, 15, 0)
+		_squad, player_squad_holder.get_path(),
+		_spawn_points[4] + Vector3(0, 15, 0)
 	)
+	
+func _on_ui_deploy_building(_building_data :BuildingData):
+	._on_ui_deploy_building(_building_data)
+	
+	_building_data.color = color
+	_building_data.node_name = GDUUID.v4()
+	_building_data.team = 1
+	_building_data.network_master = NetworkLobbyManager.get_id()
+	
+	on_deploying_building(_building_data)
 	
 func on_map_click(_pos :Vector3):
 	.on_map_click(_pos)

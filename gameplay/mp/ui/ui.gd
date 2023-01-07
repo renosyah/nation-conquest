@@ -122,7 +122,7 @@ func _on_add_squad_pressed():
 func _on_open_building_pressed():
 	build_menu.visible = true
 	emit_signal("deploy_building", 
-		preload("res://entity/building/archer_tower/archer_tower.tscn")
+		preload("res://data/building_data/archer_tower.tres")
 	)
 
 func can_build(val :bool):
