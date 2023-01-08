@@ -34,6 +34,7 @@ func on_back_pressed():
 
 var _map :BaseMap
 var _water :Water
+onready var resources :Array = []
 
 func load_map():
 	_water = preload("res://map/water/water.tscn").instance()
@@ -49,33 +50,47 @@ func load_map():
 	_map.connect("on_map_click", self , "on_map_click")
 	add_child(_map)
 	_map.generate_map()
-
+	
+func on_generate_map_completed():
+	
+	# [{"scene", "pos"}]
+	var sync_resources :Array = []
+	var resources_scenes = {
+		"bush" : preload("res://entity/resources/berry_bush/berry_bush.tscn"),
+		"tree" : preload("res://entity/resources/trees/trees.tscn"),
+		"rock" : preload("res://entity/resources/rock/rock.tscn")
+	}
+		
+	if is_server():
+		_base_spawn_points = _map.base_spawn_positions
+		
+		for _pos in _map.spawn_positions:
+			var _keys = resources_scenes.keys()
+			var _scene = _keys[rand_range(0, _keys.size())]
+			sync_resources.append({"scene":_scene, "pos":_pos})
+			
+		NetworkLobbyManager.argument["sync_resources"] = sync_resources
+		NetworkLobbyManager.argument["base_spawn_points"] = _base_spawn_points
+		
+	else:
+		sync_resources = NetworkLobbyManager.argument["sync_resources"]
+		_base_spawn_points = NetworkLobbyManager.argument["base_spawn_points"]
+		
+	# rng mus be fresh instance
+	# in order to have same result
+	# of generation
 	var rng = RandomNumberGenerator.new()
 	rng.seed = NetworkLobbyManager.argument["seed"]
-	
-	var positions_copy = _map.spawn_positions.duplicate()
-	_spawn_points = _generate_spawn_points(positions_copy)
-	
-	var resources_scenes = [
-		preload("res://entity/resources/berry_bush/berry_bush.tscn"),
-		preload("res://entity/resources/trees/trees.tscn"),
-		preload("res://entity/resources/rock/rock.tscn"),
-	]
-	for pos in positions_copy:
-		var resources =  resources_scenes[rng.randi_range(0, resources_scenes.size() - 1)].instance()
-		resources.rng = rng
-		add_child(resources)
-		resources.translation = pos
 		
-func on_generate_map_completed():
-	var delay = Timer.new()
-	delay.wait_time = 1
-	add_child(delay)
-	delay.start()
-	
-	yield(delay, "timeout")
-	delay.queue_free()
-	
+	for sync_resource in sync_resources:
+		var scene = resources_scenes[sync_resource["scene"]]
+		var pos = sync_resource["pos"]
+		var instance :BaseResources = scene.instance()
+		instance.rng = rng
+		add_child(instance)
+		instance.translation = pos
+		resources.append(instance)
+		
 	NetworkLobbyManager.set_ready()
 	
 func on_map_click(_pos :Vector3):
@@ -89,40 +104,6 @@ func on_map_click(_pos :Vector3):
 		if is_instance_valid(selected_squad[i]):
 			selected_squad[i].set_move_to(formation[i], true)
 	
-func _generate_spawn_points(positions_copy :Array) -> Array:
-	var edges = [
-		Vector3(-100, 0, -100),
-		Vector3(100, 0, -100),
-		Vector3(-100, 0, 100),
-		Vector3(100, 0, 100),
-	]
-	var _spawn_points :Array = [
-		Vector3.ZERO,
-		Vector3.ZERO,
-		Vector3.ZERO,
-		Vector3.ZERO,
-		Vector3.ZERO,
-	]
-	
-	var index :int = 0
-	for edge in edges:
-		for pos in positions_copy:
-			var close_1 = _spawn_points[index].distance_squared_to(edge)
-			var close_2 = pos.distance_squared_to(edge)
-			if close_2 < close_1 and pos.y > 2:
-				_spawn_points[index] = pos
-				
-		positions_copy.erase(_spawn_points[index])
-		index += 1
-		
-	for pos in positions_copy:
-		if _spawn_points[4].y < pos.y:
-			_spawn_points[4] = pos
-			
-	positions_copy.erase(_spawn_points[4])
-		
-	return _spawn_points
-	
 ################################################################
 # ui
 var _ui :BaseUi
@@ -135,6 +116,8 @@ func setup_ui():
 	_ui.connect("cancel_building", self, "_on_ui_cancel_building")
 	_ui.connect("recruit_squad", self, "_on_ui_recruit_squad")
 	add_child(_ui)
+	
+	_ui.loading(true)
 	
 func on_main_menu_press():
 	on_exit_game_session()
@@ -215,7 +198,7 @@ func all_player_ready():
 ################################################################
 var _building_to_build :Dictionary = {}
 var _buildings :Array = []
-var _spawn_points :Array = []
+var _base_spawn_points :Array = []
 
 func on_deploying_building(_building_data :BuildingData):
 	rpc("_on_deploying_building", _building_data.to_dictionary())

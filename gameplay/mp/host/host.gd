@@ -9,6 +9,10 @@ onready var enemy_squad_holder = $enemy_squad_holder
 func _ready():
 	_ui.color = color
 	
+func on_generate_map_completed():
+	.on_generate_map_completed()
+	NetworkLobbyManager.set_host_ready()
+	
 func all_player_ready():
 	.all_player_ready()
 	
@@ -36,7 +40,7 @@ func _on_ui_deploy_building(_building_data :BuildingData):
 # bot
 
 func get_invasion_spawn_pos() -> Vector3:
-	return _spawn_points[rand_range(0, 3)] + Vector3(0, 15, 0)
+	return _base_spawn_points[rand_range(0, 3)] + Vector3(0, _map.map_height + 5, 0)
 	
 func _on_attack_wave_timer_timeout():
 	if enemy_squad_holder.get_child_count() > 6:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://addons/mini-map/MiniMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gameplay/mp/ui/ui.gd" type="Script" id=2]
@@ -17,6 +17,38 @@
 [ext_resource path="res://assets/ui/gameplay/recruitment_panel/recruitment_panel.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/ui/gameplay/building_panel/building_panel.tscn" type="PackedScene" id=16]
 
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "..." ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "loading"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "...", ".", "..", "...", "..." ]
+}
+
 [node name="ui" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -25,7 +57,30 @@ script = ExtResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="loading" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/loading"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Label" type="Label" parent="CanvasLayer/loading"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 10 )
+text = "..."
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/loading"]
+autoplay = "loading"
+anims/RESET = SubResource( 1 )
+anims/loading = SubResource( 2 )
+
 [node name="SafeArea" parent="CanvasLayer" instance=ExtResource( 3 )]
+visible = false
 mouse_filter = 2
 
 [node name="camera_control" parent="CanvasLayer/SafeArea" instance=ExtResource( 4 )]

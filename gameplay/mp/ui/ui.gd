@@ -7,6 +7,9 @@ signal deploy_building(_building)
 signal start_building
 signal cancel_building
 
+onready var loading = $CanvasLayer/loading
+onready var safe_area = $CanvasLayer/SafeArea
+
 onready var mini_map = $CanvasLayer/SafeArea/minimap_panel/MiniMap
 onready var camera_control = $CanvasLayer/SafeArea/camera_control
 onready var squad_icon_holder = $CanvasLayer/SafeArea/Control/squad_menu/HBoxContainer2/HBoxContainer3
@@ -48,6 +51,14 @@ func _ready():
 	
 	recruit_squad_panel.visible = false
 	building_panel.visible = false
+	
+	safe_area.visible = false
+	loading.visible = true
+	
+func loading(_show :bool):
+	.loading(_show)
+	safe_area.visible = not _show
+	loading.visible = _show
 	
 func _on_recruit_squad_on_recruit_squad(_squad_data :SquadData):
 	emit_signal("recruit_squad", _squad_data)

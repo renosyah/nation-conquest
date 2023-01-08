@@ -17,10 +17,12 @@ export var map_height :int = 10
 var land_mesh :MeshInstance
 var collision :CollisionShape
 var spawn_positions : Array = []
+var base_spawn_positions : Array = []
 
 var _input_detection :Node
 var _click_position :Vector3
 
+var thread = Thread.new()
 onready var _land_shader :ShaderMaterial = land_shader
 
 func _ready():
@@ -46,7 +48,14 @@ func _ready():
 	
 	connect("input_event", self, "_input_event")
 	
+func _exit_tree():
+	thread.wait_to_finish()
+	
 func generate_map():
+	if not thread.is_active():
+		thread.start(self, "_generate_map")
+
+func _generate_map():
 	var noise = NoiseMaker.new()
 	noise.make_noise(map_seed, 3)
 	
@@ -66,6 +75,15 @@ func generate_map():
 	land_mesh.get_child(0).queue_free()
 	
 	spawn_positions = _create_spawns(lands[1])
+	base_spawn_positions = _generate_base_spawn_points(spawn_positions)
+	
+	var delay = Timer.new()
+	delay.wait_time = 1
+	add_child(delay)
+	delay.start()
+	
+	yield(delay, "timeout")
+	delay.queue_free()
 	
 	emit_signal("on_generate_map_completed")
 	
@@ -86,6 +104,56 @@ func _trim_array(arr :Array, step :int) -> Array:
 		new_arr.append(arr[i])
 		
 	return new_arr
+	
+func _generate_base_spawn_points(positions_copy :Array) -> Array:
+	var edges = [
+		# NW
+		Vector3(-100, 0, -100),
+		
+		# SW
+		Vector3(100, 0, -100),
+		
+		# NE
+		Vector3(-100, 0, 100),
+		
+		# SE
+		Vector3(100, 0, 100),
+	]
+	var _spawn_points :Array = [
+		# NW
+		Vector3.ZERO,
+		
+		# SW
+		Vector3.ZERO,
+		
+		# NE
+		Vector3.ZERO,
+		
+		# SE
+		Vector3.ZERO,
+		
+		# CENTER
+		Vector3.ZERO,
+	]
+	
+	var index :int = 0
+	for edge in edges:
+		for pos in positions_copy:
+			var close_1 = _spawn_points[index].distance_squared_to(edge)
+			var close_2 = pos.distance_squared_to(edge)
+			if close_2 < close_1 and pos.y > 2:
+				_spawn_points[index] = pos
+				
+		positions_copy.erase(_spawn_points[index])
+		index += 1
+		
+	for pos in positions_copy:
+		if _spawn_points[4].y < pos.y:
+			_spawn_points[4] = pos
+			
+	positions_copy.erase(_spawn_points[4])
+		
+	return _spawn_points
 	
 	
 func _create_land(noise :NoiseMaker) -> Array:
