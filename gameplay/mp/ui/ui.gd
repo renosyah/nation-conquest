@@ -28,7 +28,14 @@ onready var recruit_squad_panel = $CanvasLayer/SafeArea/recruit_squad
 onready var building_panel = $CanvasLayer/SafeArea/building_panel
 onready var building_panel_icon_holder = $CanvasLayer/SafeArea/building_panel/HBoxContainer2/Panel/VBoxContainer/ScrollContainer/HBoxContainer3
 
+# player squad s
+# {_instance_squad : _instance_icon}
 var squads = {}
+
+# player buildings
+# [_instance_building]
+var buildings = []
+
 var building_rotation :float = 0
 var color :Color
 
@@ -56,7 +63,34 @@ func _process(delta):
 	var value = -45 if rotate_l.pressed else 45 if rotate_r.pressed else 0
 	building_rotation += value * delta
 	
+func on_building_deployed(_building :BaseBuilding):
+	var tower_icon = preload("res://entity/building/archer_tower/tower.png")
+	add_minimap_object(_building.get_path(), _building.color, tower_icon)
+	
+	# player building
+	if _building.get_network_master() != NetworkLobbyManager.get_id() or _building.team != 1:
+		return
+		
+	buildings.append(_building)
+	
+func on_building_destroyed(_building :BaseBuilding):
+	
+	# player building
+	if _building.get_network_master() != NetworkLobbyManager.get_id() or _building.team != 1:
+		return
+		
+	if not buildings.has(_building):
+		return
+		
+	buildings.erase(_building)
+	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
+	add_minimap_object(_squad.get_path(), _squad.color)
+	
+	# player squad
+	if _squad.get_network_master() != NetworkLobbyManager.get_id() or _squad.team != 1:
+		return
+		
 	var instance :SquadIcon = preload("res://assets/ui/icon/squad_icon/squad_icon.tscn").instance()
 	instance.icon = _icon
 	instance.title = str(_squad.max_unit)
@@ -65,14 +99,16 @@ func on_squad_spawn(_squad :Squad, _icon :Resource):
 	squad_icon_holder.add_child(instance)
 	squads[_squad] = instance
 	
-	mini_map.set_color(_squad.color)
-	
 	add_squad.visible = squads.size() < 4
 	
 func _on_squad_icon_click(_icon :SquadIcon, _squad :Squad):
 	_squad.emit_signal("squad_selected", _squad)
 	
 func on_squad_update(_squad :Squad):
+	# player squad
+	if _squad.get_network_master() != NetworkLobbyManager.get_id() or _squad.team != 1:
+		return
+		
 	if not squads.has(_squad):
 		return
 		
@@ -80,12 +116,20 @@ func on_squad_update(_squad :Squad):
 	squads[_squad].show_squad_hurt()
 	
 func on_squad_selected(_squad :Squad, is_selected :bool):
+	# player squad
+	if _squad.get_network_master() != NetworkLobbyManager.get_id() or _squad.team != 1:
+		return
+		
 	if not squads.has(_squad):
 		return
 		
 	squads[_squad].set_selected(is_selected)
 	
 func on_squad_dead(_squad :Squad):
+	# player squad
+	if _squad.get_network_master() != NetworkLobbyManager.get_id() or _squad.team != 1:
+		return
+		
 	if not squads.has(_squad):
 		return
 		

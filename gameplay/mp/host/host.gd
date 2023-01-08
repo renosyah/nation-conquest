@@ -32,6 +32,9 @@ func _on_ui_deploy_building(_building_data :BuildingData):
 	
 	on_deploying_building(_building_data)
 	
+################################################################
+# bot
+
 func get_invasion_spawn_pos() -> Vector3:
 	return _spawn_points[rand_range(0, 3)] + Vector3(0, 15, 0)
 	

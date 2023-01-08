@@ -1,6 +1,7 @@
 extends BaseGameplay
 
 onready var color :Color = Color(randf(), randf(), randf(), 1)
+
 onready var player_squad_holder = $player_squad_holder
 
 # Called when the node enters the scene tree for the first time.

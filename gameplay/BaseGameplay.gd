@@ -44,7 +44,7 @@ func load_map():
 	_map.map_seed = NetworkLobbyManager.argument["seed"]
 	_map.map_scale = 1
 	_map.map_size = 200
-	_map.map_height = 10
+	_map.map_height = 20
 	_map.connect("on_generate_map_completed", self, "on_generate_map_completed")
 	_map.connect("on_map_click", self , "on_map_click")
 	add_child(_map)
@@ -176,8 +176,7 @@ func setup_camera():
 	
 func update_camera_aiming_at():
 	var _cam_aim :CameraAimingData = _camera.get_camera_aiming_at(
-		_ui.get_center_screen(),
-		squads
+		_ui.get_center_screen(), all_squads
 	)
 	if _cam_aim.collider == _water:
 		return
@@ -237,18 +236,17 @@ func on_building_selected(_building :BaseBuilding):
 	
 func on_building_deployed(_building :BaseBuilding):
 	_buildings.append(_building)
-	_ui.add_minimap_object(
-		_building.get_path(), 
-		_building.color, 
-		preload("res://entity/building/archer_tower/tower.png")
-	)
+	_ui.on_building_deployed(_building)
 	
 func on_building_destroyed(_building :BaseBuilding):
-	_buildings.erase(_building)
+	if _buildings.has(_building):
+		_buildings.erase(_building)
+		
+	_ui.on_building_destroyed(_building)
 	_building.queue_free()
 	
 ################################################################
-onready var squads :Array = []
+onready var all_squads :Array = []
 onready var selected_squad :Array = []
 
 # squad spawner
@@ -268,22 +266,17 @@ remotesync func _spawn_squad(_squad_data :Dictionary, _at :Vector3, _parent :Nod
 	_squad_spawn.connect("squad_dead", self, "on_squad_dead")
 	_squad_spawn.translation = _at
 	
-	_ui.add_minimap_object(_squad_spawn.get_path(), _squad.color)
-	
 	on_squad_spawn(_squad_spawn, _squad.icon)
 	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
-	squads.append(_squad)
-	
-	if _squad.get_network_master() != NetworkLobbyManager.get_id()  or _squad.team != 1:
-		return
-		
+	all_squads.append(_squad)
 	_ui.on_squad_spawn(_squad, _icon)
 	
 func on_squad_update(_squad :Squad):
 	_ui.on_squad_update(_squad)
 	
 func on_squad_selected(_squad :Squad):
+	# player squad
 	if _squad.get_network_master() != NetworkLobbyManager.get_id()  or _squad.team != 1:
 		return
 		
@@ -298,15 +291,6 @@ func on_squad_selected(_squad :Squad):
 		selected_squad.append(_squad)
 	
 func on_squad_dead(_squad :Squad):
-	if squads.has(_squad):
-		squads.erase(_squad)
-		
-	if selected_squad.has(_squad):
-		selected_squad.erase(_squad)
-		
-	if _squad.get_network_master() == NetworkLobbyManager.get_id() and _squad.team == 1:
-		_ui.on_squad_dead(_squad)
-	
 	if not is_server():
 		return
 		
@@ -317,6 +301,14 @@ remotesync func _on_squad_dead(_squad_path :NodePath):
 	if not is_instance_valid(_squad):
 		return
 		
+	if all_squads.has(_squad):
+		all_squads.erase(_squad)
+		
+	if selected_squad.has(_squad):
+		selected_squad.erase(_squad)
+		
+	_ui.on_squad_dead(_squad)
+	
 	_squad.queue_free()
 	
 ################################################################
