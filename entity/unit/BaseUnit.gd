@@ -178,6 +178,7 @@ func take_damage(damage :int) -> void:
 	hp -= damage
 	if hp < 1:
 		set_process(false)
+		visible = false
 		is_dead = true
 		dead()
 		return

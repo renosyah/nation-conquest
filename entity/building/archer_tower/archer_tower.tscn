@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://entity/building/archer_tower/tower.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://entity/building/archer_tower/archer_tower.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/hit_particle/custom_particle/text/custom_text_particle.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=8]
 
 [sub_resource type="SpatialMaterial" id=5]
 flags_vertex_lighting = true
@@ -27,10 +28,11 @@ height = 20.0
 radius = 4.0
 
 [sub_resource type="BoxShape" id=8]
-extents = Vector3( 1.63249, 1.55676, 1.60521 )
+extents = Vector3( 1.63249, 2.88285, 1.60521 )
 
 [node name="archer_tower" type="KinematicBody"]
 collision_layer = 0
+input_ray_pickable = false
 script = ExtResource( 2 )
 team = 3
 hp = 5000
@@ -61,12 +63,13 @@ shape = SubResource( 3 )
 
 [node name="area_build" type="Area" parent="."]
 collision_mask = 0
-input_ray_pickable = false
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="area_build"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53541, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46321, 0 )
 shape = SubResource( 8 )
+
+[node name="input_detection" parent="." instance=ExtResource( 8 )]
 
 [node name="Position3D" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.09719, 0 )
@@ -87,5 +90,7 @@ custom_particle_scene = ExtResource( 6 )
 
 [node name="Tween" type="Tween" parent="."]
 
+[connection signal="input_event" from="area_build" to="." method="_on_area_build_input_event"]
+[connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
 [connection signal="timeout" from="garrison_replenis_timer" to="." method="_on_garrison_replenis_timer_timeout"]
 [connection signal="timeout" from="agro_timer" to="." method="_on_agro_timer_timeout"]

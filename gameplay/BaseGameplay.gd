@@ -225,8 +225,12 @@ remotesync func _on_deploying_building(_building_data_dic :Dictionary):
 	_building_to_build[_building_data.network_master] = _building_data.spawn(self)
 	
 	var _build :BaseBuilding = _building_to_build[_building_data.network_master]
+	_build.connect("building_selected", self, "on_building_selected")
 	_build.connect("building_deployed", self, "on_building_deployed")
 	_build.connect("building_destroyed", self, "on_building_destroyed")
+	
+func on_building_selected(_building :BaseBuilding):
+	pass
 	
 func on_building_deployed(_building :BaseBuilding):
 	_buildings.append(_building)

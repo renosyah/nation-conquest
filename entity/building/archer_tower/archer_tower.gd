@@ -10,6 +10,7 @@ onready var _spotting_area = $Area/CollisionShape
 onready var _area = $Area
 onready var _hp_bar = $hpBar
 onready var _hit_particle = $hit_particle
+onready var _input_detection = $input_detection
 
 onready var _mesh_instance = $MeshInstance
 onready var _mesh_instance_2 = $MeshInstance2
@@ -49,7 +50,8 @@ remotesync func _finish_building():
 	var attack_range = 8
 	for pos in range(max_unit):
 		var _unit = _create_unit("garrison-unit-" + str(pos))
-		_unit.translation = get_garrison_spawn_pos()
+		_unit.global_transform.origin = get_garrison_spawn_pos()
+		_unit.global_rotation = Vector3.ZERO
 		_units.append(_unit)
 		
 		attack_range = _unit.attack_range
@@ -66,7 +68,7 @@ func get_garrison_spawn_pos() -> Vector3:
 	var angle := rand_range(0, TAU)
 	var distance := rand_range(0.5, 1)
 	var posv2 = polar2cartesian(distance, angle)
-	var posv3 =_garrison_position.translation  + Vector3(posv2.x, 0, posv2.y)
+	var posv3 =_garrison_position.global_transform.origin + Vector3(posv2.x, 0, posv2.y)
 	return posv3
 	
 func _on_garrison_replenis_timer_timeout():
@@ -86,7 +88,8 @@ func _on_garrison_replenis_timer_timeout():
 		
 remotesync func _spawn_garrison(_node_name :String):
 	var _unit = _create_unit(_node_name)
-	_unit.translation = get_garrison_spawn_pos()
+	_unit.global_transform.origin = get_garrison_spawn_pos()
+	_unit.global_rotation = Vector3.ZERO
 	_units.append(_unit)
 	
 func _create_unit(unit_name :String) -> BaseUnit:
@@ -100,6 +103,7 @@ func _create_unit(unit_name :String) -> BaseUnit:
 	_unit.color = color
 	_unit.enable_moving = false
 	_unit.connect("unit_dead", self, "_unit_dead")
+	_unit.set_as_toplevel(true)
 	add_child(_unit)
 	return _unit
 	
@@ -107,7 +111,7 @@ func moving(delta :float) -> void:
 	if status == status_deploying:
 		can_build = _area_build.get_overlapping_bodies().size() <= 1
 		_mesh_instance_2_material.albedo_color = Color(1,1,1,0.5) if can_build else Color(1,0,0,0.5)
-	
+
 func take_damage(damage :int) -> void:
 	.take_damage(damage)
 	
@@ -175,3 +179,14 @@ func _on_agro_timer_timeout():
 		
 	_spotted_target()
 	_attack_targets()
+
+func _on_area_build_input_event(camera, event, position, normal, shape_idx):
+	if status != status_deployed:
+		return
+		
+	_input_detection.check_input(event)
+	
+func _on_input_detection_any_gesture(sig ,event):
+	if event is InputEventSingleScreenTap:
+		emit_signal("building_selected", self)
+		

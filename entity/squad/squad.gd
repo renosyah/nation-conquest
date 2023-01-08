@@ -150,8 +150,6 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	if not is_instance_valid(_unit):
 		return
 		
-	_unit.visible = false
-	
 	_units.erase(_unit)
 	_unit.queue_free()
 	

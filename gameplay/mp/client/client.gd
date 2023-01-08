@@ -19,7 +19,7 @@ func _on_ui_recruit_squad(_squad :SquadData, _icon :Resource):
 	_squad.team = 1
 	_squad.icon = _icon
 	
-	spawn_squad( _squad, _spawn_points[4] + Vector3(0, 15, 0), player_squad_holder.get_path())
+	spawn_squad( _squad, Vector3(0, 15, 0), player_squad_holder.get_path())
 	
 func _on_ui_deploy_building(_building_data :BuildingData):
 	._on_ui_deploy_building(_building_data)

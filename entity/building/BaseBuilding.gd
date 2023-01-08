@@ -1,6 +1,7 @@
 extends BaseEntity
 class_name BaseBuilding
 
+signal building_selected(_building)
 signal building_deployed(_building)
 signal building_take_damage(_building, _damage)
 signal building_destroyed(_building)

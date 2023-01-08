@@ -6,6 +6,7 @@ signal on_click(_icon, _squad)
 export var icon :Resource
 export var unit_size :int
 export var color :Color = Color.white
+
 var squad :Squad
 
 onready var _icon = $Control/VBoxContainer2/HBoxContainer/TextureRect
@@ -35,9 +36,6 @@ func show_squad_hurt():
 	_tween.start()
 
 func _on_squad_icon_gui_input(event):
-	if not is_instance_valid(squad):
-		return
-		
 	_input_detection.check_input(event)
 
 func _on_input_detection_any_gesture(sig ,event):
