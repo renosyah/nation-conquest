@@ -12,11 +12,6 @@ func display_building_panel(color :Color):
 		i.queue_free()
 
 	var building_datas = [
-		 preload("res://data/building_data/archer_tower.tres"),
-		preload("res://data/building_data/archer_tower.tres"),
-		preload("res://data/building_data/archer_tower.tres"),
-		preload("res://data/building_data/archer_tower.tres"),
-		preload("res://data/building_data/archer_tower.tres"),
 		preload("res://data/building_data/archer_tower.tres")
 	]
 
