@@ -175,7 +175,10 @@ func setup_camera():
 	add_child(_camera)
 	
 func update_camera_aiming_at():
-	var _cam_aim :CameraAimingData = _camera.get_camera_aiming_at(_ui.get_center_screen())
+	var _cam_aim :CameraAimingData = _camera.get_camera_aiming_at(
+		_ui.get_center_screen(),
+		squads
+	)
 	if _cam_aim.collider == _water:
 		return
 		
@@ -245,6 +248,7 @@ func on_building_destroyed(_building :BaseBuilding):
 	_building.queue_free()
 	
 ################################################################
+onready var squads :Array = []
 onready var selected_squad :Array = []
 
 # squad spawner
@@ -265,9 +269,12 @@ remotesync func _spawn_squad(_squad_data :Dictionary, _at :Vector3, _parent :Nod
 	_squad_spawn.translation = _at
 	
 	_ui.add_minimap_object(_squad_spawn.get_path(), _squad.color)
+	
 	on_squad_spawn(_squad_spawn, _squad.icon)
 	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
+	squads.append(_squad)
+	
 	if _squad.get_network_master() != NetworkLobbyManager.get_id()  or _squad.team != 1:
 		return
 		
@@ -291,6 +298,9 @@ func on_squad_selected(_squad :Squad):
 		selected_squad.append(_squad)
 	
 func on_squad_dead(_squad :Squad):
+	if squads.has(_squad):
+		squads.erase(_squad)
+		
 	if selected_squad.has(_squad):
 		selected_squad.erase(_squad)
 		
