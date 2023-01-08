@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://addons/mini-map/MiniMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gameplay/mp/ui/ui.gd" type="Script" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://assets/ui/icon/squad_icon/icon_empty.png" type="Texture" id=12]
 [ext_resource path="res://assets/ui/icon/rotate_r.png" type="Texture" id=13]
 [ext_resource path="res://assets/ui/icon/rotate_l.png" type="Texture" id=14]
+[ext_resource path="res://assets/ui/gameplay/recruitment_panel/recruitment_panel.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/ui/gameplay/building_panel/building_panel.tscn" type="PackedScene" id=16]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -246,82 +248,19 @@ margin_right = 200.0
 margin_bottom = 104.0
 rect_min_size = Vector2( 0, 20 )
 
-[node name="recruit_squad" type="Control" parent="CanvasLayer/SafeArea"]
+[node name="recruit_squad" parent="CanvasLayer/SafeArea" instance=ExtResource( 15 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_right = 600.0
 margin_bottom = 1024.0
-mouse_filter = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/SafeArea/recruit_squad"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -274.0
-margin_top = -250.0
-margin_right = 274.0
-margin_bottom = 250.0
-rect_min_size = Vector2( 0, 500 )
-mouse_filter = 2
-size_flags_vertical = 0
-alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/recruit_squad/HBoxContainer2"]
-margin_right = 20.0
-margin_bottom = 500.0
-rect_min_size = Vector2( 20, 0 )
-
-[node name="Panel" type="Panel" parent="CanvasLayer/SafeArea/recruit_squad/HBoxContainer2"]
-margin_left = 24.0
-margin_right = 524.0
-margin_bottom = 500.0
-rect_min_size = Vector2( 500, 100 )
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SafeArea/recruit_squad/HBoxContainer2/Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 25.0
-margin_top = 28.0
-margin_right = -24.0
-margin_bottom = -25.0
-
-[node name="Label" type="Label" parent="CanvasLayer/SafeArea/recruit_squad/HBoxContainer2/Panel/VBoxContainer"]
-margin_right = 451.0
-margin_bottom = 28.0
-custom_fonts/font = ExtResource( 10 )
-text = "Recruit Squad"
-align = 1
-valign = 1
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/SafeArea/recruit_squad/HBoxContainer2/Panel/VBoxContainer"]
-margin_top = 32.0
-margin_right = 451.0
-margin_bottom = 363.0
-size_flags_vertical = 3
-scroll_horizontal_enabled = false
-
-[node name="HBoxContainer3" type="GridContainer" parent="CanvasLayer/SafeArea/recruit_squad/HBoxContainer2/Panel/VBoxContainer/ScrollContainer"]
-margin_right = 451.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 100 )
-mouse_filter = 2
-size_flags_horizontal = 3
-columns = 5
-
-[node name="close_recruit_squad" type="Button" parent="CanvasLayer/SafeArea/recruit_squad/HBoxContainer2/Panel/VBoxContainer"]
-margin_left = 165.0
-margin_top = 367.0
-margin_right = 285.0
-margin_bottom = 447.0
-rect_min_size = Vector2( 120, 80 )
-size_flags_horizontal = 4
-custom_fonts/font = ExtResource( 10 )
-text = "Cancel"
-
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/recruit_squad/HBoxContainer2"]
-margin_left = 528.0
-margin_right = 548.0
-margin_bottom = 500.0
-rect_min_size = Vector2( 20, 0 )
+[node name="building_panel" parent="CanvasLayer/SafeArea" instance=ExtResource( 16 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 600.0
+margin_bottom = 1024.0
 
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer/VBoxContainer/open_minimap" to="." method="_on_open_minimap_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer/VBoxContainer/open_building" to="." method="_on_open_building_pressed"]
@@ -330,4 +269,5 @@ rect_min_size = Vector2( 20, 0 )
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/build_menu/HBoxContainer2/build_cancel" to="." method="_on_build_cancel_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/squad_menu/HBoxContainer2/add_squad" to="." method="_on_add_squad_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/minimap_panel/VBoxContainer/close_minimap" to="." method="_on_close_minimap_pressed"]
-[connection signal="pressed" from="CanvasLayer/SafeArea/recruit_squad/HBoxContainer2/Panel/VBoxContainer/close_recruit_squad" to="." method="_on_close_recruit_squad_pressed"]
+[connection signal="on_recruit_squad" from="CanvasLayer/SafeArea/recruit_squad" to="." method="_on_recruit_squad_on_recruit_squad"]
+[connection signal="on_construct_building" from="CanvasLayer/SafeArea/building_panel" to="." method="_on_building_panel_on_construct_building"]

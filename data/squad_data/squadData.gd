@@ -3,6 +3,8 @@ class_name SquadData
 
 const squad_scene = preload("res://entity/squad/squad.tscn")
 
+export var squad_name :String
+export var squad_description :String
 export var node_name :String
 export var network_master :int
 export var unit :Resource
@@ -14,6 +16,8 @@ export var formation_space :int = 1
 export var is_selectable :bool = false
 
 func from_dictionary(data : Dictionary):
+	squad_name = data["squad_name"]
+	squad_description = data["squad_description"]
 	node_name = data["node_name"]
 	network_master = data["network_master"]
 	unit = load(data["unit"])
@@ -26,6 +30,8 @@ func from_dictionary(data : Dictionary):
 	
 func to_dictionary() -> Dictionary :
 	var data = {}
+	data["squad_name"] = squad_name
+	data["squad_description"] = squad_description
 	data["node_name"] = node_name
 	data["network_master"] = network_master
 	data["unit"] = unit.resource_path

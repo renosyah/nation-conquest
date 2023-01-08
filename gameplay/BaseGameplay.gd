@@ -139,7 +139,7 @@ func setup_ui():
 func on_main_menu_press():
 	on_exit_game_session()
 	
-func _on_ui_recruit_squad(_squad :SquadData, _icon :Resource):
+func _on_ui_recruit_squad(_squad :SquadData):
 	pass
 	
 func _on_ui_deploy_building(_building_data :BuildingData):

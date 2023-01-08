@@ -2,10 +2,12 @@
 
 [ext_resource path="res://data/squad_data/squadData.gd" type="Script" id=1]
 [ext_resource path="res://entity/unit/crossbowman/crossbowman.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ui/icon/squad_icon/icon_empty.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/icon/squad_icon/icon_squad_crossbowman.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 1 )
+squad_name = "Crossbowman"
+squad_description = ""
 node_name = ""
 network_master = 0
 unit = ExtResource( 2 )

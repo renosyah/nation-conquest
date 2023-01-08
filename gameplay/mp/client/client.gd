@@ -5,19 +5,18 @@ onready var player_squad_holder = $player_squad_holder
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	_ui.color = color
 	
 func all_player_ready():
 	.all_player_ready()
 	
-func _on_ui_recruit_squad(_squad :SquadData, _icon :Resource):
-	._on_ui_recruit_squad(_squad, _icon)
+func _on_ui_recruit_squad(_squad :SquadData):
+	._on_ui_recruit_squad(_squad)
 	
 	_squad.node_name = GDUUID.v4()
 	_squad.network_master = NetworkLobbyManager.get_id()
 	_squad.color = color
 	_squad.team = 1
-	_squad.icon = _icon
 	
 	spawn_squad( _squad, Vector3(0, 15, 0), player_squad_holder.get_path())
 	

@@ -7,19 +7,18 @@ onready var enemy_squad_holder = $enemy_squad_holder
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	_ui.color = color
 	
 func all_player_ready():
 	.all_player_ready()
 	
-func _on_ui_recruit_squad(_squad :SquadData, _icon :Resource):
-	._on_ui_recruit_squad(_squad, _icon)
+func _on_ui_recruit_squad(_squad :SquadData):
+	._on_ui_recruit_squad(_squad)
 	
 	_squad.node_name = GDUUID.v4()
 	_squad.network_master = NetworkLobbyManager.get_id()
 	_squad.color = color
 	_squad.team = 1
-	_squad.icon = _icon
 	
 	spawn_squad( _squad, Vector3(0, 15, 0), player_squad_holder.get_path())
 	
@@ -34,11 +33,7 @@ func _on_ui_deploy_building(_building_data :BuildingData):
 	on_deploying_building(_building_data)
 	
 func get_invasion_spawn_pos() -> Vector3:
-	var angle := rand_range(0, TAU)
-	var distance := _map.map_size * 0.25
-	var posv2 = polar2cartesian(distance, angle)
-	var posv3 = _map.global_transform.origin + Vector3(posv2.x, 15, posv2.y)
-	return posv3
+	return _spawn_points[rand_range(0, 3)] + Vector3(0, 15, 0)
 	
 func _on_attack_wave_timer_timeout():
 	if enemy_squad_holder.get_child_count() > 6:
@@ -60,7 +55,6 @@ func _on_attack_wave_timer_timeout():
 	squad.network_master = Network.PLAYER_HOST_ID
 	squad.color = Color.red
 	squad.team = 2
-	squad.max_unit = int(rand_range(6, 8)) if squad.max_unit >= 15 else squad.max_unit
 	spawn_squad(
 		squad, get_invasion_spawn_pos(), enemy_squad_holder.get_path()
 	)

@@ -6,6 +6,8 @@
 
 [resource]
 script = ExtResource( 1 )
+building_name = "Archer Tower"
+building_description = "Defence tower with archer garrison on top"
 node_name = ""
 network_master = 0
 building = ExtResource( 2 )

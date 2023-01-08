@@ -7,8 +7,6 @@ signal deploy_building(_building)
 signal start_building
 signal cancel_building
 
-const squad_icon_scene = preload("res://assets/ui/icon/squad_icon/squad_icon.tscn")
-
 onready var mini_map = $CanvasLayer/SafeArea/minimap_panel/MiniMap
 onready var camera_control = $CanvasLayer/SafeArea/camera_control
 onready var squad_icon_holder = $CanvasLayer/SafeArea/Control/squad_menu/HBoxContainer2/HBoxContainer3
@@ -25,11 +23,14 @@ onready var add_squad = $CanvasLayer/SafeArea/Control/squad_menu/HBoxContainer2/
 onready var rotate_l = $CanvasLayer/SafeArea/Control/build_menu/HBoxContainer/rotate_l
 onready var rotate_r = $CanvasLayer/SafeArea/Control/build_menu/HBoxContainer/rotate_r
 
-onready var recruit_squad = $CanvasLayer/SafeArea/recruit_squad
-onready var recruit_squad_icon_holder = $CanvasLayer/SafeArea/recruit_squad/HBoxContainer2/Panel/VBoxContainer/ScrollContainer/HBoxContainer3
+onready var recruit_squad_panel = $CanvasLayer/SafeArea/recruit_squad
+
+onready var building_panel = $CanvasLayer/SafeArea/building_panel
+onready var building_panel_icon_holder = $CanvasLayer/SafeArea/building_panel/HBoxContainer2/Panel/VBoxContainer/ScrollContainer/HBoxContainer3
 
 var squads = {}
 var building_rotation :float = 0
+var color :Color
 
 func _ready():
 	minimap_panel.visible = false
@@ -38,59 +39,29 @@ func _ready():
 	build_menu.visible = false
 	squad_menu.visible = true
 	
-	recruit_squad.visible = false
+	recruit_squad_panel.visible = false
+	building_panel.visible = false
 	
-func _display_squad_recruitment():
-	for i in recruit_squad_icon_holder.get_children():
-		recruit_squad_icon_holder.remove_child(i)
-		i.queue_free()
-		
-	var squad_datas = [
-		preload("res://data/squad_data/squads/militia_squad.tres"),
-		preload("res://data/squad_data/squads/spearman_squad.tres"),
-		preload("res://data/squad_data/squads/archer_squad.tres"),
-		preload("res://data/squad_data/squads/axeman_squad.tres"),
-		preload("res://data/squad_data/squads/swordman_squad.tres"),
-		preload("res://data/squad_data/squads/pikeman_squad.tres"),
-		preload("res://data/squad_data/squads/crossbowman_squad.tres"),
-		preload("res://data/squad_data/squads/maceman_squad.tres"),
-	]
-
-	var squad_icons = [
-		preload("res://assets/ui/icon/squad_icon/icon_squad_man_at_arms.png"),
-		preload("res://assets/ui/icon/squad_icon/icon_squad_spearman.png"),
-		preload("res://assets/ui/icon/squad_icon/icon_squad_archer.png"),
-		preload("res://assets/ui/icon/squad_icon/icon_squad_axeman.png"),
-		preload("res://assets/ui/icon/squad_icon/icon_squad_swordman.png"),
-		preload("res://assets/ui/icon/squad_icon/icon_squad_pikeman.png"),
-		preload("res://assets/ui/icon/squad_icon/icon_squad_crossbowman.png"),
-		preload("res://assets/ui/icon/squad_icon/icon_squad_maceman.png"),
-	]
+func _on_recruit_squad_on_recruit_squad(_squad_data :SquadData):
+	emit_signal("recruit_squad", _squad_data)
 	
-	for i in range(squad_datas.size()):
-		var instance :SquadIcon = squad_icon_scene.instance()
-		instance.icon = squad_icons[i]
-		instance.squad = null
-		instance.unit_size = squad_datas[i].max_unit
-		instance.color = Color.gray
-		instance.connect("on_click", self , "_on_recruit_squad_icon_click", [squad_datas[i]])
-		recruit_squad_icon_holder.add_child(instance)
-		
-func _on_recruit_squad_icon_click(_icon :SquadIcon, _squad :Squad, _squad_data :SquadData):
-	_on_close_recruit_squad_pressed()
-	emit_signal("recruit_squad", _squad_data, _icon.icon)
+func _on_building_panel_on_construct_building(_building_data :BuildingData):
+	build_menu.visible = true
+	building_panel.visible = false
+	squad_menu.visible = false
+	
+	emit_signal("deploy_building", _building_data)
 	
 func _process(delta):
 	var value = -45 if rotate_l.pressed else 45 if rotate_r.pressed else 0
 	building_rotation += value * delta
 	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
-	var instance :SquadIcon = squad_icon_scene.instance()
+	var instance :SquadIcon = preload("res://assets/ui/icon/squad_icon/squad_icon.tscn").instance()
 	instance.icon = _icon
-	instance.squad = _squad
-	instance.unit_size = _squad.max_unit
+	instance.title = str(_squad.max_unit)
 	instance.color = _squad.color
-	instance.connect("on_click", self , "_on_squad_icon_click")
+	instance.connect("on_click", self , "_on_squad_icon_click", [_squad])
 	squad_icon_holder.add_child(instance)
 	squads[_squad] = instance
 	
@@ -147,16 +118,13 @@ func _on_main_menu_pressed():
 	emit_signal("main_menu_press")
 
 func _on_add_squad_pressed():
-	_display_squad_recruitment()
-	recruit_squad.visible = true
+	recruit_squad_panel.display_squad_recruitment(color)
+	recruit_squad_panel.visible = true
 	
 func _on_open_building_pressed():
-	build_menu.visible = true
-	squad_menu.visible = false
-	emit_signal("deploy_building", 
-		preload("res://data/building_data/archer_tower.tres")
-	)
-
+	building_panel.display_building_panel(color)
+	building_panel.visible = true
+	
 func can_build(val :bool):
 	build_confirm.disabled = not val
 
@@ -170,8 +138,11 @@ func _on_build_cancel_pressed():
 	squad_menu.visible = true
 	emit_signal("cancel_building")
 
-func _on_close_recruit_squad_pressed():
-	recruit_squad.visible = false
+
+
+
+
+
 
 
 
