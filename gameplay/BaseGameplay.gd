@@ -34,7 +34,7 @@ func on_back_pressed():
 
 var _map :BaseMap
 var _water :Water
-onready var resources :Array = []
+onready var _resources :Array = []
 
 func load_map():
 	_water = preload("res://map/water/water.tscn").instance()
@@ -89,20 +89,20 @@ func on_generate_map_completed():
 		instance.rng = rng
 		add_child(instance)
 		instance.translation = pos
-		resources.append(instance)
+		_resources.append(instance)
 		
 	NetworkLobbyManager.set_ready()
 	
 func on_map_click(_pos :Vector3):
-	if selected_squad.empty():
+	if _selected_squad.empty():
 		return
 	
 	var formation = Utils.get_formation_box(
-		_pos, selected_squad.size(), 5
+		_pos, _selected_squad.size(), 5
 	)
-	for i in range(selected_squad.size()):
-		if is_instance_valid(selected_squad[i]):
-			selected_squad[i].set_move_to(formation[i], true)
+	for i in range(_selected_squad.size()):
+		if is_instance_valid(_selected_squad[i]):
+			_selected_squad[i].set_move_to(formation[i], true)
 	
 ################################################################
 # ui
@@ -111,10 +111,10 @@ var _ui :BaseUi
 func setup_ui():
 	_ui = preload("res://gameplay/mp/ui/ui.tscn").instance()
 	_ui.connect("main_menu_press", self, "on_main_menu_press")
-	_ui.connect("deploy_building", self, "_on_ui_deploy_building")
-	_ui.connect("start_building", self, "_on_ui_start_building")
-	_ui.connect("cancel_building", self, "_on_ui_cancel_building")
-	_ui.connect("recruit_squad", self, "_on_ui_recruit_squad")
+	_ui.connect("deploy_building", self, "on_ui_deploy_building")
+	_ui.connect("start_building", self, "on_ui_start_building")
+	_ui.connect("cancel_building", self, "on_ui_cancel_building")
+	_ui.connect("recruit_squad", self, "on_ui_recruit_squad")
 	add_child(_ui)
 	
 	_ui.loading(true)
@@ -122,13 +122,13 @@ func setup_ui():
 func on_main_menu_press():
 	on_exit_game_session()
 	
-func _on_ui_recruit_squad(_squad :SquadData):
+func on_ui_recruit_squad(_squad :SquadData):
 	pass
 	
-func _on_ui_deploy_building(_building_data :BuildingData):
-	_on_ui_cancel_building()
+func on_ui_deploy_building(_building_data :BuildingData):
+	on_ui_cancel_building()
 	
-func _on_ui_start_building():
+func on_ui_start_building():
 	var id = NetworkLobbyManager.get_id()
 	if not _building_to_build.has(id):
 		return
@@ -138,7 +138,7 @@ func _on_ui_start_building():
 		_build.start_building()
 		_building_to_build.erase(id)
 	
-func _on_ui_cancel_building():
+func on_ui_cancel_building():
 	var id = NetworkLobbyManager.get_id()
 	if not _building_to_build.has(id):
 		return
@@ -159,7 +159,7 @@ func setup_camera():
 	
 func update_camera_aiming_at():
 	var _cam_aim :CameraAimingData = _camera.get_camera_aiming_at(
-		_ui.get_center_screen(), all_squads
+		_ui.get_center_screen(), _all_squads
 	)
 	if _cam_aim.collider == _water:
 		return
@@ -229,8 +229,8 @@ func on_building_destroyed(_building :BaseBuilding):
 	_building.queue_free()
 	
 ################################################################
-onready var all_squads :Array = []
-onready var selected_squad :Array = []
+onready var _all_squads :Array = []
+onready var _selected_squad :Array = []
 
 # squad spawner
 func spawn_squad(_squad :SquadData, _at :Vector3, _parent :NodePath = get_path()):
@@ -252,7 +252,7 @@ remotesync func _spawn_squad(_squad_data :Dictionary, _at :Vector3, _parent :Nod
 	on_squad_spawn(_squad_spawn, _squad.icon)
 	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
-	all_squads.append(_squad)
+	_all_squads.append(_squad)
 	_ui.on_squad_spawn(_squad, _icon)
 	
 func on_squad_update(_squad :Squad):
@@ -262,15 +262,15 @@ func on_squad_selected(_squad :Squad):
 	if not _ui.is_player_squad(_squad):
 		return
 		
-	var is_in_squad = selected_squad.has(_squad)
+	var is_in_squad = _selected_squad.has(_squad)
 	if is_in_squad:
 		_squad.set_selected(false)
 		_ui.on_squad_selected(_squad, false)
-		selected_squad.erase(_squad)
+		_selected_squad.erase(_squad)
 	else:
 		_squad.set_selected(true)
 		_ui.on_squad_selected(_squad, true)
-		selected_squad.append(_squad)
+		_selected_squad.append(_squad)
 	
 func on_squad_dead(_squad :Squad):
 	if not is_server():
@@ -283,14 +283,13 @@ remotesync func _on_squad_dead(_squad_path :NodePath):
 	if not is_instance_valid(_squad):
 		return
 		
-	if all_squads.has(_squad):
-		all_squads.erase(_squad)
+	if _all_squads.has(_squad):
+		_all_squads.erase(_squad)
 		
-	if selected_squad.has(_squad):
-		selected_squad.erase(_squad)
+	if _selected_squad.has(_squad):
+		_selected_squad.erase(_squad)
 		
 	_ui.on_squad_dead(_squad)
-	
 	_squad.queue_free()
 	
 ################################################################
@@ -308,8 +307,6 @@ func _process(delta):
 			_build.rotation_degrees.y = _ui.building_rotation
 			_ui.can_build(_build.can_build)
 			
-	
-		
 ################################################################
 # exit
 func on_exit_game_session():

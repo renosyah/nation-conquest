@@ -74,8 +74,8 @@ func _generate_map():
 	add_child(collision)
 	land_mesh.get_child(0).queue_free()
 	
-	spawn_positions = _create_spawns(lands[1])
-	base_spawn_positions = _generate_base_spawn_points(spawn_positions)
+	spawn_positions = _trim_array(lands[1], 12)
+	base_spawn_positions = _generate_base_spawn_points(lands[1])
 	
 	var delay = Timer.new()
 	delay.wait_time = 1
@@ -87,23 +87,10 @@ func _generate_map():
 	
 	emit_signal("on_generate_map_completed")
 	
-func _create_spawns(inland_positions :Array) -> Array:
-	var stuffs = []
-	
-	var trim_inland_positions = _trim_array(inland_positions, 22)
-	for pos in trim_inland_positions:
-		if pos.distance_squared_to(translation) < map_size * 20:
-			stuffs.append(pos)
-		
-	return stuffs
-	
-	
 func _trim_array(arr :Array, step :int) -> Array:
-	var new_arr = []
-	for i in range(0, arr.size(), step):
-		new_arr.append(arr[i])
-		
-	return new_arr
+	randomize()
+	arr.shuffle()
+	return arr.slice(0, arr.size() - 1, step)
 	
 func _generate_base_spawn_points(positions_copy :Array) -> Array:
 	var edges = [
@@ -152,7 +139,7 @@ func _generate_base_spawn_points(positions_copy :Array) -> Array:
 			_spawn_points[4] = pos
 			
 	positions_copy.erase(_spawn_points[4])
-		
+	
 	return _spawn_points
 	
 	
@@ -189,7 +176,10 @@ func _create_land(noise :NoiseMaker) -> Array:
 		value -= gradient_value
 		value = clamp(value, -0.075, 1)
 		vertext.y = value * map_height
-		if value > 0.15:
+		
+		# inland height
+		# above sea level
+		if vertext.y > 1.5:
 			inland_positions.append(vertext)
 			
 		data_tool.set_vertex(i, vertext)
