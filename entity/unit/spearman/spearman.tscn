@@ -292,6 +292,7 @@ script = ExtResource( 3 )
 hp = 50
 max_hp = 50
 attack_damage = 15
+attack_delay = 5.0
 attack_range = 6.0
 skill = 0.6
 unit_role = 1

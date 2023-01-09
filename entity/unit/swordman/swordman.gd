@@ -10,4 +10,4 @@ func take_damage(damage :int) -> void:
 		.take_damage(damage)
 		return
 		
-	shield_hp -=  damage
+	shield_hp -= damage
