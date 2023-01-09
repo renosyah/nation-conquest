@@ -12,3 +12,5 @@ onready var _mesh_instance = $MeshInstance
 func _ready():
 	_mesh_instance.mesh = bushes[rng.randi_range(0, bushes.size() - 1)]
 	_mesh_instance.rotation_degrees.y = rng.randf_range(0, 180)
+	
+	_create_collision_shape(_mesh_instance)

@@ -222,6 +222,16 @@ func on_building_deployed(_building :BaseBuilding):
 	_ui.on_building_deployed(_building)
 	
 func on_building_destroyed(_building :BaseBuilding):
+	if not is_server():
+		return
+		
+	rpc("_on_building_destroyed", _building.get_path())
+	
+remotesync func _on_building_destroyed(_building_path :NodePath):
+	var _building :BaseBuilding = get_node_or_null(_building_path)
+	if not is_instance_valid(_building):
+		return
+		
 	if _buildings.has(_building):
 		_buildings.erase(_building)
 		

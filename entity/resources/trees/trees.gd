@@ -14,9 +14,4 @@ func _ready():
 	_mesh_instance.mesh = trees[rng.randi_range(0, trees.size() - 1)]
 	_mesh_instance.rotation_degrees.y = rng.randf_range(0, 180)
 	
-func _on_VisibilityNotifier_camera_entered(camera):
-	visible = true
-	
-func _on_VisibilityNotifier_camera_exited(camera):
-	visible = false
-	
+	_create_collision_shape(_mesh_instance)

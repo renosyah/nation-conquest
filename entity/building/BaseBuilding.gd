@@ -52,6 +52,8 @@ func _ready():
 	_building_timmer.one_shot = true
 	add_child(_building_timmer)
 	
+	set_process(true)
+	
 func start_building():
 	if not _is_master:
 		return
@@ -62,9 +64,11 @@ remotesync func _start_building():
 	status = status_building
 	_building_timmer.wait_time = building_time
 	_building_timmer.start()
+	set_process(false)
 	
 remotesync func _finish_building():
 	status = status_deployed
+	set_process(false)
 	emit_signal("building_deployed", self)
 	
 func _building_timmer_timeout():
@@ -93,6 +97,7 @@ func take_damage(damage :int) -> void:
 		
 	hp -= damage
 	if hp < 1:
+		is_dead = true
 		rpc("_dead")
 		return
 		

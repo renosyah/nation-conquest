@@ -25,10 +25,13 @@ var _targets :Array = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_hp_bar.visible = false
-	_mesh_instance.visible = false
-	_mesh_instance_2.visible = true
 	
+	_mesh_instance.visible = false
+	
+	_mesh_instance_2.visible = true
 	_mesh_instance_2.set_surface_material(0, _mesh_instance_2_material)
+	
+	set_process(true)
 	
 remotesync func _start_building():
 	._start_building()
@@ -42,6 +45,8 @@ remotesync func _start_building():
 		 _mesh_instance.translation.y + 20, building_time
 	)
 	_tween.start()
+	
+	
 	
 remotesync func _finish_building():
 	._finish_building()
@@ -62,7 +67,6 @@ remotesync func _finish_building():
 	
 	_hp_bar.update_bar(hp, max_hp)
 	_hp_bar.visible = true
-	
 	
 func get_garrison_spawn_pos() -> Vector3:
 	var angle := rand_range(0, TAU)
@@ -109,7 +113,7 @@ func _create_unit(unit_name :String) -> BaseUnit:
 	
 func moving(delta :float) -> void:
 	if status == status_deploying:
-		can_build = _area_build.get_overlapping_bodies().size() <= 1
+		can_build = _area_build.get_overlapping_bodies().empty()
 		_mesh_instance_2_material.albedo_color = Color(1,1,1,0.5) if can_build else Color(1,0,0,0.5)
 
 func take_damage(damage :int) -> void:

@@ -1,22 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://entity/resources/trees/trees.gd" type="Script" id=3]
-
-[sub_resource type="CylinderShape" id=1]
-height = 0.704676
-radius = 0.833359
 
 [node name="trees" type="StaticBody"]
 collision_layer = 0
 script = ExtResource( 3 )
 type_resource = 1
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 1 )
-
-[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
-
 [node name="MeshInstance" type="MeshInstance" parent="."]
-
-[connection signal="camera_entered" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_camera_entered"]
-[connection signal="camera_exited" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_camera_exited"]
