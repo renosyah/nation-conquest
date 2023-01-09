@@ -38,9 +38,10 @@ var squads = {}
 # player buildings
 # [_instance_building]
 var buildings = []
-
 var building_rotation :float = 0
-var color :Color
+
+onready var player_id :int = NetworkLobbyManager.get_id()
+onready var player_team :int = 1
 
 func _ready():
 	minimap_panel.visible = false
@@ -78,16 +79,13 @@ func on_building_deployed(_building :BaseBuilding):
 	var tower_icon = preload("res://entity/building/archer_tower/tower.png")
 	add_minimap_object(_building.get_path(), _building.color, tower_icon)
 	
-	# player building
-	if _building.get_network_master() != NetworkLobbyManager.get_id() or _building.team != 1:
+	if not is_player_building(_building):
 		return
 		
 	buildings.append(_building)
 	
 func on_building_destroyed(_building :BaseBuilding):
-	
-	# player building
-	if _building.get_network_master() != NetworkLobbyManager.get_id() or _building.team != 1:
+	if not is_player_building(_building):
 		return
 		
 	if not buildings.has(_building):
@@ -98,8 +96,7 @@ func on_building_destroyed(_building :BaseBuilding):
 func on_squad_spawn(_squad :Squad, _icon :Resource):
 	add_minimap_object(_squad.get_path(), _squad.color)
 	
-	# player squad
-	if _squad.get_network_master() != NetworkLobbyManager.get_id() or _squad.team != 1:
+	if not is_player_squad(_squad):
 		return
 		
 	var instance :SquadIcon = preload("res://assets/ui/icon/squad_icon/squad_icon.tscn").instance()
@@ -116,8 +113,7 @@ func _on_squad_icon_click(_icon :SquadIcon, _squad :Squad):
 	_squad.emit_signal("squad_selected", _squad)
 	
 func on_squad_update(_squad :Squad):
-	# player squad
-	if _squad.get_network_master() != NetworkLobbyManager.get_id() or _squad.team != 1:
+	if not is_player_squad(_squad):
 		return
 		
 	if not squads.has(_squad):
@@ -127,8 +123,7 @@ func on_squad_update(_squad :Squad):
 	squads[_squad].show_squad_hurt()
 	
 func on_squad_selected(_squad :Squad, is_selected :bool):
-	# player squad
-	if _squad.get_network_master() != NetworkLobbyManager.get_id() or _squad.team != 1:
+	if not is_player_squad(_squad):
 		return
 		
 	if not squads.has(_squad):
@@ -137,8 +132,7 @@ func on_squad_selected(_squad :Squad, is_selected :bool):
 	squads[_squad].set_selected(is_selected)
 	
 func on_squad_dead(_squad :Squad):
-	# player squad
-	if _squad.get_network_master() != NetworkLobbyManager.get_id() or _squad.team != 1:
+	if not is_player_squad(_squad):
 		return
 		
 	if not squads.has(_squad):
@@ -148,6 +142,12 @@ func on_squad_dead(_squad :Squad):
 	squads.erase(_squad)
 	
 	add_squad.visible = squads.size() < 4
+	
+func is_player_squad(_squad :Squad) -> bool:
+	return _squad.get_network_master() == NetworkLobbyManager.get_id() and _squad.team == 1
+	
+func is_player_building(_building :BaseBuilding) -> bool:
+	return _building.get_network_master() == NetworkLobbyManager.get_id() and _building.team == 1
 	
 func get_camera_moving_direction() -> Vector2:
 	return camera_control.get_moving_direction()
@@ -173,11 +173,11 @@ func _on_main_menu_pressed():
 	emit_signal("main_menu_press")
 
 func _on_add_squad_pressed():
-	recruit_squad_panel.display_squad_recruitment(color)
+	recruit_squad_panel.display_squad_recruitment()
 	recruit_squad_panel.visible = true
 	
 func _on_open_building_pressed():
-	building_panel.display_building_panel(color)
+	building_panel.display_building_panel()
 	building_panel.visible = true
 	
 func can_build(val :bool):

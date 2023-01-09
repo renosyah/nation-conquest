@@ -259,8 +259,7 @@ func on_squad_update(_squad :Squad):
 	_ui.on_squad_update(_squad)
 	
 func on_squad_selected(_squad :Squad):
-	# player squad
-	if _squad.get_network_master() != NetworkLobbyManager.get_id()  or _squad.team != 1:
+	if not _ui.is_player_squad(_squad):
 		return
 		
 	var is_in_squad = selected_squad.has(_squad)

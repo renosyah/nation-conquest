@@ -6,7 +6,7 @@ const building_item_scene = preload("res://assets/ui/gameplay/building_panel/ite
 
 onready var building_panel_icon_holder = $HBoxContainer2/Panel/VBoxContainer/ScrollContainer/HBoxContainer3
 
-func display_building_panel(color :Color):
+func display_building_panel():
 	for i in building_panel_icon_holder.get_children():
 		building_panel_icon_holder.remove_child(i)
 		i.queue_free()
@@ -17,7 +17,6 @@ func display_building_panel(color :Color):
 
 	for i in range(building_datas.size()):
 		var data = building_datas[i].duplicate()
-		data.color = color
 		
 		var instance = building_item_scene.instance()
 		instance.data = data

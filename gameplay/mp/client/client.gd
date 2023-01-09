@@ -6,10 +6,7 @@ onready var player_squad_holder = $player_squad_holder
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_ui.color = color
-	
-func all_player_ready():
-	.all_player_ready()
+	pass
 	
 func _on_ui_recruit_squad(_squad :SquadData):
 	._on_ui_recruit_squad(_squad)
@@ -24,8 +21,8 @@ func _on_ui_recruit_squad(_squad :SquadData):
 func _on_ui_deploy_building(_building_data :BuildingData):
 	._on_ui_deploy_building(_building_data)
 	
-	_building_data.color = color
 	_building_data.node_name = GDUUID.v4()
+	_building_data.color = color
 	_building_data.team = 1
 	_building_data.network_master = NetworkLobbyManager.get_id()
 	

@@ -58,6 +58,7 @@ script = ExtResource( 2 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="loading" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -80,7 +81,6 @@ anims/RESET = SubResource( 1 )
 anims/loading = SubResource( 2 )
 
 [node name="SafeArea" parent="CanvasLayer" instance=ExtResource( 3 )]
-visible = false
 mouse_filter = 2
 
 [node name="camera_control" parent="CanvasLayer/SafeArea" instance=ExtResource( 4 )]
