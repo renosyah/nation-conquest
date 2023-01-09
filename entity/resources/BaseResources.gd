@@ -10,10 +10,7 @@ export var amount :int = 1
 var collision :CollisionShape
 
 func _create_collision_shape(_mesh :MeshInstance):
-	_mesh.create_trimesh_collision()
-	
-	_mesh.cast_shadow = false
-	_mesh.generate_lightmap = false
+	_mesh.create_convex_collision()
 	_mesh.software_skinning_transform_normals = false
 
 	collision = _mesh.get_child(0).get_child(0)

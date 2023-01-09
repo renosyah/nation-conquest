@@ -74,8 +74,8 @@ func _generate_map():
 	add_child(collision)
 	land_mesh.get_child(0).queue_free()
 	
-	spawn_positions = _trim_array(lands[1], 12)
 	base_spawn_positions = _generate_base_spawn_points(lands[1])
+	spawn_positions = _trim_array(lands[1], 22)
 	
 	var delay = Timer.new()
 	delay.wait_time = 1
