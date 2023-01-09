@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://entity/building/archer_tower/tower.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://entity/building/archer_tower/archer_tower.gd" type="Script" id=2]
@@ -8,12 +8,17 @@
 [ext_resource path="res://assets/hit_particle/custom_particle/text/custom_text_particle.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=8]
 
-[sub_resource type="SpatialMaterial" id=5]
+[sub_resource type="SpatialMaterial" id=11]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.364706, 0.180392, 0, 1 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=12]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.862745, 0.623529, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=10]
 flags_transparent = true
 flags_unshaded = true
 flags_no_depth_test = true
@@ -41,11 +46,14 @@ unit = ExtResource( 3 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = ExtResource( 1 )
-material/0 = SubResource( 5 )
+material/0 = SubResource( 11 )
+material/1 = SubResource( 12 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="."]
+visible = false
 mesh = ExtResource( 1 )
-material/0 = SubResource( 7 )
+material/0 = SubResource( 10 )
+material/1 = SubResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01911, 0 )

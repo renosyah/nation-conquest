@@ -2,8 +2,7 @@ extends BaseGameplay
 
 onready var color :Color = Color(randf(), randf(), randf(), 1)
 onready var player_squad_holder = $player_squad_holder
-
-var squad_spawn_position :Vector3
+onready var squad_spawn_position :Vector3 = Vector3(0, 15, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,8 +11,9 @@ func _ready():
 func on_generate_map_completed():
 	.on_generate_map_completed()
 	
-	squad_spawn_position = _base_spawn_points[4]
-	_camera.translation = squad_spawn_position
+	if _player_base_spawn_position.has(NetworkLobbyManager.get_id()):
+		squad_spawn_position = _player_base_spawn_position[NetworkLobbyManager.get_id()]
+		_camera.translation = squad_spawn_position
 	
 func on_ui_recruit_squad(_squad :SquadData):
 	.on_ui_recruit_squad(_squad)
@@ -23,7 +23,10 @@ func on_ui_recruit_squad(_squad :SquadData):
 	_squad.color = color
 	_squad.team = 1
 	
-	.spawn_squad(_squad, Vector3(0, 15, 0), player_squad_holder.get_path())
+	.spawn_squad(
+		_squad, squad_spawn_position + Vector3(0, _map.map_height, 0), 
+		player_squad_holder.get_path()
+	)
 	
 func on_ui_deploy_building(_building_data :BuildingData):
 	.on_ui_deploy_building(_building_data)

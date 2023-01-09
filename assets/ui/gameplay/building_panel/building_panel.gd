@@ -10,11 +10,12 @@ func display_building_panel():
 	for i in building_panel_icon_holder.get_children():
 		building_panel_icon_holder.remove_child(i)
 		i.queue_free()
-
+		
 	var building_datas = [
-		preload("res://data/building_data/archer_tower.tres")
+		#preload("res://data/building_data/buildings/town_center.tres"),
+		preload("res://data/building_data/buildings/archer_tower.tres") 
 	]
-
+	
 	for i in range(building_datas.size()):
 		var data = building_datas[i].duplicate()
 		

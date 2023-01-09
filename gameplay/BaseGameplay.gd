@@ -38,14 +38,14 @@ onready var _resources :Array = []
 
 func load_map():
 	_water = preload("res://map/water/water.tscn").instance()
-	_water.size = 200
+	_water.size = 250
 	add_child(_water)
 	
 	_map = preload("res://map/spring_island/spring_map.tscn").instance()
 	_map.map_seed = NetworkLobbyManager.argument["seed"]
 	_map.map_scale = 1
-	_map.map_size = 200
-	_map.map_height = 20
+	_map.map_size = 250
+	_map.map_height = 10
 	_map.connect("on_generate_map_completed", self, "on_generate_map_completed")
 	_map.connect("on_map_click", self , "on_map_click")
 	add_child(_map)
@@ -62,19 +62,22 @@ func on_generate_map_completed():
 	}
 		
 	if is_server():
-		_base_spawn_points = _map.base_spawn_positions
-		
+		var index :int = 0
+		for player in NetworkLobbyManager.get_players():
+			_player_base_spawn_position[player.player_network_unique_id] = _map.base_spawn_positions[index]
+			index += 1
+			
 		for _pos in _map.spawn_positions:
 			var _keys = resources_scenes.keys()
 			var _scene = _keys[rand_range(0, _keys.size())]
 			sync_resources.append({"scene":_scene, "pos":_pos})
 			
 		NetworkLobbyManager.argument["sync_resources"] = sync_resources
-		NetworkLobbyManager.argument["base_spawn_points"] = _base_spawn_points
+		NetworkLobbyManager.argument["player_base_spawn_position"] = _player_base_spawn_position
 		
 	else:
 		sync_resources = NetworkLobbyManager.argument["sync_resources"]
-		_base_spawn_points = NetworkLobbyManager.argument["base_spawn_points"]
+		_player_base_spawn_position = NetworkLobbyManager.argument["player_base_spawn_position"]
 		
 	# rng mus be fresh instance
 	# in order to have same result
@@ -198,12 +201,12 @@ func all_player_ready():
 ################################################################
 var _building_to_build :Dictionary = {}
 var _buildings :Array = []
-var _base_spawn_points :Array = []
+var _player_base_spawn_position :Dictionary = {}
 
-func on_deploying_building(_building_data :BuildingData):
-	rpc("_on_deploying_building", _building_data.to_dictionary())
+func on_deploying_building(_building_data :BuildingData, _at :Vector3 = Vector3.ZERO, _autobuild :bool = false):
+	rpc("_on_deploying_building", _building_data.to_dictionary(), _at, _autobuild)
 	
-remotesync func _on_deploying_building(_building_data_dic :Dictionary):
+remotesync func _on_deploying_building(_building_data_dic :Dictionary, _at :Vector3, _autobuild :bool):
 	var _building_data :BuildingData = BuildingData.new()
 	_building_data.from_dictionary(_building_data_dic)
 	
@@ -214,6 +217,11 @@ remotesync func _on_deploying_building(_building_data_dic :Dictionary):
 	_build.connect("building_deployed", self, "on_building_deployed")
 	_build.connect("building_destroyed", self, "on_building_destroyed")
 	
+	if _autobuild:
+		_building_to_build[_building_data.network_master].translation = _at
+		_building_to_build[_building_data.network_master].start_building()
+		_building_to_build.erase(_building_data.network_master)
+		
 func on_building_selected(_building :BaseBuilding):
 	pass
 	

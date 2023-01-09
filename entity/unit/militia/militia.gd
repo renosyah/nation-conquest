@@ -9,22 +9,31 @@ onready var body = $body
 onready var animation_weapon_state = $pivot/AnimationTree.get("parameters/playback")
 onready var animation_body_state = $AnimationTree.get("parameters/playback")
 
+var _combat_anim_delay_timmer :Timer
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	_combat_anim_delay_timmer = Timer.new()
+	_combat_anim_delay_timmer.wait_time = 1
+	_combat_anim_delay_timmer.autostart = false
+	_combat_anim_delay_timmer.one_shot = true
+	add_child(_combat_anim_delay_timmer)
+	
 	attack_animation = "swing"
 	body.modulate = color
 	
-func perform_attack():
-	.perform_attack()
+func in_combat():
+	.in_combat()
 	
-	animation_weapon_state.travel(attack_animation)
-	
-	if _sound.playing:
-		return
-	
-	_sound.stream = hit_sounds[rand_range(0, hit_sounds.size())]
-	_sound.play()
-	
+	if _combat_anim_delay_timmer.is_stopped():
+		animation_weapon_state.travel(attack_animation)
+		
+		if not _sound.playing:
+			_sound.stream = hit_sounds[rand_range(0, hit_sounds.size())]
+			_sound.play()
+			
+		_combat_anim_delay_timmer.start()
+		
 func dead() -> void:
 	if _sound.playing:
 		_sound.stop()

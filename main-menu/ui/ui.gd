@@ -32,7 +32,6 @@ func _notification(what):
 func on_back_pressed():
 	get_tree().quit()
 	
-
 func on_host_player_connected():
 	main_menu_buttons.visible = false
 	host_menu_buttons.visible = true

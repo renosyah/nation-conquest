@@ -21,6 +21,7 @@ export var formation_space :int = 1
 
 export var is_dead :bool = false
 export var is_selectable :bool = false
+export var is_assault_mode :bool = false
 
 var _speed :int = 2
 var _units :Array = []
@@ -293,9 +294,6 @@ func _attack_targets():
 func _spotted_target():
 	_targets.clear()
 	
-	if is_moving:
-		return
-		
 	var _unit_size = _units.size()
 	
 	for body in _area.get_overlapping_bodies():
@@ -323,9 +321,13 @@ func _spotted_target():
 				
 			_targets.append(body)
 			
-			
+	if not _targets.empty() and is_assault_mode:
+		is_moving = false
+		is_assault_mode = false
+		
+		
 func _on_agro_timer_timeout():
-	if is_moving:
+	if is_moving and (not is_assault_mode):
 		return
 		
 	_spotted_target()
