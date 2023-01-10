@@ -4,6 +4,7 @@ onready var color :Color = Color(randf(), randf(), randf(), 1)
 onready var squad_spawn_position :Vector3 = Vector3(0, 15, 0)
 
 var bot_id :int = -69
+var bot_team :int = 69
 var bot_town_center :BaseBuilding
 var player_squads :Array = []
 var enemy_squads :Array = []
@@ -31,6 +32,7 @@ func on_ui_recruit_squad(_squad :SquadData):
 	_squad.network_master = NetworkLobbyManager.get_id()
 	_squad.color = color
 	_squad.team = 1
+	_squad.max_unit = 8
 	_squad.position = squad_spawn_position + Vector3(0, _map.map_height, 0)
 	
 	.spawn_squad(_squad)
@@ -43,6 +45,8 @@ func on_ui_deploy_building(_building_data :BuildingData):
 	_building_data.network_master = NetworkLobbyManager.get_id()
 	_building_data.color = color
 	_building_data.team = 1
+	_building_data.base_position = squad_spawn_position
+	_building_data.max_distance_from_base = 24
 	
 	.on_deploying_building(_building_data)
 	
@@ -70,7 +74,7 @@ func all_player_ready():
 	town_center.node_name = "bot-town-center"
 	town_center.network_master = Network.PLAYER_HOST_ID
 	town_center.color = Color.red
-	town_center.team = 2
+	town_center.team = bot_team
 	
 	.on_deploying_building(town_center, _map.base_spawn_positions[4], true)
 	
@@ -95,8 +99,9 @@ func on_squad_dead(_squad :Squad):
 func on_building_deployed(_building :BaseBuilding):
 	.on_building_deployed(_building)
 	
-	# enemy building
-	if _building.player_id == bot_id:
+	# enemy town center 
+	# building is deployed
+	if _building.player_id == bot_id and _building.name == "bot-town-center":
 		bot_town_center = _building
 		enemy_buildings.append(_building)
 		
@@ -108,6 +113,11 @@ func on_building_deployed(_building :BaseBuilding):
 func on_building_destroyed(_building :BaseBuilding):
 	.on_building_destroyed(_building)
 	
+	# enemy town center 
+	# building is destroyed
+	if _building.player_id == bot_id and _building.name == "bot-town-center":
+		bot_town_center = null
+		
 	if enemy_buildings.has(_building):
 		enemy_buildings.erase(_building)
 		
@@ -129,12 +139,13 @@ func _on_attack_wave_timer_timeout():
 		preload("res://data/squad_data/squads/swordman_squad.tres"),
 	]
 	
-	var squad = squad_datas[rand_range(0, squad_datas.size())].duplicate()
+	var squad :SquadData = squad_datas[rand_range(0, squad_datas.size())].duplicate()
 	squad.player_id = bot_id
 	squad.node_name = GDUUID.v4()
 	squad.network_master = Network.PLAYER_HOST_ID
 	squad.color = Color.red
-	squad.team = 2
+	squad.team = bot_team
+	squad.max_unit = 8
 	squad.position = bot_town_center.translation + Vector3(0, _map.map_height + 5, 0)
 	
 	.spawn_squad(squad)
@@ -196,13 +207,18 @@ func _on_bot_buid_timer_timeout():
 	if enemy_buildings.size() > 2:
 		return
 		
+	if not is_instance_valid(bot_town_center):
+		return
+		
 	# deploy bot tower
 	var bot_building :BuildingData = preload("res://data/building_data/buildings/archer_tower.tres")
 	bot_building.player_id = bot_id
 	bot_building.node_name = GDUUID.v4()
 	bot_building.network_master = Network.PLAYER_HOST_ID
 	bot_building.color = Color.red
-	bot_building.team = 2
+	bot_building.team = bot_team
+	bot_building.base_position = bot_town_center.translation
+	bot_building.max_distance_from_base = 24
 	
 	.on_deploying_building(bot_building)
 	

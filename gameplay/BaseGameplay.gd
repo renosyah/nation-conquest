@@ -230,6 +230,7 @@ remotesync func _on_deploying_building(_building_data_dic :Dictionary, _at :Vect
 	
 func on_building_deplyoing(_building :BaseBuilding):
 	_building_to_build[_building.player_id] = _building
+	_ui.on_building_deplyoing(_building)
 	
 func on_building_selected(_building :BaseBuilding):
 	pass
@@ -268,7 +269,7 @@ remotesync func _spawn_squad(_squad_data :Dictionary):
 	_squad.from_dictionary(_squad_data)
 	
 	# players own squad
-	_squad.is_selectable = _squad_data.network_master == NetworkLobbyManager.get_id() and _squad.team == 1
+	_squad.is_selectable = (_squad_data.player_id == NetworkLobbyManager.get_id())
 	
 	var _squad_spawn = _squad.spawn(self)
 	_squad_spawn.connect("squad_update", self, "on_squad_update")

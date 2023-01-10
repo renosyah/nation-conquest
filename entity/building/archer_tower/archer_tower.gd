@@ -116,9 +116,9 @@ func _create_unit(unit_name :String) -> BaseUnit:
 	
 func moving(delta :float) -> void:
 	if status == status_deploying:
-		can_build = _area_build.get_overlapping_bodies().empty()
+		can_build = _area_build.get_overlapping_bodies().empty() and translation.distance_to(base_position) < max_distance_from_base
 		_mesh_instance_2_material.albedo_color = Color(1,1,1,0.5) if can_build else Color(1,0,0,0.5)
-
+	
 func take_damage(damage :int) -> void:
 	.take_damage(damage)
 	

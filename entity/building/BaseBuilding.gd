@@ -21,6 +21,8 @@ export var building_time :int = 10
 export var is_dead :bool = false
 export var status :int = status_deploying
 export var can_build :bool = false
+export var base_position :Vector3
+export var max_distance_from_base :int
 
 puppet var _puppet_translation :Vector3
 puppet var _puppet_rotation :Vector3

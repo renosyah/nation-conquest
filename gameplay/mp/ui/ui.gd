@@ -28,6 +28,7 @@ onready var rotate_r = $CanvasLayer/SafeArea/Control/build_menu/HBoxContainer/ro
 
 onready var recruit_squad_panel = $CanvasLayer/SafeArea/recruit_squad
 
+onready var open_building = $CanvasLayer/SafeArea/Control/HBoxContainer/VBoxContainer/open_building
 onready var building_panel = $CanvasLayer/SafeArea/building_panel
 onready var building_panel_icon_holder = $CanvasLayer/SafeArea/building_panel/HBoxContainer2/Panel/VBoxContainer/ScrollContainer/HBoxContainer3
 
@@ -41,7 +42,8 @@ var buildings = []
 var building_rotation :float = 0
 
 onready var player_id :int = NetworkLobbyManager.get_id()
-onready var player_team :int = 1
+onready var player_max_squad :int = 5
+onready var player_max_building :int = 8
 
 func _ready():
 	minimap_panel.visible = false
@@ -75,6 +77,15 @@ func _process(delta):
 	var value = -45 if rotate_l.pressed else 45 if rotate_r.pressed else 0
 	building_rotation += value * delta
 	
+func on_building_deplyoing(_building :BaseBuilding):
+	if not is_player_building(_building):
+		return
+		
+	if not buildings.has(_building):
+		buildings.append(_building)
+	
+	open_building.visible = buildings.size() < player_max_building
+	
 func on_building_deployed(_building :BaseBuilding):
 	var tower_icon = preload("res://entity/building/archer_tower/tower.png")
 	add_minimap_object(_building.get_path(), _building.color, tower_icon)
@@ -82,7 +93,10 @@ func on_building_deployed(_building :BaseBuilding):
 	if not is_player_building(_building):
 		return
 		
-	buildings.append(_building)
+	if not buildings.has(_building):
+		buildings.append(_building)
+	
+	open_building.visible = buildings.size() < player_max_building
 	
 func on_building_destroyed(_building :BaseBuilding):
 	if not is_player_building(_building):
@@ -92,6 +106,8 @@ func on_building_destroyed(_building :BaseBuilding):
 		return
 		
 	buildings.erase(_building)
+	
+	open_building.visible = buildings.size() < player_max_building
 	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
 	add_minimap_object(_squad.get_path(), _squad.color)
@@ -107,7 +123,7 @@ func on_squad_spawn(_squad :Squad, _icon :Resource):
 	squad_icon_holder.add_child(instance)
 	squads[_squad] = instance
 	
-	add_squad.visible = squads.size() < 4
+	add_squad.visible = squads.size() < player_max_squad
 	
 func _on_squad_icon_click(_icon :SquadIcon, _squad :Squad):
 	_squad.emit_signal("squad_selected", _squad)
@@ -141,7 +157,7 @@ func on_squad_dead(_squad :Squad):
 	squads[_squad].queue_free()
 	squads.erase(_squad)
 	
-	add_squad.visible = squads.size() < 4
+	add_squad.visible = squads.size() < player_max_squad
 	
 func is_player_squad(_squad :Squad) -> bool:
 	return _squad.player_id == NetworkLobbyManager.get_id()
