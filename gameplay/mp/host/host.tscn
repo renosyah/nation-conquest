@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://gameplay/mp/host/host.gd" type="Script" id=1]
+[ext_resource path="res://assets/autobuilder/autobuilder.tscn" type="PackedScene" id=2]
 
 [node name="gameplay" type="Node"]
 script = ExtResource( 1 )
@@ -9,9 +10,17 @@ script = ExtResource( 1 )
 wait_time = 15.0
 autostart = true
 
+[node name="bot_buid_timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
 [node name="bot_attack_timer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
 
+[node name="autobuilder" parent="." instance=ExtResource( 2 )]
+
 [connection signal="timeout" from="attack_wave_timer" to="." method="_on_attack_wave_timer_timeout"]
+[connection signal="timeout" from="bot_buid_timer" to="." method="_on_bot_buid_timer_timeout"]
 [connection signal="timeout" from="bot_attack_timer" to="." method="_on_bot_attack_timer_timeout"]
+[connection signal="placement_found" from="autobuilder" to="." method="_on_autobuilder_placement_found"]

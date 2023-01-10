@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Spatial",
+"class": "AutoBuilder",
+"language": "GDScript",
+"path": "res://assets/autobuilder/autobuilder.gd"
+}, {
 "base": "BaseEntity",
 "class": "BaseBuilding",
 "language": "GDScript",
@@ -235,6 +240,7 @@ _global_script_classes=[ {
 "path": "res://map/water/water.gd"
 } ]
 _global_script_class_icons={
+"AutoBuilder": "",
 "BaseBuilding": "",
 "BaseCustomParticle": "",
 "BaseData": "",

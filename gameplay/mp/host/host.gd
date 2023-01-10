@@ -7,6 +7,9 @@ var bot_id :int = -69
 var bot_town_center :BaseBuilding
 var player_squads :Array = []
 var enemy_squads :Array = []
+var enemy_buildings :Array = []
+
+onready var autobuilder :AutoBuilder = $autobuilder
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -92,10 +95,22 @@ func on_squad_dead(_squad :Squad):
 func on_building_deployed(_building :BaseBuilding):
 	.on_building_deployed(_building)
 	
-	if _building.name == "bot-town-center":
+	# enemy building
+	if _building.player_id == bot_id:
 		bot_town_center = _building
-		_buildings.erase(_building)
+		enemy_buildings.append(_building)
+		
+		# dont include enemy building
+		# in global variable of buildings
+		if _buildings.has(_building):
+			_buildings.erase(_building)
+		
+func on_building_destroyed(_building :BaseBuilding):
+	.on_building_destroyed(_building)
 	
+	if enemy_buildings.has(_building):
+		enemy_buildings.erase(_building)
+		
 func _on_attack_wave_timer_timeout():
 	if enemy_squads.size() > 6:
 		return
@@ -176,6 +191,48 @@ func _on_bot_attack_timer_timeout():
 	
 	squad.is_assault_mode = true
 	squad.set_move_to(target.translation + attack_pos)
+
+func _on_bot_buid_timer_timeout():
+	if enemy_buildings.size() > 4:
+		return
+		
+	# deploy bot tower
+	var bot_building :BuildingData = preload("res://data/building_data/buildings/archer_tower.tres")
+	bot_building.player_id = bot_id
+	bot_building.node_name = GDUUID.v4()
+	bot_building.network_master = Network.PLAYER_HOST_ID
+	bot_building.color = Color.red
+	bot_building.team = 2
 	
+	.on_deploying_building(bot_building)
 	
+func on_building_deplyoing(_building :BaseBuilding):
 	
+	# deploy find spot
+	# using auto builder
+	if _building.player_id == bot_id:
+		autobuilder.translation = bot_town_center.translation
+		autobuilder.building = _building
+		autobuilder.find_placement()
+		return
+		
+	.on_building_deplyoing(_building)
+	
+func _on_autobuilder_placement_found(_building :BaseBuilding, _pos :Vector3):
+	_building.translation = _pos
+	_building.start_building()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -216,18 +216,21 @@ remotesync func _on_deploying_building(_building_data_dic :Dictionary, _at :Vect
 	if _autobuild:
 		_building_data.building_time = 1
 		
-	_building_to_build[_building_data.network_master] = _building_data.spawn(self)
-	
-	var _build :BaseBuilding = _building_to_build[_building_data.network_master]
+	var _build :BaseBuilding = _building_data.spawn(self)
 	_build.connect("building_selected", self, "on_building_selected")
 	_build.connect("building_deployed", self, "on_building_deployed")
 	_build.connect("building_destroyed", self, "on_building_destroyed")
 	
 	if _autobuild:
-		_building_to_build[_building_data.network_master].translation = _at
-		_building_to_build[_building_data.network_master].start_building()
-		_building_to_build.erase(_building_data.network_master)
+		_build.translation = _at
+		_build.start_building()
+		return
 		
+	on_building_deplyoing(_build)
+	
+func on_building_deplyoing(_building :BaseBuilding):
+	_building_to_build[_building.player_id] = _building
+	
 func on_building_selected(_building :BaseBuilding):
 	pass
 	
