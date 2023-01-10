@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://data/squad_data/squadData.gd" type="Script" id=1]
-[ext_resource path="res://assets/ui/icon/squad_icon/icon_squad_light_cavalry.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/icon/squad_icon/icon_squad_scout_cavalry.png" type="Texture" id=2]
 [ext_resource path="res://entity/unit/light_cavalry/light_cavalry.tscn" type="PackedScene" id=3]
 
 [resource]
