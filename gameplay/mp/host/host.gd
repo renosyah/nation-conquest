@@ -112,21 +112,21 @@ func on_building_destroyed(_building :BaseBuilding):
 		enemy_buildings.erase(_building)
 		
 func _on_attack_wave_timer_timeout():
-	if enemy_squads.size() > 6:
+	if enemy_squads.size() > 3:
 		return
 		
 	if not is_instance_valid(bot_town_center):
 		return
 		
 	var squad_datas = [
-		#preload("res://data/squad_data/squads/pikeman_squad.tres"),
-		#preload("res://data/squad_data/squads/maceman_squad.tres"),
-		#preload("res://data/squad_data/squads/crossbowman_squad.tres"),
+		preload("res://data/squad_data/squads/pikeman_squad.tres"),
+		preload("res://data/squad_data/squads/maceman_squad.tres"),
+		preload("res://data/squad_data/squads/crossbowman_squad.tres"),
 		preload("res://data/squad_data/squads/archer_squad.tres"),
-		#preload("res://data/squad_data/squads/axeman_squad.tres"),
+		preload("res://data/squad_data/squads/axeman_squad.tres"),
 		preload("res://data/squad_data/squads/militia_squad.tres"),
 		preload("res://data/squad_data/squads/spearman_squad.tres"),
-		#preload("res://data/squad_data/squads/swordman_squad.tres"),
+		preload("res://data/squad_data/squads/swordman_squad.tres"),
 	]
 	
 	var squad = squad_datas[rand_range(0, squad_datas.size())].duplicate()
@@ -193,7 +193,7 @@ func _on_bot_attack_timer_timeout():
 	squad.set_move_to(target.translation + attack_pos)
 
 func _on_bot_buid_timer_timeout():
-	if enemy_buildings.size() > 4:
+	if enemy_buildings.size() > 2:
 		return
 		
 	# deploy bot tower

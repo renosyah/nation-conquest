@@ -8,7 +8,12 @@ onready var _input_detection = $input_detection
 
 onready var _mesh_instance = $MeshInstance
 onready var _mesh_instance_2 = $MeshInstance2
-onready var _mesh_instance_2_material = $MeshInstance2/tower.get_surface_material(0)
+
+onready var highlight_tower = $MeshInstance2/tower
+onready var highlight_canopy = $MeshInstance2/canopy
+onready var highlight_canopy_2 = $MeshInstance2/canopy2
+
+onready var highlight_material :SpatialMaterial = highlight_tower.get_surface_material(0).duplicate()
 
 onready var _area_build = $area_build
 
@@ -21,8 +26,16 @@ func _ready():
 	_mesh_instance.visible = false
 	_mesh_instance_2.visible = true
 	
+	set_all_highlight_material(highlight_tower, highlight_material)
+	set_all_highlight_material(highlight_canopy, highlight_material)
+	set_all_highlight_material(highlight_canopy_2, highlight_material)
+	
 	set_process(true)
 	
+func set_all_highlight_material(_mesh :MeshInstance, _material :SpatialMaterial):
+	for i in range(_mesh.get_surface_material_count()):
+		_mesh.set_surface_material(i, highlight_material)
+		
 remotesync func _start_building():
 	._start_building()
 	
@@ -46,7 +59,7 @@ remotesync func _finish_building():
 func moving(delta :float) -> void:
 	if status == status_deploying:
 		can_build = _area_build.get_overlapping_bodies().empty()
-		_mesh_instance_2_material.albedo_color = Color(1,1,1,0.5) if can_build else Color(1,0,0,0.5)
+		highlight_material.albedo_color = Color(1,1,1,0.5) if can_build else Color(1,0,0,0.5)
 	
 func take_damage(damage :int) -> void:
 	.take_damage(damage)

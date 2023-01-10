@@ -14,7 +14,9 @@ onready var _input_detection = $input_detection
 
 onready var _mesh_instance = $MeshInstance
 onready var _mesh_instance_2 = $MeshInstance2
-onready var _mesh_instance_2_material = _mesh_instance_2.get_surface_material(0)
+
+onready var _mesh_instance_2_material = _mesh_instance_2.get_surface_material(0).duplicate()
+
 onready var _area_build = $area_build
 
 onready var _tween = $Tween
@@ -28,7 +30,10 @@ func _ready():
 	
 	_mesh_instance.visible = false
 	_mesh_instance_2.visible = true
-
+	
+	for i in range(_mesh_instance_2.get_surface_material_count()):
+		_mesh_instance_2.set_surface_material(i, _mesh_instance_2_material)
+		
 	set_process(true)
 	
 remotesync func _start_building():
