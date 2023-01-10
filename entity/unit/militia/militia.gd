@@ -22,10 +22,10 @@ func _ready():
 	attack_animation = "swing"
 	body.modulate = color
 	
-func in_combat():
-	.in_combat()
+func in_combat(is_arrive :bool):
+	.in_combat(is_arrive)
 	
-	if _combat_anim_delay_timmer.is_stopped():
+	if is_arrive and _combat_anim_delay_timmer.is_stopped():
 		animation_weapon_state.travel(attack_animation)
 		
 		if not _sound.playing:

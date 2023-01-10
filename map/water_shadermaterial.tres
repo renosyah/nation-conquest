@@ -31,7 +31,7 @@ vec3 apply_distortion(vec3 vertext, float time){
 
 void vertex() {
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
-	VERTEX = apply_distortion(VERTEX, TIME * 0.2);
+	VERTEX = apply_distortion(VERTEX, TIME * 0.08);
 }
 
 void fragment() {

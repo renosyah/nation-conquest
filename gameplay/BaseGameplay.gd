@@ -38,13 +38,13 @@ onready var _resources :Array = []
 
 func load_map():
 	_water = preload("res://map/water/water.tscn").instance()
-	_water.size = 300
+	_water.size = 200
 	add_child(_water)
 	
 	_map = preload("res://map/spring_island/spring_map.tscn").instance()
 	_map.map_seed = NetworkLobbyManager.argument["seed"]
 	_map.map_scale = 1
-	_map.map_size = 300
+	_map.map_size = 200
 	_map.map_height = 15
 	_map.connect("on_generate_map_completed", self, "on_generate_map_completed")
 	_map.connect("on_map_click", self , "on_map_click")

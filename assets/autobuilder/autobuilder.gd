@@ -12,6 +12,8 @@ onready var h_pivot = $rotation_pivot/h_pivot
 onready var timer = $Timer
 
 onready var _radius :Vector3 = Vector3(radius, 0, 0)
+
+var ignore :Array = []
 var building :BaseBuilding
 var placement_pos :Vector3
 
@@ -62,7 +64,7 @@ func _get_cast_position() -> CameraAimingData:
 	aiming_data.position = ray_cast_to
 	
 	var col :Dictionary = get_world().direct_space_state.intersect_ray(
-		h_pivot.global_transform.origin, ray_cast_to, [], 0b11
+		h_pivot.global_transform.origin, ray_cast_to, ignore, 0b11
 	)
 	if not col.empty():
 		aiming_data.from_dictionary(col)

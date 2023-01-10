@@ -172,7 +172,7 @@ func _create_land(noise :NoiseMaker) -> Array:
 		var value = noise.get_noise(vertext * map_scale)
 		var gradient_value = data.get_pixel(
 			(vertext.x + map_size) * 0.5, (vertext.z + map_size) * 0.5
-		).r * 2.2
+		).r * 1.8
 		value -= gradient_value
 		value = clamp(value, -0.075, 1)
 		vertext.y = value * map_height

@@ -120,11 +120,10 @@ func attacking(delta :float):
 	else:
 		is_arrive = true
 	
-	if is_arrive:
-		in_combat()
-		
-func in_combat():
-	if _attack_delay_timmer.is_stopped():
+	in_combat(is_arrive)
+	
+func in_combat(is_arrive :bool):
+	if is_arrive and _attack_delay_timmer.is_stopped():
 		perform_attack()
 		var attack_time = attack_delay + rand_range(-0.2, 0.2) - skill
 		_attack_delay_timmer.wait_time = attack_time if attack_time > 0 else 0.1

@@ -230,6 +230,7 @@ func on_building_deplyoing(_building :BaseBuilding):
 	# deploy find spot
 	# using auto builder
 	if _building.player_id == bot_id:
+		autobuilder.ignore = _all_squads
 		autobuilder.translation = bot_town_center.translation
 		autobuilder.building = _building
 		autobuilder.find_placement()

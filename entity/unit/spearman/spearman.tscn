@@ -60,7 +60,7 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 90, -15.205 ) ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=33]
 resource_name = "idle_ready"
 tracks/0/type = "value"
 tracks/0/path = NodePath("spear:translation")
@@ -87,7 +87,7 @@ tracks/1/keys = {
 "values": [ Vector3( 2.41306e-06, 90, -89.677 ), Vector3( 2.41306e-06, 90, -89.677 ) ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=34]
 resource_name = "ready"
 tracks/0/type = "value"
 tracks/0/path = NodePath("spear:translation")
@@ -316,8 +316,8 @@ autoplay = "idle"
 playback_speed = 4.0
 anims/RESET = SubResource( 2 )
 anims/idle = SubResource( 3 )
-anims/idle_ready = SubResource( 21 )
-anims/ready = SubResource( 20 )
+anims/idle_ready = SubResource( 33 )
+anims/ready = SubResource( 34 )
 anims/trush = SubResource( 4 )
 anims/unready = SubResource( 22 )
 

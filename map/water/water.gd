@@ -1,14 +1,12 @@
 extends StaticBody
 class_name Water
 
-const water_shader = preload("res://map/water_shadermaterial.tres")
-
 export var size :float = 200
 
 var water_mesh_instance :MeshInstance
 var collision :CollisionShape
 
-onready var _water_shader :ShaderMaterial = water_shader
+onready var _water_shader :ShaderMaterial = preload("res://map/water_shadermaterial.tres")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
