@@ -63,8 +63,11 @@ func on_generate_map_completed():
 		
 	if is_server():
 		var index :int = 0
+		var map_base_spawn_positions :Array = _map.base_spawn_positions.slice(0, 3)
+		map_base_spawn_positions.shuffle()
+		
 		for player in NetworkLobbyManager.get_players():
-			_player_base_spawn_position[player.player_network_unique_id] = _map.base_spawn_positions[index]
+			_player_base_spawn_position[player.player_network_unique_id] = map_base_spawn_positions[index]
 			index += 1
 			
 		for _pos in _map.spawn_positions:
@@ -210,6 +213,9 @@ remotesync func _on_deploying_building(_building_data_dic :Dictionary, _at :Vect
 	var _building_data :BuildingData = BuildingData.new()
 	_building_data.from_dictionary(_building_data_dic)
 	
+	if _autobuild:
+		_building_data.building_time = 1
+		
 	_building_to_build[_building_data.network_master] = _building_data.spawn(self)
 	
 	var _build :BaseBuilding = _building_to_build[_building_data.network_master]

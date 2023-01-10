@@ -48,6 +48,8 @@ func on_ui_deploy_building(_building_data :BuildingData):
 func all_player_ready():
 	.all_player_ready()
 	
+	
+	# deploy player town center
 	for player in NetworkLobbyManager.get_players():
 		var base_spawn_position :Vector3 = _player_base_spawn_position[player.player_network_unique_id]
 		var town_center :BuildingData = preload("res://data/building_data/buildings/town_center.tres")
@@ -59,6 +61,7 @@ func all_player_ready():
 		
 		.on_deploying_building(town_center, base_spawn_position, true)
 		
+	# deploy bot town center
 	var town_center :BuildingData = preload("res://data/building_data/buildings/town_center.tres")
 	town_center.player_id = bot_id
 	town_center.node_name = "bot-town-center"
