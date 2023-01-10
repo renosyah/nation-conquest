@@ -40,11 +40,13 @@ func _start_building():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	rotation_pivot.rotate_y(deg2rad(90) * delta)
+	rotation_pivot.rotate_y(deg2rad(60) * delta)
 	
 	h_pivot.translation = h_pivot.translation.linear_interpolate(
-		_radius, 5 * delta
+		_radius, 15 * delta
 	)
+	if h_pivot.translation.is_equal_approx(_radius):
+		_radius = Vector3(-radius, 0, 0)
 	
 	placement_pos = _get_cast_position().position
 	building.translation = placement_pos
