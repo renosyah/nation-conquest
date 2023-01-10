@@ -2,19 +2,18 @@
 
 [ext_resource path="res://data/building_data/buildingData.gd" type="Script" id=1]
 [ext_resource path="res://entity/building/town_center/town_center.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ui/icon/building_icon/town_center.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/icon/building_icon/archer_tower_icon.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 1 )
-player_id = 0
 building_name = "Town Center"
-building_description = "Main HQ for faction"
+building_description = "HQ for team"
 node_name = ""
 network_master = 0
 building = ExtResource( 2 )
 icon = ExtResource( 3 )
 team = 0
 color = Color( 1, 1, 1, 1 )
-hp = 500
-max_hp = 500
-building_time = 10
+hp = 1500
+max_hp = 1500
+building_time = 25

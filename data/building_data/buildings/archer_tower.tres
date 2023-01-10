@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource( 1 )
+player_id = 0
 building_name = "Archer Tower"
 building_description = "Defence tower with archer garrison on top"
 node_name = ""

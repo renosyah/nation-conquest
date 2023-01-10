@@ -1,6 +1,9 @@
 extends KinematicBody
 class_name BaseEntity
 
+# owner
+var player_id :int
+
 # misc network
 var _network_timmer :Timer
 var _is_online :bool = false

@@ -1,6 +1,7 @@
 extends BaseData
 class_name BuildingData
 
+export var player_id :int
 export var building_name :String
 export var building_description :String
 export var node_name :String
@@ -14,6 +15,7 @@ export var max_hp :int = 500
 export var building_time :int = 10
 
 func from_dictionary(data : Dictionary):
+	player_id = data["player_id"]
 	building_name = data["building_name"]
 	building_description = data["building_description"]
 	node_name = data["node_name"]
@@ -28,6 +30,7 @@ func from_dictionary(data : Dictionary):
 
 func to_dictionary() -> Dictionary :
 	var data = {}
+	data["player_id"] = player_id
 	data["building_name"] = building_name
 	data["building_description"] = building_description
 	data["node_name"] = node_name
@@ -43,6 +46,7 @@ func to_dictionary() -> Dictionary :
 	
 func spawn(parent :Node) -> BaseBuilding:
 	var build = building.instance()
+	build.player_id = player_id
 	build.team = team
 	build.color = color
 	build.name = node_name

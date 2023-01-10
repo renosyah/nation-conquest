@@ -38,14 +38,14 @@ onready var _resources :Array = []
 
 func load_map():
 	_water = preload("res://map/water/water.tscn").instance()
-	_water.size = 250
+	_water.size = 300
 	add_child(_water)
 	
 	_map = preload("res://map/spring_island/spring_map.tscn").instance()
 	_map.map_seed = NetworkLobbyManager.argument["seed"]
 	_map.map_scale = 1
-	_map.map_size = 250
-	_map.map_height = 10
+	_map.map_size = 300
+	_map.map_height = 15
 	_map.connect("on_generate_map_completed", self, "on_generate_map_completed")
 	_map.connect("on_map_click", self , "on_map_click")
 	add_child(_map)
@@ -251,21 +251,21 @@ onready var _all_squads :Array = []
 onready var _selected_squad :Array = []
 
 # squad spawner
-func spawn_squad(_squad :SquadData, _at :Vector3, _parent :NodePath = get_path()):
-	rpc("_spawn_squad", _squad.to_dictionary(), _at, _parent)
+func spawn_squad(_squad :SquadData):
+	rpc("_spawn_squad", _squad.to_dictionary())
 
-remotesync func _spawn_squad(_squad_data :Dictionary, _at :Vector3, _parent :NodePath):
+remotesync func _spawn_squad(_squad_data :Dictionary):
 	var _squad = SquadData.new()
 	_squad.from_dictionary(_squad_data)
 	
 	# players own squad
 	_squad.is_selectable = _squad_data.network_master == NetworkLobbyManager.get_id() and _squad.team == 1
 	
-	var _squad_spawn = _squad.spawn(get_node_or_null(_parent))
+	var _squad_spawn = _squad.spawn(self)
 	_squad_spawn.connect("squad_update", self, "on_squad_update")
 	_squad_spawn.connect("squad_selected", self,"on_squad_selected")
 	_squad_spawn.connect("squad_dead", self, "on_squad_dead")
-	_squad_spawn.translation = _at
+	_squad_spawn.translation = _squad.position
 	
 	on_squad_spawn(_squad_spawn, _squad.icon)
 	

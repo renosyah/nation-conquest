@@ -3,10 +3,12 @@ class_name SquadData
 
 const squad_scene = preload("res://entity/squad/squad.tscn")
 
+export var player_id :int
 export var squad_name :String
 export var squad_description :String
 export var node_name :String
 export var network_master :int
+export var position :Vector3
 export var unit :Resource
 export var icon :Resource = preload("res://assets/ui/icon/squad_icon/icon_empty.png")
 export var team :int = 0
@@ -16,10 +18,12 @@ export var formation_space :int = 1
 export var is_selectable :bool = false
 
 func from_dictionary(data : Dictionary):
+	player_id = data["player_id"]
 	squad_name = data["squad_name"]
 	squad_description = data["squad_description"]
 	node_name = data["node_name"]
 	network_master = data["network_master"]
+	position = data["position"]
 	unit = load(data["unit"])
 	icon = load(data["icon"])
 	team = data["team"]
@@ -30,10 +34,12 @@ func from_dictionary(data : Dictionary):
 	
 func to_dictionary() -> Dictionary :
 	var data = {}
+	data["player_id"] = player_id
 	data["squad_name"] = squad_name
 	data["squad_description"] = squad_description
 	data["node_name"] = node_name
 	data["network_master"] = network_master
+	data["position"] = position
 	data["unit"] = unit.resource_path
 	data["icon"] = icon.resource_path
 	data["team"] = team
@@ -45,6 +51,7 @@ func to_dictionary() -> Dictionary :
 	
 func spawn(parent :Node) -> Squad:
 	var squad = squad_scene.instance()
+	squad.player_id = player_id
 	squad.unit = unit
 	squad.team = team
 	squad.color = color

@@ -144,10 +144,10 @@ func on_squad_dead(_squad :Squad):
 	add_squad.visible = squads.size() < 4
 	
 func is_player_squad(_squad :Squad) -> bool:
-	return _squad.get_network_master() == NetworkLobbyManager.get_id() and _squad.team == 1
+	return _squad.player_id == NetworkLobbyManager.get_id()
 	
 func is_player_building(_building :BaseBuilding) -> bool:
-	return _building.get_network_master() == NetworkLobbyManager.get_id() and _building.team == 1
+	return _building.player_id == NetworkLobbyManager.get_id()
 	
 func get_camera_moving_direction() -> Vector2:
 	return camera_control.get_moving_direction()

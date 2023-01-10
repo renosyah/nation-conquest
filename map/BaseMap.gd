@@ -128,7 +128,7 @@ func _generate_base_spawn_points(positions_copy :Array) -> Array:
 		for pos in positions_copy:
 			var close_1 = _spawn_points[index].distance_squared_to(edge)
 			var close_2 = pos.distance_squared_to(edge)
-			if close_2 < close_1 and pos.y > 2:
+			if close_2 < close_1 and pos.y > 4:
 				_spawn_points[index] = pos
 				
 		positions_copy.erase(_spawn_points[index])

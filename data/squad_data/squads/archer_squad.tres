@@ -6,10 +6,12 @@
 
 [resource]
 script = ExtResource( 1 )
+player_id = 0
 squad_name = "Archer"
 squad_description = ""
 node_name = ""
 network_master = 0
+position = Vector3( 0, 0, 0 )
 unit = ExtResource( 2 )
 icon = ExtResource( 3 )
 team = 0

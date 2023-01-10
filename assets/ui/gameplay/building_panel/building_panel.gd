@@ -12,7 +12,7 @@ func display_building_panel():
 		i.queue_free()
 		
 	var building_datas = [
-		#preload("res://data/building_data/buildings/town_center.tres"),
+		preload("res://data/building_data/buildings/town_center.tres"),
 		preload("res://data/building_data/buildings/archer_tower.tres") 
 	]
 	
