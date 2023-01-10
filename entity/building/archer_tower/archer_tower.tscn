@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://entity/building/archer_tower/tower.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://entity/building/archer_tower/archer_tower.gd" type="Script" id=2]
@@ -11,14 +11,18 @@
 [sub_resource type="SpatialMaterial" id=11]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
-albedo_color = Color( 0.364706, 0.180392, 0, 1 )
+albedo_color = Color( 0.345098, 0.168627, 0, 1 )
 
-[sub_resource type="SpatialMaterial" id=12]
+[sub_resource type="SpatialMaterial" id=10]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.686275, 0.388235, 0, 1 )
 
-[sub_resource type="SpatialMaterial" id=10]
+[sub_resource type="SpatialMaterial" id=12]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+
+[sub_resource type="SpatialMaterial" id=9]
 flags_transparent = true
 flags_unshaded = true
 flags_no_depth_test = true
@@ -47,13 +51,15 @@ unit = ExtResource( 3 )
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = ExtResource( 1 )
 material/0 = SubResource( 11 )
-material/1 = SubResource( 12 )
+material/1 = SubResource( 10 )
+material/2 = SubResource( 12 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="."]
 visible = false
 mesh = ExtResource( 1 )
-material/0 = SubResource( 10 )
-material/1 = SubResource( 10 )
+material/0 = SubResource( 9 )
+material/1 = SubResource( 9 )
+material/2 = SubResource( 9 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01911, 0 )

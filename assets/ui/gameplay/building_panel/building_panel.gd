@@ -4,7 +4,7 @@ signal on_construct_building(_building_data)
 
 const building_item_scene = preload("res://assets/ui/gameplay/building_panel/item/item.tscn")
 
-onready var building_panel_icon_holder = $HBoxContainer2/Panel/VBoxContainer/ScrollContainer/HBoxContainer3
+onready var building_panel_icon_holder = $CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer/HBoxContainer3
 
 func display_building_panel():
 	for i in building_panel_icon_holder.get_children():
@@ -27,5 +27,5 @@ func display_building_panel():
 func _on_building_panel_icon_click( _building :BuildingData):
 	emit_signal("on_construct_building", _building)
 
-func _on_close_build_building_pressed():
+func _on_close_base_building_pressed():
 	visible = false

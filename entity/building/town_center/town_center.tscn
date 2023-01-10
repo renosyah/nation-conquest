@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://entity/building/town_center/town_center.gd" type="Script" id=1]
 [ext_resource path="res://entity/building/town_center/tower.obj" type="ArrayMesh" id=2]
@@ -19,10 +19,22 @@ flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.686275, 0.388235, 0, 1 )
 
+[sub_resource type="SpatialMaterial" id=13]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.615686, 0.615686, 0.615686, 1 )
+
 [sub_resource type="SpatialMaterial" id=11]
 flags_unshaded = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.447059, 0.447059, 0.447059, 1 )
+
+[sub_resource type="SpatialMaterial" id=14]
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 1, 1, 1, 0.647059 )
 
 [sub_resource type="SpatialMaterial" id=12]
 flags_transparent = true
@@ -49,6 +61,7 @@ transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0
 mesh = ExtResource( 2 )
 material/0 = SubResource( 9 )
 material/1 = SubResource( 10 )
+material/2 = SubResource( 13 )
 
 [node name="canopy" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.454216, 0, 4.41078 )
@@ -82,11 +95,13 @@ material/1 = SubResource( 11 )
 
 [node name="MeshInstance2" type="Spatial" parent="."]
 transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0.5, 0 )
+visible = false
 
 [node name="tower" type="MeshInstance" parent="MeshInstance2"]
 mesh = ExtResource( 2 )
-material/0 = SubResource( 12 )
-material/1 = SubResource( 12 )
+material/0 = SubResource( 14 )
+material/1 = SubResource( 14 )
+material/2 = SubResource( 14 )
 
 [node name="canopy" type="MeshInstance" parent="MeshInstance2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.454216, 0, 4.41078 )

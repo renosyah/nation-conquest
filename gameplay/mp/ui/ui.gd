@@ -30,7 +30,6 @@ onready var recruit_squad_panel = $CanvasLayer/SafeArea/recruit_squad
 
 onready var open_building = $CanvasLayer/SafeArea/Control/HBoxContainer/VBoxContainer/open_building
 onready var building_panel = $CanvasLayer/SafeArea/building_panel
-onready var building_panel_icon_holder = $CanvasLayer/SafeArea/building_panel/HBoxContainer2/Panel/VBoxContainer/ScrollContainer/HBoxContainer3
 
 # player squad s
 # {_instance_squad : _instance_icon}

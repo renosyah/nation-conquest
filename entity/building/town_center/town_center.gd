@@ -9,11 +9,14 @@ onready var _input_detection = $input_detection
 onready var _mesh_instance = $MeshInstance
 onready var _mesh_instance_2 = $MeshInstance2
 
-onready var highlight_tower = $MeshInstance2/tower
-onready var highlight_canopy = $MeshInstance2/canopy
-onready var highlight_canopy_2 = $MeshInstance2/canopy2
+onready var _tower = $MeshInstance/tower
 
-onready var highlight_material :SpatialMaterial = highlight_tower.get_surface_material(0).duplicate()
+onready var _highlight_tower = $MeshInstance2/tower
+onready var _highlight_canopy = $MeshInstance2/canopy
+onready var _highlight_canopy_2 = $MeshInstance2/canopy2
+
+onready var _highlight_material :SpatialMaterial = _highlight_tower.get_surface_material(0).duplicate()
+onready var _team_color_material :SpatialMaterial = _tower.get_surface_material(2).duplicate()
 
 onready var _area_build = $area_build
 
@@ -26,15 +29,18 @@ func _ready():
 	_mesh_instance.visible = false
 	_mesh_instance_2.visible = true
 	
-	set_all_highlight_material(highlight_tower, highlight_material)
-	set_all_highlight_material(highlight_canopy, highlight_material)
-	set_all_highlight_material(highlight_canopy_2, highlight_material)
+	_team_color_material.albedo_color = color
+	_tower.set_surface_material(2, _team_color_material)
+	
+	set_all_highlight_material(_highlight_tower, _highlight_material)
+	set_all_highlight_material(_highlight_canopy, _highlight_material)
+	set_all_highlight_material(_highlight_canopy_2, _highlight_material)
 	
 	set_process(true)
 	
 func set_all_highlight_material(_mesh :MeshInstance, _material :SpatialMaterial):
 	for i in range(_mesh.get_surface_material_count()):
-		_mesh.set_surface_material(i, highlight_material)
+		_mesh.set_surface_material(i, _material)
 		
 remotesync func _start_building():
 	._start_building()
@@ -59,7 +65,7 @@ remotesync func _finish_building():
 func moving(delta :float) -> void:
 	if status == status_deploying:
 		can_build = _area_build.get_overlapping_bodies().empty() and translation.distance_to(base_position) < max_distance_from_base
-		highlight_material.albedo_color = Color(1,1,1,0.5) if can_build else Color(1,0,0,0.5)
+		_highlight_material.albedo_color = Color(1,1,1,0.5) if can_build else Color(1,0,0,0.5)
 	
 func take_damage(damage :int) -> void:
 	.take_damage(damage)
