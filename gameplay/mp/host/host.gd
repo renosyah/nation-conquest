@@ -101,8 +101,10 @@ func on_building_deployed(_building :BaseBuilding):
 	
 	# enemy town center 
 	# building is deployed
-	if _building.player_id == bot_id and _building.name == "bot-town-center":
-		bot_town_center = _building
+	if _building.player_id == bot_id:
+		if _building.name == "bot-town-center":
+			bot_town_center = _building
+			
 		enemy_buildings.append(_building)
 		
 		# dont include enemy building
@@ -115,11 +117,12 @@ func on_building_destroyed(_building :BaseBuilding):
 	
 	# enemy town center 
 	# building is destroyed
-	if _building.player_id == bot_id and _building.name == "bot-town-center":
-		bot_town_center = null
+	if _building.player_id == bot_id:
+		if _building.name == "bot-town-center":
+			bot_town_center = null
 		
-	if enemy_buildings.has(_building):
-		enemy_buildings.erase(_building)
+		if enemy_buildings.has(_building):
+			enemy_buildings.erase(_building)
 		
 func _on_attack_wave_timer_timeout():
 	if enemy_squads.size() > 3:
@@ -204,7 +207,7 @@ func _on_bot_attack_timer_timeout():
 	squad.set_move_to(target.translation + attack_pos)
 
 func _on_bot_buid_timer_timeout():
-	if enemy_buildings.size() > 2:
+	if enemy_buildings.size() > 4:
 		return
 		
 	if not is_instance_valid(bot_town_center):
