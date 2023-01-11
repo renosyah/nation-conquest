@@ -58,6 +58,7 @@ script = ExtResource( 1 )
 transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0.5, 0 )
 
 [node name="tower" type="MeshInstance" parent="MeshInstance"]
+generate_lightmap = false
 mesh = ExtResource( 2 )
 material/0 = SubResource( 9 )
 material/1 = SubResource( 10 )
@@ -65,31 +66,41 @@ material/2 = SubResource( 13 )
 
 [node name="canopy" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.454216, 0, 4.41078 )
+generate_lightmap = false
 mesh = ExtResource( 3 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 10 )
 
 [node name="canopy2" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.39751, 0, -0.34661 )
+generate_lightmap = false
 mesh = ExtResource( 3 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 10 )
 
 [node name="MeshInstance" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.37137, 0.5, 0.547064 )
+generate_lightmap = false
 mesh = ExtResource( 7 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 11 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00948, 0.5, -0.0667198 )
+generate_lightmap = false
 mesh = ExtResource( 7 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 11 )
 
 [node name="MeshInstance3" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( -8.9407e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -5.96046e-08, 0, -1.3031, 1.19929, 2.49144 )
+generate_lightmap = false
 mesh = ExtResource( 7 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 11 )
 
@@ -98,20 +109,26 @@ transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0
 visible = false
 
 [node name="tower" type="MeshInstance" parent="MeshInstance2"]
+generate_lightmap = false
 mesh = ExtResource( 2 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 14 )
 material/1 = SubResource( 14 )
 material/2 = SubResource( 14 )
 
 [node name="canopy" type="MeshInstance" parent="MeshInstance2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.454216, 0, 4.41078 )
+generate_lightmap = false
 mesh = ExtResource( 3 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 12 )
 material/1 = SubResource( 12 )
 
 [node name="canopy2" type="MeshInstance" parent="MeshInstance2"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.39751, 0, -0.34661 )
+generate_lightmap = false
 mesh = ExtResource( 3 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 12 )
 material/1 = SubResource( 12 )
 
