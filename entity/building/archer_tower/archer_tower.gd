@@ -16,7 +16,6 @@ onready var _mesh_instance = $MeshInstance
 onready var _mesh_instance_2 = $MeshInstance2
 
 onready var _mesh_instance_2_material = _mesh_instance_2.get_surface_material(0).duplicate()
-onready var _team_color_material :SpatialMaterial = _mesh_instance.get_surface_material(2).duplicate()
 
 onready var _area_build = $area_build
 
@@ -32,6 +31,7 @@ func _ready():
 	_mesh_instance.visible = false
 	_mesh_instance_2.visible = true
 	
+	var _team_color_material :SpatialMaterial = _mesh_instance.get_surface_material(2).duplicate()
 	_team_color_material.albedo_color = color
 	_mesh_instance.set_surface_material(2, _team_color_material)
 	

@@ -19,6 +19,7 @@ flags_do_not_receive_shadows = true
 albedo_color = Color( 0.686275, 0.388235, 0, 1 )
 
 [sub_resource type="SpatialMaterial" id=12]
+flags_unshaded = true
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 
