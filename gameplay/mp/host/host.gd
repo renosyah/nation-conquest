@@ -20,7 +20,9 @@ func on_map_click(_pos :Vector3):
 func on_generate_map_completed():
 	.on_generate_map_completed()
 	
-	squad_spawn_position = _player_base_spawn_position[NetworkLobbyManager.get_id()]
+	var player_id :int = NetworkLobbyManager.get_id()
+	player_color = _player_color[player_id]
+	squad_spawn_position = _player_base_spawn_position[player_id]
 	_camera.translation = squad_spawn_position
 	
 	NetworkLobbyManager.set_host_ready()
@@ -55,8 +57,8 @@ func on_ui_deploy_building(_building_data :BuildingData):
 func all_player_ready():
 	.all_player_ready()
 	
-	var bot_count :int = 4
-	var bot_spawn_positions :Array = _map.base_spawn_positions.duplicate()
+	var bot_spawn_positions :Array = _map.base_spawn_positions.slice(0, 3)
+	var bot_count :int = bot_spawn_positions.size()
 	
 	# deploy player town center
 	for player in NetworkLobbyManager.get_players():
@@ -65,8 +67,8 @@ func all_player_ready():
 		town_center.player_id = player.player_network_unique_id
 		town_center.node_name = GDUUID.v4()
 		town_center.network_master = player.player_network_unique_id
-		town_center.color = player_color
-		town_center.team = 1
+		town_center.color = _player_color[player.player_network_unique_id]
+		town_center.team = player_team
 		
 		.on_deploying_building(town_center, base_spawn_position, true)
 		
@@ -75,6 +77,7 @@ func all_player_ready():
 		
 		
 	for i in range(bot_count):
+		var base_spawn_position :Vector3 = bot_spawn_positions[i]
 		var bot :MPBot = preload("res://gameplay/mp/util/bot/mp_bot.tscn").instance()
 		bot.bot_id = -i + 69
 		bot.bot_color = Color(randf(), randf(), randf(), 1)
@@ -84,7 +87,7 @@ func all_player_ready():
 		add_child(bot)
 		bots[bot.bot_id] = bot
 		
-		.on_deploying_building(bot.get_town_center_data(), bot_spawn_positions[i], true)
+		.on_deploying_building(bot.get_town_center_data(), base_spawn_position, true)
 		
 		
 func on_squad_spawn(_squad :Squad, _icon :Resource):

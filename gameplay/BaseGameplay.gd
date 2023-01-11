@@ -68,6 +68,7 @@ func on_generate_map_completed():
 		
 		for player in NetworkLobbyManager.get_players():
 			_player_base_spawn_position[player.player_network_unique_id] = map_base_spawn_positions[index]
+			_player_color[player.player_network_unique_id] = Color(randf(), randf(), randf(), 1)
 			index += 1
 			
 		for _pos in _map.spawn_positions:
@@ -77,10 +78,12 @@ func on_generate_map_completed():
 			
 		NetworkLobbyManager.argument["sync_resources"] = sync_resources
 		NetworkLobbyManager.argument["player_base_spawn_position"] = _player_base_spawn_position
+		NetworkLobbyManager.argument["player_color"] = _player_color
 		
 	else:
 		sync_resources = NetworkLobbyManager.argument["sync_resources"]
 		_player_base_spawn_position = NetworkLobbyManager.argument["player_base_spawn_position"]
+		_player_color = NetworkLobbyManager.argument["player_color"]
 		
 	# rng mus be fresh instance
 	# in order to have same result
@@ -205,6 +208,7 @@ func all_player_ready():
 var _building_to_build :Dictionary = {}
 var _buildings :Array = []
 var _player_base_spawn_position :Dictionary = {}
+var _player_color :Dictionary = {}
 
 func on_deploying_building(_building_data :BuildingData, _at :Vector3 = Vector3.ZERO, _autobuild :bool = false):
 	rpc("_on_deploying_building", _building_data.to_dictionary(), _at, _autobuild)
@@ -222,6 +226,7 @@ remotesync func _on_deploying_building(_building_data_dic :Dictionary, _at :Vect
 	_build.connect("building_destroyed", self, "on_building_destroyed")
 	
 	if _autobuild:
+		_build.set_process(false)
 		_build.translation = _at
 		_build.start_building()
 		return

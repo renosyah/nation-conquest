@@ -18,7 +18,9 @@ func on_map_click(_pos :Vector3):
 func on_generate_map_completed():
 	.on_generate_map_completed()
 	
-	squad_spawn_position = _player_base_spawn_position[NetworkLobbyManager.get_id()]
+	var player_id :int = NetworkLobbyManager.get_id()
+	player_color = _player_color[player_id]
+	squad_spawn_position = _player_base_spawn_position[player_id]
 	_camera.translation = squad_spawn_position
 	
 func on_ui_recruit_squad(_squad :SquadData):
