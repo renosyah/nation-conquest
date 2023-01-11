@@ -117,8 +117,9 @@ func _on_build_timer():
 	emit_signal("bot_deploying_building", self, bot_building)
 	
 	
-func start_find_placement(_building :BaseBuilding, ignores :Array = []):
+func start_find_placement(_building :BaseBuilding, ignores :Array = [], exceptions :Array = []):
 	autobuilder.ignore = ignores
+	autobuilder.exceptions = exceptions
 	autobuilder.translation = bot_town_center.translation
 	autobuilder.building = _building
 	autobuilder.find_placement()

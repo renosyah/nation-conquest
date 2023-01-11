@@ -165,7 +165,7 @@ func setup_camera():
 	
 func update_camera_aiming_at():
 	var _cam_aim :CameraAimingData = _camera.get_camera_aiming_at(
-		_ui.get_center_screen(), _all_squads
+		_ui.get_center_screen(), _all_squads + _buildings
 	)
 	if _cam_aim.collider == _water:
 		return

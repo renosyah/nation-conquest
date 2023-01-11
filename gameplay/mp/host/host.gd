@@ -1,10 +1,10 @@
 extends BaseGameplay
 
-onready var color :Color = Color(randf(), randf(), randf(), 1)
+onready var player_team :int = 1
+onready var player_color :Color = Color(randf(), randf(), randf(), 1)
 onready var squad_spawn_position :Vector3 = Vector3(0, 15, 0)
-onready var tap = $tap
+onready var taps = $taps
 
-var player_team :int = 1
 var bots :Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -14,12 +14,8 @@ func _ready():
 func on_map_click(_pos :Vector3):
 	.on_map_click(_pos)
 	
-	if _selected_squad.empty():
-		return
-		
-	tap.color = color
-	tap.translation = _pos
-	tap.tap()
+	taps.color = player_color
+	taps.taps(_selected_squad)
 	
 func on_generate_map_completed():
 	.on_generate_map_completed()
@@ -35,7 +31,7 @@ func on_ui_recruit_squad(_squad :SquadData):
 	_squad.player_id = NetworkLobbyManager.get_id()
 	_squad.node_name = GDUUID.v4()
 	_squad.network_master = NetworkLobbyManager.get_id()
-	_squad.color = color
+	_squad.color = player_color
 	_squad.team = player_team
 	_squad.position = squad_spawn_position + Vector3(0, _map.map_height, 0)
 	
@@ -47,7 +43,7 @@ func on_ui_deploy_building(_building_data :BuildingData):
 	_building_data.player_id = NetworkLobbyManager.get_id()
 	_building_data.node_name = GDUUID.v4()
 	_building_data.network_master = NetworkLobbyManager.get_id()
-	_building_data.color = color
+	_building_data.color = player_color
 	_building_data.team = player_team
 	_building_data.base_position = squad_spawn_position
 	_building_data.max_distance_from_base = 24
@@ -69,7 +65,7 @@ func all_player_ready():
 		town_center.player_id = player.player_network_unique_id
 		town_center.node_name = GDUUID.v4()
 		town_center.network_master = player.player_network_unique_id
-		town_center.color = color
+		town_center.color = player_color
 		town_center.team = 1
 		
 		.on_deploying_building(town_center, base_spawn_position, true)
@@ -79,7 +75,7 @@ func all_player_ready():
 		
 		
 	for i in range(bot_count):
-		var bot :MPBot = preload("res://gameplay/mp/util/mp_bot.tscn").instance()
+		var bot :MPBot = preload("res://gameplay/mp/util/bot/mp_bot.tscn").instance()
 		bot.bot_id = -i + 69
 		bot.bot_color = Color(randf(), randf(), randf(), 1)
 		bot.bot_team = i + 69
@@ -115,23 +111,20 @@ func on_building_destroyed(_building :BaseBuilding):
 	for key in bots.keys():
 		bots[key].on_building_destroyed(_building)
 		
-		
+# bot deploy squad
 func on_bot_recruit_squad(_mp_bot :MPBot, _squad_data :SquadData):
-	
-	# bot deploy squad
 	.spawn_squad(_squad_data)
 	
+# bot deploy building
 func on_bot_deploying_building(_mp_bot :MPBot, _building_data :BuildingData):
-	
-	# bot deploy building
 	.on_deploying_building(_building_data)
-
-func on_building_deplyoing(_building :BaseBuilding):
 	
-	# bot using auto builder
+# bot using auto builder
+func on_building_deplyoing(_building :BaseBuilding):
 	if bots.has(_building.player_id):
-		var ignores :Array = _all_squads + _buildings
-		bots[_building.player_id].start_find_placement(_building, ignores)
+		bots[_building.player_id].start_find_placement(
+			_building, _all_squads + _buildings, [_water]
+		)
 		return
 		
 	# continue, because if else 

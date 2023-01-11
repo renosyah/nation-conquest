@@ -13,6 +13,7 @@ onready var timer = $Timer
 
 onready var _radius :Vector3 = Vector3(radius, 0, 0)
 
+var exceptions :Array = []
 var ignore :Array = []
 var building :BaseBuilding
 var placement_pos :Vector3
@@ -27,6 +28,7 @@ func find_placement():
 		
 	_radius = Vector3(radius, 0, 0)
 	rotation_pivot.translation.y = height
+	placement_pos = global_transform.origin
 	
 	timer.wait_time = duration
 	timer.start()
@@ -50,7 +52,10 @@ func _process(delta):
 	if h_pivot.translation.is_equal_approx(_radius):
 		_radius = Vector3(-radius, 0, 0)
 	
-	placement_pos = _get_cast_position().position
+	var aim :CameraAimingData = _get_cast_position()
+	if _is_valid_position(aim):
+		placement_pos = aim.position
+		
 	building.translation = placement_pos
 	
 	if timer.is_stopped() and building.can_build:
@@ -58,6 +63,16 @@ func _process(delta):
 		_start_building()
 		return
 		
+		
+func _is_valid_position(aim :CameraAimingData) -> bool:
+	if exceptions.empty():
+		return true
+		
+	if exceptions.has(aim.collider):
+		return false
+		
+	return true
+	
 func _get_cast_position() -> CameraAimingData:
 	var aiming_data :CameraAimingData = CameraAimingData.new()
 	var ray_cast_to :Vector3 = h_pivot.global_transform.origin + Vector3.DOWN * 1000
@@ -68,8 +83,7 @@ func _get_cast_position() -> CameraAimingData:
 	for i in ignore:
 		if is_instance_valid(i):
 			_ignore.append(i)
-				
-				
+			
 	var col :Dictionary = get_world().direct_space_state.intersect_ray(
 		h_pivot.global_transform.origin, ray_cast_to, _ignore, 0b11
 	)

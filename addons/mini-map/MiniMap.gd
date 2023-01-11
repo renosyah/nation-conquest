@@ -3,7 +3,7 @@ class_name MiniMap
 
 signal on_minimap_click(_minimap, _pos_v2, _pos_v3)
 
-const DIMESION_MULTIPLIER = 10.0
+const DIMESION_MULTIPLIER = 25.0
 
 export var camera_offset :Vector2 = Vector2.ZERO
 export var border_color :Color = Color.white

@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://gameplay/mp/host/host.gd" type="Script" id=1]
-[ext_resource path="res://assets/tap/tap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gameplay/mp/util/taps/taps.tscn" type="PackedScene" id=2]
 
 [node name="gameplay" type="Node"]
 script = ExtResource( 1 )
 
-[node name="tap" parent="." instance=ExtResource( 2 )]
+[node name="taps" parent="." instance=ExtResource( 2 )]

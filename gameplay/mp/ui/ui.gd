@@ -10,11 +10,10 @@ signal cancel_building
 onready var loading = $CanvasLayer/loading
 onready var safe_area = $CanvasLayer/SafeArea
 
-onready var mini_map = $CanvasLayer/SafeArea/minimap_panel/MiniMap
+onready var mini_map = $CanvasLayer/SafeArea/Control/HBoxContainer/MiniMap
 onready var camera_control = $CanvasLayer/SafeArea/camera_control
 onready var squad_icon_holder = $CanvasLayer/SafeArea/Control/squad_menu/HBoxContainer2/HBoxContainer3
 
-onready var minimap_panel = $CanvasLayer/SafeArea/minimap_panel
 onready var control = $CanvasLayer/SafeArea/Control
 
 onready var build_confirm = $CanvasLayer/SafeArea/Control/build_menu/HBoxContainer2/build_confirm
@@ -28,7 +27,7 @@ onready var rotate_r = $CanvasLayer/SafeArea/Control/build_menu/HBoxContainer/ro
 
 onready var recruit_squad_panel = $CanvasLayer/SafeArea/recruit_squad
 
-onready var open_building = $CanvasLayer/SafeArea/Control/HBoxContainer/VBoxContainer/open_building
+onready var open_building = $CanvasLayer/SafeArea/Control/HBoxContainer2/open_building
 onready var building_panel = $CanvasLayer/SafeArea/building_panel
 
 # player squad s
@@ -45,7 +44,6 @@ onready var player_max_squad :int = 5
 onready var player_max_building :int = 8
 
 func _ready():
-	minimap_panel.visible = false
 	control.visible = true
 	
 	build_menu.visible = false
@@ -175,15 +173,7 @@ func get_center_screen() -> Vector2:
 	
 func add_minimap_object(object_path :NodePath, color :Color = Color.white, _icon :Resource = preload("res://addons/mini-map/troop.png")):
 	mini_map.add_object(object_path, color, _icon)
-
-func _on_open_minimap_pressed():
-	minimap_panel.visible = true
-	control.visible = false
 	
-func _on_close_minimap_pressed():
-	minimap_panel.visible = false
-	control.visible = true
-
 func _on_main_menu_pressed():
 	emit_signal("main_menu_press")
 
