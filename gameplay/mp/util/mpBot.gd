@@ -27,6 +27,9 @@ export var recruit_time :float = 15
 export var build_time :float = 10
 export var action_time :float = 2
 
+export var max_squads :int = 3
+export var max_buildings :int = 2
+
 var enemy_squads :Array = []
 var enemy_buildings :Array = []
 
@@ -82,7 +85,7 @@ func _on_recruit_timer():
 	if not is_instance_valid(bot_town_center):
 		return
 		
-	if bot_squads.size() > 4:
+	if bot_squads.size() > max_buildings:
 		return
 		
 	var squad :SquadData = squad_datas[rand_range(0, squad_datas.size())].duplicate()
@@ -99,7 +102,7 @@ func _on_build_timer():
 	if not is_instance_valid(bot_town_center):
 		return
 		
-	if bot_buildings.size() > 4:
+	if bot_buildings.size() > max_buildings:
 		return
 		
 	var bot_building :BuildingData = building_datas[rand_range(0, building_datas.size())].duplicate()

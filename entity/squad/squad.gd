@@ -40,7 +40,6 @@ onready var _hit_particle = $hit_particle
 onready var _spotting_area = $Area/CollisionShape
 onready var _area = $Area
 onready var _pivot = $pivot
-onready var _moving_indicator = $tap
 
 onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
 onready var _floor_max_angle: float = deg2rad(45.0)
@@ -63,7 +62,6 @@ func _ready():
 	banner_mesh_material.albedo_color.a = 0.6
 	
 	outline_mesh_material.albedo_color = squad_unselected_color if is_selectable else Color(1,1,1,0)
-	_moving_indicator.color = color
 	
 	var formations = Utils.get_formation_box(
 		global_transform.origin,max_unit,formation_space
@@ -252,10 +250,6 @@ func set_selected(val :bool):
 func set_move_to(to :Vector3, display_tap :bool = false):
 	move_to = to
 	is_moving = true
-	
-	if display_tap:
-		_moving_indicator.translation = to
-		_moving_indicator.tap()
 
 func is_in_combat() -> bool:
 	return not _targets.empty()

@@ -1,11 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://entity/squad/squad.gd" type="Script" id=1]
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=2]
 [ext_resource path="res://entity/squad/banner.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/tap/tap.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/hit_particle/custom_particle/mesh/custom_mesh_particle.tscn" type="PackedScene" id=7]
 [ext_resource path="res://entity/squad/squad_collision.tres" type="Shape" id=8]
 
@@ -100,8 +99,6 @@ shape = SubResource( 3 )
 [node name="agro_timer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
-
-[node name="tap" parent="." instance=ExtResource( 6 )]
 
 [connection signal="input_event" from="." to="." method="_on_squad_input_event"]
 [connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
