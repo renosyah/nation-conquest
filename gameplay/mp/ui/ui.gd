@@ -30,6 +30,8 @@ onready var recruit_squad_panel = $CanvasLayer/SafeArea/recruit_squad
 onready var open_building = $CanvasLayer/SafeArea/Control/HBoxContainer2/open_building
 onready var building_panel = $CanvasLayer/SafeArea/building_panel
 
+onready var demolish_building_panel = $CanvasLayer/SafeArea/demolish_building_panel
+
 # player squad s
 # {_instance_squad : _instance_icon}
 var squads = {}
@@ -43,6 +45,8 @@ onready var player_id :int = NetworkLobbyManager.get_id()
 onready var player_max_squad :int = 5
 onready var player_max_building :int = 8
 
+var selected_building :BaseBuilding = null
+
 func _ready():
 	control.visible = true
 	
@@ -54,6 +58,8 @@ func _ready():
 	
 	safe_area.visible = false
 	loading.visible = true
+	
+	demolish_building_panel.visible = false
 	
 func loading(_show :bool):
 	.loading(_show)
@@ -82,6 +88,13 @@ func on_building_deplyoing(_building :BaseBuilding):
 		buildings.append(_building)
 	
 	open_building.visible = buildings.size() < player_max_building
+	
+func on_building_selected(_building :BaseBuilding):
+	if not is_player_building(_building):
+		return
+		
+	selected_building = _building
+	demolish_building_panel.visible = true
 	
 func on_building_deployed(_building :BaseBuilding):
 	var tower_icon = preload("res://entity/building/archer_tower/tower.png")
@@ -197,6 +210,13 @@ func _on_build_cancel_pressed():
 	build_menu.visible = false
 	squad_menu.visible = true
 	emit_signal("cancel_building")
+
+func _on_demolish_building_panel_demolish():
+	if not is_instance_valid(selected_building):
+		return
+		
+	selected_building.demolish()
+
 
 
 

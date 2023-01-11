@@ -50,7 +50,6 @@ max_hp = 5000
 unit = ExtResource( 3 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-generate_lightmap = false
 mesh = ExtResource( 1 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 11 )
@@ -59,7 +58,6 @@ material/2 = SubResource( 12 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="."]
 visible = false
-generate_lightmap = false
 mesh = ExtResource( 1 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )

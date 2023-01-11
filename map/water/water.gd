@@ -19,7 +19,6 @@ func _ready():
 	water_mesh_instance.create_trimesh_collision()
 	
 	water_mesh_instance.cast_shadow = false
-	water_mesh_instance.generate_lightmap = false
 	water_mesh_instance.software_skinning_transform_normals = false
 	
 	add_child(water_mesh_instance)

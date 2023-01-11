@@ -5,11 +5,11 @@
 [ext_resource path="res://addons/SafeArea/SafeArea.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/ui/camera_control/camera_control.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/ui/fps_ping_displayer/fps_ping_displayer.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/ui/gameplay/demolish_building/demolish_building_panel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/ui/icon/menu.png" type="Texture" id=8]
 [ext_resource path="res://assets/ui/icon/building.png" type="Texture" id=9]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=10]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=11]
-[ext_resource path="res://assets/ui/icon/squad_icon/icon_empty.png" type="Texture" id=12]
 [ext_resource path="res://assets/ui/icon/rotate_r.png" type="Texture" id=13]
 [ext_resource path="res://assets/ui/icon/rotate_l.png" type="Texture" id=14]
 [ext_resource path="res://assets/ui/gameplay/recruitment_panel/recruitment_panel.tscn" type="PackedScene" id=15]
@@ -131,7 +131,6 @@ margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
 size_flags_vertical = 0
 icon = ExtResource( 8 )
-flat = true
 expand_icon = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer"]
@@ -144,7 +143,7 @@ mouse_filter = 2
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control"]
 margin_top = 213.0
 margin_right = 600.0
-margin_bottom = 970.0
+margin_bottom = 746.0
 mouse_filter = 2
 size_flags_vertical = 3
 alignment = 2
@@ -154,20 +153,19 @@ __meta__ = {
 
 [node name="open_building" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer2"]
 margin_left = 506.0
-margin_top = 338.0
+margin_top = 226.0
 margin_right = 586.0
-margin_bottom = 418.0
+margin_bottom = 306.0
 rect_min_size = Vector2( 80, 80 )
 size_flags_horizontal = 8
 size_flags_vertical = 4
 icon = ExtResource( 9 )
-flat = true
 expand_icon = true
 
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2"]
 margin_left = 590.0
 margin_right = 600.0
-margin_bottom = 757.0
+margin_bottom = 533.0
 rect_min_size = Vector2( 10, 0 )
 mouse_filter = 2
 
@@ -236,10 +234,9 @@ custom_fonts/font = ExtResource( 10 )
 text = "Cancel"
 
 [node name="squad_menu" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control"]
-visible = false
-margin_top = 752.0
-margin_right = 89.0
-margin_bottom = 972.0
+margin_top = 750.0
+margin_right = 600.0
+margin_bottom = 970.0
 rect_min_size = Vector2( 0, 220 )
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -275,8 +272,6 @@ margin_bottom = 160.0
 rect_min_size = Vector2( 85, 160 )
 custom_fonts/font = ExtResource( 11 )
 text = "+"
-icon = ExtResource( 12 )
-flat = true
 icon_align = 1
 expand_icon = true
 
@@ -307,6 +302,8 @@ anchor_bottom = 0.0
 margin_right = 600.0
 margin_bottom = 1024.0
 
+[node name="demolish_building_panel" parent="CanvasLayer/SafeArea" instance=ExtResource( 6 )]
+
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer/main_menu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer2/open_building" to="." method="_on_open_building_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/build_menu/HBoxContainer2/build_confirm" to="." method="_on_build_confirm_pressed"]
@@ -314,3 +311,4 @@ margin_bottom = 1024.0
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/squad_menu/HBoxContainer2/add_squad" to="." method="_on_add_squad_pressed"]
 [connection signal="on_recruit_squad" from="CanvasLayer/SafeArea/recruit_squad" to="." method="_on_recruit_squad_on_recruit_squad"]
 [connection signal="on_construct_building" from="CanvasLayer/SafeArea/building_panel" to="." method="_on_building_panel_on_construct_building"]
+[connection signal="demolish" from="CanvasLayer/SafeArea/demolish_building_panel" to="." method="_on_demolish_building_panel_demolish"]

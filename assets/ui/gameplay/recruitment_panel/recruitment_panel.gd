@@ -31,6 +31,7 @@ func display_squad_recruitment():
 		
 		var instance  = squad_icon_scene.instance()
 		instance.data = data
+		instance.is_locked = false
 		instance.connect("on_click", self , "_on_recruit_squad_icon_click", [data])
 		recruit_squad_icon_holder.add_child(instance)
 		

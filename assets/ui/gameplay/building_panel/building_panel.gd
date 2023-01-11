@@ -13,7 +13,7 @@ func display_building_panel():
 		
 	var building_datas = [
 		preload("res://data/building_data/buildings/town_center.tres"),
-		preload("res://data/building_data/buildings/archer_tower.tres") 
+		preload("res://data/building_data/buildings/archer_tower.tres"),
 	]
 	
 	for i in range(building_datas.size()):
@@ -21,6 +21,7 @@ func display_building_panel():
 		
 		var instance = building_item_scene.instance()
 		instance.data = data
+		instance.is_locked = false
 		instance.connect("on_click", self , "_on_building_panel_icon_click", [data])
 		building_panel_icon_holder.add_child(instance)
 		

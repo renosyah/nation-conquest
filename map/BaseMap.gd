@@ -66,7 +66,6 @@ func _generate_map():
 	land_mesh.create_trimesh_collision()
 	
 	land_mesh.cast_shadow = false
-	land_mesh.generate_lightmap = false
 	land_mesh.software_skinning_transform_normals = false
 
 	collision = land_mesh.get_child(0).get_child(0)

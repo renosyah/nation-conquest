@@ -238,7 +238,11 @@ func on_building_deplyoing(_building :BaseBuilding):
 	_ui.on_building_deplyoing(_building)
 	
 func on_building_selected(_building :BaseBuilding):
-	pass
+	if not _selected_squad.empty():
+		on_map_click(_building.global_transform.origin)
+		return
+		
+	_ui.on_building_selected(_building)
 	
 func on_building_deployed(_building :BaseBuilding):
 	_buildings.append(_building)

@@ -337,7 +337,6 @@ shape = ExtResource( 2 )
 [node name="body2" type="Sprite3D" parent="body"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.814109, -0.0182912 )
 cast_shadow = 0
-generate_lightmap = false
 alpha_cut = 2
 texture = ExtResource( 4 )
 
@@ -346,23 +345,22 @@ texture = ExtResource( 4 )
 [node name="horse" type="Sprite3D" parent="body/horse_pivot"]
 transform = Transform( -8.74227e-08, 0, 2, 0, 2, 0, -2, 0, -8.74227e-08, 0, 0.450238, -0.212072 )
 cast_shadow = 0
-generate_lightmap = false
 modulate = Color( 0.6, 0.239216, 0, 1 )
 alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="shadle" type="Sprite3D" parent="body/horse_pivot/horse"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.137031, -0.0346076, 0.025896 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.137031, -0.0346076, 0.014577 )
 cast_shadow = 0
-generate_lightmap = false
 modulate = Color( 0.47451, 0.47451, 0.47451, 1 )
+alpha_cut = 2
 texture = ExtResource( 5 )
 
 [node name="shadle2" type="Sprite3D" parent="body/horse_pivot/horse"]
-transform = Transform( 1, 0, 3.72529e-09, 0, 1, 0, -3.72529e-09, 0, 1, -0.132902, -0.0346076, -0.0627416 )
+transform = Transform( 1, 0, 3.72529e-09, 0, 1, 0, -3.72529e-09, 0, 1, -0.132902, -0.0346076, -0.0171244 )
 cast_shadow = 0
-generate_lightmap = false
 modulate = Color( 0.47451, 0.47451, 0.47451, 1 )
+alpha_cut = 2
 texture = ExtResource( 5 )
 
 [node name="pivot" type="Spatial" parent="."]

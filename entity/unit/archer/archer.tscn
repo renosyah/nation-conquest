@@ -319,7 +319,6 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0
 shape = SubResource( 20 )
 
 [node name="body" type="Sprite3D" parent="."]
-generate_lightmap = false
 alpha_cut = 2
 texture = ExtResource( 1 )
 
@@ -333,7 +332,6 @@ transform = Transform( -4.29612e-08, 8.06326e-09, 1, 0.184466, 0.982838, 0, -0.9
 transform = Transform( -4.4725e-08, 2.24955e-10, 1, 0.216661, 0.976247, 9.47056e-09, -0.976247, 0.216661, -4.37114e-08, 0, 0.0788074, -0.695804 )
 visible = false
 cast_shadow = 0
-generate_lightmap = false
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="pivot"]

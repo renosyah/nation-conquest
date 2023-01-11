@@ -14,46 +14,45 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
-margin_left = 150.0
-margin_top = 326.0
-margin_right = 450.0
-margin_bottom = 698.0
+margin_left = 76.0
+margin_top = 176.0
+margin_right = 524.0
+margin_bottom = 848.0
 rect_min_size = Vector2( 20, 0 )
 
 [node name="Panel" type="ColorRect" parent="CenterContainer/MarginContainer"]
-margin_right = 300.0
-margin_bottom = 372.0
+margin_right = 448.0
+margin_bottom = 672.0
 rect_min_size = Vector2( 0, 100 )
 color = Color( 0.105882, 0.105882, 0.105882, 1 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/MarginContainer"]
-margin_right = 300.0
-margin_bottom = 372.0
+margin_right = 448.0
+margin_bottom = 672.0
 rect_min_size = Vector2( 300, 300 )
 mouse_filter = 2
 size_flags_vertical = 0
 alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/MarginContainer/HBoxContainer2"]
-margin_left = 38.0
-margin_right = 58.0
-margin_bottom = 372.0
+margin_right = 20.0
+margin_bottom = 672.0
 rect_min_size = Vector2( 20, 0 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MarginContainer/HBoxContainer2"]
-margin_left = 62.0
-margin_right = 237.0
-margin_bottom = 372.0
+margin_left = 24.0
+margin_right = 424.0
+margin_bottom = 672.0
 alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer"]
-margin_right = 175.0
+margin_right = 400.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="Label" type="Label" parent="CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer"]
 margin_top = 44.0
-margin_right = 175.0
+margin_right = 400.0
 margin_bottom = 72.0
 custom_fonts/font = ExtResource( 1 )
 text = "Base Building"
@@ -62,45 +61,45 @@ valign = 1
 
 [node name="MarginContainer4" type="MarginContainer" parent="CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer"]
 margin_top = 76.0
-margin_right = 175.0
+margin_right = 400.0
 margin_bottom = 96.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="HBoxContainer3" type="GridContainer" parent="CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer"]
 margin_top = 100.0
-margin_right = 175.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 0, 100 )
+margin_right = 400.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 400, 400 )
 mouse_filter = 2
 size_flags_horizontal = 3
 columns = 4
 
 [node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer"]
-margin_top = 204.0
-margin_right = 175.0
-margin_bottom = 244.0
+margin_top = 504.0
+margin_right = 400.0
+margin_bottom = 544.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="close_base_building" type="Button" parent="CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer"]
-margin_left = 27.0
-margin_top = 248.0
-margin_right = 147.0
-margin_bottom = 328.0
+margin_left = 140.0
+margin_top = 548.0
+margin_right = 260.0
+margin_bottom = 628.0
 rect_min_size = Vector2( 120, 80 )
 size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 1 )
 text = "Cancel"
 
 [node name="MarginContainer3" type="MarginContainer" parent="CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer"]
-margin_top = 332.0
-margin_right = 175.0
-margin_bottom = 372.0
+margin_top = 632.0
+margin_right = 400.0
+margin_bottom = 672.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/MarginContainer/HBoxContainer2"]
-margin_left = 241.0
-margin_right = 261.0
-margin_bottom = 372.0
+margin_left = 428.0
+margin_right = 448.0
+margin_bottom = 672.0
 rect_min_size = Vector2( 20, 0 )
 
 [connection signal="pressed" from="CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer/close_base_building" to="." method="_on_close_base_building_pressed"]

@@ -191,7 +191,6 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0
 shape = ExtResource( 4 )
 
 [node name="body" type="Sprite3D" parent="."]
-generate_lightmap = false
 alpha_cut = 2
 texture = ExtResource( 2 )
 
