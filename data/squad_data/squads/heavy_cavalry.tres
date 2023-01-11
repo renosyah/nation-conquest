@@ -16,6 +16,6 @@ unit = ExtResource( 2 )
 icon = ExtResource( 3 )
 team = 0
 color = Color( 1, 1, 1, 1 )
-max_unit = 15
+max_unit = 8
 formation_space = 2
 is_selectable = false

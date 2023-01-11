@@ -4,6 +4,9 @@ class_name BaseEntity
 # owner
 var player_id :int
 
+# performace
+var _visibility_notifier :VisibilityNotifier
+
 # misc network
 var _network_timmer :Timer
 var _is_online :bool = false
@@ -17,7 +20,19 @@ func _network_timmer_timeout() -> void:
 ############################################################
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_visibility_notifier = VisibilityNotifier.new()
+	_visibility_notifier.max_distance = 80
+	_visibility_notifier.connect("camera_entered", self, "_on_camera_entered")
+	_visibility_notifier.connect("camera_exited", self , "_on_camera_exited")
+	add_child(_visibility_notifier)
+	
 	_setup_network_timer()
+	
+func _on_camera_entered(camera: Camera):
+	visible = true
+	
+func _on_camera_exited(camera: Camera):
+	visible = false
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta :float) -> void:

@@ -13,7 +13,7 @@ export var unit :Resource
 export var icon :Resource = preload("res://assets/ui/icon/squad_icon/icon_empty.png")
 export var team :int = 0
 export var color :Color = Color.white
-export var max_unit :int = 15
+export var max_unit :int = 8
 export var formation_space :int = 1
 export var is_selectable :bool = false
 

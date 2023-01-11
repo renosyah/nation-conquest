@@ -63,8 +63,15 @@ func _get_cast_position() -> CameraAimingData:
 	var ray_cast_to :Vector3 = h_pivot.global_transform.origin + Vector3.DOWN * 1000
 	aiming_data.position = ray_cast_to
 	
+	var _ignore = []
+	
+	for i in ignore:
+		if is_instance_valid(i):
+			_ignore.append(i)
+				
+				
 	var col :Dictionary = get_world().direct_space_state.intersect_ray(
-		h_pivot.global_transform.origin, ray_cast_to, ignore, 0b11
+		h_pivot.global_transform.origin, ray_cast_to, _ignore, 0b11
 	)
 	if not col.empty():
 		aiming_data.from_dictionary(col)

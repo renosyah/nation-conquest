@@ -21,7 +21,6 @@ func on_ui_recruit_squad(_squad :SquadData):
 	_squad.network_master = NetworkLobbyManager.get_id()
 	_squad.color = color
 	_squad.team = 1
-	_squad.max_unit = 8
 	_squad.position = squad_spawn_position + Vector3(0, _map.map_height, 0)
 	
 	.spawn_squad(_squad)
