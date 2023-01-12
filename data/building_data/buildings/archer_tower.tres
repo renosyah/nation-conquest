@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://data/building_data/buildingData.gd" type="Script" id=1]
-[ext_resource path="res://assets/ui/icon/building_icon/archer_tower_icon.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/icon/building_icon/archer_tower.png" type="Texture" id=2]
 [ext_resource path="res://entity/building/archer_tower/archer_tower.tscn" type="PackedScene" id=3]
 
 [resource]

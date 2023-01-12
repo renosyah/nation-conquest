@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/archer_tower_icon.png-624009586f9c01e97c1876089f9d52f5.stex"
+path="res://.import/archer_tower.png-d1fd3211435c0926ce1559d082f1e46f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/icon/building_icon/archer_tower_icon.png"
-dest_files=[ "res://.import/archer_tower_icon.png-624009586f9c01e97c1876089f9d52f5.stex" ]
+source_file="res://assets/ui/icon/building_icon/archer_tower.png"
+dest_files=[ "res://.import/archer_tower.png-d1fd3211435c0926ce1559d082f1e46f.stex" ]
 
 [params]
 

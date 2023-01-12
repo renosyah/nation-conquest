@@ -96,7 +96,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1.02891 )
 visible = false
 
 [node name="farm2" type="MeshInstance" parent="MeshInstance2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 mesh = ExtResource( 2 )
 skeleton = NodePath("../../MeshInstance")
 software_skinning_transform_normals = false
