@@ -211,29 +211,43 @@ var _player_base_spawn_position :Dictionary = {}
 var _player_color :Dictionary = {}
 
 func on_deploying_building(_building_data :BuildingData, _at :Vector3 = Vector3.ZERO, _autobuild :bool = false):
-	rpc("_on_deploying_building", _building_data.to_dictionary(), _at, _autobuild)
+	rpc("_on_deploying_buildings", 
+		[create_deploying_building_payload(_building_data, _at, _autobuild)]
+	)
 	
-remotesync func _on_deploying_building(_building_data_dic :Dictionary, _at :Vector3, _autobuild :bool):
-	var _building_data :BuildingData = BuildingData.new()
-	_building_data.from_dictionary(_building_data_dic)
+func create_deploying_building_payload(_building_data :BuildingData, _at :Vector3 = Vector3.ZERO, _autobuild :bool = false) -> Dictionary:
+	return {
+		"building_data":_building_data.to_dictionary(), 
+		"at":_at,
+		"autobuild":_autobuild
+	}
 	
-	_building_data.is_selectable = (_building_data.player_id == NetworkLobbyManager.get_id())
+func on_deploying_buildings(_building_datas :Array):
+	rpc("_on_deploying_buildings", _building_datas)
 	
-	if _autobuild:
-		_building_data.building_time = 1
+# send data in array so does not 
+# overstress rpc and prevent desync
+remotesync func _on_deploying_buildings(_building_data_dics :Array):
+	for _building_data_dic in _building_data_dics:
+		var _building_data :BuildingData = BuildingData.new()
+		_building_data.from_dictionary(_building_data_dic["building_data"])
 		
-	var _build :BaseBuilding = _building_data.spawn(self)
-	_build.connect("building_selected", self, "on_building_selected")
-	_build.connect("building_deployed", self, "on_building_deployed")
-	_build.connect("building_destroyed", self, "on_building_destroyed")
-	
-	if _autobuild:
-		_build.set_process(false)
-		_build.translation = _at
-		_build.start_building()
-		return
+		_building_data.is_selectable = (_building_data.player_id == NetworkLobbyManager.get_id())
 		
-	on_building_deplyoing(_build)
+		if _building_data_dic["autobuild"]:
+			_building_data.building_time = 1
+			
+		var _build :BaseBuilding = _building_data.spawn(self)
+		_build.connect("building_selected", self, "on_building_selected")
+		_build.connect("building_deployed", self, "on_building_deployed")
+		_build.connect("building_destroyed", self, "on_building_destroyed")
+		
+		if _building_data_dic["autobuild"]:
+			_build.set_process(false)
+			_build.translation = _building_data_dic["at"]
+			_build.start_building()
+		else:
+			on_building_deplyoing(_build)
 	
 func on_building_deplyoing(_building :BaseBuilding):
 	_building_to_build[_building.player_id] = _building

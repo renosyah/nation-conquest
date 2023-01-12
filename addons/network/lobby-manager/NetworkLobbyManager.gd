@@ -45,6 +45,7 @@ func init_lobby():
 		return
 		
 	_network_player.player_name = player_name
+	_network_player.player_status = NetworkPlayer.PLAYER_STATUS_NOT_READY
 	
 	if configuration is NetworkServer:
 		_init_host()
@@ -129,11 +130,11 @@ func _ready():
 # host player section
 func _init_host():
 	var _configuration :NetworkServer = configuration as NetworkServer
-	var err = _network.create_server(_configuration.max_player, _configuration.port, _network_player.player_name)
+	var err = _network.create_server(_configuration.max_player, _configuration.port)
 	if err != OK:
 		return
 		
-func _server_player_connected(_player_network_unique_id : int, _player :NetworkPlayer):
+func _server_player_connected(_player_network_unique_id : int):
 	_network_player.player_network_unique_id = _player_network_unique_id
 	
 	_server_advertiser.setup()
@@ -150,11 +151,11 @@ func _server_player_connected(_player_network_unique_id : int, _player :NetworkP
 # join player section
 func _init_join():
 	var _configuration :NetworkClient = configuration as NetworkClient
-	var err = _network.connect_to_server(_configuration.ip, _configuration.port, _network_player.player_name)
+	var err = _network.connect_to_server(_configuration.ip, _configuration.port)
 	if err != OK:
 		return
 		
-func _client_player_connected(_player_network_unique_id : int, _player :NetworkPlayer):
+func _client_player_connected(_player_network_unique_id : int):
 	_network_player.player_network_unique_id = _player_network_unique_id
 	rpc_id(host_id, "_request_append_player_joined", _player_network_unique_id, _network_player.to_dictionary())
 	emit_signal("on_client_player_connected")

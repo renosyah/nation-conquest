@@ -50,6 +50,8 @@ func on_ui_deploy_building(_building_data :BuildingData):
 func all_player_ready():
 	.all_player_ready()
 	
+	var deploying_buildings :Array = []
+	
 	var bot_spawn_positions :Array = _map.base_spawn_positions.slice(0, 3)
 	var bot_count :int = bot_spawn_positions.size()
 	
@@ -63,7 +65,11 @@ func all_player_ready():
 		town_center.color = _player_color[player.player_network_unique_id]
 		town_center.team = player_team
 		
-		.on_deploying_building(town_center, base_spawn_position, true)
+		deploying_buildings.append(
+			.create_deploying_building_payload(
+				town_center, base_spawn_position, true
+			)
+		)
 		
 		bot_count -= 1
 		bot_spawn_positions.erase(base_spawn_position)
@@ -80,9 +86,15 @@ func all_player_ready():
 		add_child(bot)
 		bots[bot.bot_id] = bot
 		
-		.on_deploying_building(bot.get_town_center_data(), base_spawn_position, true)
+		deploying_buildings.append(
+			.create_deploying_building_payload(
+				bot.get_town_center_data(), base_spawn_position, true
+			)
+		)
 		
 		
+	.on_deploying_buildings(deploying_buildings)
+	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
 	.on_squad_spawn(_squad, _icon)
 	
