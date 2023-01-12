@@ -21,7 +21,7 @@ func _network_timmer_timeout() -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_visibility_notifier = VisibilityNotifier.new()
-	_visibility_notifier.max_distance = 80
+	_visibility_notifier.max_distance = 60
 	_visibility_notifier.connect("camera_entered", self, "_on_camera_entered")
 	_visibility_notifier.connect("camera_exited", self , "_on_camera_exited")
 	add_child(_visibility_notifier)

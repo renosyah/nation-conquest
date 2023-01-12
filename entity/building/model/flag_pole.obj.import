@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/flag_pole.obj-390ff1461c074af55eab5d4a3cb5423a.mesh"
+
+[deps]
+
+files=[ "res://.import/flag_pole.obj-390ff1461c074af55eab5d4a3cb5423a.mesh" ]
+
+source_file="res://entity/building/model/flag_pole.obj"
+dest_files=[ "res://.import/flag_pole.obj-390ff1461c074af55eab5d4a3cb5423a.mesh", "res://.import/flag_pole.obj-390ff1461c074af55eab5d4a3cb5423a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

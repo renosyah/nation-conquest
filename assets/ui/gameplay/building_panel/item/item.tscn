@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/ui/icon/locked.png" type="Texture" id=1]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_14.tres" type="DynamicFont" id=2]
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/ui/icon/coin.png" type="Texture" id=4]
 [ext_resource path="res://assets/ui/gameplay/building_panel/item/item.gd" type="Script" id=5]
 
 [node name="item" type="MarginContainer"]
@@ -63,31 +64,41 @@ expand = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer2/HBoxContainer/TextureRect/VBoxContainer"]
-margin_right = 95.0
-margin_bottom = 58.0
-mouse_filter = 2
-size_flags_vertical = 3
+alignment = 2
 
 [node name="ColorRect" type="ColorRect" parent="Control/VBoxContainer2/HBoxContainer/TextureRect/VBoxContainer"]
-margin_top = 62.0
+margin_top = 96.0
 margin_right = 95.0
 margin_bottom = 121.0
+rect_min_size = Vector2( 0, 25 )
 mouse_filter = 2
-size_flags_vertical = 3
 color = Color( 0, 0, 0, 0.470588 )
 
-[node name="Label2" type="Label" parent="Control/VBoxContainer2/HBoxContainer/TextureRect/VBoxContainer/ColorRect"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer2/HBoxContainer/TextureRect/VBoxContainer/ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer2/HBoxContainer/TextureRect/VBoxContainer/ColorRect/HBoxContainer"]
+margin_left = 24.0
+margin_right = 44.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 20, 20 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 4 )
+expand = true
+
+[node name="Label2" type="Label" parent="Control/VBoxContainer2/HBoxContainer/TextureRect/VBoxContainer/ColorRect/HBoxContainer"]
+margin_left = 48.0
+margin_top = 4.0
+margin_right = 71.0
+margin_bottom = 20.0
 grow_vertical = 0
 custom_fonts/font = ExtResource( 2 )
-text = "Archer Tower"
+text = "200"
 align = 1
 valign = 1
-autowrap = true
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer2/HBoxContainer"]
 margin_left = 104.0
@@ -141,6 +152,7 @@ margin_bottom = 50.0
 rect_min_size = Vector2( 5, 5 )
 
 [node name="lock" type="ColorRect" parent="Control"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0

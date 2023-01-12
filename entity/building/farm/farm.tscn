@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://entity/building/farm/farm.gd" type="Script" id=1]
 [ext_resource path="res://entity/building/farm/farm.obj" type="ArrayMesh" id=2]
@@ -8,24 +8,28 @@
 [ext_resource path="res://assets/hit_particle/custom_particle/text/custom_text_particle.tscn" type="PackedScene" id=6]
 [ext_resource path="res://entity/building/model/food_barrel.obj" type="ArrayMesh" id=7]
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=8]
+[ext_resource path="res://entity/building/model/flag_pole.obj" type="ArrayMesh" id=9]
+[ext_resource path="res://entity/building/model/coin.obj" type="ArrayMesh" id=10]
 
-[sub_resource type="SpatialMaterial" id=5]
-flags_vertex_lighting = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 0.345098, 0.168627, 0, 1 )
-
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=14]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.686275, 0.388235, 0, 1 )
 
-[sub_resource type="CubeMesh" id=3]
-size = Vector3( 3.2, 1, 1.6 )
+[sub_resource type="SpatialMaterial" id=15]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.345098, 0.168627, 0, 1 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=16]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 1, 0.819608, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=17]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.129412, 0.0823529, 0.0392157, 1 )
 
 [sub_resource type="SpatialMaterial" id=7]
 flags_vertex_lighting = true
@@ -37,12 +41,22 @@ flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.345098, 0.168627, 0, 1 )
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=19]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 1, 0.819608, 0, 1 )
 
-[sub_resource type="SpatialMaterial" id=11]
+[sub_resource type="SpatialMaterial" id=20]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.184314, 0.0901961, 0.00392157, 1 )
+
+[sub_resource type="SpatialMaterial" id=21]
+flags_unshaded = true
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+
+[sub_resource type="SpatialMaterial" id=18]
 flags_transparent = true
 flags_unshaded = true
 flags_no_depth_test = true
@@ -52,80 +66,109 @@ albedo_color = Color( 1, 1, 1, 0.647059 )
 [sub_resource type="BoxShape" id=12]
 extents = Vector3( 1.68065, 3.10908, 1.78517 )
 
-[sub_resource type="ConvexPolygonShape" id=10]
-points = PoolVector3Array( -1.79428, -0.32849, -0.762068, -1.79428, -0.332977, 0.670646, -1.79428, 1.35524, -0.762068, 1.79428, -0.32849, -0.762068, -1.79428, -0.332977, 2.78534, 1.79428, -0.332977, 0.670646, -1.79428, 1.35524, -0.67873, -0.820914, 2.53195, -0.000569522, 1.79393, 1.35524, -0.762068, 1.79428, -0.32849, -0.67873, -1.79428, 0.387742, 2.78534, 1.79428, -0.332977, 2.78534, -1.79428, 1.33281, 0.754331, 0.820563, 2.53195, -0.000569522, 1.79393, 1.35524, -0.67873, 1.79393, 0.387742, 2.78534, 1.79393, 1.33281, 0.754331 )
+[sub_resource type="ConvexPolygonShape" id=13]
+points = PoolVector3Array( 2.14301, -0.397694, 2.91086, 2.14259, 0.463102, 2.91086, -2.14301, -0.397694, 2.91086, 2.14301, -0.397694, -1.27807, 2.14301, -0.392335, -2.89, 2.14259, 1.61865, -2.89, 2.14259, 1.59185, -1.17873, 1.87534, 0.641626, 2.63018, -2.14301, 0.463102, 2.91086, 0.980046, 3.02406, -2.08028, -2.14301, -0.397694, -1.27807, 2.14301, -0.392335, -2.98934, 2.14259, 1.61865, -2.98934, -1.89548, 0.641626, 2.63018, -0.980465, 3.02406, -2.08028, -2.14301, 1.59185, -1.17873, -2.14301, -0.392335, -2.98934, -2.14301, 1.61865, -2.98934, -2.14301, 1.61865, -2.89 )
+
+[sub_resource type="Curve" id=22]
+_data = [ Vector2( 0.133663, 0.118182 ), 0.0, 0.0, 0, 0, Vector2( 0.232673, 0.936364 ), 0.0, 0.0, 0, 0, Vector2( 0.985149, 0.0727272 ), 0.0, 0.0, 0, 0 ]
 
 [node name="farm" type="KinematicBody"]
 collision_layer = 0
 input_ray_pickable = false
 script = ExtResource( 1 )
+amount = 10
 
 [node name="MeshInstance" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1.02891 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 
 [node name="farm" type="MeshInstance" parent="MeshInstance"]
 mesh = ExtResource( 2 )
 software_skinning_transform_normals = false
-material/0 = SubResource( 5 )
-material/1 = SubResource( 4 )
-
-[node name="field" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.207629, 1.84566 )
-mesh = SubResource( 3 )
-software_skinning_transform_normals = false
-material/0 = SubResource( 6 )
+material/0 = SubResource( 14 )
+material/1 = SubResource( 15 )
+material/2 = SubResource( 16 )
+material/3 = SubResource( 17 )
 
 [node name="barrel" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.977789, 0.301947, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0837516, 0.301947, -2.06958 )
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 7 )
 material/1 = SubResource( 8 )
-material/2 = SubResource( 9 )
+material/2 = SubResource( 19 )
 
 [node name="barrel2" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.16844, 0.301947, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51604, 0.301947, -2.06958 )
 mesh = ExtResource( 7 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 7 )
 material/1 = SubResource( 8 )
-material/2 = SubResource( 9 )
+material/2 = SubResource( 19 )
+
+[node name="flag" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.01186, -0.227653, -3.11283 )
+mesh = ExtResource( 9 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 20 )
+material/1 = SubResource( 21 )
 
 [node name="MeshInstance2" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1.02891 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 visible = false
 
 [node name="farm2" type="MeshInstance" parent="MeshInstance2"]
 mesh = ExtResource( 2 )
 skeleton = NodePath("../../MeshInstance")
 software_skinning_transform_normals = false
-material/0 = SubResource( 11 )
-material/1 = SubResource( 11 )
+material/0 = SubResource( 18 )
+material/1 = SubResource( 18 )
+material/2 = SubResource( 18 )
+material/3 = SubResource( 18 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01911, -0.0717112 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.80574, 0 )
 shape = SubResource( 12 )
 disabled = true
 
 [node name="area_build" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.06289 )
 collision_mask = 0
 input_ray_pickable = false
 monitorable = false
 
-[node name="CollisionShape2" type="CollisionShape" parent="area_build"]
+[node name="CollisionShape" type="CollisionShape" parent="area_build"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-shape = SubResource( 10 )
+shape = SubResource( 13 )
 
 [node name="input_detection" parent="." instance=ExtResource( 8 )]
 
 [node name="hpBar" parent="." instance=ExtResource( 4 )]
-transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.07829, 0 )
+transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21324, 0 )
 
 [node name="hit_particle" parent="." instance=ExtResource( 5 )]
 custom_particle_scene = ExtResource( 6 )
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="harvest_time" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
+[node name="CPUParticles" type="CPUParticles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9637, 0 )
+emitting = false
+one_shot = true
+explosiveness = 1.0
+mesh = ExtResource( 10 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_rotate_y = true
+direction = Vector3( 0, 1, 0 )
+spread = 25.0
+gravity = Vector3( 0, 12, 0 )
+angular_velocity = 8.0
+scale_amount_curve = SubResource( 22 )
+color = Color( 1, 0.823529, 0, 1 )
+
 [connection signal="input_event" from="area_build" to="." method="_on_area_build_input_event"]
 [connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
+[connection signal="timeout" from="harvest_time" to="." method="_on_harvest_time_timeout"]

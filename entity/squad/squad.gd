@@ -250,11 +250,11 @@ func set_selected(val :bool):
 	if not is_selectable:
 		return
 		
-	for unit in _units:
-		if not is_instance_valid(unit):
+	for _unit in _units:
+		if not is_instance_valid(_unit):
 			continue
 			
-		unit.set_selected(val)
+		_unit.set_selected(val)
 		
 	var color :Color = squad_selected_color if val else squad_unselected_color
 	(_banner.get_surface_material(1) as SpatialMaterial).albedo_color = color
@@ -284,11 +284,11 @@ func _attack_targets():
 		return
 		
 	if _targets.empty():
-		for unit in _units:
+		for _unit in _units:
 			if is_instance_valid(unit):
-				unit.is_moving = true
-				unit.is_attacking = false
-				unit.attack_to = null
+				_unit.is_moving = true
+				_unit.is_attacking = false
+				_unit.attack_to = null
 		return
 		
 	if is_moving and is_assault_mode:
@@ -296,11 +296,11 @@ func _attack_targets():
 		is_assault_mode = false
 		
 	var pos :int = 0
-	for unit in _units:
+	for _unit in _units:
 		if is_instance_valid(unit):
-			unit.is_moving = false
-			unit.is_attacking = true
-			unit.attack_to = _targets[pos]
+			_unit.is_moving = false
+			_unit.is_attacking = true
+			_unit.attack_to = _targets[pos]
 			
 		if pos < _targets.size() - 1:
 			pos += 1

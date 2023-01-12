@@ -9,6 +9,7 @@ script = ExtResource( 1 )
 player_id = 0
 squad_name = "Axeman"
 squad_description = ""
+price = 75
 node_name = ""
 network_master = 0
 position = Vector3( 0, 0, 0 )

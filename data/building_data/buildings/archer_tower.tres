@@ -9,6 +9,7 @@ script = ExtResource( 1 )
 player_id = 0
 building_name = "Archer Tower"
 building_description = "Defence tower with archer garrison on top"
+price = 45
 node_name = ""
 network_master = 0
 building = ExtResource( 3 )

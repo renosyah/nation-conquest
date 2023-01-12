@@ -1,4 +1,5 @@
 extends BaseBuilding
+class_name TownCenter
 
 onready var _collision_shape = $CollisionShape
 

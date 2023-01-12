@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://addons/mini-map/MiniMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gameplay/mp/ui/ui.gd" type="Script" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://assets/ui/icon/rotate_l.png" type="Texture" id=14]
 [ext_resource path="res://assets/ui/gameplay/recruitment_panel/recruitment_panel.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/ui/gameplay/building_panel/building_panel.tscn" type="PackedScene" id=16]
+[ext_resource path="res://assets/ui/icon/coin.png" type="Texture" id=17]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -105,6 +106,7 @@ mouse_filter = 2
 margin_top = 9.0
 margin_right = 600.0
 margin_bottom = 209.0
+rect_min_size = Vector2( 0, 200 )
 mouse_filter = 2
 
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer"]
@@ -119,12 +121,57 @@ margin_right = 209.0
 mouse_filter = 2
 camera_offset = Vector2( 0, -10 )
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer"]
+[node name="MarginContainer" type="Control" parent="CanvasLayer/SafeArea/Control/HBoxContainer"]
 margin_left = 213.0
 margin_right = 507.0
 margin_bottom = 200.0
 mouse_filter = 2
 size_flags_horizontal = 3
+
+[node name="Control" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer"]
+margin_right = 200.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/Control"]
+visible = false
+margin_right = 200.0
+margin_bottom = 60.0
+color = Color( 0, 0, 0, 0.545098 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/Control"]
+margin_right = 200.0
+margin_bottom = 60.0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/Control/HBoxContainer"]
+margin_right = 60.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 60, 60 )
+texture = ExtResource( 17 )
+expand = true
+
+[node name="player_coin" type="Label" parent="CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/Control/HBoxContainer"]
+margin_left = 64.0
+margin_right = 159.0
+margin_bottom = 60.0
+grow_vertical = 0
+custom_colors/font_color = Color( 0.917647, 0.560784, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/line_spacing = 1
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 1
+custom_fonts/font = ExtResource( 11 )
+text = "200"
+align = 1
+valign = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/Control/HBoxContainer"]
+margin_left = 163.0
+margin_right = 193.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 30, 0 )
 
 [node name="main_menu" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer"]
 margin_left = 511.0

@@ -45,7 +45,7 @@ func load_map():
 	_map.map_seed = NetworkLobbyManager.argument["seed"]
 	_map.map_scale = 1
 	_map.map_size = 200
-	_map.map_height = 15
+	_map.map_height = 12
 	_map.connect("on_generate_map_completed", self, "on_generate_map_completed")
 	_map.connect("on_map_click", self , "on_map_click")
 	add_child(_map)

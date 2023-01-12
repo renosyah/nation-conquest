@@ -1,4 +1,9 @@
 extends BaseBuilding
+class_name Farm
+
+signal harvest_time(_farm, _amount)
+
+export var amount :int = 50
 
 onready var _collision_shape = $CollisionShape
 
@@ -8,12 +13,15 @@ onready var _input_detection = $input_detection
 
 onready var _mesh_instance = $MeshInstance
 onready var _mesh_instance_2 = $MeshInstance2
+onready var _farm_2 = $MeshInstance2/farm2
 
-onready var farm_2 = $MeshInstance2/farm2
 onready var _highlight_material :SpatialMaterial = $MeshInstance2/farm2.get_surface_material(0).duplicate()
+onready var _flag = $MeshInstance/flag
 
 onready var _area_build = $area_build
 onready var _tween = $Tween
+
+onready var _cpu_particles = $CPUParticles
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,8 +29,12 @@ func _ready():
 	_mesh_instance.visible = false
 	_mesh_instance_2.visible = true
 	
+	var flag_material = _flag.get_surface_material(1).duplicate()
+	flag_material.albedo_color = color
+	_flag.set_surface_material(1, flag_material)
+	
 	_area_build.input_ray_pickable = is_selectable
-	set_all_highlight_material(farm_2, _highlight_material)
+	set_all_highlight_material(_farm_2, _highlight_material)
 	
 	set_process(true)
 	
@@ -73,6 +85,10 @@ func _on_area_build_input_event(camera, event, position, normal, shape_idx):
 func _on_input_detection_any_gesture(sig ,event):
 	if event is InputEventSingleScreenTap:
 		emit_signal("building_selected", self)
-
-
-
+		
+func _on_harvest_time_timeout():
+	if status != status_deployed:
+		return
+		
+	_cpu_particles.emitting = true
+	emit_signal("harvest_time", self, amount)

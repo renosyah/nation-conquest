@@ -4,6 +4,7 @@ class_name BuildingData
 export var player_id :int
 export var building_name :String
 export var building_description :String
+export var price :int
 export var node_name :String
 export var network_master :int
 export var building :Resource
@@ -21,6 +22,7 @@ func from_dictionary(data : Dictionary):
 	player_id = data["player_id"]
 	building_name = data["building_name"]
 	building_description = data["building_description"]
+	price = data["price"]
 	node_name = data["node_name"]
 	network_master = data["network_master"]
 	building = load(data["building"])
@@ -39,6 +41,7 @@ func to_dictionary() -> Dictionary :
 	data["player_id"] = player_id
 	data["building_name"] = building_name
 	data["building_description"] = building_description
+	data["price"] = price
 	data["node_name"] = node_name
 	data["network_master"] = network_master
 	data["building"] = building.resource_path

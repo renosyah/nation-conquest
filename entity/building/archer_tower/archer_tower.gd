@@ -1,4 +1,5 @@
 extends BaseBuilding
+class_name ArcherTower
 
 export var unit :Resource
 export var max_unit :int = 4

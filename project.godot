@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "BaseBuilding",
+"class": "ArcherTower",
+"language": "GDScript",
+"path": "res://entity/building/archer_tower/archer_tower.gd"
+}, {
 "base": "Spatial",
 "class": "AutoBuilder",
 "language": "GDScript",
@@ -98,6 +103,11 @@ _global_script_classes=[ {
 "class": "CustomTextParticle",
 "language": "GDScript",
 "path": "res://assets/hit_particle/custom_particle/text/custom_text_particle.gd"
+}, {
+"base": "BaseBuilding",
+"class": "Farm",
+"language": "GDScript",
+"path": "res://entity/building/farm/farm.gd"
 }, {
 "base": "Node",
 "class": "GDUUID",
@@ -229,6 +239,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/tap/tap.gd"
 }, {
+"base": "BaseBuilding",
+"class": "TownCenter",
+"language": "GDScript",
+"path": "res://entity/building/town_center/town_center.gd"
+}, {
 "base": "MeshInstance",
 "class": "UnitHighlight",
 "language": "GDScript",
@@ -245,6 +260,7 @@ _global_script_classes=[ {
 "path": "res://map/water/water.gd"
 } ]
 _global_script_class_icons={
+"ArcherTower": "",
 "AutoBuilder": "",
 "BaseBuilding": "",
 "BaseCustomParticle": "",
@@ -263,6 +279,7 @@ _global_script_class_icons={
 "CustomGradientTexture": "",
 "CustomMeshParticle": "",
 "CustomTextParticle": "",
+"Farm": "",
 "GDUUID": "",
 "HitParticle": "",
 "HpBar3D": "",
@@ -289,6 +306,7 @@ _global_script_class_icons={
 "SquadData": "",
 "SquadIcon": "",
 "Tap": "",
+"TownCenter": "",
 "UnitHighlight": "",
 "Utils": "",
 "Water": ""

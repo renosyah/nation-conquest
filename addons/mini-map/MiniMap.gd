@@ -5,6 +5,7 @@ signal on_minimap_click(_minimap, _pos_v2, _pos_v3)
 
 const DIMESION_MULTIPLIER = 25.0
 
+export var enable :bool = false
 export var camera_offset :Vector2 = Vector2.ZERO
 export var border_color :Color = Color.white
 export var interval_update :bool = false
@@ -18,6 +19,7 @@ onready var _entity_marker_template = $MarginContainer/Grid/EntityMarker
 onready var _get_viewport_rect_size :Vector2 = get_viewport_rect().size
 onready var _timer = $Timer
 onready var _input_detection = $input_detection
+onready var _color_rect = $MarginContainer/ColorRect
 
 var _camera :Camera
 var _map_objects :Array = []
@@ -40,6 +42,9 @@ func _process(_delta):
 	_update_minimap()
 	
 func _update_minimap():
+	if not enable:
+		return
+		
 	if not is_instance_valid(_camera):
 		_camera = get_viewport().get_camera()
 		return
@@ -98,7 +103,12 @@ func remove_object(object :NodePath):
 	_markers.erase(object)
 	
 func set_zoom(value :float):
-	_zoom = clamp(_zoom , 1, 5)
+	_zoom = clamp(value / 10 , 1, 5)
+	
+func set_enable(value :float):
+	enable = value
+	_color_rect.visible = not enable
+	_grid.visible = enable
 
 func _on_Timer_timeout():
 	_timer.start()

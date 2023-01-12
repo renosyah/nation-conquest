@@ -35,6 +35,7 @@ onready var demolish_building_panel = $CanvasLayer/SafeArea/demolish_building_pa
 onready var select_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/select_all
 onready var unselect_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/unselect_all
 
+onready var player_coin_ui = $CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/Control/HBoxContainer/player_coin
 
 # player squad s
 # {_instance_squad : _instance_icon}
@@ -44,6 +45,9 @@ var squads = {}
 # [_instance_building]
 var buildings = []
 var building_rotation :float = 0
+var building_deploying :BuildingData
+
+var player_coin :int = 100
 
 onready var player_id :int = NetworkLobbyManager.get_id()
 onready var player_max_squad :int = 5
@@ -53,6 +57,8 @@ var selected_building :BaseBuilding = null
 
 func _ready():
 	control.visible = true
+	
+	add_squad.visible = false
 	
 	build_menu.visible = false
 	squad_menu.visible = true
@@ -68,16 +74,26 @@ func _ready():
 	select_all.visible = true
 	unselect_all.visible = false
 	
-
+	mini_map.set_enable(false)
+	_update_player_coin()
+	
 func loading(_show :bool):
 	.loading(_show)
 	safe_area.visible = not _show
 	loading.visible = _show
 	
 func _on_recruit_squad_on_recruit_squad(_squad_data :SquadData):
+	if player_coin - _squad_data.price < 0:
+		return
+		
+	player_coin -= _squad_data.price
+	_update_player_coin()
+	
 	emit_signal("recruit_squad", _squad_data)
 	
 func _on_building_panel_on_construct_building(_building_data :BuildingData):
+	building_deploying = _building_data
+	
 	build_menu.visible = true
 	building_panel.visible = false
 	squad_menu.visible = false
@@ -87,6 +103,8 @@ func _on_building_panel_on_construct_building(_building_data :BuildingData):
 func _process(delta):
 	var value = -45 if rotate_l.pressed else 45 if rotate_r.pressed else 0
 	building_rotation += value * delta
+	
+	mini_map.set_zoom(get_camera_zoom())
 	
 func on_building_deplyoing(_building :BaseBuilding):
 	if not is_player_building(_building):
@@ -113,8 +131,13 @@ func on_building_deployed(_building :BaseBuilding):
 		
 	if not buildings.has(_building):
 		buildings.append(_building)
+		
+	if _building is Farm:
+		_building.connect("harvest_time", self,"on_harvest_time")
 	
 	open_building.visible = buildings.size() < player_max_building
+	add_squad.visible = is_player_have_town_center()
+	mini_map.set_enable(is_player_have_tower())
 	
 func on_building_destroyed(_building :BaseBuilding):
 	if not is_player_building(_building):
@@ -126,6 +149,8 @@ func on_building_destroyed(_building :BaseBuilding):
 	buildings.erase(_building)
 	
 	open_building.visible = buildings.size() < player_max_building
+	add_squad.visible = is_player_have_town_center()
+	mini_map.set_enable(is_player_have_tower())
 	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
 	add_minimap_object(_squad.get_path(), _squad.color)
@@ -187,6 +212,26 @@ func is_player_squad(_squad :Squad) -> bool:
 func is_player_building(_building :BaseBuilding) -> bool:
 	return _building.player_id == NetworkLobbyManager.get_id()
 	
+func is_player_have_tower() -> bool:
+	for building in buildings:
+		if not is_instance_valid(building):
+			continue
+			
+		if building is ArcherTower:
+			return true
+			
+	return false
+	
+func is_player_have_town_center() -> bool:
+	for building in buildings:
+		if not is_instance_valid(building):
+			continue
+			
+		if building is TownCenter:
+			return true
+			
+	return false
+	
 func check_if_squad_selected() -> bool:
 	for key in squads:
 		if squads[key].is_selected:
@@ -216,6 +261,15 @@ func get_center_screen() -> Vector2:
 func add_minimap_object(object_path :NodePath, color :Color = Color.white, _icon :Resource = preload("res://addons/mini-map/troop.png")):
 	mini_map.add_object(object_path, color, _icon)
 	
+func on_harvest_time(_building :Farm, _amount :int):
+	player_coin += _amount
+	_update_player_coin()
+	
+func _update_player_coin():
+	player_coin_ui.text = str(player_coin)
+	recruit_squad_panel.player_coin = player_coin
+	building_panel.player_coin = player_coin
+	
 func _on_main_menu_pressed():
 	emit_signal("main_menu_press")
 
@@ -233,6 +287,15 @@ func can_build(val :bool):
 func _on_build_confirm_pressed():
 	build_menu.visible = false
 	squad_menu.visible = true
+	
+	if player_coin - building_deploying.price < 0:
+		return
+		
+	player_coin -= building_deploying.price
+	_update_player_coin()
+	
+	building_deploying = null
+	
 	emit_signal("start_building")
 	
 func _on_build_cancel_pressed():

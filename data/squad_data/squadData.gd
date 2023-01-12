@@ -6,6 +6,7 @@ const squad_scene = preload("res://entity/squad/squad.tscn")
 export var player_id :int
 export var squad_name :String
 export var squad_description :String
+export var price :int
 export var node_name :String
 export var network_master :int
 export var position :Vector3
@@ -21,6 +22,7 @@ func from_dictionary(data : Dictionary):
 	player_id = data["player_id"]
 	squad_name = data["squad_name"]
 	squad_description = data["squad_description"]
+	price = data["price"]
 	node_name = data["node_name"]
 	network_master = data["network_master"]
 	position = data["position"]
@@ -37,6 +39,7 @@ func to_dictionary() -> Dictionary :
 	data["player_id"] = player_id
 	data["squad_name"] = squad_name
 	data["squad_description"] = squad_description
+	data["price"] = price
 	data["node_name"] = node_name
 	data["network_master"] = network_master
 	data["position"] = position

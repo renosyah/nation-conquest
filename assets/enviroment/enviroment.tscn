@@ -14,7 +14,7 @@ background_sky = SubResource( 2 )
 fog_enabled = true
 fog_color = Color( 0.152941, 0.47451, 0.792157, 1 )
 fog_sun_color = Color( 1, 0.901961, 0.701961, 1 )
-fog_depth_curve = 1.68179
+fog_depth_curve = 0.637279
 dof_blur_far_distance = 25.0
 
 [node name="enviroment" type="Node"]

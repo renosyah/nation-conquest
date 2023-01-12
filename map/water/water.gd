@@ -3,6 +3,8 @@ class_name Water
 
 export var size :float = 200
 
+onready var mesh_instance = $MeshInstance
+
 #var water_mesh_instance :MeshInstance
 #var collision :CollisionShape
 #
@@ -10,7 +12,9 @@ export var size :float = 200
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	var plane :PlaneMesh = mesh_instance.mesh
+	plane.size = Vector2(size, size)
+	
 #	var water_mesh = PlaneMesh.new()
 #	water_mesh.size = Vector2(size, size)
 #

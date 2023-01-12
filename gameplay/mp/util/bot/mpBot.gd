@@ -40,9 +40,13 @@ var bot_buildings :Array = []
 var bot_town_center :BaseBuilding
 var autobuilder :AutoBuilder
 
+var bot_coin :int = 100
+
 var recruit_timer :Timer
 var build_timer :Timer
 var action_timer :Timer
+
+var uperhand_timer :Timer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -73,6 +77,13 @@ func _ready():
 	action_timer.connect("timeout", self , "_on_action_timer")
 	add_child(action_timer)
 	
+	uperhand_timer = Timer.new()
+	uperhand_timer.wait_time = rand_range(25 - 2, 25 + 2)
+	uperhand_timer.autostart = true
+	uperhand_timer.one_shot = false
+	uperhand_timer.connect("timeout", self , "_on_uperhand_timer")
+	add_child(uperhand_timer)
+	
 func get_town_center_data() -> BuildingData:
 	var town_center :BuildingData = preload("res://data/building_data/buildings/town_center.tres")
 	town_center.player_id = bot_id
@@ -89,7 +100,20 @@ func _on_recruit_timer():
 	if bot_squads.size() > max_buildings:
 		return
 		
-	var squad :SquadData = squad_datas[rand_range(0, squad_datas.size())].duplicate()
+	var _squads :Array = squad_datas.duplicate()
+	_squads.shuffle()
+	
+	var squad :SquadData = null
+	for s in _squads:
+		if bot_coin > s.price:
+			squad = s
+			break
+		
+	if squad == null:
+		return
+		
+	bot_coin -= squad.price
+	
 	squad.player_id = bot_id
 	squad.node_name = "BOT_SQUAD_" + GDUUID.v4() + "-" + str(bot_id)
 	squad.network_master = Network.PLAYER_HOST_ID
@@ -106,7 +130,20 @@ func _on_build_timer():
 	if bot_buildings.size() > max_buildings:
 		return
 		
-	var bot_building :BuildingData = building_datas[rand_range(0, building_datas.size())].duplicate()
+	var _buildings :Array = building_datas.duplicate()
+	_buildings.shuffle()
+	
+	var bot_building :BuildingData = null
+	for s in _buildings:
+		if bot_coin > s.price:
+			bot_building = s
+			break
+		
+	if bot_building == null:
+		return
+		
+	bot_coin -= bot_building.price
+	
 	bot_building.player_id = bot_id
 	bot_building.node_name = "BOT_BUILDING_" + GDUUID.v4() + "-" + str(bot_id)
 	bot_building.network_master = Network.PLAYER_HOST_ID
@@ -134,6 +171,9 @@ func _on_placement_found(_building :BaseBuilding, _pos :Vector3):
 	
 func _on_action_timer():
 	if not is_instance_valid(bot_town_center):
+		return
+		
+	if not is_bot_have_farm():
 		return
 		
 	if bot_squads.empty():
@@ -182,6 +222,10 @@ func _on_action_timer():
 	squad.is_assault_mode = true
 	squad.set_move_to(target.translation + attack_pos)
 	
+func _on_uperhand_timer():
+	if not is_bot_have_farm():
+		bot_coin += 100
+	
 func on_squad_spawn(_squad:Squad):
 	if _squad.team == bot_team:
 		if _squad.player_id == bot_id:
@@ -207,6 +251,9 @@ func on_building_deployed(_building :BaseBuilding):
 				autobuilder.translation = bot_town_center.translation
 				
 			bot_buildings.append(_building)
+			
+			if _building is Farm:
+				_building.connect("harvest_time", self,"on_harvest_time")
 		
 	else:
 		enemy_buildings.append(_building)
@@ -222,11 +269,21 @@ func on_building_destroyed(_building :BaseBuilding):
 	else:
 		if enemy_buildings.has(_building):
 			enemy_buildings.erase(_building)
+	
+func on_harvest_time(_building :Farm, _amount :int):
+	bot_coin += _amount
 
 
-
-
-
+func is_bot_have_farm() -> bool:
+	for building in bot_buildings:
+		if not is_instance_valid(building):
+			continue
+			
+		if building is Farm:
+			return true
+			
+	return false
+	
 
 
 

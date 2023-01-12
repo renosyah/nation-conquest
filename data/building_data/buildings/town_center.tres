@@ -9,6 +9,7 @@ script = ExtResource( 1 )
 player_id = 0
 building_name = "Town Center"
 building_description = "Main HQ for faction"
+price = 200
 node_name = ""
 network_master = 0
 building = ExtResource( 2 )

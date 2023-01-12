@@ -9,6 +9,7 @@ script = ExtResource( 1 )
 player_id = 0
 building_name = "Farm"
 building_description = "Main source of income"
+price = 25
 node_name = ""
 network_master = 0
 building = ExtResource( 2 )

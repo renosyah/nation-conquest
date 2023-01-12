@@ -8,7 +8,7 @@ var is_locked :bool = true
 onready var texture_rect =  $Control/VBoxContainer2/HBoxContainer/TextureRect
 onready var building_name = $Control/VBoxContainer2/MarginContainer2/VBoxContainer/Label
 onready var frame_2 = $Control/Frame2
-onready var label_2 = $Control/VBoxContainer2/HBoxContainer/TextureRect/VBoxContainer/ColorRect/Label2
+onready var label_2 = $Control/VBoxContainer2/HBoxContainer/TextureRect/VBoxContainer/ColorRect/HBoxContainer/Label2
 
 onready var input_detection = $input_detection
 onready var lock = $Control/lock
@@ -17,8 +17,12 @@ onready var lock = $Control/lock
 func _ready():
 	texture_rect.texture = data.icon
 	building_name.text = data.building_name
-	label_2.text = "Wood : 90"
-	frame_2.color = Color.gray
+	label_2.text = str(data.price)
+	frame_2.color = Color(0.242188, 0.242188, 0.242188)
+	lock.visible = is_locked
+	
+func set_lock(val: bool):
+	is_locked = val
 	lock.visible = is_locked
 	
 func _on_item_gui_input(event):
