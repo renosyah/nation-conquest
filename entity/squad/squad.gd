@@ -338,3 +338,20 @@ func _on_agro_timer_timeout():
 		
 	_spotted_target()
 	_attack_targets()
+	
+func _on_squad_tree_exiting():
+	if is_instance_valid(_tap):
+		_tap.queue_free()
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+

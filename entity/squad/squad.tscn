@@ -101,5 +101,6 @@ wait_time = 0.5
 autostart = true
 
 [connection signal="input_event" from="." to="." method="_on_squad_input_event"]
+[connection signal="tree_exiting" from="." to="." method="_on_squad_tree_exiting"]
 [connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
 [connection signal="timeout" from="agro_timer" to="." method="_on_agro_timer_timeout"]

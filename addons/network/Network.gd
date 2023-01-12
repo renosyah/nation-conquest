@@ -117,8 +117,6 @@ func connect_to_server(_ip:String = DEFAULT_IP, _port :int = DEFAULT_PORT, playe
 	get_tree().set_network_peer(null) 
 	get_tree().set_network_peer(peer)
 	
-	setup_ping()
-	
 	return OK
 	
 func get_local_network_player() -> NetworkPlayer:
@@ -173,6 +171,8 @@ func _connected_to_server():
 	if _local_network_player == null:
 		return
 		
+	setup_ping()
+	
 	_local_network_player.player_network_unique_id = local_player_id
 	emit_signal("client_player_connected", local_player_id, _local_network_player)
 	rpc_id(PLAYER_HOST_ID,'_send_player_info', local_player_id, _local_network_player.to_dictionary())

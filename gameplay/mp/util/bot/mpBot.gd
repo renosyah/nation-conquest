@@ -118,6 +118,9 @@ func _on_build_timer():
 	
 	
 func start_find_placement(_building :BaseBuilding, ignores :Array = [], exceptions :Array = []):
+	if not is_instance_valid(bot_town_center):
+		return
+		
 	autobuilder.ignore = ignores
 	autobuilder.exceptions = exceptions
 	autobuilder.translation = bot_town_center.translation
