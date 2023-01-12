@@ -14,7 +14,6 @@ albedo_color = Color( 0.584314, 0.337255, 0, 1 )
 [node name="sword" type="MeshInstance"]
 transform = Transform( -4.21812e-08, -1.14643e-08, 1, -0.262273, 0.964993, 0, -0.964993, -0.262273, -4.37114e-08, 0, 0, -0.594756 )
 cast_shadow = 0
-generate_lightmap = false
 mesh = ExtResource( 1 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 20 )

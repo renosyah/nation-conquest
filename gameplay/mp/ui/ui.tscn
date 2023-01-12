@@ -157,6 +157,7 @@ __meta__ = {
 margin_left = 506.0
 margin_right = 586.0
 margin_bottom = 533.0
+mouse_filter = 2
 alignment = 1
 
 [node name="open_building" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
@@ -174,6 +175,7 @@ margin_top = 261.0
 margin_right = 80.0
 margin_bottom = 271.0
 rect_min_size = Vector2( 0, 10 )
+mouse_filter = 2
 
 [node name="select_all" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
 margin_top = 275.0

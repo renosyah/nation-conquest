@@ -15,7 +15,6 @@ albedo_color = Color( 0, 0, 0, 1 )
 [node name="crossbow" type="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 0.962341, -0.271844, 0, 0.271844, 0.962341, 0, -0.0762588, -0.646121 )
 cast_shadow = 0
-generate_lightmap = false
 mesh = ExtResource( 1 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 20 )

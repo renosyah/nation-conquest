@@ -1,13 +1,13 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://entity/building/town_center/town_center.gd" type="Script" id=1]
 [ext_resource path="res://entity/building/town_center/tower.obj" type="ArrayMesh" id=2]
-[ext_resource path="res://entity/building/town_center/canopy.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://entity/building/model/canopy.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/hit_particle/custom_particle/text/custom_text_particle.tscn" type="PackedScene" id=6]
-[ext_resource path="res://entity/building/town_center/barrell.obj" type="ArrayMesh" id=7]
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=8]
+[ext_resource path="res://entity/building/model/barrel.obj" type="ArrayMesh" id=9]
 
 [sub_resource type="SpatialMaterial" id=9]
 flags_vertex_lighting = true
@@ -24,19 +24,12 @@ flags_unshaded = true
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 
-[sub_resource type="SpatialMaterial" id=11]
-flags_unshaded = true
+[sub_resource type="SpatialMaterial" id=15]
+flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
-albedo_color = Color( 0.447059, 0.447059, 0.447059, 1 )
+albedo_color = Color( 0.341176, 0.341176, 0.341176, 1 )
 
 [sub_resource type="SpatialMaterial" id=14]
-flags_transparent = true
-flags_unshaded = true
-flags_no_depth_test = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 1, 1, 1, 0.647059 )
-
-[sub_resource type="SpatialMaterial" id=12]
 flags_transparent = true
 flags_unshaded = true
 flags_no_depth_test = true
@@ -78,25 +71,25 @@ material/0 = SubResource( 9 )
 material/1 = SubResource( 10 )
 
 [node name="MeshInstance" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.37137, 0.5, 0.547064 )
-mesh = ExtResource( 7 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.70992, 0.238619, 1.53159 )
+mesh = ExtResource( 9 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
-material/1 = SubResource( 11 )
+material/1 = SubResource( 15 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00948, 0.5, -0.0667198 )
-mesh = ExtResource( 7 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00948, 0.115803, -0.0667198 )
+mesh = ExtResource( 9 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
-material/1 = SubResource( 11 )
+material/1 = SubResource( 15 )
 
 [node name="MeshInstance3" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( -8.9407e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -5.96046e-08, 0, -1.3031, 1.19929, 2.49144 )
-mesh = ExtResource( 7 )
+transform = Transform( -8.9407e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -8.9407e-08, 0, -1.3031, -0.0688918, 2.49144 )
+mesh = ExtResource( 9 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
-material/1 = SubResource( 11 )
+material/1 = SubResource( 15 )
 
 [node name="MeshInstance2" type="Spatial" parent="."]
 transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0.5, 0 )
@@ -113,15 +106,15 @@ material/2 = SubResource( 14 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.454216, 0, 4.41078 )
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
-material/0 = SubResource( 12 )
-material/1 = SubResource( 12 )
+material/0 = SubResource( 14 )
+material/1 = SubResource( 14 )
 
 [node name="canopy2" type="MeshInstance" parent="MeshInstance2"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.39751, 0, -0.34661 )
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
-material/0 = SubResource( 12 )
-material/1 = SubResource( 12 )
+material/0 = SubResource( 14 )
+material/1 = SubResource( 14 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01911, 0 )
