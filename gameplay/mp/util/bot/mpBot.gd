@@ -97,7 +97,11 @@ func _on_recruit_timer():
 	if not is_instance_valid(bot_town_center):
 		return
 		
-	if bot_squads.size() > max_buildings:
+	if not is_bot_have_farm():
+		return
+		
+		
+	if bot_squads.size() > max_squads:
 		return
 		
 	var _squads :Array = squad_datas.duplicate()
@@ -170,12 +174,6 @@ func _on_placement_found(_building :BaseBuilding, _pos :Vector3):
 	_building.start_building()
 	
 func _on_action_timer():
-	if not is_instance_valid(bot_town_center):
-		return
-		
-	if not is_bot_have_farm():
-		return
-		
 	if bot_squads.empty():
 		return
 		
