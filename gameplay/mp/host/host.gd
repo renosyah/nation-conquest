@@ -3,19 +3,12 @@ extends BaseGameplay
 onready var player_team :int = 1
 onready var player_color :Color = Color(randf(), randf(), randf(), 1)
 onready var squad_spawn_position :Vector3 = Vector3(0, 15, 0)
-onready var taps = $taps
 
 var bots :Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-	
-func on_map_click(_pos :Vector3):
-	.on_map_click(_pos)
-	
-	taps.color = player_color
-	taps.taps(_selected_squad)
 	
 func on_generate_map_completed():
 	.on_generate_map_completed()

@@ -40,6 +40,7 @@ onready var _hit_particle = $hit_particle
 onready var _spotting_area = $Area/CollisionShape
 onready var _area = $Area
 onready var _pivot = $pivot
+var _tap :Tap
 
 onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
 onready var _floor_max_angle: float = deg2rad(45.0)
@@ -62,6 +63,11 @@ func _ready():
 	banner_mesh_material.albedo_color.a = 0.6
 	
 	outline_mesh_material.albedo_color = squad_unselected_color if is_selectable else Color(1,1,1,0)
+	
+	_tap = preload("res://assets/tap/tap.tscn").instance()
+	var last_index = get_tree().get_root().get_child_count() - 1
+	get_tree().get_root().get_child(last_index).add_child(_tap)
+	_tap.color = color
 	
 	var formations = Utils.get_formation_box(
 		global_transform.origin,max_unit,formation_space
@@ -250,6 +256,10 @@ func set_selected(val :bool):
 func set_move_to(to :Vector3, display_tap :bool = false):
 	move_to = to
 	is_moving = true
+	
+	if display_tap:
+		_tap.translation = move_to
+		_tap.tap()
 
 func is_in_combat() -> bool:
 	return not _targets.empty()
@@ -275,6 +285,10 @@ func _attack_targets():
 				unit.attack_to = null
 		return
 		
+	if is_moving and is_assault_mode:
+		is_moving = false
+		is_assault_mode = false
+		
 	var pos :int = 0
 	for unit in _units:
 		if is_instance_valid(unit):
@@ -288,7 +302,10 @@ func _attack_targets():
 func _spotted_target():
 	_targets.clear()
 	
-	var _unit_size = _units.size()
+	if _units.empty():
+		return
+		
+	var _unit_size :int = _units.size()
 	
 	for body in _area.get_overlapping_bodies():
 		if _targets.size() > _unit_size:
@@ -315,11 +332,6 @@ func _spotted_target():
 				
 			_targets.append(body)
 			
-	if not _targets.empty() and is_assault_mode:
-		is_moving = false
-		is_assault_mode = false
-		
-		
 func _on_agro_timer_timeout():
 	if is_moving and (not is_assault_mode):
 		return

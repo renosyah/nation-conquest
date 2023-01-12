@@ -357,3 +357,5 @@ tree_root = SubResource( 18 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 19 )
+
+[connection signal="tree_exiting" from="." to="." method="_on_archer_tree_exiting"]

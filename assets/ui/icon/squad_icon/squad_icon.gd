@@ -6,6 +6,7 @@ signal on_click(_icon)
 export var icon :Resource
 export var title :String
 export var color :Color = Color.white
+export var is_selected :bool = false
 
 onready var _icon = $Control/VBoxContainer2/HBoxContainer/TextureRect
 onready var _input_detection = $input_detection
@@ -24,7 +25,8 @@ func _ready():
 	_frame_3.modulate.a = 0
 	
 func set_selected(val :bool):
-	_frame.modulate = Color.white if val else Color.transparent
+	is_selected = val
+	_frame.modulate = Color.white if is_selected else Color.transparent
 
 func update_unit_size(_val :int):
 	_label.text = str(_val)

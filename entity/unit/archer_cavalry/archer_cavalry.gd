@@ -2,7 +2,7 @@ extends BaseUnit
 
 const arrow_projectile = preload("res://entity/projectile/arrow/arrow.tscn")
 
-const hit_sounds :Array = [preload("res://assets/sound/fight1.wav"), preload("res://assets/sound/fight2.wav"), preload("res://assets/sound/fight3.wav"), preload("res://assets/sound/fight4.wav"), preload("res://assets/sound/fight5.wav")]
+const hit_sounds :Array = [preload("res://assets/sound/stab1.wav"), preload("res://assets/sound/stab2.wav")]
 const dead_sound :Array = [preload("res://assets/sound/maledeath1.wav"), preload("res://assets/sound/maledeath2.wav"), preload("res://assets/sound/maledeath3.wav"), preload("res://assets/sound/maledeath4.wav")]
 
 var attack_animation :String
@@ -39,7 +39,9 @@ func _create_arrow() -> BaseProjectile:
 	var arrow = arrow_projectile.instance()
 	arrow.speed = 12
 	arrow.connect("hit", self ,"_arrow_hit")
-	add_child(arrow)
+	
+	var last_index = get_tree().get_root().get_child_count() - 1
+	get_tree().get_root().get_child(last_index).add_child(arrow)
 	return arrow
 	
 func perform_attack():
@@ -120,3 +122,9 @@ func idle(delta :float):
 		return
 		
 	animation_body_state.travel("moving")
+
+
+func _on_archer_cavalry_tree_exiting():
+	for i in _arrows_pool:
+		i.queue_free()
+

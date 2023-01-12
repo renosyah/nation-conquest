@@ -229,11 +229,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/tap/tap.gd"
 }, {
-"base": "Node",
-"class": "Taps",
-"language": "GDScript",
-"path": "res://gameplay/mp/util/taps/taps.gd"
-}, {
 "base": "MeshInstance",
 "class": "UnitHighlight",
 "language": "GDScript",
@@ -294,7 +289,6 @@ _global_script_class_icons={
 "SquadData": "",
 "SquadIcon": "",
 "Tap": "",
-"Taps": "",
 "UnitHighlight": "",
 "Utils": "",
 "Water": ""

@@ -36,7 +36,9 @@ func _create_arrow() -> BaseProjectile:
 	var arrow = arrow_projectile.instance()
 	arrow.speed = 12
 	arrow.connect("hit", self ,"_arrow_hit")
-	add_child(arrow)
+	
+	var last_index = get_tree().get_root().get_child_count() - 1
+	get_tree().get_root().get_child(last_index).add_child(arrow)
 	return arrow
 	
 func perform_attack():
@@ -115,3 +117,7 @@ func idle(delta :float):
 		return
 		
 	animation_body_state.travel("moving")
+	
+func _on_archer_tree_exiting():
+	for i in _arrows_pool:
+		i.queue_free()

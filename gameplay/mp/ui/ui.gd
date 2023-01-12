@@ -27,10 +27,14 @@ onready var rotate_r = $CanvasLayer/SafeArea/Control/build_menu/HBoxContainer/ro
 
 onready var recruit_squad_panel = $CanvasLayer/SafeArea/recruit_squad
 
-onready var open_building = $CanvasLayer/SafeArea/Control/HBoxContainer2/open_building
+onready var open_building = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/open_building
 onready var building_panel = $CanvasLayer/SafeArea/building_panel
 
 onready var demolish_building_panel = $CanvasLayer/SafeArea/demolish_building_panel
+
+onready var select_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/select_all
+onready var unselect_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/unselect_all
+
 
 # player squad s
 # {_instance_squad : _instance_icon}
@@ -61,6 +65,10 @@ func _ready():
 	
 	demolish_building_panel.visible = false
 	
+	select_all.visible = true
+	unselect_all.visible = false
+	
+
 func loading(_show :bool):
 	.loading(_show)
 	safe_area.visible = not _show
@@ -157,6 +165,10 @@ func on_squad_selected(_squad :Squad, is_selected :bool):
 		
 	squads[_squad].set_selected(is_selected)
 	
+	var any_selected :bool = check_if_squad_selected()
+	unselect_all.visible = any_selected
+	select_all.visible = not any_selected
+	
 func on_squad_dead(_squad :Squad):
 	if not is_player_squad(_squad):
 		return
@@ -174,6 +186,23 @@ func is_player_squad(_squad :Squad) -> bool:
 	
 func is_player_building(_building :BaseBuilding) -> bool:
 	return _building.player_id == NetworkLobbyManager.get_id()
+	
+func check_if_squad_selected() -> bool:
+	for key in squads:
+		if squads[key].is_selected:
+			return true
+			
+	return false
+	
+func selected_all_squad():
+	for key in squads:
+		if not squads[key].is_selected:
+			key.emit_signal("squad_selected", key)
+			
+func unselected_all_squad():
+	for key in squads:
+		if squads[key].is_selected:
+			key.emit_signal("squad_selected", key)
 	
 func get_camera_moving_direction() -> Vector2:
 	return camera_control.get_moving_direction()
@@ -216,6 +245,14 @@ func _on_demolish_building_panel_demolish():
 		return
 		
 	selected_building.demolish()
+	
+func _on_select_all_pressed():
+	selected_all_squad()
+	
+func _on_unselect_all_pressed():
+	unselected_all_squad()
+
+
 
 
 
