@@ -36,7 +36,7 @@ flags_no_depth_test = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 1, 1, 1, 0.647059 )
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="BoxShape" id=12]
 extents = Vector3( 1.68065, 3.10908, 1.78517 )
 
 [sub_resource type="ConvexPolygonShape" id=8]
@@ -52,6 +52,7 @@ transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0
 
 [node name="tower" type="MeshInstance" parent="MeshInstance"]
 mesh = ExtResource( 2 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 10 )
 material/2 = SubResource( 13 )
@@ -118,7 +119,7 @@ material/1 = SubResource( 14 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01911, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 12 )
 disabled = true
 
 [node name="area_build" type="Area" parent="."]

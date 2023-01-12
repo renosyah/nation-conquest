@@ -1,0 +1,23 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://data/building_data/buildingData.gd" type="Script" id=1]
+[ext_resource path="res://entity/building/farm/farm.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ui/icon/building_icon/farm.png" type="Texture" id=3]
+
+[resource]
+script = ExtResource( 1 )
+player_id = 0
+building_name = "Farm"
+building_description = "Main source of income"
+node_name = ""
+network_master = 0
+building = ExtResource( 2 )
+icon = ExtResource( 3 )
+team = 0
+color = Color( 1, 1, 1, 1 )
+hp = 500
+max_hp = 500
+building_time = 10
+base_position = Vector3( 0, 0, 0 )
+max_distance_from_base = 0
+is_selectable = false

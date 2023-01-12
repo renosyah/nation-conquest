@@ -13,6 +13,7 @@ func display_building_panel():
 		
 	var building_datas = [
 		preload("res://data/building_data/buildings/town_center.tres"),
+		preload("res://data/building_data/buildings/farm.tres"),
 		preload("res://data/building_data/buildings/archer_tower.tres"),
 	]
 	
