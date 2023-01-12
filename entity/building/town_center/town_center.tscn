@@ -123,6 +123,7 @@ disabled = true
 
 [node name="area_build" type="Area" parent="."]
 collision_mask = 0
+input_ray_pickable = false
 monitorable = false
 
 [node name="CollisionShape2" type="CollisionShape" parent="area_build"]

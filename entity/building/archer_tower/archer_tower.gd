@@ -38,6 +38,8 @@ func _ready():
 	for i in range(_mesh_instance_2.get_surface_material_count()):
 		_mesh_instance_2.set_surface_material(i, _mesh_instance_2_material)
 		
+	_area_build.input_ray_pickable = is_selectable
+	
 	set_process(true)
 	
 remotesync func _start_building():

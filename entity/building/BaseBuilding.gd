@@ -22,6 +22,7 @@ export var is_dead :bool = false
 export var status :int = status_deploying
 export var can_build :bool = false
 export var base_position :Vector3
+export var is_selectable :bool = false
 export var max_distance_from_base :int
 
 puppet var _puppet_translation :Vector3
@@ -53,6 +54,8 @@ func _ready():
 	_building_timmer.autostart = false
 	_building_timmer.one_shot = true
 	add_child(_building_timmer)
+	
+	input_ray_pickable = is_selectable
 	
 	set_process(true)
 	

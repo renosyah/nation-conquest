@@ -37,8 +37,12 @@ onready var _banner = $banner/banner
 onready var _agro_timer = $agro_timer
 onready var _unit_count = $banner/unit_count
 onready var _hit_particle = $hit_particle
-onready var _spotting_area = $Area/CollisionShape
-onready var _area = $Area
+
+onready var _input_area = $input_area
+
+onready var _spotting_area = $spotting_area
+onready var _spotting_collision = $spotting_area/CollisionShape
+
 onready var _pivot = $pivot
 var _tap :Tap
 
@@ -63,6 +67,8 @@ func _ready():
 	banner_mesh_material.albedo_color.a = 0.6
 	
 	outline_mesh_material.albedo_color = squad_unselected_color if is_selectable else Color(1,1,1,0)
+	
+	_input_area.input_ray_pickable = is_selectable
 	
 	_tap = preload("res://assets/tap/tap.tscn").instance()
 	var last_index = get_tree().get_root().get_child_count() - 1
@@ -90,9 +96,9 @@ func _ready():
 		spotting_range = _unit.spotting_range
 		combat_range = _unit.spotting_range - 1
 		
-	var shape :CylinderShape = _spotting_area.shape.duplicate() as CylinderShape
+	var shape :CylinderShape = _spotting_collision.shape.duplicate() as CylinderShape
 	shape.radius = spotting_range
-	_spotting_area.shape = shape
+	_spotting_collision.shape = shape
 	
 	var delay = Timer.new()
 	delay.wait_time = 1
@@ -233,7 +239,7 @@ func _move_to_position(_to :Vector3) -> bool:
 	
 	return false
 	
-func _on_squad_input_event(camera, event, position, normal, shape_idx):
+func _on_input_area_input_event(camera, event, position, normal, shape_idx):
 	_input_detection.check_input(event)
 	
 func _on_input_detection_any_gesture(sig ,event):
@@ -307,7 +313,7 @@ func _spotted_target():
 		
 	var _unit_size :int = _units.size()
 	
-	for body in _area.get_overlapping_bodies():
+	for body in _spotting_area.get_overlapping_bodies():
 		if _targets.size() > _unit_size:
 			return
 			
@@ -346,6 +352,9 @@ func _on_squad_tree_exiting():
 	
 	
 	
+
+
+
 
 
 

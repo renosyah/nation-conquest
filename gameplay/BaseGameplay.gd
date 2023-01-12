@@ -217,6 +217,8 @@ remotesync func _on_deploying_building(_building_data_dic :Dictionary, _at :Vect
 	var _building_data :BuildingData = BuildingData.new()
 	_building_data.from_dictionary(_building_data_dic)
 	
+	_building_data.is_selectable = (_building_data.player_id == NetworkLobbyManager.get_id())
+	
 	if _autobuild:
 		_building_data.building_time = 1
 		

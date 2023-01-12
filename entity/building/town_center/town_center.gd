@@ -36,6 +36,8 @@ func _ready():
 	set_all_highlight_material(_highlight_canopy, _highlight_material)
 	set_all_highlight_material(_highlight_canopy_2, _highlight_material)
 	
+	_area_build.input_ray_pickable = is_selectable
+	
 	set_process(true)
 	
 func set_all_highlight_material(_mesh :MeshInstance, _material :SpatialMaterial):

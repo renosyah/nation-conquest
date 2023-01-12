@@ -15,6 +15,7 @@ export var max_hp :int = 500
 export var building_time :int = 10
 export var base_position :Vector3
 export var max_distance_from_base :int
+export var is_selectable :bool = false
 
 func from_dictionary(data : Dictionary):
 	player_id = data["player_id"]
@@ -31,6 +32,7 @@ func from_dictionary(data : Dictionary):
 	building_time = data["building_time"]
 	base_position = data["base_position"]
 	max_distance_from_base = data["max_distance_from_base"]
+	is_selectable = data["is_selectable"]
 
 func to_dictionary() -> Dictionary :
 	var data = {}
@@ -48,6 +50,7 @@ func to_dictionary() -> Dictionary :
 	data["building_time"] = building_time
 	data["base_position"] = base_position
 	data["max_distance_from_base"] = max_distance_from_base
+	data["is_selectable"] = is_selectable
 	return data
 	
 func spawn(parent :Node) -> BaseBuilding:
@@ -61,6 +64,7 @@ func spawn(parent :Node) -> BaseBuilding:
 	build.building_time = building_time
 	build.base_position = base_position
 	build.max_distance_from_base = max_distance_from_base
+	build.is_selectable = is_selectable
 	build.set_network_master(network_master)
 	parent.add_child(build)
 	return build
