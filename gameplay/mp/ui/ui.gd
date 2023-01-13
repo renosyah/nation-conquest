@@ -224,8 +224,8 @@ func is_player_have_tower() -> bool:
 	for building in buildings:
 		if not is_instance_valid(building):
 			continue
-		if building is ArcherTower:
-			return true
+		if building is ArcherTower and building.status == BaseBuilding.status_deployed:
+			continue
 			
 	return false
 	
@@ -233,7 +233,7 @@ func is_player_have_town_center() -> bool:
 	for building in buildings:
 		if not is_instance_valid(building):
 			continue
-		if building is TownCenter:
+		if building is TownCenter and building.status == BaseBuilding.status_deployed:
 			return true
 			
 	return false
