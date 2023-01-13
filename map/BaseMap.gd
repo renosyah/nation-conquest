@@ -74,7 +74,7 @@ func _generate_map():
 	land_mesh.get_child(0).queue_free()
 	
 	base_spawn_positions = _generate_base_spawn_points(lands[1])
-	spawn_positions = _trim_array(lands[1], 22)
+	spawn_positions = _trim_array(lands[1], 28)
 	
 	var delay = Timer.new()
 	delay.wait_time = 1

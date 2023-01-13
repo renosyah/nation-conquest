@@ -6,7 +6,7 @@ signal placement_not_found(_building)
 
 export var height :float = 20.0
 export var radius :float = 15.0
-export var duration :float = 2.0
+export var duration :float = 4.0
 
 onready var rotation_pivot = $rotation_pivot
 onready var h_pivot = $rotation_pivot/h_pivot

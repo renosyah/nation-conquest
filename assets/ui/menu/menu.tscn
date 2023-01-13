@@ -1,0 +1,185 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/ui/icon/checkbox_check.png" type="Texture" id=1]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/ui/menu/menu.gd" type="Script" id=4]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=5]
+
+[node name="menu" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -209.0
+margin_top = -255.5
+margin_right = 209.0
+margin_bottom = 255.5
+script = ExtResource( 4 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -209.0
+margin_top = -252.5
+margin_right = 209.0
+margin_bottom = 253.5
+
+[node name="ColorRect2" type="ColorRect" parent="MarginContainer"]
+margin_right = 418.0
+margin_bottom = 506.0
+color = Color( 0.117647, 0.117647, 0.117647, 0.917647 )
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 418.0
+margin_bottom = 506.0
+alignment = 1
+
+[node name="MarginContainer8" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
+margin_top = 27.0
+margin_right = 418.0
+margin_bottom = 47.0
+rect_min_size = Vector2( 80, 20 )
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer2"]
+margin_top = 51.0
+margin_right = 418.0
+margin_bottom = 111.0
+custom_fonts/font = ExtResource( 3 )
+text = "Menu"
+align = 1
+valign = 1
+
+[node name="MarginContainer7" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
+margin_top = 115.0
+margin_right = 418.0
+margin_bottom = 145.0
+rect_min_size = Vector2( 80, 30 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
+margin_top = 149.0
+margin_right = 418.0
+margin_bottom = 229.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HBoxContainer2"]
+margin_right = 80.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 3
+
+[node name="Label3" type="Label" parent="MarginContainer/VBoxContainer2/HBoxContainer2"]
+margin_left = 84.0
+margin_top = 20.0
+margin_right = 192.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 2 )
+text = "Sound"
+align = 1
+valign = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HBoxContainer2"]
+margin_left = 196.0
+margin_right = 250.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 20, 0 )
+size_flags_horizontal = 3
+
+[node name="sfx_setting" type="Button" parent="MarginContainer/VBoxContainer2/HBoxContainer2"]
+margin_left = 254.0
+margin_right = 334.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer2/HBoxContainer2/sfx_setting"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HBoxContainer2"]
+margin_left = 338.0
+margin_right = 418.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 3
+
+[node name="MarginContainer6" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
+margin_top = 233.0
+margin_right = 418.0
+margin_bottom = 273.0
+rect_min_size = Vector2( 80, 40 )
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
+margin_top = 277.0
+margin_right = 418.0
+margin_bottom = 357.0
+alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HBoxContainer3"]
+margin_right = 80.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="resume" type="Button" parent="MarginContainer/VBoxContainer2/HBoxContainer3"]
+margin_left = 84.0
+margin_right = 334.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 250, 80 )
+custom_fonts/font = ExtResource( 5 )
+text = "Resume"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HBoxContainer3"]
+margin_left = 338.0
+margin_right = 418.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
+margin_top = 361.0
+margin_right = 418.0
+margin_bottom = 371.0
+rect_min_size = Vector2( 0, 10 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
+margin_top = 375.0
+margin_right = 418.0
+margin_bottom = 455.0
+alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="exit" type="Button" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
+margin_left = 84.0
+margin_right = 334.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 250, 80 )
+custom_fonts/font = ExtResource( 5 )
+text = "Exit"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
+margin_left = 338.0
+margin_right = 418.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
+margin_top = 459.0
+margin_right = 418.0
+margin_bottom = 479.0
+rect_min_size = Vector2( 0, 20 )
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/HBoxContainer2/sfx_setting" to="." method="_on_sfx_setting_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/HBoxContainer3/resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/HBoxContainer/exit" to="." method="_on_exit_pressed"]

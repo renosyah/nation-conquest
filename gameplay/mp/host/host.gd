@@ -8,7 +8,7 @@ var bots :Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	_ui.player_team = player_team
 	
 func on_generate_map_completed():
 	.on_generate_map_completed()

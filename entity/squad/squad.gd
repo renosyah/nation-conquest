@@ -68,7 +68,7 @@ func _ready():
 	
 	outline_mesh_material.albedo_color = squad_unselected_color if is_selectable else Color(1,1,1,0)
 	
-	_input_area.input_ray_pickable = is_selectable
+	#_input_area.input_ray_pickable = is_selectable
 	
 	_tap = preload("res://assets/tap/tap.tscn").instance()
 	var last_index = get_tree().get_root().get_child_count() - 1

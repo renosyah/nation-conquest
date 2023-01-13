@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "BaseBuilding",
 "class": "Barrack",
 "language": "GDScript",
-"path": "res://entity/building/barrack/barrack.gd"
+"path": "res://entity/building/blacksmith/blacksmith.gd"
 }, {
 "base": "BaseEntity",
 "class": "BaseBuilding",
@@ -73,6 +73,11 @@ _global_script_classes=[ {
 "class": "BaseUnit",
 "language": "GDScript",
 "path": "res://entity/unit/BaseUnit.gd"
+}, {
+"base": "BaseBuilding",
+"class": "Blacksmith",
+"language": "GDScript",
+"path": "res://entity/building/barrack/barrack.gd"
 }, {
 "base": "BaseData",
 "class": "BuildingData",
@@ -224,6 +229,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/LANServerBroadcast/server_listener/ServerListener.gd"
 }, {
+"base": "BaseData",
+"class": "SettingData",
+"language": "GDScript",
+"path": "res://data/setting_data/SettingData.gd"
+}, {
 "base": "BaseBuilding",
 "class": "ShootingRange",
 "language": "GDScript",
@@ -283,6 +293,7 @@ _global_script_class_icons={
 "BaseResources": "",
 "BaseUi": "",
 "BaseUnit": "",
+"Blacksmith": "",
 "BuildingData": "",
 "BuildingIcon": "",
 "CameraAimingData": "",
@@ -313,6 +324,7 @@ _global_script_class_icons={
 "SaveLoad": "",
 "ServerAdvertiser": "res://addons/LANServerBroadcast/server_advertiser/server_advertiser.png",
 "ServerListener": "res://addons/LANServerBroadcast/server_listener/server_listener.png",
+"SettingData": "",
 "ShootingRange": "",
 "Squad": "",
 "SquadData": "",

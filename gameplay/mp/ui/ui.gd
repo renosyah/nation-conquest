@@ -38,6 +38,8 @@ onready var unselect_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxCont
 onready var player_coin_ui = $CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/coin/HBoxContainer/player_coin
 onready var player_building = $CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/building/HBoxContainer/player_building
 
+onready var menu = $CanvasLayer/menu
+
 # player squad s
 # {_instance_squad : _instance_icon}
 var squads = {}
@@ -49,10 +51,11 @@ var building_rotation :float = 0
 var building_deploying :BuildingData
 
 var player_coin :int = 100
+var player_team :int = 1
 
 onready var player_id :int = NetworkLobbyManager.get_id()
 onready var player_max_squad :int = 5
-onready var player_max_building :int = 8
+onready var player_max_building :int = 10
 
 var selected_building :BaseBuilding = null
 
@@ -67,6 +70,7 @@ func _ready():
 	recruit_squad_panel.visible = false
 	building_panel.visible = false
 	
+	menu.visible = false
 	safe_area.visible = false
 	loading.visible = true
 	
@@ -221,6 +225,12 @@ func is_player_squad(_squad :Squad) -> bool:
 func is_player_building(_building :BaseBuilding) -> bool:
 	return _building.player_id == NetworkLobbyManager.get_id()
 	
+func is_enemy_squad(_squad :Squad):
+	return _squad.team != player_team
+	
+func is_enemy_building(_building :BaseBuilding):
+	return _building.team != player_team
+	
 func is_player_have_tower() -> bool:
 	for building in buildings:
 		if not is_instance_valid(building):
@@ -303,8 +313,8 @@ func _update_player_building(_display_only :bool = true):
 		building_panel.player_buildings = buildings
 	
 func _on_main_menu_pressed():
-	emit_signal("main_menu_press")
-
+	menu.visible = true
+	
 func _on_add_squad_pressed():
 	recruit_squad_panel.display_squad_recruitment()
 	recruit_squad_panel.visible = true
@@ -346,6 +356,10 @@ func _on_select_all_pressed():
 	
 func _on_unselect_all_pressed():
 	unselected_all_squad()
+
+func _on_menu_on_main_menu_press():
+	emit_signal("main_menu_press")
+
 
 
 

@@ -23,8 +23,8 @@ export var recruit_time :float = 15
 export var build_time :float = 10
 export var action_time :float = 2
 
-export var max_squads :int = 4
-export var max_buildings :int = 6
+export var max_squads :int = 3
+export var max_buildings :int = 4
 
 var enemy_squads :Array = []
 var enemy_buildings :Array = []
@@ -74,7 +74,7 @@ func _ready():
 	add_child(action_timer)
 	
 	uperhand_timer = Timer.new()
-	uperhand_timer.wait_time = rand_range(25 - 2, 25 + 2)
+	uperhand_timer.wait_time = rand_range(35 - 2, 35 + 2)
 	uperhand_timer.autostart = true
 	uperhand_timer.one_shot = false
 	uperhand_timer.connect("timeout", self , "_on_uperhand_timer")
@@ -133,18 +133,20 @@ func _on_build_timer():
 		return
 		
 	var _buildings :Array = [
-		preload("res://data/building_data/buildings/farm.tres")
+		preload("res://data/building_data/buildings/farm.tres"),
+		preload("res://data/building_data/buildings/archer_tower.tres"),
+		preload("res://data/building_data/buildings/barrack.tres"),
+		preload("res://data/building_data/buildings/shooting_range.tres"),
+		preload("res://data/building_data/buildings/blacksmith.tres")
 	]
 	
-	if is_bot_have_farm():
-		_buildings.append(preload("res://data/building_data/buildings/archer_tower.tres"))
-		_buildings.append(preload("res://data/building_data/buildings/barrack.tres"))
-		_buildings.append(preload("res://data/building_data/buildings/shooting_range.tres"))
-		
 	_buildings.shuffle()
 	
 	var bot_building :BuildingData = null
 	for s in _buildings:
+		if not _is_building_ids_in_buildings(s.requirement_ids):
+			continue
+			
 		if bot_coin > s.price:
 			bot_building = s.duplicate()
 			break
@@ -226,8 +228,7 @@ func _on_action_timer():
 	squad.set_attack_to(target.translation)
 	
 func _on_uperhand_timer():
-	if not is_bot_have_farm():
-		bot_coin += 100
+	bot_coin += 100
 	
 func on_squad_spawn(_squad:Squad):
 	if _squad.team == bot_team:

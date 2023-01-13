@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://addons/mini-map/MiniMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gameplay/mp/ui/ui.gd" type="Script" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://assets/ui/icon/coin.png" type="Texture" id=17]
 [ext_resource path="res://assets/ui/icon/building_icon.png" type="Texture" id=18]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=19]
+[ext_resource path="res://assets/ui/menu/menu.tscn" type="PackedScene" id=20]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -84,6 +85,7 @@ anims/RESET = SubResource( 1 )
 anims/loading = SubResource( 2 )
 
 [node name="SafeArea" parent="CanvasLayer" instance=ExtResource( 3 )]
+margin_right = 6.0
 mouse_filter = 2
 
 [node name="camera_control" parent="CanvasLayer/SafeArea" instance=ExtResource( 4 )]
@@ -159,7 +161,7 @@ margin_top = 5.0
 margin_right = 117.0
 margin_bottom = 45.0
 grow_vertical = 0
-custom_colors/font_color = Color( 0.917647, 0.560784, 0, 1 )
+custom_colors/font_color = Color( 1, 0.705882, 0.247059, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 1
@@ -195,6 +197,7 @@ margin_right = 145.0
 margin_bottom = 50.0
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/building/HBoxContainer"]
+self_modulate = Color( 0.627451, 0.627451, 0.627451, 1 )
 margin_right = 50.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 50, 50 )
@@ -447,6 +450,9 @@ margin_bottom = 1024.0
 visible = false
 margin_right = 606.0
 
+[node name="menu" parent="CanvasLayer" instance=ExtResource( 20 )]
+visible = false
+
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer/main_menu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/open_building" to="." method="_on_open_building_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/select_all" to="." method="_on_select_all_pressed"]
@@ -457,3 +463,4 @@ margin_right = 606.0
 [connection signal="on_recruit_squad" from="CanvasLayer/SafeArea/recruit_squad" to="." method="_on_recruit_squad_on_recruit_squad"]
 [connection signal="on_construct_building" from="CanvasLayer/SafeArea/building_panel" to="." method="_on_building_panel_on_construct_building"]
 [connection signal="demolish" from="CanvasLayer/SafeArea/demolish_building_panel" to="." method="_on_demolish_building_panel_demolish"]
+[connection signal="on_main_menu_press" from="CanvasLayer/menu" to="." method="_on_menu_on_main_menu_press"]

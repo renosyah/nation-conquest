@@ -14,6 +14,7 @@ func _ready():
 	load_map()
 	setup_camera()
 	setup_enviroment()
+	setup_sound()
 	
 	set_process(true)
 	
@@ -38,14 +39,14 @@ onready var _resources :Array = []
 
 func load_map():
 	_water = preload("res://map/water/water.tscn").instance()
-	_water.size = 200
+	_water.size = 250
 	add_child(_water)
 	
 	_map = preload("res://map/spring_island/spring_map.tscn").instance()
 	_map.map_seed = NetworkLobbyManager.argument["seed"]
 	_map.map_scale = 1
-	_map.map_size = 200
-	_map.map_height = 12
+	_map.map_size = 250
+	_map.map_height = 10
 	_map.connect("on_generate_map_completed", self, "on_generate_map_completed")
 	_map.connect("on_map_click", self , "on_map_click")
 	add_child(_map)
@@ -168,6 +169,15 @@ func update_camera_aiming_at():
 	_camera_last_aim_pos = _cam_aim.position
 	
 ################################################################
+# sound
+
+var _sound :AudioStreamPlayer
+
+func setup_sound():
+	_sound = AudioStreamPlayer.new()
+	add_child(_sound)
+
+################################################################
 # directional light
 var _environment :Node
 
@@ -246,10 +256,7 @@ func on_building_deplyoing(_building :BaseBuilding):
 	_ui.on_building_deplyoing(_building)
 	
 func on_building_selected(_building :BaseBuilding):
-	var _is_player_building :bool = _ui.is_player_building(_building)
-	var _selected_squad_empty :bool = _selected_squad.empty()
-	
-	if not _is_player_building and not _selected_squad_empty:
+	if _ui.is_enemy_building(_building) and not _selected_squad.empty():
 		_order_attack_to(_building.global_transform.origin)
 		return
 		
@@ -289,7 +296,7 @@ remotesync func _spawn_squad(_squad_data :Dictionary):
 	_squad.from_dictionary(_squad_data)
 	
 	# players own squad
-	_squad.is_selectable = true #(_squad_data.player_id == NetworkLobbyManager.get_id())
+	_squad.is_selectable = (_squad_data.player_id == NetworkLobbyManager.get_id())
 	
 	var _squad_spawn = _squad.spawn(self)
 	_squad_spawn.connect("squad_update", self, "on_squad_update")
@@ -307,14 +314,11 @@ func on_squad_update(_squad :Squad):
 	_ui.on_squad_update(_squad)
 	
 func on_squad_selected(_squad :Squad):
-	var _is_player_squad :bool = _ui.is_player_squad(_squad)
-	var _selected_squad_empty :bool = _selected_squad.empty()
-	
-	if not _is_player_squad and not _selected_squad_empty:
+	if _ui.is_enemy_squad(_squad) and not _selected_squad.empty():
 		_order_attack_to(_squad.global_transform.origin)
 		return
 		
-	if not _is_player_squad:
+	if not _ui.is_player_squad(_squad):
 		return
 		
 	var is_in_squad = _selected_squad.has(_squad)
@@ -326,6 +330,10 @@ func on_squad_selected(_squad :Squad):
 		_squad.set_selected(true)
 		_ui.on_squad_selected(_squad, true)
 		_selected_squad.append(_squad)
+		
+	if not _sound.playing:
+		_sound.stream = preload("res://assets/sound/click.wav")
+		_sound.play()
 	
 func on_squad_dead(_squad :Squad):
 	if not is_server():
@@ -362,6 +370,10 @@ func _order_move_to(_pos :Vector3):
 func _order_attack_to(_pos :Vector3):
 	if _selected_squad.empty():
 		return
+		
+	if not _sound.playing:
+		_sound.stream = preload("res://assets/sound/assault_click.wav")
+		_sound.play()
 	
 	for i in range(_selected_squad.size()):
 		if is_instance_valid(_selected_squad[i]):

@@ -22,7 +22,8 @@ func display_building_panel():
 		preload("res://data/building_data/buildings/farm.tres"),
 		preload("res://data/building_data/buildings/archer_tower.tres"),
 		preload("res://data/building_data/buildings/barrack.tres"),
-		preload("res://data/building_data/buildings/shooting_range.tres")
+		preload("res://data/building_data/buildings/shooting_range.tres"),
+		preload("res://data/building_data/buildings/blacksmith.tres")
 	]
 	
 	for i in range(building_datas.size()):

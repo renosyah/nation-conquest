@@ -1,0 +1,194 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://entity/building/blacksmith/blacksmith.gd" type="Script" id=1]
+[ext_resource path="res://entity/building/model/barrel.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://entity/building/blacksmith/blacksmith.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/hit_particle/custom_particle/text/custom_text_particle.tscn" type="PackedScene" id=6]
+[ext_resource path="res://entity/weapon/shield.obj" type="ArrayMesh" id=7]
+[ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=8]
+[ext_resource path="res://entity/weapon/sword.obj" type="ArrayMesh" id=11]
+
+[sub_resource type="SpatialMaterial" id=44]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.345098, 0.168627, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=45]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.686275, 0.388235, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=46]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.145098, 0.145098, 0.145098, 1 )
+
+[sub_resource type="SpatialMaterial" id=47]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.266667, 0.172549, 0.101961, 1 )
+
+[sub_resource type="SpatialMaterial" id=48]
+flags_unshaded = true
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+
+[sub_resource type="SpatialMaterial" id=7]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.184314, 0.0901961, 0.00392157, 1 )
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.345098, 0.168627, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=20]
+flags_unshaded = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.607843, 0.607843, 0.607843, 1 )
+
+[sub_resource type="SpatialMaterial" id=21]
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.584314, 0.337255, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=22]
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.560784, 0.270588, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=23]
+flags_unshaded = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.607843, 0.607843, 0.607843, 1 )
+
+[sub_resource type="SpatialMaterial" id=41]
+flags_unshaded = true
+flags_vertex_lighting = true
+flags_disable_ambient_light = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+
+[sub_resource type="SphereMesh" id=42]
+material = SubResource( 41 )
+radius = 0.4
+height = 0.6
+
+[sub_resource type="Curve" id=43]
+_data = [ Vector2( 0.029703, 0.886364 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.413636 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="SpatialMaterial" id=49]
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 1, 1, 1, 0.647059 )
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 1.68065, 3.10908, 1.78517 )
+
+[sub_resource type="ConvexPolygonShape" id=30]
+points = PoolVector3Array( 2.67523, -0.753909, 2.00205, -2.56327, 1.642, 2.07672, -2.4368, -0.704938, -1.97554, 1.33743, 3.43946, -2.10222, -2.67822, 1.47599, -2.28056, -2.4368, -0.704938, 1.94578, -1.07263, 2.99324, 1.10935, 3.03302, 0.138132, 1.64537, 2.68035, -0.685976, -2.2195, 2.05077, 3.43946, -1.47754, 0.26573, 1.74446, 2.18089, 1.63758, 1.55678, -2.7263, -1.14137, 2.95172, -0.984203, 0.980752, -0.754319, -2.81608, 2.25515, -0.692226, -2.74474, 2.1456, 1.89862, -2.54646, 2.57649, 1.8993, -1.77779, 2.49633, 0.0494612, 2.09122, -1.24873, 1.47599, 2.18089, 2.76468, -0.754319, -1.21003, -1.26653, 2.9152, 1.03767, 1.78476, 0.201205, -2.86107, 1.80584, 3.35708, -2.1208, 1.71335, 2.06765, -2.62552, 1.15909, -0.129521, 2.09122, 2.85412, -0.753909, 1.64537, 0.444625, -0.754319, -0.674519, 2.74383, -0.667916, -1.94639, -1.32897, 2.80778, -1.16068, 1.15853, 3.43946, -1.74555, 2.63388, 0.199801, -2.2705, 2.76468, 0.138132, 1.91237, -0.179832, 2.19069, 1.8232, 1.96132, 3.43946, -1.38888, 1.72703, -0.68054, -2.90386, 2.39966, 2.069, -2.20202, 1.51576, 3.43946, -1.2992, 1.62522, 2.57695, -2.45131, 1.97915, 3.3593, -1.95117, 3.03302, 0.138132, 1.5557, -0.893737, 2.81425, 1.28769, -2.43888, 1.72276, 2.04116, 3.03302, 0.0494612, 1.5557, 0.355736, 1.56548, 2.18089, 0.444625, -0.754319, -2.10222, 2.40235, 1.89859, -2.28973, 2.6016, -0.692513, -2.39842, 1.89403, 1.90035, -2.6394, 1.24798, 3.43946, -1.47754, 2.48614, 1.8981, -2.11669, 1.15853, 3.43946, -1.83421, 1.88428, 3.26327, -2.11384, 1.6266, 3.26063, -2.19718, 2.05022, 3.25792, -1.85433, 1.78355, 3.43946, -1.2992 )
+
+[node name="blacksmith" type="KinematicBody"]
+collision_layer = 0
+input_ray_pickable = false
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+
+[node name="barrack" type="MeshInstance" parent="MeshInstance"]
+mesh = ExtResource( 3 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 44 )
+material/1 = SubResource( 45 )
+material/2 = SubResource( 46 )
+material/3 = SubResource( 47 )
+material/4 = SubResource( 48 )
+
+[node name="barrel" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.27857, 0.00167227, -1.63462 )
+mesh = ExtResource( 2 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 7 )
+material/1 = SubResource( 8 )
+
+[node name="barrel3" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.669826, -0.0690681, 2.19605 )
+mesh = ExtResource( 2 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 7 )
+material/1 = SubResource( 8 )
+
+[node name="sword" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 0.704819, 0.709386, -3.10083e-08, 0, -4.37114e-08, -1, -0.709386, 0.704819, -3.08087e-08, 1.9211, 0.0709206, 1.50476 )
+cast_shadow = 0
+mesh = ExtResource( 11 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 20 )
+material/1 = SubResource( 21 )
+
+[node name="shield" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1.09612, -1.67288, 7.31238e-08, 0, -8.74228e-08, -2, 1.67288, 1.09612, -4.79129e-08, -1.71621, 0.563656, 0.967956 )
+mesh = ExtResource( 7 )
+material/0 = SubResource( 22 )
+material/1 = SubResource( 23 )
+
+[node name="shield2" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( -1.70912, -1.03871, 4.54035e-08, 0, -8.74228e-08, -2, 1.03871, -1.70912, 7.47079e-08, -1.71621, 0.563656, -0.390521 )
+mesh = ExtResource( 7 )
+material/0 = SubResource( 22 )
+material/1 = SubResource( 23 )
+
+[node name="CPUParticles" type="CPUParticles" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.53354, -0.155875, -2.55959 )
+amount = 4
+lifetime = 0.6
+mesh = SubResource( 42 )
+gravity = Vector3( 0, 5, 0 )
+scale_amount_curve = SubResource( 43 )
+color = Color( 1, 0.462745, 0, 1 )
+
+[node name="MeshInstance2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+visible = false
+
+[node name="barrack2" type="MeshInstance" parent="MeshInstance2"]
+mesh = ExtResource( 3 )
+skeleton = NodePath("../../MeshInstance")
+software_skinning_transform_normals = false
+material/0 = SubResource( 49 )
+material/1 = SubResource( 49 )
+material/2 = SubResource( 49 )
+material/3 = SubResource( 49 )
+material/4 = SubResource( 49 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.80574, 0 )
+shape = SubResource( 12 )
+disabled = true
+
+[node name="area_build" type="Area" parent="."]
+collision_mask = 0
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="area_build"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+shape = SubResource( 30 )
+
+[node name="input_detection" parent="." instance=ExtResource( 8 )]
+
+[node name="hpBar" parent="." instance=ExtResource( 4 )]
+transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21324, 0 )
+visible = false
+
+[node name="hit_particle" parent="." instance=ExtResource( 5 )]
+custom_particle_scene = ExtResource( 6 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="input_event" from="area_build" to="." method="_on_area_build_input_event"]
+[connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]

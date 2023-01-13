@@ -1,5 +1,5 @@
 extends BaseBuilding
-class_name TownCenter
+class_name Barrack
 
 onready var _collision_shape = $CollisionShape
 
@@ -9,35 +9,26 @@ onready var _input_detection = $input_detection
 
 onready var _mesh_instance = $MeshInstance
 onready var _mesh_instance_2 = $MeshInstance2
+onready var _barrack_2 = $MeshInstance2/barrack2
+onready var _barrack = $MeshInstance/barrack
 
-onready var _tower = $MeshInstance/tower
-
-onready var _highlight_tower = $MeshInstance2/tower
-onready var _highlight_canopy = $MeshInstance2/canopy
-onready var _highlight_canopy_2 = $MeshInstance2/canopy2
-
-onready var _highlight_material :SpatialMaterial = _highlight_tower.get_surface_material(0).duplicate()
+onready var _highlight_material :SpatialMaterial = $MeshInstance2/barrack2.get_surface_material(0).duplicate()
 
 onready var _area_build = $area_build
-
 onready var _tween = $Tween
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_hp_bar.visible = false
-	
 	_mesh_instance.visible = false
 	_mesh_instance_2.visible = true
 	
-	var _team_color_material :SpatialMaterial = _tower.get_surface_material(2).duplicate()
+	var _team_color_material :SpatialMaterial = _barrack.get_surface_material(3).duplicate()
 	_team_color_material.albedo_color = color
-	_tower.set_surface_material(2, _team_color_material)
-	
-	set_all_highlight_material(_highlight_tower, _highlight_material)
-	set_all_highlight_material(_highlight_canopy, _highlight_material)
-	set_all_highlight_material(_highlight_canopy_2, _highlight_material)
+	_barrack.set_surface_material(4, _team_color_material)
 	
 	_area_build.input_ray_pickable = is_selectable
+	set_all_highlight_material(_barrack_2, _highlight_material)
 	
 	set_process(true)
 	
@@ -89,4 +80,3 @@ func _on_input_detection_any_gesture(sig ,event):
 	if event is InputEventSingleScreenTap:
 		emit_signal("building_selected", self)
 		
-

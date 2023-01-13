@@ -154,21 +154,21 @@ wait_time = 15.0
 autostart = true
 
 [node name="CPUParticles" type="CPUParticles" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9637, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.892199, 0 )
+cast_shadow = 0
 emitting = false
-amount = 4
+amount = 1
+lifetime = 2.0
 one_shot = true
-explosiveness = 1.0
 mesh = ExtResource( 10 )
 emission_shape = 1
-emission_sphere_radius = 1.0
+emission_sphere_radius = 2.0
 flag_rotate_y = true
 direction = Vector3( 1, 0, 1 )
 spread = 90.0
-gravity = Vector3( 0, 12, 0 )
+gravity = Vector3( 0, 6, 0 )
 angular_velocity = 8.0
 scale_amount_curve = SubResource( 22 )
-color = Color( 1, 0.823529, 0, 1 )
 
 [connection signal="input_event" from="area_build" to="." method="_on_area_build_input_event"]
 [connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
