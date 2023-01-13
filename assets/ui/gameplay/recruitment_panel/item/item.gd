@@ -3,7 +3,6 @@ extends MarginContainer
 signal on_click
 
 var data :SquadData
-var is_locked :bool = true
 
 onready var texture_rect =  $Control/VBoxContainer2/HBoxContainer/TextureRect
 onready var building_name = $Control/VBoxContainer2/MarginContainer2/VBoxContainer/Label
@@ -12,6 +11,9 @@ onready var label_2 = $Control/VBoxContainer2/HBoxContainer/TextureRect/VBoxCont
 
 onready var input_detection = $input_detection
 onready var lock = $Control/lock
+onready var unfunded = $Control/unfunded
+
+var can_click :bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,14 +21,23 @@ func _ready():
 	building_name.text =  data.squad_name
 	label_2.text = str(data.price)
 	frame_2.color = Color(0.242188, 0.242188, 0.242188)
-	lock.visible = is_locked
+	lock.visible = false
+	unfunded.visible = false
 	
-func set_lock(val: bool):
-	is_locked = val
-	lock.visible = is_locked
+func set_lock(_is_locked: bool, _is_expensive: bool):
+	lock.visible = false
+	unfunded.visible = false
+	can_click = false
+	
+	lock.visible = _is_locked
+	if _is_locked:
+		return
+		
+	unfunded.visible = _is_expensive
+	can_click = not _is_expensive
 	
 func _on_item_gui_input(event):
-	if is_locked:
+	if not can_click:
 		return
 		
 	input_detection.check_input(event)

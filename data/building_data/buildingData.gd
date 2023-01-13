@@ -1,10 +1,24 @@
 extends BaseData
 class_name BuildingData
 
+# building ids : 
+
+# town_center = 0
+# farm = 1
+# archer_tower = 2
+
+# barrack = 3
+# shooting_range = 4
+
+# blacksmith = 5
+# stable = 6
+
 export var player_id :int
 export var building_name :String
 export var building_description :String
 export var price :int
+export var building_id :int = 0
+export var requirement_ids :Array = []
 export var node_name :String
 export var network_master :int
 export var building :Resource
@@ -23,6 +37,8 @@ func from_dictionary(data : Dictionary):
 	building_name = data["building_name"]
 	building_description = data["building_description"]
 	price = data["price"]
+	building_id = data["building_id"]
+	requirement_ids = data["requirement_ids"]
 	node_name = data["node_name"]
 	network_master = data["network_master"]
 	building = load(data["building"])
@@ -42,6 +58,8 @@ func to_dictionary() -> Dictionary :
 	data["building_name"] = building_name
 	data["building_description"] = building_description
 	data["price"] = price
+	data["building_id"] = building_id
+	data["requirement_ids"] = requirement_ids
 	data["node_name"] = node_name
 	data["network_master"] = network_master
 	data["building"] = building.resource_path
@@ -61,6 +79,7 @@ func spawn(parent :Node) -> BaseBuilding:
 	build.player_id = player_id
 	build.team = team
 	build.color = color
+	build.building_id = building_id
 	build.name = node_name
 	build.hp = hp
 	build.max_hp = max_hp

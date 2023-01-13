@@ -20,6 +20,8 @@ const squad_datas = [
 	preload("res://data/squad_data/squads/heavy_cavalry.tres")
 ]
 var player_coin :int = 0
+var player_buildings :Array = []
+
 onready var recruit_squad_icon_holder =  $CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer/HBoxContainer3
 
 func _ready():
@@ -35,15 +37,52 @@ func display_squad_recruitment():
 		
 		var instance  = squad_icon_scene.instance()
 		instance.data = data
-		instance.is_locked = true
 		instance.connect("on_click", self , "_on_recruit_squad_icon_click", [data])
 		recruit_squad_icon_holder.add_child(instance)
+		instance.set_lock(
+			not _is_building_ids_in_buildings(data.requirement_ids),
+			player_coin < data.price
+		)
 		
 	set_process(true)
 	
+func _is_building_ids_in_buildings(building_ids :Array) -> bool:
+	if player_buildings.empty():
+		return false
+		
+	var req_count :int = building_ids.size()
+	var req_satisfy :int = 0
+	
+	for id in building_ids:
+		if _is_id_in_buildings(id):
+			req_satisfy += 1
+			
+			if req_satisfy == req_count:
+				return true
+				
+			continue
+		
+	return false
+	
+func _is_id_in_buildings(id :int) -> bool:
+	for player_building in player_buildings:
+		if not is_instance_valid(player_building):
+			continue
+			
+		if _is_building_valid(player_building, id):
+			return true
+			
+	return false
+	
+func _is_building_valid(_building :BaseBuilding, id:int):
+	return _building.building_id == id and _building.status == BaseBuilding.status_deployed
+	
 func _process(delta):
 	for i in recruit_squad_icon_holder.get_children():
-		i.set_lock(player_coin < i.data.price)
+		i.set_lock(
+			not _is_building_ids_in_buildings(i.data.requirement_ids)
+			, player_coin < i.data.price
+		)
 	
 func _on_recruit_squad_icon_click(_squad_data :SquadData):
 	visible = false

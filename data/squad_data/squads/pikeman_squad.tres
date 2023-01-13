@@ -10,6 +10,7 @@ player_id = 0
 squad_name = "Pikeman"
 squad_description = ""
 price = 90
+requirement_ids = [ 0, 3, 5 ]
 node_name = ""
 network_master = 0
 position = Vector3( 0, 0, 0 )

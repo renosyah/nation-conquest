@@ -15,11 +15,6 @@ const squad_datas = [
 	preload("res://data/squad_data/squads/swordman_squad.tres"),
 ]
 
-const building_datas = [
-	preload("res://data/building_data/buildings/farm.tres"),
-	preload("res://data/building_data/buildings/archer_tower.tres")
-]
-
 export var bot_id :int = -69
 export var bot_team :int = 69
 export var bot_color :Color = Color.white
@@ -28,8 +23,8 @@ export var recruit_time :float = 15
 export var build_time :float = 10
 export var action_time :float = 2
 
-export var max_squads :int = 3
-export var max_buildings :int = 2
+export var max_squads :int = 4
+export var max_buildings :int = 6
 
 var enemy_squads :Array = []
 var enemy_buildings :Array = []
@@ -100,7 +95,6 @@ func _on_recruit_timer():
 	if not is_bot_have_farm():
 		return
 		
-		
 	if bot_squads.size() > max_squads:
 		return
 		
@@ -109,8 +103,11 @@ func _on_recruit_timer():
 	
 	var squad :SquadData = null
 	for s in _squads:
+		if not _is_building_ids_in_buildings(s.requirement_ids):
+			continue
+			
 		if bot_coin > s.price:
-			squad = s
+			squad = s.duplicate()
 			break
 		
 	if squad == null:
@@ -134,13 +131,20 @@ func _on_build_timer():
 	if bot_buildings.size() > max_buildings:
 		return
 		
-	var _buildings :Array = building_datas.duplicate()
+	var _buildings :Array = [
+		preload("res://data/building_data/buildings/farm.tres")
+	]
+	
+	if is_bot_have_farm():
+		_buildings.append(preload("res://data/building_data/buildings/archer_tower.tres"))
+		_buildings.append(preload("res://data/building_data/buildings/barrack.tres"))
+	
 	_buildings.shuffle()
 	
 	var bot_building :BuildingData = null
 	for s in _buildings:
 		if bot_coin > s.price:
-			bot_building = s
+			bot_building = s.duplicate()
 			break
 		
 	if bot_building == null:
@@ -282,8 +286,37 @@ func is_bot_have_farm() -> bool:
 			
 	return false
 	
-
-
+func _is_building_ids_in_buildings(building_ids :Array) -> bool:
+	if bot_buildings.empty():
+		return false
+		
+	var req_count :int = building_ids.size()
+	var req_satisfy :int = 0
+	
+	for id in building_ids:
+		if _requirement_id_in_buildings(id):
+			req_satisfy += 1
+			
+			if req_satisfy == req_count:
+				return true
+				
+			continue
+		
+	return false
+	
+func _requirement_id_in_buildings(id :int) -> bool:
+	for bot_building in bot_buildings:
+		if not is_instance_valid(bot_building):
+			continue
+			
+		if _is_building_valid(bot_building, id):
+			return true
+			
+	return false
+	
+func _is_building_valid(_building :BaseBuilding, id:int):
+	return _building.building_id == id and _building.status == BaseBuilding.status_deployed
+	
 
 
 

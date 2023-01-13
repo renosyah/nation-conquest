@@ -113,7 +113,7 @@ func on_building_deplyoing(_building :BaseBuilding):
 	if not buildings.has(_building):
 		buildings.append(_building)
 	
-	open_building.visible = buildings.size() < player_max_building
+	open_building.visible = not is_building_max()
 	
 func on_building_selected(_building :BaseBuilding):
 	if not is_player_building(_building):
@@ -135,9 +135,13 @@ func on_building_deployed(_building :BaseBuilding):
 	if _building is Farm:
 		_building.connect("harvest_time", self,"on_harvest_time")
 	
-	open_building.visible = buildings.size() < player_max_building
-	add_squad.visible = is_player_have_town_center()
-	mini_map.set_enable(is_player_have_tower())
+	open_building.visible = not is_building_max()
+	building_panel.player_buildings = buildings
+	
+	recruit_squad_panel.player_buildings = buildings
+	add_squad.visible = not is_squad_max() and is_player_have_town_center()
+	
+	mini_map.set_enable(is_player_have_tower() and is_player_have_town_center())
 	
 func on_building_destroyed(_building :BaseBuilding):
 	if not is_player_building(_building):
@@ -148,9 +152,13 @@ func on_building_destroyed(_building :BaseBuilding):
 		
 	buildings.erase(_building)
 	
-	open_building.visible = buildings.size() < player_max_building
-	add_squad.visible = is_player_have_town_center()
-	mini_map.set_enable(is_player_have_tower())
+	open_building.visible = not is_building_max()
+	building_panel.player_buildings = buildings
+	
+	recruit_squad_panel.player_buildings = buildings
+	add_squad.visible = not is_squad_max() and is_player_have_town_center()
+	
+	mini_map.set_enable(is_player_have_tower() and is_player_have_town_center())
 	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
 	add_minimap_object(_squad.get_path(), _squad.color)
@@ -166,7 +174,7 @@ func on_squad_spawn(_squad :Squad, _icon :Resource):
 	squad_icon_holder.add_child(instance)
 	squads[_squad] = instance
 	
-	add_squad.visible = squads.size() < player_max_squad
+	add_squad.visible = not is_squad_max() and is_player_have_town_center()
 	
 func _on_squad_icon_click(_icon :SquadIcon, _squad :Squad):
 	_squad.emit_signal("squad_selected", _squad)
@@ -204,7 +212,7 @@ func on_squad_dead(_squad :Squad):
 	squads[_squad].queue_free()
 	squads.erase(_squad)
 	
-	add_squad.visible = squads.size() < player_max_squad
+	add_squad.visible = not is_squad_max() and is_player_have_town_center()
 	
 func is_player_squad(_squad :Squad) -> bool:
 	return _squad.player_id == NetworkLobbyManager.get_id()
@@ -216,7 +224,6 @@ func is_player_have_tower() -> bool:
 	for building in buildings:
 		if not is_instance_valid(building):
 			continue
-			
 		if building is ArcherTower:
 			return true
 			
@@ -226,7 +233,6 @@ func is_player_have_town_center() -> bool:
 	for building in buildings:
 		if not is_instance_valid(building):
 			continue
-			
 		if building is TownCenter:
 			return true
 			
@@ -248,6 +254,22 @@ func unselected_all_squad():
 	for key in squads:
 		if squads[key].is_selected:
 			key.emit_signal("squad_selected", key)
+	
+func is_squad_max() -> bool:
+	var count :int = 0
+	for key in squads.keys():
+		if is_instance_valid(key):
+			count += 1
+			
+	return count == player_max_squad
+	
+func is_building_max() -> bool:
+	var count :int = 0
+	for building in buildings:
+		if is_instance_valid(building):
+			count += 1
+			
+	return count == player_max_building
 	
 func get_camera_moving_direction() -> Vector2:
 	return camera_control.get_moving_direction()

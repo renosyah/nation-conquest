@@ -70,7 +70,7 @@ extents = Vector3( 1.68065, 3.10908, 1.78517 )
 points = PoolVector3Array( 2.14301, -0.397694, 2.91086, 2.14259, 0.463102, 2.91086, -2.14301, -0.397694, 2.91086, 2.14301, -0.397694, -1.27807, 2.14301, -0.392335, -2.89, 2.14259, 1.61865, -2.89, 2.14259, 1.59185, -1.17873, 1.87534, 0.641626, 2.63018, -2.14301, 0.463102, 2.91086, 0.980046, 3.02406, -2.08028, -2.14301, -0.397694, -1.27807, 2.14301, -0.392335, -2.98934, 2.14259, 1.61865, -2.98934, -1.89548, 0.641626, 2.63018, -0.980465, 3.02406, -2.08028, -2.14301, 1.59185, -1.17873, -2.14301, -0.392335, -2.98934, -2.14301, 1.61865, -2.98934, -2.14301, 1.61865, -2.89 )
 
 [sub_resource type="Curve" id=22]
-_data = [ Vector2( 0.133663, 0.118182 ), 0.0, 0.0, 0, 0, Vector2( 0.232673, 0.936364 ), 0.0, 0.0, 0, 0, Vector2( 0.985149, 0.0727272 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0.103801, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.361111, 0.904908 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [node name="farm" type="KinematicBody"]
 collision_layer = 0
@@ -156,14 +156,15 @@ autostart = true
 [node name="CPUParticles" type="CPUParticles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9637, 0 )
 emitting = false
+amount = 4
 one_shot = true
 explosiveness = 1.0
 mesh = ExtResource( 10 )
 emission_shape = 1
 emission_sphere_radius = 1.0
 flag_rotate_y = true
-direction = Vector3( 0, 1, 0 )
-spread = 25.0
+direction = Vector3( 1, 0, 1 )
+spread = 90.0
 gravity = Vector3( 0, 12, 0 )
 angular_velocity = 8.0
 scale_amount_curve = SubResource( 22 )

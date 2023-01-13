@@ -1,17 +1,17 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://data/building_data/buildingData.gd" type="Script" id=1]
-[ext_resource path="res://entity/building/town_center/town_center.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ui/icon/building_icon/town_center.png" type="Texture" id=3]
+[ext_resource path="res://entity/building/barrack/barrack.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ui/icon/building_icon/barrack.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 1 )
 player_id = 0
-building_name = "Town Center"
-building_description = "Main HQ for faction"
-price = 200
-building_id = 0
-requirement_ids = [ 1 ]
+building_name = "Barrack"
+building_description = "Train squad"
+price = 30
+building_id = 3
+requirement_ids = [ 0, 1 ]
 node_name = ""
 network_master = 0
 building = ExtResource( 2 )

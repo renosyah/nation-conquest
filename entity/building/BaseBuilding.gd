@@ -10,6 +10,7 @@ const status_deploying = 0
 const status_building = 1
 const status_deployed = 2
 
+export var building_id :int = 0
 export var team :int = 0
 export var color :Color = Color.white
 
