@@ -4,8 +4,8 @@ signal on_click
 
 var data :BuildingData
 
-onready var texture_rect =  $Control/VBoxContainer2/HBoxContainer/TextureRect
-onready var building_name = $Control/VBoxContainer2/MarginContainer2/VBoxContainer/Label
+onready var texture_rect = $Control/VBoxContainer2/HBoxContainer/TextureRect
+onready var building_name = $Control/VBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer/Label
 onready var frame_2 = $Control/Frame2
 onready var label_2 = $Control/VBoxContainer2/HBoxContainer/TextureRect/VBoxContainer/ColorRect/HBoxContainer/Label2
 

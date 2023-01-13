@@ -138,7 +138,8 @@ func _on_build_timer():
 	if is_bot_have_farm():
 		_buildings.append(preload("res://data/building_data/buildings/archer_tower.tres"))
 		_buildings.append(preload("res://data/building_data/buildings/barrack.tres"))
-	
+		_buildings.append(preload("res://data/building_data/buildings/shooting_range.tres"))
+		
 	_buildings.shuffle()
 	
 	var bot_building :BuildingData = null

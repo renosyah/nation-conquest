@@ -224,6 +224,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/LANServerBroadcast/server_listener/ServerListener.gd"
 }, {
+"base": "BaseBuilding",
+"class": "ShootingRange",
+"language": "GDScript",
+"path": "res://entity/building/shooting_range/shooting_range.gd"
+}, {
 "base": "BaseEntity",
 "class": "Squad",
 "language": "GDScript",
@@ -308,6 +313,7 @@ _global_script_class_icons={
 "SaveLoad": "",
 "ServerAdvertiser": "res://addons/LANServerBroadcast/server_advertiser/server_advertiser.png",
 "ServerListener": "res://addons/LANServerBroadcast/server_listener/server_listener.png",
+"ShootingRange": "",
 "Squad": "",
 "SquadData": "",
 "SquadIcon": "",

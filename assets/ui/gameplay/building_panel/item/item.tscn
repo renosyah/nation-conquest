@@ -134,16 +134,35 @@ rect_min_size = Vector2( 0, 50 )
 mouse_filter = 2
 alignment = 2
 
-[node name="Label" type="Label" parent="Control/VBoxContainer2/MarginContainer2/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer2/MarginContainer2/VBoxContainer"]
 margin_right = 105.0
 margin_bottom = 41.0
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="Control/VBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer"]
+margin_right = 5.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="Label" type="Label" parent="Control/VBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer"]
+margin_left = 9.0
+margin_right = 96.0
+margin_bottom = 41.0
 grow_vertical = 0
+size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 2 )
 text = "Archer Tower"
 align = 1
 valign = 1
 autowrap = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer2/MarginContainer2/VBoxContainer/HBoxContainer"]
+margin_left = 100.0
+margin_right = 105.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 5, 0 )
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer2/MarginContainer2/VBoxContainer"]
 margin_top = 45.0
