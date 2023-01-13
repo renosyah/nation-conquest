@@ -103,15 +103,7 @@ func on_generate_map_completed():
 	NetworkLobbyManager.set_ready()
 	
 func on_map_click(_pos :Vector3):
-	if _selected_squad.empty():
-		return
-	
-	var formation = Utils.get_formation_box(
-		_pos, _selected_squad.size(), 5
-	)
-	for i in range(_selected_squad.size()):
-		if is_instance_valid(_selected_squad[i]):
-			_selected_squad[i].set_move_to(formation[i], true)
+	_order_move_to(_pos)
 	
 ################################################################
 # ui
@@ -232,7 +224,7 @@ remotesync func _on_deploying_buildings(_building_data_dics :Array):
 		var _building_data :BuildingData = BuildingData.new()
 		_building_data.from_dictionary(_building_data_dic["building_data"])
 		
-		_building_data.is_selectable = (_building_data.player_id == NetworkLobbyManager.get_id())
+		_building_data.is_selectable = true #(_building_data.player_id == NetworkLobbyManager.get_id())
 		
 		if _building_data_dic["autobuild"]:
 			_building_data.building_time = 1
@@ -254,8 +246,11 @@ func on_building_deplyoing(_building :BaseBuilding):
 	_ui.on_building_deplyoing(_building)
 	
 func on_building_selected(_building :BaseBuilding):
-	if not _selected_squad.empty():
-		on_map_click(_building.global_transform.origin)
+	var _is_player_building :bool = _ui.is_player_building(_building)
+	var _selected_squad_empty :bool = _selected_squad.empty()
+	
+	if not _is_player_building and not _selected_squad_empty:
+		_order_attack_to(_building.global_transform.origin)
 		return
 		
 	_ui.on_building_selected(_building)
@@ -294,7 +289,7 @@ remotesync func _spawn_squad(_squad_data :Dictionary):
 	_squad.from_dictionary(_squad_data)
 	
 	# players own squad
-	_squad.is_selectable = (_squad_data.player_id == NetworkLobbyManager.get_id())
+	_squad.is_selectable = true #(_squad_data.player_id == NetworkLobbyManager.get_id())
 	
 	var _squad_spawn = _squad.spawn(self)
 	_squad_spawn.connect("squad_update", self, "on_squad_update")
@@ -312,7 +307,14 @@ func on_squad_update(_squad :Squad):
 	_ui.on_squad_update(_squad)
 	
 func on_squad_selected(_squad :Squad):
-	if not _ui.is_player_squad(_squad):
+	var _is_player_squad :bool = _ui.is_player_squad(_squad)
+	var _selected_squad_empty :bool = _selected_squad.empty()
+	
+	if not _is_player_squad and not _selected_squad_empty:
+		_order_attack_to(_squad.global_transform.origin)
+		return
+		
+	if not _is_player_squad:
 		return
 		
 	var is_in_squad = _selected_squad.has(_squad)
@@ -344,6 +346,26 @@ remotesync func _on_squad_dead(_squad_path :NodePath):
 		
 	_ui.on_squad_dead(_squad)
 	_squad.queue_free()
+	
+################################################################
+func _order_move_to(_pos :Vector3):
+	if _selected_squad.empty():
+		return
+	
+	var formation = Utils.get_formation_box(
+		_pos, _selected_squad.size(), 5
+	)
+	for i in range(_selected_squad.size()):
+		if is_instance_valid(_selected_squad[i]):
+			_selected_squad[i].set_move_to(formation[i], true)
+			
+func _order_attack_to(_pos :Vector3):
+	if _selected_squad.empty():
+		return
+	
+	for i in range(_selected_squad.size()):
+		if is_instance_valid(_selected_squad[i]):
+			_selected_squad[i].set_attack_to(_pos, true)
 	
 ################################################################
 # proccess

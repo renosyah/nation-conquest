@@ -258,7 +258,17 @@ func set_selected(val :bool):
 		
 	var color :Color = squad_selected_color if val else squad_unselected_color
 	(_banner.get_surface_material(1) as SpatialMaterial).albedo_color = color
-
+	
+func set_attack_to(to :Vector3, display_tap :bool = false):
+	var combat_range_offset  = combat_range - 2
+	var attack_pos :Vector3 = to.direction_to(global_transform.origin) * combat_range_offset
+	var distance_to_target :float = global_transform.origin.distance_to(to)
+	if distance_to_target < combat_range_offset:
+		is_moving = false
+		return
+		
+	set_move_to(to + attack_pos, display_tap)
+	
 func set_move_to(to :Vector3, display_tap :bool = false):
 	move_to = to
 	is_moving = true

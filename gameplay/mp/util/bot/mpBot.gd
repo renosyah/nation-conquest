@@ -222,12 +222,8 @@ func _on_action_timer():
 	if not is_instance_valid(target):
 		return
 		
-	var attack_pos = target.translation.direction_to(
-		squad.translation
-	) * squad.combat_range
-	
 	squad.is_assault_mode = true
-	squad.set_move_to(target.translation + attack_pos)
+	squad.set_attack_to(target.translation)
 	
 func _on_uperhand_timer():
 	if not is_bot_have_farm():
