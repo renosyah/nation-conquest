@@ -35,7 +35,8 @@ onready var demolish_building_panel = $CanvasLayer/SafeArea/demolish_building_pa
 onready var select_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/select_all
 onready var unselect_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/unselect_all
 
-onready var player_coin_ui = $CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/Control/HBoxContainer/player_coin
+onready var player_coin_ui = $CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/coin/HBoxContainer/player_coin
+onready var player_building = $CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/building/HBoxContainer/player_building
 
 # player squad s
 # {_instance_squad : _instance_icon}
@@ -75,7 +76,9 @@ func _ready():
 	unselect_all.visible = false
 	
 	mini_map.set_enable(false)
+	_update_player_building(false)
 	_update_player_coin()
+	
 	
 func loading(_show :bool):
 	.loading(_show)
@@ -115,6 +118,8 @@ func on_building_deplyoing(_building :BaseBuilding):
 	
 	open_building.visible = not is_building_max()
 	
+	_update_player_building(true)
+	
 func on_building_selected(_building :BaseBuilding):
 	if not is_player_building(_building):
 		return
@@ -136,12 +141,10 @@ func on_building_deployed(_building :BaseBuilding):
 		_building.connect("harvest_time", self,"on_harvest_time")
 	
 	open_building.visible = not is_building_max()
-	building_panel.player_buildings = buildings
-	
-	recruit_squad_panel.player_buildings = buildings
 	add_squad.visible = not is_squad_max() and is_player_have_town_center()
-	
 	mini_map.set_enable(is_player_have_tower() and is_player_have_town_center())
+	
+	_update_player_building(false)
 	
 func on_building_destroyed(_building :BaseBuilding):
 	if not is_player_building(_building):
@@ -153,12 +156,10 @@ func on_building_destroyed(_building :BaseBuilding):
 	buildings.erase(_building)
 	
 	open_building.visible = not is_building_max()
-	building_panel.player_buildings = buildings
-	
-	recruit_squad_panel.player_buildings = buildings
 	add_squad.visible = not is_squad_max() and is_player_have_town_center()
-	
 	mini_map.set_enable(is_player_have_tower() and is_player_have_town_center())
+	
+	_update_player_building(false)
 	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
 	add_minimap_object(_squad.get_path(), _squad.color)
@@ -293,6 +294,13 @@ func _update_player_coin():
 	player_coin_ui.text = str(player_coin)
 	recruit_squad_panel.player_coin = player_coin
 	building_panel.player_coin = player_coin
+	
+func _update_player_building(_display_only :bool = true):
+	player_building.text = str(buildings.size()) + "/" + str(player_max_building)
+	
+	if not _display_only:
+		recruit_squad_panel.player_buildings = buildings
+		building_panel.player_buildings = buildings
 	
 func _on_main_menu_pressed():
 	emit_signal("main_menu_press")
