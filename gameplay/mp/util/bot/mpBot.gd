@@ -49,6 +49,7 @@ func _ready():
 	
 	autobuilder = preload("res://assets/autobuilder/autobuilder.tscn").instance()
 	autobuilder.connect("placement_found", self, "_on_placement_found")
+	autobuilder.connect("placement_not_found", self, "_on_placement_not_found")
 	add_child(autobuilder)
 	
 	recruit_timer = Timer.new()
@@ -177,6 +178,9 @@ func start_find_placement(_building :BaseBuilding, ignores :Array = [], exceptio
 func _on_placement_found(_building :BaseBuilding, _pos :Vector3):
 	_building.translation = _pos
 	_building.start_building()
+	
+func _on_placement_not_found(_building :BaseBuilding):
+	_building.demolish()
 	
 func _on_action_timer():
 	if bot_squads.empty():

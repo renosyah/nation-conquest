@@ -2,6 +2,7 @@ extends Spatial
 class_name AutoBuilder
 
 signal placement_found(_building ,_pos)
+signal placement_not_found(_building)
 
 export var height :float = 20.0
 export var radius :float = 15.0
@@ -41,7 +42,14 @@ func _start_building():
 		
 	h_pivot.translation.x = 0
 	emit_signal("placement_found", building, placement_pos)
-
+	
+func _demolish_building():
+	if not is_instance_valid(building):
+		return
+		
+	h_pivot.translation.x = 0
+	emit_signal("placement_not_found", building)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	rotation_pivot.rotate_y(deg2rad(60) * delta)
@@ -58,11 +66,15 @@ func _process(delta):
 		
 	building.translation = placement_pos
 	
-	if timer.is_stopped() and building.can_build:
+	if timer.is_stopped():
 		set_process(false)
-		_start_building()
-		return
 		
+		if building.can_build:
+			_start_building()
+		else:
+			_demolish_building()
+			
+		return
 		
 func _is_valid_position(aim :CameraAimingData) -> bool:
 	if exceptions.empty():
