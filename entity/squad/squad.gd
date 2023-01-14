@@ -35,7 +35,6 @@ puppet var _puppet_velocity :Vector3
 
 onready var _input_detection = $input_detection
 onready var _banner = $banner/banner
-onready var _agro_timer = $agro_timer
 onready var _unit_count = $banner/unit_count
 onready var _hit_particle = $hit_particle
 
@@ -197,6 +196,16 @@ remotesync func _squad_disband():
 	is_dead = true
 	set_process(false)
 	emit_signal("squad_dead", self)
+	
+	
+func moving(delta :float) -> void:
+	.moving(delta)
+	
+	if is_moving and (not is_assault_mode):
+		return
+		
+	_spotted_target()
+	_attack_targets()
 	
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
@@ -371,13 +380,6 @@ func _spotted_target():
 				
 			_targets.append(body)
 			
-func _on_agro_timer_timeout():
-	if is_moving and (not is_assault_mode):
-		return
-		
-	_spotted_target()
-	_attack_targets()
-	
 func _on_squad_tree_exiting():
 	if is_instance_valid(_tap):
 		_tap.queue_free()

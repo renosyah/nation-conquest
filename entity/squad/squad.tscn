@@ -102,11 +102,6 @@ monitorable = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.696755, 0 )
 shape = SubResource( 3 )
 
-[node name="agro_timer" type="Timer" parent="."]
-wait_time = 0.5
-autostart = true
-
 [connection signal="tree_exiting" from="." to="." method="_on_squad_tree_exiting"]
 [connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
 [connection signal="input_event" from="input_area" to="." method="_on_input_area_input_event"]
-[connection signal="timeout" from="agro_timer" to="." method="_on_agro_timer_timeout"]

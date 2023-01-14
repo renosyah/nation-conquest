@@ -56,45 +56,44 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -209.0
-margin_top = -252.0
+margin_top = -178.5
 margin_right = 209.0
-margin_bottom = 254.0
+margin_bottom = 178.5
 
 [node name="ColorRect2" type="ColorRect" parent="MarginContainer"]
 margin_right = 418.0
-margin_bottom = 506.0
+margin_bottom = 357.0
 color = Color( 0.117647, 0.117647, 0.117647, 0.917647 )
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
 margin_right = 418.0
-margin_bottom = 506.0
+margin_bottom = 357.0
 alignment = 1
 
 [node name="MarginContainer8" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 67.0
 margin_right = 418.0
-margin_bottom = 87.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 80, 20 )
 
 [node name="Label2" type="Label" parent="MarginContainer/VBoxContainer2"]
-margin_top = 91.0
+margin_top = 24.0
 margin_right = 418.0
-margin_bottom = 151.0
+margin_bottom = 84.0
 custom_fonts/font = ExtResource( 1 )
 text = "Victory"
 align = 1
 valign = 1
 
 [node name="MarginContainer7" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 155.0
+margin_top = 88.0
 margin_right = 418.0
-margin_bottom = 185.0
+margin_bottom = 118.0
 rect_min_size = Vector2( 80, 30 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 189.0
+margin_top = 122.0
 margin_right = 418.0
-margin_bottom = 272.0
+margin_bottom = 205.0
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HBoxContainer2"]
 margin_right = 40.0
@@ -119,15 +118,15 @@ margin_bottom = 83.0
 rect_min_size = Vector2( 40, 0 )
 
 [node name="MarginContainer6" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 276.0
+margin_top = 209.0
 margin_right = 418.0
-margin_bottom = 316.0
+margin_bottom = 249.0
 rect_min_size = Vector2( 80, 40 )
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 320.0
+margin_top = 253.0
 margin_right = 418.0
-margin_bottom = 400.0
+margin_bottom = 333.0
 alignment = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HBoxContainer3"]
@@ -141,7 +140,7 @@ margin_right = 334.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 250, 80 )
 custom_fonts/font = ExtResource( 2 )
-text = "Resume"
+text = "Continue"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2/HBoxContainer3"]
 margin_left = 338.0
@@ -149,16 +148,10 @@ margin_right = 418.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 0 )
 
-[node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 404.0
-margin_right = 418.0
-margin_bottom = 414.0
-rect_min_size = Vector2( 0, 10 )
-
 [node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
-margin_top = 418.0
+margin_top = 337.0
 margin_right = 418.0
-margin_bottom = 438.0
+margin_bottom = 357.0
 rect_min_size = Vector2( 0, 20 )
 
 [connection signal="pressed" from="SafeArea/VBoxContainer/HBoxContainer/main_menu" to="." method="_on_main_menu_pressed"]
