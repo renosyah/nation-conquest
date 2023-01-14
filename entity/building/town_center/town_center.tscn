@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://entity/building/town_center/town_center.gd" type="Script" id=1]
 [ext_resource path="res://entity/building/town_center/tower.obj" type="ArrayMesh" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=8]
 [ext_resource path="res://entity/building/model/barrel.obj" type="ArrayMesh" id=9]
 [ext_resource path="res://entity/building/model/food_barrel.obj" type="ArrayMesh" id=10]
-[ext_resource path="res://addons/Godot-Touch-Input-Manager/InputManager.gd" type="Script" id=11]
 
 [sub_resource type="SpatialMaterial" id=9]
 flags_vertex_lighting = true
@@ -165,8 +164,7 @@ monitorable = false
 transform = Transform( 0.761448, 0, 0.648226, 0, 1, 0, -0.648226, 0, 0.761448, 0, 0, 0 )
 shape = SubResource( 17 )
 
-[node name="input_detection" type="Node" parent="." instance=ExtResource( 8 )]
-script = ExtResource( 11 )
+[node name="input_detection" parent="." instance=ExtResource( 8 )]
 
 [node name="hpBar" parent="." instance=ExtResource( 4 )]
 transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.93297, 0 )

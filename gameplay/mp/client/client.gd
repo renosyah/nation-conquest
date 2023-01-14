@@ -40,3 +40,18 @@ func on_ui_deploy_building(_building_data :BuildingData):
 	_building_data.max_distance_from_base = 24
 	
 	.on_deploying_building(_building_data)
+	
+func on_building_destroyed(_building :BaseBuilding):
+	.on_building_destroyed(_building)
+	
+	if not _building is TownCenter:
+		return
+		
+	if _ui.is_player_building(_building):
+		_ui.on_player_lose()
+		
+func on_team_wining(_team:int):
+	.on_team_wining(_team)
+	
+	if _team == player_team:
+		_ui.on_player_win()

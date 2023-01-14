@@ -5,6 +5,7 @@ onready var player_color :Color = Color(randf(), randf(), randf(), 1)
 onready var squad_spawn_position :Vector3 = Vector3(0, 15, 0)
 
 var bots :Dictionary = {}
+onready var rule :MatchRule = $rule
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -71,6 +72,8 @@ func all_player_ready():
 			)
 		)
 		
+		rule.add_player(town_center.player_id, town_center.team)
+		
 		bot_count -= 1
 		bot_spawn_positions.erase(base_spawn_position)
 		
@@ -83,8 +86,11 @@ func all_player_ready():
 		bot.bot_team = i + 69
 		bot.connect("bot_recruit_squad", self, "on_bot_recruit_squad")
 		bot.connect("bot_deploying_building", self, "on_bot_deploying_building")
+		bot.connect("bot_surrender", self ,"on_bot_surrender")
 		add_child(bot)
 		bots[bot.bot_id] = bot
+		
+		rule.add_player(bot.bot_id, bot.bot_team)
 		
 		deploying_buildings.append(
 			.create_deploying_building_payload(
@@ -93,6 +99,8 @@ func all_player_ready():
 		)
 		
 		
+	rule.start()
+	
 	.on_deploying_buildings(deploying_buildings)
 	
 func on_squad_spawn(_squad :Squad, _icon :Resource):
@@ -119,6 +127,14 @@ func on_building_destroyed(_building :BaseBuilding):
 	for key in bots.keys():
 		bots[key].on_building_destroyed(_building)
 		
+	if not _building is TownCenter:
+		return
+		
+	if _ui.is_player_building(_building):
+		_ui.on_player_lose()
+		
+	rule.player_lose(_building.player_id)
+	
 # bot deploy squad
 func on_bot_recruit_squad(_mp_bot :MPBot, _squad_data :SquadData):
 	.spawn_squad(_squad_data)
@@ -126,6 +142,9 @@ func on_bot_recruit_squad(_mp_bot :MPBot, _squad_data :SquadData):
 # bot deploy building
 func on_bot_deploying_building(_mp_bot :MPBot, _building_data :BuildingData):
 	.on_deploying_building(_building_data)
+	
+func on_bot_surrender(_mp_bot :MPBot):
+	rule.player_lose(_mp_bot.bot_id)
 	
 # bot using auto builder
 func on_building_deplyoing(_building :BaseBuilding):
@@ -138,8 +157,13 @@ func on_building_deplyoing(_building :BaseBuilding):
 	# continue, because if else 
 	# is player is currenlty building
 	.on_building_deplyoing(_building)
-
-
+	
+func _on_rule_wining_team(_team : int):
+	rpc("_on_team_wining", _team)
+	
+func on_team_wining(_team:int):
+	if _team == player_team:
+		_ui.on_player_win()
 
 
 

@@ -47,12 +47,12 @@ remotesync func _start_building():
 	._start_building()
 	
 	_mesh_instance.visible = true
-	_mesh_instance.translation.y -= 20
+	_mesh_instance.translation.y -= 10
 	_collision_shape.set_deferred("disabled", false)
 	
 	_tween.interpolate_property(
 		_mesh_instance, "translation:y", _mesh_instance.translation.y,
-		 _mesh_instance.translation.y + 20, building_time
+		 _mesh_instance.translation.y + 10, building_time
 	)
 	_tween.start()
 	

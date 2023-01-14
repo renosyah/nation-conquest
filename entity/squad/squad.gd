@@ -276,13 +276,13 @@ func set_move_to(to :Vector3, display_tap :bool = false):
 	if display_tap:
 		_tap.translation = move_to
 		_tap.tap()
-
+	
 func is_in_combat() -> bool:
 	return not _targets.empty()
-
+	
 func unit_size() -> int:
 	return _units.size()
-
+	
 func disband():
 	if not _is_master:
 		return

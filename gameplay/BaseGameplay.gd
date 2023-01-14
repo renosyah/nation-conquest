@@ -356,6 +356,7 @@ remotesync func _on_squad_dead(_squad_path :NodePath):
 	_squad.queue_free()
 	
 ################################################################
+# squad move orders
 func _order_move_to(_pos :Vector3):
 	if _selected_squad.empty():
 		return
@@ -378,6 +379,14 @@ func _order_attack_to(_pos :Vector3):
 	for i in range(_selected_squad.size()):
 		if is_instance_valid(_selected_squad[i]):
 			_selected_squad[i].set_attack_to(_pos, true)
+			
+################################################################
+# wining team notification
+remotesync func _on_team_wining(_team :int):
+	on_team_wining(_team)
+	
+func on_team_wining(_team:int):
+	pass
 	
 ################################################################
 # proccess

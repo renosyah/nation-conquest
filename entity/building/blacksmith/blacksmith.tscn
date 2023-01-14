@@ -72,8 +72,8 @@ params_blend_mode = 1
 
 [sub_resource type="SphereMesh" id=42]
 material = SubResource( 41 )
-radius = 0.4
-height = 0.6
+radius = 0.5
+height = 1.0
 
 [sub_resource type="Curve" id=43]
 _data = [ Vector2( 0.029703, 0.886364 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.413636 ), 0.0, 0.0, 0, 0 ]

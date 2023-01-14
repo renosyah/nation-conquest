@@ -39,6 +39,7 @@ onready var player_coin_ui = $CanvasLayer/SafeArea/Control/HBoxContainer/MarginC
 onready var player_building = $CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/building/HBoxContainer/player_building
 
 onready var menu = $CanvasLayer/menu
+onready var result = $CanvasLayer/result
 
 # player squad s
 # {_instance_squad : _instance_icon}
@@ -315,6 +316,9 @@ func _update_player_building(_display_only :bool = true):
 func _on_main_menu_pressed():
 	menu.visible = true
 	
+func _on_result_on_main_menu_press():
+	menu.visible = true
+	
 func _on_add_squad_pressed():
 	recruit_squad_panel.display_squad_recruitment()
 	recruit_squad_panel.visible = true
@@ -360,9 +364,15 @@ func _on_unselect_all_pressed():
 func _on_menu_on_main_menu_press():
 	emit_signal("main_menu_press")
 
-
-
-
+func on_player_lose():
+	control.visible = false
+	result.set_condition(false)
+	result.visible = true
+	
+func on_player_win():
+	control.visible = false
+	result.set_condition(true)
+	result.visible = true
 
 
 

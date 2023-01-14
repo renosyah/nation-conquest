@@ -3,6 +3,7 @@ class_name MPBot
 
 signal bot_recruit_squad(_mpbot, _squad_data)
 signal bot_deploying_building(_mpbot, _building_data)
+signal bot_surrender(_mpbot)
 
 const squad_datas = [
 	preload("res://data/squad_data/squads/pikeman_squad.tres"),
@@ -266,6 +267,7 @@ func on_building_destroyed(_building :BaseBuilding):
 	if _building.team == bot_team:
 		if _building.name == "bot-town-center-" + str(bot_id):
 			bot_town_center = null
+			surrender()
 			
 		if bot_buildings.has(_building):
 			bot_buildings.erase(_building)
@@ -277,6 +279,12 @@ func on_building_destroyed(_building :BaseBuilding):
 func on_harvest_time(_building :Farm, _amount :int):
 	bot_coin += _amount
 
+func surrender():
+	action_timer.stop()
+	build_timer.stop()
+	recruit_timer.stop()
+	uperhand_timer.stop()
+	emit_signal("bot_surrender", self)
 
 func is_bot_have_farm() -> bool:
 	for building in bot_buildings:

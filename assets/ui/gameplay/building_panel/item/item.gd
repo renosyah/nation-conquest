@@ -11,7 +11,6 @@ onready var label_2 = $Control/VBoxContainer2/HBoxContainer/TextureRect/VBoxCont
 
 onready var input_detection = $input_detection
 onready var lock = $Control/lock
-onready var unfunded = $Control/unfunded
 
 var can_click :bool = false
 
@@ -21,19 +20,19 @@ func _ready():
 	building_name.text = data.building_name
 	label_2.text = str(data.price)
 	frame_2.color = Color(0.242188, 0.242188, 0.242188)
+	label_2.modulate = Color.white
 	lock.visible = false
-	unfunded.visible = false
 	
 func set_lock(_is_locked: bool, _is_expensive: bool):
 	lock.visible = false
-	unfunded.visible = false
+	label_2.modulate = Color.red
 	can_click = false
 	
 	lock.visible = _is_locked
 	if _is_locked:
 		return
 		
-	unfunded.visible = _is_expensive
+	label_2.modulate = Color.red if _is_expensive else Color.white
 	can_click = not _is_expensive
 	
 func _on_item_gui_input(event):

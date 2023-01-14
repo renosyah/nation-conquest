@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://addons/mini-map/MiniMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gameplay/mp/ui/ui.gd" type="Script" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://assets/ui/icon/building_icon.png" type="Texture" id=18]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=19]
 [ext_resource path="res://assets/ui/menu/menu.tscn" type="PackedScene" id=20]
+[ext_resource path="res://assets/ui/match_result/result.tscn" type="PackedScene" id=21]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -453,6 +454,8 @@ margin_right = 606.0
 [node name="menu" parent="CanvasLayer" instance=ExtResource( 20 )]
 visible = false
 
+[node name="result" parent="CanvasLayer" instance=ExtResource( 21 )]
+
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer/main_menu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/open_building" to="." method="_on_open_building_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/select_all" to="." method="_on_select_all_pressed"]
@@ -464,3 +467,4 @@ visible = false
 [connection signal="on_construct_building" from="CanvasLayer/SafeArea/building_panel" to="." method="_on_building_panel_on_construct_building"]
 [connection signal="demolish" from="CanvasLayer/SafeArea/demolish_building_panel" to="." method="_on_demolish_building_panel_demolish"]
 [connection signal="on_main_menu_press" from="CanvasLayer/menu" to="." method="_on_menu_on_main_menu_press"]
+[connection signal="on_main_menu_press" from="CanvasLayer/result" to="." method="_on_result_on_main_menu_press"]
