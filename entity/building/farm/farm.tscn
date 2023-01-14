@@ -104,7 +104,7 @@ script = ExtResource( 1 )
 amount = 10
 
 [node name="MeshInstance" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0 )
 
 [node name="farm" type="MeshInstance" parent="MeshInstance"]
 mesh = ExtResource( 2 )
@@ -129,7 +129,7 @@ anims/RESET = SubResource( 23 )
 anims/blade_spin = SubResource( 24 )
 
 [node name="MeshInstance2" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0 )
 visible = false
 
 [node name="farm2" type="MeshInstance" parent="MeshInstance2"]

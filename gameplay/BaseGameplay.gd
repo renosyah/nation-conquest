@@ -136,9 +136,15 @@ func on_ui_start_building():
 		return
 		
 	var _build = _building_to_build[id]
-	if is_instance_valid(_build):
-		_build.start_building()
-		_building_to_build.erase(id)
+	if not is_instance_valid(_build):
+		return
+		
+	if not _sound.playing:
+		_sound.stream = preload("res://assets/sound/asset_sound_building.wav")
+		_sound.play()
+		
+	_build.start_building()
+	_building_to_build.erase(id)
 	
 func on_ui_cancel_building():
 	var id = NetworkLobbyManager.get_id()
