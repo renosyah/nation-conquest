@@ -49,12 +49,15 @@ func _network_timmer_timeout() -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	status = status_deploying
+	
 	_building_timmer = Timer.new()
 	_building_timmer.wait_time = building_time
 	_building_timmer.connect("timeout", self , "_building_timmer_timeout")
 	_building_timmer.autostart = false
 	_building_timmer.one_shot = true
 	add_child(_building_timmer)
+	
+	
 	
 	input_ray_pickable = is_selectable
 	

@@ -1,62 +1,87 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://entity/building/farm/farm.gd" type="Script" id=1]
 [ext_resource path="res://entity/building/farm/farm.obj" type="ArrayMesh" id=2]
-[ext_resource path="res://entity/building/model/food_box.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://entity/building/farm/blade.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/hit_particle/custom_particle/text/custom_text_particle.tscn" type="PackedScene" id=6]
-[ext_resource path="res://entity/building/model/food_barrel.obj" type="ArrayMesh" id=7]
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=8]
-[ext_resource path="res://entity/building/model/flag_pole.obj" type="ArrayMesh" id=9]
 [ext_resource path="res://entity/building/model/coin.obj" type="ArrayMesh" id=10]
 
-[sub_resource type="SpatialMaterial" id=14]
+[sub_resource type="SpatialMaterial" id=26]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.686275, 0.388235, 0, 1 )
 
-[sub_resource type="SpatialMaterial" id=15]
+[sub_resource type="SpatialMaterial" id=27]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.345098, 0.168627, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=28]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.129412, 0.0823529, 0.0392157, 1 )
+
+[sub_resource type="SpatialMaterial" id=29]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.447059, 0.447059, 0.447059, 1 )
 
 [sub_resource type="SpatialMaterial" id=16]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 1, 0.819608, 0, 1 )
 
-[sub_resource type="SpatialMaterial" id=17]
-flags_vertex_lighting = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 0.129412, 0.0823529, 0.0392157, 1 )
-
-[sub_resource type="SpatialMaterial" id=7]
-flags_vertex_lighting = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 0.184314, 0.0901961, 0.00392157, 1 )
-
-[sub_resource type="SpatialMaterial" id=8]
-flags_vertex_lighting = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 0.345098, 0.168627, 0, 1 )
-
-[sub_resource type="SpatialMaterial" id=19]
-flags_vertex_lighting = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 1, 0.819608, 0, 1 )
-
-[sub_resource type="SpatialMaterial" id=20]
-flags_vertex_lighting = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 0.184314, 0.0901961, 0.00392157, 1 )
-
-[sub_resource type="SpatialMaterial" id=21]
+[sub_resource type="SpatialMaterial" id=30]
 flags_unshaded = true
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 
-[sub_resource type="SpatialMaterial" id=18]
+[sub_resource type="SpatialMaterial" id=25]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.129412, 0.0823529, 0.0392157, 1 )
+
+[sub_resource type="SpatialMaterial" id=31]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.843137, 0.478431, 0, 1 )
+
+[sub_resource type="Animation" id=23]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("blade:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=24]
+resource_name = "blade_spin"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("blade:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 360 ) ]
+}
+
+[sub_resource type="SpatialMaterial" id=33]
 flags_transparent = true
 flags_unshaded = true
 flags_no_depth_test = true
@@ -66,8 +91,8 @@ albedo_color = Color( 1, 1, 1, 0.647059 )
 [sub_resource type="BoxShape" id=12]
 extents = Vector3( 1.68065, 3.10908, 1.78517 )
 
-[sub_resource type="ConvexPolygonShape" id=13]
-points = PoolVector3Array( 2.14301, -0.397694, 2.91086, 2.14259, 0.463102, 2.91086, -2.14301, -0.397694, 2.91086, 2.14301, -0.397694, -1.27807, 2.14301, -0.392335, -2.89, 2.14259, 1.61865, -2.89, 2.14259, 1.59185, -1.17873, 1.87534, 0.641626, 2.63018, -2.14301, 0.463102, 2.91086, 0.980046, 3.02406, -2.08028, -2.14301, -0.397694, -1.27807, 2.14301, -0.392335, -2.98934, 2.14259, 1.61865, -2.98934, -1.89548, 0.641626, 2.63018, -0.980465, 3.02406, -2.08028, -2.14301, 1.59185, -1.17873, -2.14301, -0.392335, -2.98934, -2.14301, 1.61865, -2.98934, -2.14301, 1.61865, -2.89 )
+[sub_resource type="ConvexPolygonShape" id=32]
+points = PoolVector3Array( -0.746248, 3.81741, -0.192946, 3.10872, 0.825648, 3.97258, -3.09258, -0.313378, -4.12708, -3.09258, -0.313378, 3.97258, 2.93268, -0.187637, -3.89715, 3.10872, 0.825648, -4.12708, -3.09258, 0.825648, 3.97258, -3.09258, 0.825648, -4.12708, 2.93268, -0.187637, 3.74265, 0.300839, 3.95162, 0.508445, 0.18158, 3.81402, -0.772374, -0.280997, 3.8096, 0.732218, 0.9934, 3.5828, -0.424606, -0.970868, 3.57189, 0.498885, -0.282895, 3.93901, -0.542632, 0.531527, 3.93965, -0.310013, 0.994433, 3.58456, 0.386861, -0.519684, 3.95639, 0.274395, 0.534741, 3.95216, 0.273672, -0.165697, 3.81688, -0.773414, -0.517209, 3.94675, -0.310825, -1.07474, 3.44044, -0.418679, 0.298515, 3.93535, -0.541795, 0.296364, 3.80449, 0.730047, -0.511602, 3.80885, 0.615995, -0.856366, 3.68816, -0.422542, -0.28507, 3.95425, 0.509194, 0.760864, 3.81354, 0.153673, 0.524967, 3.79865, 0.612289, -0.506784, 3.79116, -0.649239 )
 
 [sub_resource type="Curve" id=22]
 _data = [ Vector2( 0.103801, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.361111, 0.904908 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
@@ -84,33 +109,24 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 [node name="farm" type="MeshInstance" parent="MeshInstance"]
 mesh = ExtResource( 2 )
 software_skinning_transform_normals = false
-material/0 = SubResource( 14 )
-material/1 = SubResource( 15 )
-material/2 = SubResource( 16 )
-material/3 = SubResource( 17 )
+material/0 = SubResource( 26 )
+material/1 = SubResource( 27 )
+material/2 = SubResource( 28 )
+material/3 = SubResource( 29 )
+material/4 = SubResource( 16 )
+material/5 = SubResource( 30 )
 
-[node name="barrel" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0837516, 0.301947, -2.06958 )
+[node name="blade" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.88345, -0.0463936 )
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
-material/0 = SubResource( 7 )
-material/1 = SubResource( 8 )
-material/2 = SubResource( 19 )
+material/0 = SubResource( 25 )
+material/1 = SubResource( 31 )
 
-[node name="barrel2" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51604, 0.301947, -2.06958 )
-mesh = ExtResource( 7 )
-software_skinning_transform_normals = false
-material/0 = SubResource( 7 )
-material/1 = SubResource( 8 )
-material/2 = SubResource( 19 )
-
-[node name="flag" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.01186, -0.227653, -3.11283 )
-mesh = ExtResource( 9 )
-software_skinning_transform_normals = false
-material/0 = SubResource( 20 )
-material/1 = SubResource( 21 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MeshInstance"]
+autoplay = "blade_spin"
+anims/RESET = SubResource( 23 )
+anims/blade_spin = SubResource( 24 )
 
 [node name="MeshInstance2" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
@@ -120,10 +136,20 @@ visible = false
 mesh = ExtResource( 2 )
 skeleton = NodePath("../../MeshInstance")
 software_skinning_transform_normals = false
-material/0 = SubResource( 18 )
-material/1 = SubResource( 18 )
-material/2 = SubResource( 18 )
-material/3 = SubResource( 18 )
+material/0 = SubResource( 33 )
+material/1 = SubResource( 33 )
+material/2 = SubResource( 33 )
+material/3 = SubResource( 33 )
+material/4 = SubResource( 33 )
+material/5 = SubResource( 33 )
+
+[node name="blade2" type="MeshInstance" parent="MeshInstance2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.88345, -0.0463936 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../../MeshInstance")
+software_skinning_transform_normals = false
+material/0 = SubResource( 33 )
+material/1 = SubResource( 33 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.80574, 0 )
@@ -137,7 +163,7 @@ monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="area_build"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-shape = SubResource( 13 )
+shape = SubResource( 32 )
 
 [node name="input_detection" parent="." instance=ExtResource( 8 )]
 
@@ -154,15 +180,13 @@ wait_time = 15.0
 autostart = true
 
 [node name="CPUParticles" type="CPUParticles" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.892199, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7909, 0 )
 cast_shadow = 0
 emitting = false
 amount = 1
 lifetime = 2.0
 one_shot = true
 mesh = ExtResource( 10 )
-emission_shape = 1
-emission_sphere_radius = 2.0
 flag_rotate_y = true
 direction = Vector3( 1, 0, 1 )
 spread = 90.0

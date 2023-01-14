@@ -11,12 +11,13 @@ onready var _hp_bar = $hpBar
 onready var _hit_particle = $hit_particle
 onready var _input_detection = $input_detection
 
+onready var _farm = $MeshInstance/farm
 onready var _mesh_instance = $MeshInstance
 onready var _mesh_instance_2 = $MeshInstance2
 onready var _farm_2 = $MeshInstance2/farm2
+onready var _blade_2 = $MeshInstance2/blade2
 
 onready var _highlight_material :SpatialMaterial = $MeshInstance2/farm2.get_surface_material(0).duplicate()
-onready var _flag = $MeshInstance/flag
 
 onready var _area_build = $area_build
 onready var _tween = $Tween
@@ -29,12 +30,13 @@ func _ready():
 	_mesh_instance.visible = false
 	_mesh_instance_2.visible = true
 	
-	var flag_material = _flag.get_surface_material(1).duplicate()
-	flag_material.albedo_color = color
-	_flag.set_surface_material(1, flag_material)
+	var _team_color_material :SpatialMaterial = _farm.get_surface_material(5).duplicate()
+	_team_color_material.albedo_color = color
+	_farm.set_surface_material(5, _team_color_material)
 	
 	_area_build.input_ray_pickable = is_selectable
 	set_all_highlight_material(_farm_2, _highlight_material)
+	set_all_highlight_material(_blade_2, _highlight_material)
 	
 	set_process(true)
 	
