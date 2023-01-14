@@ -1,0 +1,217 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://entity/building/healing_camp/healing_camp.gd" type="Script" id=1]
+[ext_resource path="res://entity/building/model/barrel.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://entity/building/healing_camp/area_healing.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/hit_particle/custom_particle/text/custom_text_particle.tscn" type="PackedScene" id=6]
+[ext_resource path="res://entity/building/healing_camp/healing_camp.obj" type="ArrayMesh" id=7]
+[ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=8]
+[ext_resource path="res://entity/building/model/food_box.obj" type="ArrayMesh" id=9]
+[ext_resource path="res://entity/building/model/food_barrel.obj" type="ArrayMesh" id=10]
+
+[sub_resource type="SpatialMaterial" id=53]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.686275, 0.388235, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=54]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.345098, 0.168627, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=55]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.145098, 0.145098, 0.145098, 1 )
+
+[sub_resource type="SpatialMaterial" id=56]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.615686, 0.615686, 0.615686, 1 )
+
+[sub_resource type="SpatialMaterial" id=57]
+flags_unshaded = true
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+
+[sub_resource type="SpatialMaterial" id=7]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.184314, 0.0901961, 0.00392157, 1 )
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.345098, 0.168627, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=51]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.184314, 0.0901961, 0.00392157, 1 )
+
+[sub_resource type="SpatialMaterial" id=52]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.345098, 0.168627, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=19]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 1, 0.819608, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=60]
+flags_transparent = true
+flags_unshaded = true
+flags_vertex_lighting = true
+flags_no_depth_test = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 1, 1, 1, 0.682353 )
+
+[sub_resource type="SpatialMaterial" id=59]
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 1, 1, 1, 0.647059 )
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 1.68065, 3.10908, 1.78517 )
+
+[sub_resource type="ConvexPolygonShape" id=50]
+points = PoolVector3Array( -1.68958, -0.321129, -2.6022, -5.29629, -0.320741, -2.6022, -1.78958, -0.432329, 7.35702, -3.95449, 2.77858, 2.94858, 5.75425, 0.612587, -2.87525, 0.0774803, 3.74979, 0.0366666, 5.42254, -0.310554, 7.0571, -5.59929, 0.613406, 7.35702, -5.59929, 0.613406, -2.87525, 5.45125, -0.321128, -2.6022, 5.68422, 0.551886, 7.2939, 3.96053, 2.77858, 4.29385, -5.26654, -0.309783, 7.0571, 4.10945, 2.77858, 0.859054, -3.91998, 2.67563, 4.23882, -3.95449, 2.77858, 0.860056, -0.13803, 2.08794, -1.80992, 5.25349, 1.58558, 5.19347, 1.94455, -0.432738, 7.35602, -5.03162, 1.58691, 5.15433, 5.17182, 1.58672, -0.0193626, -1.78958, 0.613816, 7.35702, -4.93637, 1.58824, 0.0172907, 0.14785, 2.08768, -1.80738, -4.34997, 2.31056, 4.52531, 1.94455, 0.613816, -2.87625 )
+
+[sub_resource type="CylinderShape" id=58]
+height = 24.4243
+radius = 19.735
+
+[node name="healing_camp" type="KinematicBody"]
+collision_layer = 0
+input_ray_pickable = false
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+
+[node name="barrack" type="MeshInstance" parent="MeshInstance"]
+mesh = ExtResource( 7 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 53 )
+material/1 = SubResource( 54 )
+material/2 = SubResource( 55 )
+material/3 = SubResource( 56 )
+material/4 = SubResource( 57 )
+
+[node name="barrel" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.49471, 0.00167227, 2.5745 )
+mesh = ExtResource( 2 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 7 )
+material/1 = SubResource( 8 )
+
+[node name="barrel3" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.51562, -0.0690681, 6.19394 )
+mesh = ExtResource( 2 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 7 )
+material/1 = SubResource( 8 )
+
+[node name="barrel2" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 0.0316201, 0, -0.9995, 0, 1, 0, 0.9995, 0, 0.0316201, 4.53549, 0.301947, 2.13131 )
+mesh = ExtResource( 9 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 51 )
+material/1 = SubResource( 52 )
+material/2 = SubResource( 19 )
+
+[node name="barrel4" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 0.0316201, 0, -0.9995, 0, 1, 0, 0.9995, 0, 0.0316201, 4.58078, 0.301947, 3.56289 )
+mesh = ExtResource( 10 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 51 )
+material/1 = SubResource( 52 )
+material/2 = SubResource( 19 )
+
+[node name="barrel5" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 0.0316201, 0, -0.9995, 0, 1, 0, 0.9995, 0, 0.0316201, -4.43033, 0.301947, 2.13131 )
+mesh = ExtResource( 9 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 51 )
+material/1 = SubResource( 52 )
+material/2 = SubResource( 19 )
+
+[node name="barrel6" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 0.0316201, 0, -0.9995, 0, 1, 0, 0.9995, 0, 0.0316201, -4.38504, 0.301947, 3.56289 )
+mesh = ExtResource( 10 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 51 )
+material/1 = SubResource( 52 )
+material/2 = SubResource( 19 )
+
+[node name="MeshInstance" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+cast_shadow = 0
+mesh = ExtResource( 3 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 60 )
+
+[node name="MeshInstance2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+visible = false
+
+[node name="barrack2" type="MeshInstance" parent="MeshInstance2"]
+mesh = ExtResource( 7 )
+skeleton = NodePath("../../MeshInstance")
+software_skinning_transform_normals = false
+material/0 = SubResource( 59 )
+material/1 = SubResource( 59 )
+material/2 = SubResource( 59 )
+material/3 = SubResource( 59 )
+material/4 = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.80574, 0 )
+shape = SubResource( 12 )
+disabled = true
+
+[node name="area_build" type="Area" parent="."]
+collision_mask = 0
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="area_build"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+shape = SubResource( 50 )
+
+[node name="area_healing" type="Area" parent="."]
+collision_layer = 2
+collision_mask = 0
+input_ray_pickable = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="area_healing"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.82189, 0 )
+shape = SubResource( 58 )
+
+[node name="input_detection" parent="." instance=ExtResource( 8 )]
+
+[node name="hpBar" parent="." instance=ExtResource( 4 )]
+transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21324, 0 )
+
+[node name="hit_particle" parent="." instance=ExtResource( 5 )]
+custom_particle_scene = ExtResource( 6 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="reinforce_timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="area_healing_checker" type="Timer" parent="."]
+autostart = true
+
+[connection signal="input_event" from="area_build" to="." method="_on_area_build_input_event"]
+[connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
+[connection signal="timeout" from="reinforce_timer" to="." method="_on_reinforce_timer_timeout"]
+[connection signal="timeout" from="area_healing_checker" to="." method="_on_area_healing_checker_timeout"]

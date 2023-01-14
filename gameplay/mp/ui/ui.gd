@@ -185,7 +185,17 @@ func on_squad_spawn(_squad :Squad, _icon :Resource):
 func _on_squad_icon_click(_icon :SquadIcon, _squad :Squad):
 	_squad.emit_signal("squad_selected", _squad)
 	
-func on_squad_update(_squad :Squad):
+func on_squad_unit_added(_squad :Squad):
+	if not is_player_squad(_squad):
+		return
+		
+	if not squads.has(_squad):
+		return
+		
+	squads[_squad].update_unit_size(_squad.unit_size())
+	squads[_squad].show_squad_heal()
+	
+func on_squad_unit_dead(_squad :Squad):
 	if not is_player_squad(_squad):
 		return
 		
@@ -299,6 +309,8 @@ func add_minimap_object(object_path :NodePath, color :Color = Color.white, _icon
 	
 func on_harvest_time(_building :Farm, _amount :int):
 	player_coin += _amount
+	player_coin = clamp(player_coin, 0, 1000)
+		
 	_update_player_coin()
 	
 func _update_player_coin():

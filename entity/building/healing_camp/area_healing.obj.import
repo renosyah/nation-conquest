@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/area_healing.obj-e223aec663d13bba11b8b5138d30fa17.mesh"
+
+[deps]
+
+files=[ "res://.import/area_healing.obj-e223aec663d13bba11b8b5138d30fa17.mesh" ]
+
+source_file="res://entity/building/healing_camp/area_healing.obj"
+dest_files=[ "res://.import/area_healing.obj-e223aec663d13bba11b8b5138d30fa17.mesh", "res://.import/area_healing.obj-e223aec663d13bba11b8b5138d30fa17.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

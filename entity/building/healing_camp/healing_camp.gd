@@ -1,5 +1,5 @@
 extends BaseBuilding
-class_name Barrack
+class_name HealingCamp
 
 onready var _collision_shape = $CollisionShape
 
@@ -14,8 +14,10 @@ onready var _barrack = $MeshInstance/barrack
 
 onready var _highlight_material :SpatialMaterial = $MeshInstance2/barrack2.get_surface_material(0).duplicate()
 
+onready var _area_healing = $area_healing
 onready var _area_build = $area_build
 onready var _tween = $Tween
+onready var _area_healing_indicator = $MeshInstance/MeshInstance
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,6 +31,8 @@ func _ready():
 	
 	_area_build.input_ray_pickable = is_selectable
 	set_all_highlight_material(_barrack_2, _highlight_material)
+	
+	_area_healing_indicator.visible = false
 	
 	set_process(true)
 	
@@ -80,3 +84,50 @@ func _on_input_detection_any_gesture(sig ,event):
 	if event is InputEventSingleScreenTap:
 		emit_signal("building_selected", self)
 		
+func _on_reinforce_timer_timeout():
+	if status != status_deployed:
+		return
+		
+	var squad_to_heal :Array = []
+	
+	for object in _area_healing.get_overlapping_bodies():
+		if not object is Squad:
+			return
+			
+		if object.player_id == player_id:
+			squad_to_heal.append(object)
+			
+		if object.team != team:
+			return
+	
+	for squad in squad_to_heal:
+		squad.reinforce_squad()
+		
+func _on_area_healing_checker_timeout():
+	if status != status_deployed:
+		return
+		
+	_area_healing_indicator.visible = false
+		
+	for object in _area_healing.get_overlapping_bodies():
+		if not object is Squad:
+			return
+			
+		if object.player_id == player_id:
+			_area_healing_indicator.visible = true
+			return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

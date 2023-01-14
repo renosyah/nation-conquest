@@ -299,7 +299,8 @@ remotesync func _spawn_squad(_squad_data :Dictionary):
 	_squad.is_selectable = (_squad_data.player_id == NetworkLobbyManager.get_id())
 	
 	var _squad_spawn = _squad.spawn(self)
-	_squad_spawn.connect("squad_update", self, "on_squad_update")
+	_squad_spawn.connect("squad_unit_added", self , "on_squad_unit_added")
+	_squad_spawn.connect("squad_unit_dead", self, "on_squad_unit_dead")
 	_squad_spawn.connect("squad_selected", self,"on_squad_selected")
 	_squad_spawn.connect("squad_dead", self, "on_squad_dead")
 	_squad_spawn.translation = _squad.position
@@ -310,8 +311,11 @@ func on_squad_spawn(_squad :Squad, _icon :Resource):
 	_all_squads.append(_squad)
 	_ui.on_squad_spawn(_squad, _icon)
 	
-func on_squad_update(_squad :Squad):
-	_ui.on_squad_update(_squad)
+func on_squad_unit_added(_squad :Squad):
+	_ui.on_squad_unit_added(_squad)
+	
+func on_squad_unit_dead(_squad :Squad):
+	_ui.on_squad_unit_dead(_squad)
 	
 func on_squad_selected(_squad :Squad):
 	if _ui.is_enemy_squad(_squad) and not _selected_squad.empty():

@@ -124,6 +124,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-uuid/uuid.gd"
 }, {
+"base": "BaseBuilding",
+"class": "HealingCamp",
+"language": "GDScript",
+"path": "res://entity/building/healing_camp/healing_camp.gd"
+}, {
 "base": "Spatial",
 "class": "HitParticle",
 "language": "GDScript",
@@ -308,6 +313,7 @@ _global_script_class_icons={
 "CustomTextParticle": "",
 "Farm": "",
 "GDUUID": "",
+"HealingCamp": "",
 "HitParticle": "",
 "HpBar3D": "",
 "InputEventMultiScreenDrag": "",

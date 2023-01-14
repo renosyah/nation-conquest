@@ -5,7 +5,8 @@ const squad_selected_color :Color = Color(1, 1, 1, 1)
 const squad_unselected_color :Color = Color(1, 1, 1, 0.2)
 
 signal squad_selected(_squad)
-signal squad_update(_squad)
+signal squad_unit_dead(_squad)
+signal squad_unit_added(_squad)
 signal squad_dead(_squad)
 
 export var unit :Resource
@@ -128,6 +129,7 @@ func _create_unit(unit_name :String) -> BaseUnit:
 	
 func _reassign_unit_formation():
 	for i in range(_units.size()):
+		_units[i].is_moving = true
 		_units[i].move_to = _pivot.get_child(i)
 		
 func _unit_take_damage(_unit :BaseUnit, _damage :int):
@@ -176,9 +178,21 @@ remotesync func _erase_unit(_unit_path :NodePath):
 			rpc("_squad_disband")
 		return
 		
-	emit_signal("squad_update", self)
+	emit_signal("squad_unit_dead", self)
 		
 		
+remotesync func _reinforce_squad(_unit_name :String):
+	var _unit = _create_unit(_unit_name)
+	_unit.set_as_toplevel(true)
+	_unit.translation = global_transform.origin + Vector3(0, 2, 0)
+	_units.append(_unit)
+	
+	(_unit_count.mesh as TextMesh).text = str(_units.size())
+	
+	_reassign_unit_formation()
+	emit_signal("squad_unit_added", self)
+	
+	
 remotesync func _squad_disband():
 	is_dead = true
 	set_process(false)
@@ -282,6 +296,15 @@ func is_in_combat() -> bool:
 	
 func unit_size() -> int:
 	return _units.size()
+	
+func reinforce_squad() -> void:
+	if not _is_master:
+		return
+		
+	if unit_size() >= max_unit:
+		return
+		
+	rpc("_reinforce_squad", "unit-" +  GDUUID.v4())
 	
 func disband():
 	if not _is_master:

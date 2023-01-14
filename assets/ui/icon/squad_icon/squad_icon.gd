@@ -14,7 +14,9 @@ onready var _frame = $Control/Frame
 onready var _label = $Control/VBoxContainer2/MarginContainer2/VBoxContainer/Label
 onready var _frame_2 = $Control/Frame2
 onready var _frame_3 = $Control/Frame3
+onready var _frame_4 = $Control/Frame4
 onready var _tween = $Tween
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,6 +25,7 @@ func _ready():
 	_frame.modulate = Color.transparent
 	_frame_2.modulate = color
 	_frame_3.modulate.a = 0
+	_frame_4.modulate.a = 0
 	
 func set_selected(val :bool):
 	is_selected = val
@@ -33,6 +36,10 @@ func update_unit_size(_val :int):
 
 func show_squad_hurt():
 	_tween.interpolate_property(_frame_3, "modulate:a", 1, 0, 0.2, Tween.TRANS_SINE)
+	_tween.start()
+	
+func show_squad_heal():
+	_tween.interpolate_property(_frame_4, "modulate:a", 1, 0, 0.2, Tween.TRANS_SINE)
 	_tween.start()
 
 func _on_squad_icon_gui_input(event):
