@@ -455,6 +455,7 @@ margin_right = 606.0
 visible = false
 
 [node name="result" parent="CanvasLayer" instance=ExtResource( 21 )]
+visible = false
 
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer/main_menu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/open_building" to="." method="_on_open_building_pressed"]

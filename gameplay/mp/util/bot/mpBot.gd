@@ -138,7 +138,9 @@ func _on_build_timer():
 		preload("res://data/building_data/buildings/archer_tower.tres"),
 		preload("res://data/building_data/buildings/barrack.tres"),
 		preload("res://data/building_data/buildings/shooting_range.tres"),
-		preload("res://data/building_data/buildings/blacksmith.tres")
+		preload("res://data/building_data/buildings/blacksmith.tres"),
+		preload("res://data/building_data/buildings/healing_camp.tres"),
+		preload("res://data/building_data/buildings/stable.tres")
 	]
 	
 	_buildings.shuffle()

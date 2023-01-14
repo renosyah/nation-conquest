@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "BaseBuilding",
 "class": "Barrack",
 "language": "GDScript",
-"path": "res://entity/building/blacksmith/blacksmith.gd"
+"path": "res://entity/building/barrack/barrack.gd"
 }, {
 "base": "BaseEntity",
 "class": "BaseBuilding",
@@ -77,7 +77,7 @@ _global_script_classes=[ {
 "base": "BaseBuilding",
 "class": "Blacksmith",
 "language": "GDScript",
-"path": "res://entity/building/barrack/barrack.gd"
+"path": "res://entity/building/blacksmith/blacksmith.gd"
 }, {
 "base": "BaseData",
 "class": "BuildingData",
@@ -264,6 +264,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/ui/icon/squad_icon/squad_icon.gd"
 }, {
+"base": "BaseBuilding",
+"class": "Stable",
+"language": "GDScript",
+"path": "res://entity/building/stable/stable.gd"
+}, {
 "base": "Spatial",
 "class": "Tap",
 "language": "GDScript",
@@ -341,6 +346,7 @@ _global_script_class_icons={
 "Squad": "",
 "SquadData": "",
 "SquadIcon": "",
+"Stable": "",
 "Tap": "",
 "TownCenter": "",
 "UnitHighlight": "",

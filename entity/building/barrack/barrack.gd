@@ -1,5 +1,5 @@
 extends BaseBuilding
-class_name Blacksmith
+class_name Barrack
 
 onready var _collision_shape = $CollisionShape
 

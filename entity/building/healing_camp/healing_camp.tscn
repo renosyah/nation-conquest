@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://entity/building/healing_camp/healing_camp.gd" type="Script" id=1]
 [ext_resource path="res://entity/building/model/barrel.obj" type="ArrayMesh" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=8]
 [ext_resource path="res://entity/building/model/food_box.obj" type="ArrayMesh" id=9]
 [ext_resource path="res://entity/building/model/food_barrel.obj" type="ArrayMesh" id=10]
+[ext_resource path="res://entity/building/healing_camp/healing_icon.obj" type="ArrayMesh" id=11]
 
 [sub_resource type="SpatialMaterial" id=62]
 flags_vertex_lighting = true
@@ -53,6 +54,69 @@ flags_vertex_lighting = true
 flags_no_depth_test = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 1, 1, 1, 0.682353 )
+
+[sub_resource type="SpatialMaterial" id=65]
+flags_unshaded = true
+flags_vertex_lighting = true
+flags_no_depth_test = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.129412, 0.866667, 0, 0.682353 )
+
+[sub_resource type="Animation" id=66]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance2:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 7.03855, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MeshInstance2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=67]
+resource_name = "healing"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance2:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 7.03855, 0 ), Vector3( 0, 6.26757, 0 ), Vector3( 0, 8.03015, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MeshInstance2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
+}
 
 [sub_resource type="SpatialMaterial" id=64]
 flags_transparent = true
@@ -109,10 +173,24 @@ material/1 = SubResource( 52 )
 material/2 = SubResource( 19 )
 
 [node name="MeshInstance" type="MeshInstance" parent="MeshInstance"]
+visible = false
 cast_shadow = 0
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 60 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="MeshInstance/MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.03855, 0 )
+cast_shadow = 0
+mesh = ExtResource( 11 )
+skeleton = NodePath("../..")
+software_skinning_transform_normals = false
+material/0 = SubResource( 65 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MeshInstance/MeshInstance"]
+autoplay = "healing"
+anims/RESET = SubResource( 66 )
+anims/healing = SubResource( 67 )
 
 [node name="MeshInstance2" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
