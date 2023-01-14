@@ -103,6 +103,7 @@ autostart = true
 transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.09992, 0 )
 
 [node name="hit_particle" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.34465, 0 )
 custom_particle_scene = ExtResource( 6 )
 
 [node name="Tween" type="Tween" parent="."]

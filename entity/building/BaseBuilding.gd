@@ -57,8 +57,6 @@ func _ready():
 	_building_timmer.one_shot = true
 	add_child(_building_timmer)
 	
-	
-	
 	input_ray_pickable = is_selectable
 	
 	set_process(true)
@@ -79,6 +77,10 @@ remotesync func _finish_building():
 	status = status_deployed
 	set_process(false)
 	emit_signal("building_deployed", self)
+	
+remotesync func _take_damage(damage :int, hp_remain :int) -> void:
+	hp = hp_remain
+	emit_signal("building_take_damage", self, damage)
 	
 func _building_timmer_timeout():
 	if not _is_master:
@@ -110,7 +112,8 @@ func take_damage(damage :int) -> void:
 		rpc("_dead")
 		return
 		
-	emit_signal("building_take_damage", self, damage)
+	rpc("_take_damage", damage, hp)
+	
 	
 func demolish() -> void:
 	rpc("_dead")

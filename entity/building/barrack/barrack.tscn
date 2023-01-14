@@ -204,6 +204,7 @@ transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21324, 0 )
 visible = false
 
 [node name="hit_particle" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.16921, 0 )
 custom_particle_scene = ExtResource( 6 )
 
 [node name="Tween" type="Tween" parent="."]

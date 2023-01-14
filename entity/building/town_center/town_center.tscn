@@ -170,6 +170,7 @@ shape = SubResource( 17 )
 transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.93297, 0 )
 
 [node name="hit_particle" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.12691, 0 )
 custom_particle_scene = ExtResource( 6 )
 
 [node name="Tween" type="Tween" parent="."]

@@ -56,6 +56,16 @@ remotesync func _finish_building():
 	_hp_bar.update_bar(hp, max_hp)
 	_hp_bar.visible = true
 	
+remotesync func _take_damage(damage :int, hp_remain :int) -> void:
+	._take_damage(damage, hp_remain)
+	
+	_hp_bar.update_bar(hp, max_hp)
+	_hit_particle.display_hit(
+		"-" + str(damage), Color.white,
+		global_transform.origin
+	)
+	
+	
 func moving(delta :float) -> void:
 	if status == status_deploying:
 		can_build = _area_build.get_overlapping_bodies().empty() and translation.distance_to(base_position) < max_distance_from_base
@@ -64,11 +74,7 @@ func moving(delta :float) -> void:
 func take_damage(damage :int) -> void:
 	.take_damage(damage)
 	
-	_hp_bar.update_bar(hp, max_hp)
-	_hit_particle.display_hit(
-		"-" + str(damage), Color.white,
-		global_transform.origin
-	)
+
 	
 func _on_area_build_input_event(camera, event, position, normal, shape_idx):
 	if status != status_deployed:

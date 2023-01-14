@@ -78,6 +78,15 @@ remotesync func _finish_building():
 	_hp_bar.update_bar(hp, max_hp)
 	_hp_bar.visible = true
 	
+remotesync func _take_damage(damage :int, hp_remain :int) -> void:
+	._take_damage(damage, hp_remain)
+	
+	_hp_bar.update_bar(hp, max_hp)
+	_hit_particle.display_hit(
+		"-" + str(damage), Color.white,
+		 _garrison_position.global_transform.origin
+	)
+	
 func get_garrison_spawn_pos() -> Vector3:
 	var angle := rand_range(0, TAU)
 	var distance := rand_range(0.5, 1)
@@ -126,15 +135,7 @@ func moving(delta :float) -> void:
 		can_build = _area_build.get_overlapping_bodies().empty() and translation.distance_to(base_position) < max_distance_from_base
 		_mesh_instance_2_material.albedo_color = Color(1,1,1,0.5) if can_build else Color(1,0,0,0.5)
 	
-func take_damage(damage :int) -> void:
-	.take_damage(damage)
-	
-	_hp_bar.update_bar(hp, max_hp)
-	_hit_particle.display_hit(
-		"-" + str(damage), Color.white,
-		 _garrison_position.global_transform.origin
-	)
-	
+
 func _unit_dead(_unit :BaseUnit):
 	rpc("_erase_unit", _unit.get_path())
 	

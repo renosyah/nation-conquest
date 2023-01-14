@@ -13,6 +13,9 @@ class_name BuildingData
 # blacksmith = 5
 # stable = 6
 
+# healing camp = 7
+# trebuchet = 8
+
 export var player_id :int
 export var building_name :String
 export var building_description :String

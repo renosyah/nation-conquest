@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/base.obj-118353744b37d998fb0648d0bb130037.mesh"
+
+[deps]
+
+files=[ "res://.import/base.obj-118353744b37d998fb0648d0bb130037.mesh" ]
+
+source_file="res://entity/building/trebuchet/base.obj"
+dest_files=[ "res://.import/base.obj-118353744b37d998fb0648d0bb130037.mesh", "res://.import/base.obj-118353744b37d998fb0648d0bb130037.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

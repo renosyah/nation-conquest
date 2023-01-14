@@ -1,17 +1,17 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://data/building_data/buildingData.gd" type="Script" id=1]
-[ext_resource path="res://entity/building/healing_camp/healing_camp.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ui/icon/building_icon/healing_camp.png" type="Texture" id=3]
+[ext_resource path="res://entity/building/trebuchet/trebuchet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ui/icon/building_icon/trebuchet.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 1 )
 player_id = 0
-building_name = "Healing Camp"
-building_description = "Reinforce squad"
-price = 60
-building_id = 7
-requirement_ids = [ 0, 1, 3, 4 ]
+building_name = "Trebuchet"
+building_description = "Heavy siege weapon"
+price = 125
+building_id = 8
+requirement_ids = [ 0, 5 ]
 node_name = ""
 network_master = 0
 building = ExtResource( 2 )

@@ -1,0 +1,199 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://entity/building/model/barrel.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://entity/building/trebuchet/body.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://entity/building/trebuchet/base.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://entity/building/trebuchet/arm.obj" type="ArrayMesh" id=4]
+[ext_resource path="res://entity/building/trebuchet/counterweight.obj" type="ArrayMesh" id=5]
+[ext_resource path="res://entity/building/trebuchet/trebuchet_turret/trebuchet_turret.gd" type="Script" id=6]
+
+[sub_resource type="SpatialMaterial" id=21]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.309804, 0.309804, 0.309804, 1 )
+
+[sub_resource type="SpatialMaterial" id=22]
+flags_unshaded = true
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+
+[sub_resource type="SpatialMaterial" id=15]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.690196, 0.372549, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=16]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.690196, 0.372549, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=17]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.447059, 0.239216, 0, 1 )
+
+[sub_resource type="Animation" id=18]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("base/body/arm:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -25, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("base/body/weight:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 5.21901, 3.49605 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "firing"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("base/body/arm:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 0.8, 1.4, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -25, 0, 0 ), Vector3( -25, 0, 0 ), Vector3( 148.484, 0, 0 ), Vector3( -25, 0, 0 ), Vector3( -25, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("base/body/weight:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 5.21901, 3.49605 ), Vector3( 0, 5.21901, 3.49605 ), Vector3( 0, 2.75971, 2.9697 ), Vector3( 0, 1.41843, 0.976526 ), Vector3( 0, 2.78797, -1.10721 ), Vector3( 0, 1.90937, -0.310494 ), Vector3( 0, 1.70355, 1.06712 ), Vector3( 0, 1.7933, 2.25794 ), Vector3( 0, 2.66977, 3.11773 ), Vector3( 0, 3.9376, 3.6062 ), Vector3( 0, 5.21901, 3.49605 ), Vector3( 0, 5.21901, 3.49605 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_animation_projectile_release"
+} ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("base/body/arm:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -25, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("base/body/weight:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 5.21901, 3.49605 ) ]
+}
+
+[sub_resource type="SpatialMaterial" id=7]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.184314, 0.0901961, 0.00392157, 1 )
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.345098, 0.168627, 0, 1 )
+
+[node name="trebuchet_turret" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+script = ExtResource( 6 )
+
+[node name="base" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.322466, 0 )
+mesh = ExtResource( 3 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 21 )
+material/1 = SubResource( 22 )
+
+[node name="body" type="MeshInstance" parent="base"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+mesh = ExtResource( 2 )
+skeleton = NodePath("../..")
+software_skinning_transform_normals = false
+material/0 = SubResource( 15 )
+
+[node name="arm" type="MeshInstance" parent="base/body"]
+transform = Transform( 1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 5.80698, 1.33101 )
+mesh = ExtResource( 4 )
+skeleton = NodePath("../../..")
+software_skinning_transform_normals = false
+material/0 = SubResource( 16 )
+
+[node name="weight" type="MeshInstance" parent="base/body"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21901, 3.49605 )
+mesh = ExtResource( 5 )
+skeleton = NodePath("../../..")
+software_skinning_transform_normals = false
+material/0 = SubResource( 17 )
+
+[node name="Position3D" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.3645, -8.58133 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 18 )
+anims/firing = SubResource( 19 )
+anims/idle = SubResource( 20 )
+
+[node name="barrel" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.12063, 0.301947, 0.704054 )
+mesh = ExtResource( 1 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 7 )
+material/1 = SubResource( 8 )
+
+[node name="barrel3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.99803, 0.301947, 1.89699 )
+mesh = ExtResource( 1 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 7 )
+material/1 = SubResource( 8 )
+
+[node name="firing_delay" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
