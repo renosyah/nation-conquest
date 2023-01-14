@@ -2,7 +2,7 @@
 
 [ext_resource path="res://data/building_data/buildingData.gd" type="Script" id=1]
 [ext_resource path="res://entity/building/healing_camp/healing_camp.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ui/icon/building_icon/blacksmith.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/icon/building_icon/healing_camp.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 1 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://entity/building/healing_camp/healing_camp.gd" type="Script" id=1]
 [ext_resource path="res://entity/building/model/barrel.obj" type="ArrayMesh" id=2]
@@ -11,27 +11,12 @@
 [ext_resource path="res://entity/building/model/food_box.obj" type="ArrayMesh" id=9]
 [ext_resource path="res://entity/building/model/food_barrel.obj" type="ArrayMesh" id=10]
 
-[sub_resource type="SpatialMaterial" id=53]
+[sub_resource type="SpatialMaterial" id=62]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
-albedo_color = Color( 0.686275, 0.388235, 0, 1 )
+albedo_color = Color( 0.490196, 0.490196, 0.490196, 1 )
 
-[sub_resource type="SpatialMaterial" id=54]
-flags_vertex_lighting = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 0.345098, 0.168627, 0, 1 )
-
-[sub_resource type="SpatialMaterial" id=55]
-flags_vertex_lighting = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 0.145098, 0.145098, 0.145098, 1 )
-
-[sub_resource type="SpatialMaterial" id=56]
-flags_vertex_lighting = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 0.615686, 0.615686, 0.615686, 1 )
-
-[sub_resource type="SpatialMaterial" id=57]
+[sub_resource type="SpatialMaterial" id=63]
 flags_unshaded = true
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
@@ -69,7 +54,7 @@ flags_no_depth_test = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 1, 1, 1, 0.682353 )
 
-[sub_resource type="SpatialMaterial" id=59]
+[sub_resource type="SpatialMaterial" id=64]
 flags_transparent = true
 flags_unshaded = true
 flags_no_depth_test = true
@@ -77,14 +62,14 @@ flags_do_not_receive_shadows = true
 albedo_color = Color( 1, 1, 1, 0.647059 )
 
 [sub_resource type="BoxShape" id=12]
-extents = Vector3( 1.68065, 3.10908, 1.78517 )
+extents = Vector3( 2.79042, 3.10908, 2.49005 )
 
-[sub_resource type="ConvexPolygonShape" id=50]
-points = PoolVector3Array( -1.68958, -0.321129, -2.6022, -5.29629, -0.320741, -2.6022, -1.78958, -0.432329, 7.35702, -3.95449, 2.77858, 2.94858, 5.75425, 0.612587, -2.87525, 0.0774803, 3.74979, 0.0366666, 5.42254, -0.310554, 7.0571, -5.59929, 0.613406, 7.35702, -5.59929, 0.613406, -2.87525, 5.45125, -0.321128, -2.6022, 5.68422, 0.551886, 7.2939, 3.96053, 2.77858, 4.29385, -5.26654, -0.309783, 7.0571, 4.10945, 2.77858, 0.859054, -3.91998, 2.67563, 4.23882, -3.95449, 2.77858, 0.860056, -0.13803, 2.08794, -1.80992, 5.25349, 1.58558, 5.19347, 1.94455, -0.432738, 7.35602, -5.03162, 1.58691, 5.15433, 5.17182, 1.58672, -0.0193626, -1.78958, 0.613816, 7.35702, -4.93637, 1.58824, 0.0172907, 0.14785, 2.08768, -1.80738, -4.34997, 2.31056, 4.52531, 1.94455, 0.613816, -2.87625 )
+[sub_resource type="ConvexPolygonShape" id=61]
+points = PoolVector3Array( 2.25562, -0.2246, 1.36589, -0.0963198, -0.263483, -2.56738, -0.250737, -0.263483, -2.52824, 0.0182462, 3.64453, 0.0495077, -2.25511, -0.2246, 1.36541, 0.0934209, 2.04112, 2.23209, 2.25562, -0.2246, -1.29366, -1.52464, 2.07051, -1.01763, 0.865531, 2.07215, -1.64586, 1.79215, 2.07324, -0.0991797, -2.29384, -0.263483, -1.21731, 1.17622, -0.2246, 2.3294, -1.56977, 2.07245, 0.786898, -1.33013, -0.2246, 2.29171, -0.866655, 2.07166, -1.647, 1.57446, 2.07424, 0.752865, -2.60318, -0.2246, -0.0614899, 1.33013, -0.263483, -2.21948, -0.644112, 2.07118, 1.88795, 2.60318, -0.2246, 0.131791, -1.33013, -0.263483, -2.21996, -1.78693, 2.07157, -0.136122, 1.52296, 2.07087, -1.01662, 0.574839, 2.07449, 1.9397, 0.0544549, 2.07135, -1.86479, -0.0185745, 3.62762, -0.06303, -0.829166, -0.147223, 2.36902, 1.33013, -0.2246, 2.29123, -2.60318, -0.2246, 0.131308, 0.0958102, -0.263483, -2.56738, 1.83161, -0.263483, -1.71839, -0.0554954, 3.63661, 0.0116437, 2.60318, -0.2246, -0.0610067, 0.0553968, 3.63321, -0.0252738, 1.56642, 2.07245, -0.946877, -0.0554321, 2.07138, -1.86494, -2.25562, -0.263483, -1.29463, 0.936236, 2.07092, -1.60319, -1.63898, 2.07149, -0.68874, -1.71811, 2.07253, 0.232831, 1.25318, -0.263483, -2.25862, -0.389397, 2.074, 2.01515, -2.29384, -0.2246, 1.2881, 2.29435, -0.2246, -1.21683, 2.29435, -0.2246, 1.28858, 1.49354, 2.10906, 0.822853, 2.57415, -0.241332, 0.0150179, -1.25318, -0.263483, -2.25862, 1.75477, 2.07319, 0.0855308, -2.40952, -0.224211, -0.793543, 0.683044, 2.07293, 1.82011, -0.0554988, 3.52431, 0.197454, -1.17571, -0.2246, 2.3294, 0.0920079, 3.59225, 0.0483809, -0.0186732, 2.0747, 2.16845, -1.49381, 2.10987, 0.822559, 2.41003, -0.2246, -0.79306, -2.40952, -0.2246, 0.864328, 0.829166, -0.263483, -2.3741, 2.41003, -0.2246, 0.864328, -0.753839, 2.07063, -1.67928, -0.0920869, 3.58395, -0.0631462, 0.753245, 2.0711, -1.67803 )
 
 [sub_resource type="CylinderShape" id=58]
 height = 24.4243
-radius = 19.735
+radius = 10.7896
 
 [node name="healing_camp" type="KinematicBody"]
 collision_layer = 0
@@ -97,44 +82,18 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 [node name="barrack" type="MeshInstance" parent="MeshInstance"]
 mesh = ExtResource( 7 )
 software_skinning_transform_normals = false
-material/0 = SubResource( 53 )
-material/1 = SubResource( 54 )
-material/2 = SubResource( 55 )
-material/3 = SubResource( 56 )
-material/4 = SubResource( 57 )
+material/0 = SubResource( 62 )
+material/1 = SubResource( 63 )
 
 [node name="barrel" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.49471, 0.00167227, 2.5745 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.09806, 0.344684, 2.05701 )
 mesh = ExtResource( 2 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 7 )
 material/1 = SubResource( 8 )
-
-[node name="barrel3" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.51562, -0.0690681, 6.19394 )
-mesh = ExtResource( 2 )
-software_skinning_transform_normals = false
-material/0 = SubResource( 7 )
-material/1 = SubResource( 8 )
-
-[node name="barrel2" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 0.0316201, 0, -0.9995, 0, 1, 0, 0.9995, 0, 0.0316201, 4.53549, 0.301947, 2.13131 )
-mesh = ExtResource( 9 )
-software_skinning_transform_normals = false
-material/0 = SubResource( 51 )
-material/1 = SubResource( 52 )
-material/2 = SubResource( 19 )
-
-[node name="barrel4" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 0.0316201, 0, -0.9995, 0, 1, 0, 0.9995, 0, 0.0316201, 4.58078, 0.301947, 3.56289 )
-mesh = ExtResource( 10 )
-software_skinning_transform_normals = false
-material/0 = SubResource( 51 )
-material/1 = SubResource( 52 )
-material/2 = SubResource( 19 )
 
 [node name="barrel5" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 0.0316201, 0, -0.9995, 0, 1, 0, 0.9995, 0, 0.0316201, -4.43033, 0.301947, 2.13131 )
+transform = Transform( -0.386341, 0, -0.922356, 0, 1, 0, 0.922356, 0, -0.386341, 2.71415, 0.301947, 0.153943 )
 mesh = ExtResource( 9 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 51 )
@@ -142,7 +101,7 @@ material/1 = SubResource( 52 )
 material/2 = SubResource( 19 )
 
 [node name="barrel6" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 0.0316201, 0, -0.9995, 0, 1, 0, 0.9995, 0, 0.0316201, -4.38504, 0.301947, 3.56289 )
+transform = Transform( -0.386341, 0, -0.922356, 0, 1, 0, 0.922356, 0, -0.386341, 2.1608, 0.301947, 1.47503 )
 mesh = ExtResource( 10 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 51 )
@@ -150,7 +109,6 @@ material/1 = SubResource( 52 )
 material/2 = SubResource( 19 )
 
 [node name="MeshInstance" type="MeshInstance" parent="MeshInstance"]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
 cast_shadow = 0
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
@@ -164,11 +122,8 @@ visible = false
 mesh = ExtResource( 7 )
 skeleton = NodePath("../../MeshInstance")
 software_skinning_transform_normals = false
-material/0 = SubResource( 59 )
-material/1 = SubResource( 59 )
-material/2 = SubResource( 59 )
-material/3 = SubResource( 59 )
-material/4 = SubResource( 59 )
+material/0 = SubResource( 64 )
+material/1 = SubResource( 64 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.80574, 0 )
@@ -182,7 +137,7 @@ monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="area_build"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-shape = SubResource( 50 )
+shape = SubResource( 61 )
 
 [node name="area_healing" type="Area" parent="."]
 collision_layer = 2

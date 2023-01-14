@@ -25,9 +25,9 @@ func _ready():
 	_mesh_instance.visible = false
 	_mesh_instance_2.visible = true
 	
-	var _team_color_material :SpatialMaterial = _barrack.get_surface_material(4).duplicate()
+	var _team_color_material :SpatialMaterial = _barrack.get_surface_material(1).duplicate()
 	_team_color_material.albedo_color = color
-	_barrack.set_surface_material(4, _team_color_material)
+	_barrack.set_surface_material(1, _team_color_material)
 	
 	_area_build.input_ray_pickable = is_selectable
 	set_all_highlight_material(_barrack_2, _highlight_material)
