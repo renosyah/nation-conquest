@@ -208,22 +208,11 @@ func _on_action_timer():
 	if not is_instance_valid(squad):
 		return
 		
-	var targets_copy :Array = enemy_squads.duplicate() + enemy_buildings.duplicate()
-	if targets_copy.empty():
+	var targets :Array = enemy_squads + enemy_buildings
+	if targets.empty():
 		return
 		
-	targets_copy.shuffle()
-	
-	var target = targets_copy[0]
-	for s in targets_copy:
-		if not is_instance_valid(target) or not is_instance_valid(s):
-			continue
-			
-		var dis_1 = target.translation.distance_squared_to(squad.translation)
-		var dis_2 = target.translation.distance_squared_to(s.translation)
-		if dis_2 < dis_1:
-			target = s
-			
+	var target = targets[rand_range(0, targets.size())]
 	if not is_instance_valid(target):
 		return
 		
