@@ -102,6 +102,9 @@ func leave():
 	_exit_delay.start()
 	yield(_exit_delay,"timeout")
 	
+	if is_server():
+		_server_advertiser.dismantle()
+	
 	_network.disconnect_from_server()
 	_lobby_players.clear()
 	argument.clear()
