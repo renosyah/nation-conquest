@@ -63,6 +63,8 @@ func _generate_map():
 	land_mesh = lands[0]
 	add_child(land_mesh)
 	
+	#ResourceSaver.save("user://map.tres", land_mesh.mesh)
+	
 	land_mesh.create_trimesh_collision()
 	
 	land_mesh.cast_shadow = false

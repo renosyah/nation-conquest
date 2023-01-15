@@ -1,10 +1,17 @@
 extends Control
 
+onready var title = $CanvasLayer/Control/VBoxContainer/Label
+onready var control = $CanvasLayer/Control
 onready var server_browser = $CanvasLayer/Control/server_browser
 onready var main_menu_buttons = $CanvasLayer/Control/main_menu_buttons
 onready var host_menu_buttons = $CanvasLayer/Control/host_menu_buttons
+onready var tween = $Tween
+
 
 func _ready():
+	title.modulate.a = 0
+	
+	control.visible = false
 	server_browser.visible = false
 	main_menu_buttons.visible = true
 	host_menu_buttons.visible = false
@@ -15,8 +22,8 @@ func _ready():
 	NetworkLobbyManager.connect("on_client_player_connected", self,"on_client_player_connected")
 	NetworkLobbyManager.connect("on_host_player_connected", self,"on_host_player_connected")
 	#NetworkLobbyManager.connect("lobby_player_update", self, "on_lobby_player_update")
-	#NetworkLobbyManager.connect("on_host_disconnected", self, "on_leave")
-	#NetworkLobbyManager.connect("on_leave", self, "on_leave")
+	NetworkLobbyManager.connect("on_host_disconnected", self, "on_leave")
+	NetworkLobbyManager.connect("on_leave", self, "on_leave")
 	NetworkLobbyManager.connect("on_host_ready", self ,"on_host_ready")
 	
 func _notification(what):
@@ -28,7 +35,12 @@ func _notification(what):
 		MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
 			on_back_pressed()
 			return
-		
+	
+func show_ui():
+	control.visible = true
+	tween.interpolate_property(title, "modulate:a", 0, 1, 1.4,Tween.TRANS_LINEAR)
+	tween.start()
+	
 func on_back_pressed():
 	get_tree().quit()
 	
@@ -67,7 +79,18 @@ func on_client_player_connected():
 func on_host_ready():
 	get_tree().change_scene("res://gameplay/mp/client/client.tscn")
 	
+func _on_cancel_pressed():
+	NetworkLobbyManager.leave()
+	host_menu_buttons.visible = false
+	
+func on_leave():
+	main_menu_buttons.visible = true
+	host_menu_buttons.visible = false
 	
 	
-	
-	
+
+
+
+
+
+

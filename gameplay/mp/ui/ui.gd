@@ -381,23 +381,20 @@ func on_player_lose():
 		return
 		
 	result.set_condition(false)
-	_on_build_cancel_pressed()
-	unselected_all_squad()
-	control.visible = false
-	result.visible = true
+	game_over()
 	
 func on_player_win():
 	if result.visible:
 		return
 		
 	result.set_condition(true)
+	game_over()
+	
+func game_over():
 	_on_build_cancel_pressed()
 	unselected_all_squad()
 	control.visible = false
 	result.visible = true
-
-
-
 
 
 
