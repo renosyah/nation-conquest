@@ -112,7 +112,7 @@ func take_damage(damage :int) -> void:
 		rpc("_dead")
 		return
 		
-	rpc("_take_damage", damage, hp)
+	rpc_unreliable("_take_damage", damage, hp)
 	
 	
 func demolish() -> void:

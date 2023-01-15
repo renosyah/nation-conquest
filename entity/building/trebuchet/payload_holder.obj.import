@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/payload_holder.obj-3bbf0e70893ba0901b85905ee82b60eb.mesh"
+
+[deps]
+
+files=[ "res://.import/payload_holder.obj-3bbf0e70893ba0901b85905ee82b60eb.mesh" ]
+
+source_file="res://entity/building/trebuchet/payload_holder.obj"
+dest_files=[ "res://.import/payload_holder.obj-3bbf0e70893ba0901b85905ee82b60eb.mesh", "res://.import/payload_holder.obj-3bbf0e70893ba0901b85905ee82b60eb.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

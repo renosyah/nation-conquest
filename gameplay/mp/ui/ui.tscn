@@ -94,7 +94,6 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 606.0
 margin_bottom = 1024.0
-mouse_filter = 2
 
 [node name="Control" type="VBoxContainer" parent="CanvasLayer/SafeArea"]
 margin_right = 606.0

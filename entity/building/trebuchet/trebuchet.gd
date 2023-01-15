@@ -28,7 +28,9 @@ func _ready():
 	
 	_trebuchet_turret.is_master = _is_master()
 	_trebuchet_turret.set_team_color(color)
-	
+	_trebuchet_turret.player_id = player_id
+	_trebuchet_turret.team = team
+
 	_area_build.input_ray_pickable = is_selectable
 	_barrack_2.set_surface_material(0, _highlight_material)
 	

@@ -1,5 +1,8 @@
 extends Spatial
 
+var player_id :int
+export var team :int = 0
+
 export var is_attacking :bool = false
 var attack_to = null
 export var attack_damage :int = 180
@@ -15,6 +18,9 @@ onready var animation_player = $AnimationPlayer
 onready var firing_delay = $firing_delay
 onready var position_3d = $Position3D
 onready var audio_stream_player_3d = $AudioStreamPlayer3D
+onready var audio_stream_player_3_d_2 = $AudioStreamPlayer3D2
+onready var hit_particle = $hit_particle
+onready var area_damage = $AreaDamage
 
 onready var material :SpatialMaterial = base.get_surface_material(1).duplicate()
 
@@ -24,6 +30,10 @@ var _projectile_pool :Array = []
 func _ready():
 	base.set_surface_material(1, material)
 	audio_stream_player_3d.unit_db = Global.sound_amplified
+	audio_stream_player_3_d_2.unit_db = Global.sound_amplified
+	
+	audio_stream_player_3_d_2.set_as_toplevel(true)
+	area_damage.set_as_toplevel(true)
 	
 	_projectile_pools()
 	set_process(true)
@@ -46,14 +56,13 @@ func _get_projectile() -> BaseProjectile:
 	
 func _create_projectile() -> BaseProjectile:
 	var arrow = preload("res://entity/projectile/boulder/boulder.tscn").instance()
-	arrow.speed = 24
-	arrow.connect("hit", self ,"_arrow_hit")
+	arrow.speed = 36
+	arrow.connect("hit", self ,"_arrow_hit", [arrow])
 	
 	var last_index = get_tree().get_root().get_child_count() - 1
 	get_tree().get_root().get_child(last_index).add_child(arrow)
 	return arrow
 	
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if not is_attacking:
@@ -92,6 +101,8 @@ func _on_animation_projectile_release():
 	arrow.translation = position_3d.global_transform.origin
 	arrow.accuration = 1.0
 	
+	area_damage.translation = attack_to.global_transform.origin
+	
 	if attack_to.has_method("get_prediction_path"):
 		arrow.target = attack_to.get_prediction_path()
 	else:
@@ -99,9 +110,14 @@ func _on_animation_projectile_release():
 		
 	arrow.fire()
 	
-func _arrow_hit():
-	audio_stream_player_3d.stream = preload("res://assets/sound/explode3.wav")
-	audio_stream_player_3d.play()
+func _arrow_hit(arrow :BaseProjectile):
+	audio_stream_player_3_d_2.translation = arrow.global_transform.origin
+	audio_stream_player_3_d_2.stream = preload("res://assets/sound/explode3.wav")
+	audio_stream_player_3_d_2.play()
+	
+	hit_particle.display_hit(
+		"", Color(0.156863, 0.156863, 0.156863), arrow.global_transform.origin
+	)
 	
 	if not is_instance_valid(attack_to):
 		is_attacking = false
@@ -114,8 +130,11 @@ func _arrow_hit():
 	if not is_master:
 		return
 		
-	if attack_to is BaseBuilding:
-		attack_to.take_damage(attack_damage)
-	else:
-		attack_to.take_damage(attack_damage)
+	for body in area_damage.get_overlapping_bodies():
+		if body == self:
+			continue
+			
+		if body is BaseBuilding or body is BaseUnit:
+			if body.team != team:
+				body.take_damage(attack_damage)
 	

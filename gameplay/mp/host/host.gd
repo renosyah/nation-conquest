@@ -42,7 +42,6 @@ func on_ui_deploy_building(_building_data :BuildingData):
 	_building_data.color = player_color
 	_building_data.team = player_team
 	_building_data.base_position = squad_spawn_position
-	_building_data.max_distance_from_base = 24
 	
 	.on_deploying_building(_building_data)
 	
