@@ -362,9 +362,10 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Conquest : Nation"
+config/name="Colony Conquest 2"
+config/description="Simple squad base quick pace RTS for mobile"
 run/main_scene="res://main-menu/main_menu.tscn"
-config/icon="res://icon.png"
+config/icon="res://icn.png"
 
 [autoload]
 

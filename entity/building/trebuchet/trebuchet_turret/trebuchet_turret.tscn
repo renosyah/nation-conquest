@@ -103,10 +103,22 @@ tracks/4/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("base/body/arm2:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=19]
 resource_name = "firing"
-length = 2.0
+length = 1.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("base/body/arm:rotation_degrees")
 tracks/0/interp = 1
@@ -114,7 +126,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 0.8, 1.4, 2 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 1.2, 1.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector3( -25, 0, 0 ), Vector3( -25, 0, 0 ), Vector3( 148.484, 0, 0 ), Vector3( -25, 0, 0 ), Vector3( -25, 0, 0 ) ]
@@ -126,10 +138,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 2 ),
+"times": PoolRealArray( 0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 5.21901, 3.49605 ), Vector3( 0, 5.21901, 3.49605 ), Vector3( 0, 2.75971, 2.9697 ), Vector3( 0, 1.41843, 0.976526 ), Vector3( 0, 2.78797, -1.10721 ), Vector3( 0, 1.90937, -0.310494 ), Vector3( 0, 1.70355, 1.06712 ), Vector3( 0, 1.7933, 2.25794 ), Vector3( 0, 2.66977, 3.11773 ), Vector3( 0, 3.9376, 3.6062 ), Vector3( 0, 5.21901, 3.49605 ), Vector3( 0, 5.21901, 3.49605 ) ]
+"values": [ Vector3( 0, 5.21901, 3.49605 ), Vector3( 0, 5.21901, 3.49605 ), Vector3( 0, 2.75971, 2.9697 ), Vector3( 1.75781e-07, 1.4121, 0.958998 ), Vector3( 0, 2.78797, -1.10721 ), Vector3( 0, 1.90937, -0.310494 ), Vector3( 0, 1.70355, 1.06712 ), Vector3( 0, 1.7933, 2.25794 ), Vector3( 0, 2.66977, 3.11773 ), Vector3( 0, 3.9376, 3.6062 ), Vector3( 0, 5.21901, 3.49605 ), Vector3( 0, 5.21901, 3.49605 ) ]
 }
 tracks/2/type = "method"
 tracks/2/path = NodePath(".")
@@ -138,7 +150,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.8 ),
+"times": PoolRealArray( 0.6 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -152,7 +164,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.8 ),
+"times": PoolRealArray( 0, 0.6 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -164,10 +176,10 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 2 ),
+"times": PoolRealArray( 0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 8.66221e-07, 1.1862, -8.57741 ), Vector3( 8.66221e-07, 1.1862, -8.57741 ), Vector3( 8.66221e-07, 12.2319, -8.57741 ), Vector3( -5.83265e-09, 17.5538, 1.39772 ), Vector3( -8.434e-07, 12.268, 10.9784 ), Vector3( -5.28326e-07, 16.2188, 7.37435 ), Vector3( -1.1596e-08, 17.529, 1.46365 ), Vector3( 4.79243e-07, 16.098, -4.15089 ), Vector3( 8.40543e-07, 12.1481, -8.28369 ), Vector3( 5.07861e-07, 6.53955, -9.93262 ), Vector3( 9.00154e-07, 0.85142, -8.96556 ), Vector3( 8.66221e-07, 1.1862, -8.57741 ) ]
+"values": [ Vector3( 8.66221e-07, 1.1862, -8.57741 ), Vector3( 8.66221e-07, 1.1862, -8.57741 ), Vector3( 8.71002e-07, 11.7926, -8.6321 ), Vector3( -5.83265e-09, 17.5538, 1.39772 ), Vector3( -8.434e-07, 12.268, 10.9784 ), Vector3( -5.28326e-07, 16.2188, 7.37435 ), Vector3( -1.1596e-08, 17.529, 1.46365 ), Vector3( 4.79243e-07, 16.098, -4.15089 ), Vector3( 8.40543e-07, 12.1481, -8.28369 ), Vector3( 5.07861e-07, 6.53955, -9.93262 ), Vector3( 9.00154e-07, 0.85142, -8.96556 ), Vector3( 8.66221e-07, 1.1862, -8.57741 ) ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("base/body/arm2:rotation_degrees")
@@ -176,10 +188,22 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.3, 1.4, 2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 0.7, 0.8, 0.9, 1.1, 1.2, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( -4.93199, -1.825e-05, -9.62417e-06 ), Vector3( -4.93199, -1.825e-05, -9.62417e-06 ), Vector3( 4.898, -180, 180 ), Vector3( -78.014, -7.05472e-05, 5.42916e-05 ), Vector3( -36.73, -2.1991e-05, 3.38262e-07 ), Vector3( 87.7, -0.000344154, -0.00034869 ), Vector3( 78.705, -180, -180 ), Vector3( 86.8901, -180, -180 ), Vector3( 68.5999, -4.7662e-05, -4.42988e-05 ), Vector3( -8.37007, -2.07396e-05, -2.29664e-06 ), Vector3( -4.93199, -1.825e-05, -9.62417e-06 ) ]
+"values": [ Vector3( -3.447, 9.07812e-09, -3.0171e-07 ), Vector3( -3.447, 9.07812e-09, -3.0171e-07 ), Vector3( 340, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 78.705, 0, 0 ), Vector3( 86.89, 0, 0 ), Vector3( 68.5999, -4.7662e-05, -4.42988e-05 ), Vector3( -3.447, 9.07812e-09, -3.0171e-07 ), Vector3( -3.447, 9.07812e-09, -3.0171e-07 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("base/body/arm2:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
 }
 
 [sub_resource type="Animation" id=20]
@@ -292,6 +316,7 @@ material/0 = SubResource( 27 )
 
 [node name="arm2" type="MeshInstance" parent="base/body"]
 transform = Transform( 1, 1.20738e-08, -1.1955e-08, -1.04044e-08, 0.99139, 0.130941, 1.3433e-08, -0.130941, 0.99139, 8.66221e-07, 1.1862, -8.57741 )
+visible = false
 mesh = ExtResource( 9 )
 skeleton = NodePath("../../..")
 software_skinning_transform_normals = false
