@@ -51,7 +51,7 @@ var buildings = []
 var building_rotation :float = 0
 var building_deploying :BuildingData
 
-var player_coin :int = 1000
+var player_coin :int = 100
 var player_team :int = 1
 
 onready var player_id :int = NetworkLobbyManager.get_id()
@@ -380,16 +380,20 @@ func on_player_lose():
 	if result.visible:
 		return
 		
-	control.visible = false
 	result.set_condition(false)
+	_on_build_cancel_pressed()
+	unselected_all_squad()
+	control.visible = false
 	result.visible = true
 	
 func on_player_win():
 	if result.visible:
 		return
 		
-	control.visible = false
 	result.set_condition(true)
+	_on_build_cancel_pressed()
+	unselected_all_squad()
+	control.visible = false
 	result.visible = true
 
 
