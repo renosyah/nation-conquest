@@ -231,10 +231,10 @@ func on_squad_dead(_squad :Squad):
 	add_squad.visible = not is_squad_max() and is_player_have_town_center()
 	
 func is_player_squad(_squad :Squad) -> bool:
-	return _squad.player_id == NetworkLobbyManager.get_id()
+	return _squad.player_id == player_id
 	
 func is_player_building(_building :BaseBuilding) -> bool:
-	return _building.player_id == NetworkLobbyManager.get_id()
+	return _building.player_id == player_id
 	
 func is_enemy_squad(_squad :Squad):
 	return _squad.team != player_team
