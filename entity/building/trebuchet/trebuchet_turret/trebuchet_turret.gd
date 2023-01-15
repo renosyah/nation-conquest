@@ -69,7 +69,13 @@ func _process(delta):
 		return
 		
 	if not is_instance_valid(attack_to):
+		is_attacking = false
 		return
+		
+	if firing_delay.is_stopped():
+		perform_attack()
+		firing_delay.wait_time = attack_delay
+		firing_delay.start()
 		
 	var enemy_pos :Vector3 = attack_to.global_transform.origin
 	var pos = global_transform.origin
@@ -81,12 +87,6 @@ func _process(delta):
 	var _transform = pivot.transform.looking_at(pos.direction_to(to) * 100, Vector3.UP)
 	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
 	
-	if firing_delay.is_stopped():
-		perform_attack()
-		var attack_time = attack_delay
-		firing_delay.wait_time = attack_time if attack_time > 0 else 0.1
-		firing_delay.start()
-		
 func perform_attack():
 	audio_stream_player_3d.stream = preload("res://assets/sound/arrow_fly.wav")
 	audio_stream_player_3d.play()
@@ -95,6 +95,7 @@ func perform_attack():
 	
 func _on_animation_projectile_release():
 	if not is_instance_valid(attack_to):
+		is_attacking = false
 		return
 		
 	var arrow = _get_projectile()

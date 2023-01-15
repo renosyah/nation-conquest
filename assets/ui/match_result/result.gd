@@ -15,7 +15,7 @@ func _ready():
 
 func set_condition(is_win :bool):
 	label_2.text = "Victory" if is_win else "Defeat"
-	label_3.text = "All Enemy Town Center Destroyed!" if is_win else "Your Town Center Has Been Destroyed!"
+	label_3.text = "All Enemy Town Center Destroyed!" if is_win else "You Lose a Town Center"
 	margin_container.visible = true
 
 func _on_main_menu_pressed():

@@ -18,8 +18,6 @@ onready var _area = $Area
 onready var _area_build = $area_build
 onready var _tween = $Tween
 
-var _targets :Array = []
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_hp_bar.visible = false
@@ -84,27 +82,36 @@ func _on_input_detection_any_gesture(sig ,event):
 	if event is InputEventSingleScreenTap:
 		emit_signal("building_selected", self)
 		
-func _attack_targets():
-	if _targets.empty():
-		_trebuchet_turret.is_attacking = false
-		_trebuchet_turret.attack_to = null
+remotesync func _attack_target(_target_path :NodePath):
+	var _target = get_node_or_null(_target_path)
+	if not is_instance_valid(_target):
+		return
+		
+	if _trebuchet_turret.is_attacking:
 		return
 		
 	_trebuchet_turret.is_attacking = true
-	_trebuchet_turret.attack_to = _targets[0]
+	_trebuchet_turret.attack_to = _target
 	
 func _spotted_target():
-	_targets.clear()
-	
+	if _trebuchet_turret.is_attacking:
+		return
+		
 	for body in _area.get_overlapping_bodies():
+		if not is_instance_valid(body):
+			continue
+			
 		if body is BaseUnit or body is BaseBuilding:
 			if body.team == team:
 				continue
 				
-			_targets.append(body)
+			rpc("_attack_target", body.get_path())
 			return
 			
 func _on_agro_timer_timeout():
+	if not _is_master:
+		return
+		
 	if is_dead:
 		return
 		
@@ -112,4 +119,3 @@ func _on_agro_timer_timeout():
 		return
 		
 	_spotted_target()
-	_attack_targets()
