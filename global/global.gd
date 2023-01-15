@@ -14,6 +14,9 @@ onready var player :PlayerData = PlayerData.new()
 
 func _ready():
 	player.player_name = RandomNameGenerator.generate()
+	player.player_color = Color(randf(), randf(), randf(), 1)
+	player.player_team = 1
+	
 	#player.load_data(player_save_file)
 ################################################################
 # setting

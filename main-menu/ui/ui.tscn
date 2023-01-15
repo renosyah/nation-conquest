@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://main-menu/ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=2]
 [ext_resource path="res://addons/server-browser/server_browser.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/ui/icon/setting.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/setting_menu/setting_menu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/SafeArea/SafeArea.tscn" type="PackedScene" id=8]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -62,8 +66,47 @@ margin_bottom = 688.0
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Control/MarginContainer"]
+visible = false
 margin_right = 400.0
 margin_bottom = 479.0
+
+[node name="Label2" type="Label" parent="CanvasLayer/HBoxContainer/Control/MarginContainer/VBoxContainer"]
+margin_right = 400.0
+margin_bottom = 40.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/line_spacing = 1
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 1
+custom_fonts/font = ExtResource( 5 )
+text = "Players"
+align = 1
+valign = 1
+
+[node name="MarginContainer6" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control/MarginContainer/VBoxContainer"]
+margin_top = 44.0
+margin_right = 400.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 24, 24 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/HBoxContainer/Control/MarginContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 400.0
+margin_bottom = 451.0
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Control/MarginContainer/VBoxContainer/ScrollContainer"]
+margin_right = 400.0
+size_flags_horizontal = 3
+
+[node name="MarginContainer7" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control/MarginContainer/VBoxContainer"]
+margin_top = 455.0
+margin_right = 400.0
+margin_bottom = 479.0
+rect_min_size = Vector2( 24, 24 )
 
 [node name="main_menu_buttons" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control"]
 margin_top = 692.0
@@ -95,25 +138,45 @@ margin_right = 344.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
 
-[node name="host" type="Button" parent="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer"]
+[node name="quickplay" type="Button" parent="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer"]
 margin_top = 28.0
 margin_right = 344.0
 margin_bottom = 108.0
 rect_min_size = Vector2( 0, 80 )
 custom_fonts/font = ExtResource( 2 )
-text = "Host"
+text = "Quick Play"
 
-[node name="MarginContainer5" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer"]
+[node name="MarginContainer6" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer"]
 margin_top = 112.0
 margin_right = 344.0
 margin_bottom = 136.0
 rect_min_size = Vector2( 24, 24 )
 
-[node name="join" type="Button" parent="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer"]
 margin_top = 140.0
 margin_right = 344.0
 margin_bottom = 220.0
+
+[node name="host" type="Button" parent="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer/HBoxContainer"]
+margin_right = 156.0
+margin_bottom = 80.0
 rect_min_size = Vector2( 0, 80 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Host"
+
+[node name="MarginContainer7" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer/HBoxContainer"]
+margin_left = 160.0
+margin_right = 184.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 24, 24 )
+
+[node name="join" type="Button" parent="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer/HBoxContainer"]
+margin_left = 188.0
+margin_right = 344.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 0, 80 )
+size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 text = "Join"
 
@@ -257,14 +320,58 @@ margin_right = 528.0
 margin_bottom = 1024.0
 rect_min_size = Vector2( 24, 0 )
 
+[node name="SafeArea" parent="CanvasLayer" instance=ExtResource( 8 )]
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SafeArea"]
+margin_right = 600.0
+margin_bottom = 89.0
+mouse_filter = 2
+size_flags_vertical = 0
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/VBoxContainer"]
+margin_right = 600.0
+margin_bottom = 5.0
+rect_min_size = Vector2( 0, 5 )
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SafeArea/VBoxContainer"]
+margin_top = 9.0
+margin_right = 600.0
+margin_bottom = 89.0
+mouse_filter = 2
+alignment = 2
+
+[node name="setting_menu" type="Button" parent="CanvasLayer/SafeArea/VBoxContainer/HBoxContainer"]
+margin_left = 511.0
+margin_right = 591.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+size_flags_vertical = 0
+icon = ExtResource( 6 )
+flat = true
+expand_icon = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/VBoxContainer/HBoxContainer"]
+margin_left = 595.0
+margin_right = 600.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 5, 0 )
+mouse_filter = 2
+
+[node name="menu" parent="CanvasLayer" instance=ExtResource( 7 )]
+visible = false
+
 [node name="server_browser" parent="CanvasLayer" instance=ExtResource( 3 )]
 visible = false
 
 [node name="Tween" type="Tween" parent="."]
 
-[connection signal="pressed" from="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer/host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer/join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer/quickplay" to="." method="_on_quickplay_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer/HBoxContainer/host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Control/main_menu_buttons/main_menu_buttons/VBoxContainer/HBoxContainer/join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Control/host_menu_buttons/main_menu_buttons/VBoxContainer/play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Control/host_menu_buttons/main_menu_buttons/VBoxContainer/cancel" to="." method="_on_cancel_pressed"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/Control/client_menu_buttons/main_menu_buttons/VBoxContainer/cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="CanvasLayer/SafeArea/VBoxContainer/HBoxContainer/setting_menu" to="." method="_on_setting_menu_pressed"]
 [connection signal="on_join" from="CanvasLayer/server_browser" to="." method="_on_server_browser_on_join"]

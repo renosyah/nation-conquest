@@ -22,6 +22,7 @@ signal on_leave
 signal on_host_ready
 
 var player_name :String = ""
+var player_extra_data :Dictionary = {}
 var configuration :NetworkConfiguration
 var argument :Dictionary = {}
 
@@ -46,6 +47,7 @@ func init_lobby():
 		
 	_network_player.player_name = player_name
 	_network_player.player_status = NetworkPlayer.PLAYER_STATUS_NOT_READY
+	_network_player.extra = player_extra_data
 	
 	if configuration is NetworkServer:
 		_init_host()
@@ -75,6 +77,19 @@ func set_ready():
 	rpc("_request_update_player_joined_status",
 			_network_player.player_network_unique_id, _network_player.to_dictionary())
 		
+func update_player_extra_data(extra :Dictionary):
+	player_extra_data = extra
+	
+	if not is_network_on():
+		return
+	
+	if is_server():
+		_request_update_player_extra_data(
+			_network_player.player_network_unique_id, player_extra_data)
+	else:
+		rpc_id(host_id, "_request_update_player_extra_data",
+			 _network_player.player_network_unique_id, player_extra_data)
+	
 # get current player in lobby
 func get_players() -> Array:
 	var players :Array = []
@@ -174,6 +189,14 @@ remote func _request_append_player_joined(_player_network_unique_id :int, data :
 	_lobby_players.append(data)
 	_server_advertiser.serverInfo["player"] = _lobby_players.size()
 	
+	rpc("_update_player_joined", _lobby_players)
+	
+remote func _request_update_player_extra_data(_player_network_unique_id :int, _extra :Dictionary):
+	for i in _lobby_players:
+		if i["player_network_unique_id"] == _player_network_unique_id:
+			i["extra"] = _extra
+			break
+			
 	rpc("_update_player_joined", _lobby_players)
 	
 remote func _request_erase_player_joined(_player_network_unique_id :int):

@@ -1,7 +1,7 @@
 extends BaseGameplay
 
-onready var player_team :int = 1
-onready var player_color :Color = Color(randf(), randf(), randf(), 1)
+onready var player_team :int = Global.player.player_team
+onready var player_color :Color = Global.player.player_color
 onready var squad_spawn_position :Vector3 = Vector3(0, 15, 0)
 
 # Called when the node enters the scene tree for the first time.
