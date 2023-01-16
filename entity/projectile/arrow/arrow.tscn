@@ -16,6 +16,7 @@ albedo_color = Color( 0.317647, 0.196078, 0, 1 )
 [node name="arrow" type="Spatial"]
 script = ExtResource( 1 )
 target = null
+margin = 2
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 cast_shadow = 0

@@ -14,7 +14,7 @@ _data = [ Vector2( 0.0376569, 0.929545 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.464773 )
 
 [node name="boulder" type="Spatial"]
 script = ExtResource( 1 )
-margin = 2
+margin = 4
 is_static = true
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
