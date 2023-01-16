@@ -2,7 +2,7 @@ extends Control
 
 signal on_main_menu_press
 
-onready var _sfx_sound_setting_icon = $MarginContainer/VBoxContainer2/HBoxContainer2/sfx_setting/TextureRect
+onready var _sfx_sound_setting_icon = $MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer3/sfx_setting/TextureRect
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

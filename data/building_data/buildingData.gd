@@ -78,8 +78,11 @@ func to_dictionary() -> Dictionary :
 	return data
 	
 func spawn(parent :Node) -> BaseBuilding:
-	var build = building.instance()
+	var build :BaseBuilding = building.instance()
 	build.player_id = player_id
+	build.building_name = building_name
+	build.building_description = building_description
+	build.building_price = price
 	build.team = team
 	build.color = color
 	build.building_id = building_id

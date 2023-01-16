@@ -8,4 +8,9 @@ script = ExtResource( 1 )
 
 [node name="rule" parent="." instance=ExtResource( 2 )]
 
+[node name="endgame_timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
 [connection signal="wining_team" from="rule" to="." method="_on_rule_wining_team"]
+[connection signal="timeout" from="endgame_timer" to="." method="_on_endgame_timer_timeout"]

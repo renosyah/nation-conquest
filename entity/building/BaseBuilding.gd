@@ -11,6 +11,9 @@ const status_building = 1
 const status_deployed = 2
 
 export var building_id :int = 0
+export var building_name :String
+export var building_description :String
+export var building_price :int
 export var team :int = 0
 export var color :Color = Color.white
 
@@ -99,6 +102,12 @@ func _building_timmer_timeout():
 func get_build_progress() -> float:
 	return _building_timmer.time_left
 	
+func get_repair_price() -> int:
+	if hp <= 0:
+		return building_price
+		
+	return int( building_price - ( (float(hp) / max_hp) * building_price))
+	
 func puppet_moving(delta :float) -> void:
 	.puppet_moving(delta)
 	
@@ -114,7 +123,7 @@ func take_damage(damage :int) -> void:
 	if is_dead:
 		return
 		
-	hp -= (damage / 2)
+	hp -= int(damage / 2)
 	if hp < 1:
 		is_dead = true
 		rpc("_dead")
@@ -122,6 +131,17 @@ func take_damage(damage :int) -> void:
 		
 	rpc_unreliable("_take_damage", damage, hp)
 	
+func repair() -> void:
+	if hp == max_hp:
+		return
+		
+	rpc("_repair")
+	
+remotesync func _repair() -> void:
+	hp = max_hp
+	
+	# quick update
+	rpc_unreliable("_take_damage", 0, hp)
 	
 func demolish() -> void:
 	rpc("_dead")

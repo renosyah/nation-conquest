@@ -19,10 +19,15 @@ const squad_datas = [
 	preload("res://data/squad_data/squads/archer_cavalry.tres"),
 	preload("res://data/squad_data/squads/heavy_cavalry.tres")
 ]
+var tier :int = 1
 var player_coin :int = 0
 var player_buildings :Array = []
 
 onready var recruit_squad_icon_holder =  $CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer/HBoxContainer3
+
+onready var tier_1 = $CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer/HBoxContainer/tier_1
+onready var tier_2 = $CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer/HBoxContainer/tier_2
+onready var tier_3 = $CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer/HBoxContainer/tier_3
 
 func _ready():
 	set_process(false)
@@ -32,8 +37,25 @@ func display_squad_recruitment():
 		recruit_squad_icon_holder.remove_child(i)
 		i.queue_free()
 		
-	for i in range(squad_datas.size()):
-		var data = squad_datas[i].duplicate()
+	var datas :Array = []
+	
+	tier_1.disabled = false
+	tier_2.disabled = false
+	tier_3.disabled = false
+	
+	match (tier):
+		1:
+			datas = squad_datas.slice(0, 3)
+			tier_1.disabled = true
+		2:
+			datas = squad_datas.slice(4, 7)
+			tier_2.disabled = true
+		3: 
+			datas = squad_datas.slice(8, 11)
+			tier_3.disabled = true
+		
+	for i in range(datas.size()):
+		var data = datas[i]
 		
 		var instance  = squad_icon_scene.instance()
 		instance.data = data
@@ -91,3 +113,15 @@ func _on_recruit_squad_icon_click(_squad_data :SquadData):
 func _on_close_recruit_squad_pressed():
 	set_process(false)
 	visible = false
+	
+func _on_tier_1_pressed():
+	tier = 1
+	display_squad_recruitment()
+	
+func _on_tier_2_pressed():
+	tier = 2
+	display_squad_recruitment()
+	
+func _on_tier_3_pressed():
+	tier = 3
+	display_squad_recruitment()

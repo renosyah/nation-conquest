@@ -31,6 +31,7 @@ onready var open_building = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxCon
 onready var building_panel = $CanvasLayer/SafeArea/building_panel
 
 onready var demolish_building_panel = $CanvasLayer/SafeArea/demolish_building_panel
+onready var repair_building_panel = $CanvasLayer/SafeArea/repair_building_panel
 
 onready var select_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/select_all
 onready var unselect_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/unselect_all
@@ -76,6 +77,7 @@ func _ready():
 	loading.visible = true
 	
 	demolish_building_panel.visible = false
+	repair_building_panel.visible = false
 	
 	select_all.visible = true
 	unselect_all.visible = false
@@ -125,10 +127,12 @@ func on_building_deplyoing(_building :BaseBuilding):
 	
 	_update_player_building(true)
 	
-func on_building_selected(_building :BaseBuilding):
-	if not is_player_building(_building):
-		return
-		
+func on_building_repair(_building :BaseBuilding):
+	selected_building = _building
+	repair_building_panel.set_repair_cost(selected_building.get_repair_price())
+	repair_building_panel.visible = true
+	
+func on_building_demolish(_building :BaseBuilding):
 	selected_building = _building
 	demolish_building_panel.visible = true
 	
@@ -360,7 +364,19 @@ func _on_build_cancel_pressed():
 	build_menu.visible = false
 	squad_menu.visible = true
 	emit_signal("cancel_building")
-
+	
+func _on_repair_building_panel_repair():
+	if not is_instance_valid(selected_building):
+		return
+		
+	if player_coin - selected_building.get_repair_price() < 0:
+		return
+		
+	player_coin -= selected_building.get_repair_price()
+	_update_player_coin()
+	
+	selected_building.repair()
+	
 func _on_demolish_building_panel_demolish():
 	if not is_instance_valid(selected_building):
 		return
@@ -395,6 +411,9 @@ func game_over():
 	unselected_all_squad()
 	control.visible = false
 	result.visible = true
+
+
+
 
 
 

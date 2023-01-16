@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/building_data/buildingData.gd"
 }, {
+"base": "Spatial",
+"class": "BuildingFloatingOption",
+"language": "GDScript",
+"path": "res://assets/building_floating_option/building_floating_option.gd"
+}, {
 "base": "MarginContainer",
 "class": "BuildingIcon",
 "language": "GDScript",
@@ -315,6 +320,7 @@ _global_script_class_icons={
 "BaseUnit": "",
 "Blacksmith": "",
 "BuildingData": "",
+"BuildingFloatingOption": "",
 "BuildingIcon": "",
 "CameraAimingData": "",
 "CounterData": "",

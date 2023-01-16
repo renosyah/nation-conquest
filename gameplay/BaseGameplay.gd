@@ -161,6 +161,7 @@ var _camera_last_aim_pos :Vector3
 func setup_camera():
 	_camera = preload("res://assets/rts-camera/rts_camera.tscn").instance()
 	add_child(_camera)
+	_camera.on_orientation_change(Global.setting_data.screen_orientation)
 	
 func update_camera_aiming_at():
 	var _cam_aim :CameraAimingData = _camera.get_camera_aiming_at(
@@ -213,6 +214,7 @@ func all_player_ready():
 var _building_to_build :Dictionary = {}
 var _buildings :Array = []
 var _player_base_spawn_position :Dictionary = {}
+var _floating_option :BuildingFloatingOption
 
 func on_deploying_building(_building_data :BuildingData, _at :Vector3 = Vector3.ZERO, _autobuild :bool = false):
 	rpc("_on_deploying_buildings", 
@@ -262,7 +264,36 @@ func on_building_selected(_building :BaseBuilding):
 		_order_attack_to(_building.global_transform.origin)
 		return
 		
-	_ui.on_building_selected(_building)
+	if not _ui.is_player_building(_building):
+		return
+		
+	if is_instance_valid(_floating_option):
+		_floating_option.queue_free()
+		_floating_option = null
+		return
+		
+	_floating_option = preload("res://assets/building_floating_option/building_floating_option.tscn").instance()
+	_floating_option.camera = _camera.camera
+	_floating_option.building_name = _building.building_name
+	_floating_option.connect("demolish", self, "on_demolish", [_building])
+	_floating_option.connect("repair", self, "on_repair", [_building])
+	add_child(_floating_option)
+	_floating_option.translation = _building.translation
+	_floating_option.translation.y += 10
+	
+func on_repair(_building :BaseBuilding):
+	if is_instance_valid(_floating_option):
+		_floating_option.queue_free()
+		_floating_option = null
+		
+	_ui.on_building_repair(_building)
+	
+func on_demolish(_building :BaseBuilding):
+	if is_instance_valid(_floating_option):
+		_floating_option.queue_free()
+		_floating_option = null
+		
+	_ui.on_building_demolish(_building)
 	
 func on_building_deployed(_building :BaseBuilding):
 	_buildings.append(_building)

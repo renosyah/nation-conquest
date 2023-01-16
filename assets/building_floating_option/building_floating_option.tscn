@@ -1,0 +1,89 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_86.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/building_floating_option/building_floating_option.gd" type="Script" id=2]
+[ext_resource path="res://assets/building_floating_option/demolish.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://addons/3DOutline/Outline.material" type="Material" id=4]
+[ext_resource path="res://assets/building_floating_option/repair.obj" type="ArrayMesh" id=5]
+[ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/Godot-Touch-Input-Manager/InputManager.gd" type="Script" id=7]
+
+[sub_resource type="TextMesh" id=1]
+text = "Town Center"
+font = ExtResource( 1 )
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_unshaded = true
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+
+[sub_resource type="SpatialMaterial" id=3]
+next_pass = ExtResource( 4 )
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.701961, 0, 0, 1 )
+
+[sub_resource type="ConvexPolygonShape" id=5]
+points = PoolVector3Array( -0.932889, -0.932887, -0.3086, -0.0290732, -0.322666, -0.574909, -0.932889, 0.932887, -0.3086, 0.93284, 0.932887, -0.3086, 0.999951, -1, 0.324312, -1, -1, 0.324312, -1, 1, 0.324312, 0.999951, 1, 0.324312, 0.93284, -0.932887, -0.3086, 0.0290689, -0.0294627, -0.634689, -0.0293047, -0.176236, 0.658612, -0.029062, -0.146476, -0.633434, -0.0293494, 0, 0.659598, -0.0587968, -0.117917, 0.660954, 0.0292673, -0.352804, 0.599988, 0.0587493, -0.117921, 0.660977, -0.0291173, -0.0294615, -0.634662, 0.0290137, -0.146483, -0.633462, 0.0292562, -0.176243, 0.658636, 0.0293012, 0, 0.659628, 0.0290249, -0.32268, -0.574934, -0.0293158, -0.352791, 0.599965 )
+
+[sub_resource type="SpatialMaterial" id=4]
+next_pass = ExtResource( 4 )
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0.960784, 0.580392, 0, 1 )
+
+[sub_resource type="ConvexPolygonShape" id=6]
+points = PoolVector3Array( -0.967309, -0.967498, -0.3086, 0.976578, 0.976578, 0.3293, 0.976578, 0.0303986, 0.3293, -0.976578, 0.0303986, 0.3293, -0.967498, 0.967498, -0.3086, 0.967498, 0.967498, -0.3086, 0.976387, -0.976578, 0.3293, 0.967309, -0.967498, -0.3086, -0.976387, -0.976578, 0.3293, -0.976578, 0.976578, 0.3293 )
+
+[node name="building_floating_option" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="pivot" type="Spatial" parent="."]
+transform = Transform( -1, 3.69465e-08, -7.92319e-08, 0, 0.906308, 0.422618, 8.74228e-08, 0.422618, -0.906308, 0, 0, 0 )
+
+[node name="building_name" type="MeshInstance" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+mesh = SubResource( 1 )
+skeleton = NodePath("../..")
+software_skinning_transform_normals = false
+material/0 = SubResource( 2 )
+
+[node name="demolish_button" type="MeshInstance" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1, 0 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+software_skinning_transform_normals = false
+material/0 = SubResource( 3 )
+
+[node name="demolish_button" type="Area" parent="pivot/demolish_button"]
+collision_mask = 0
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="pivot/demolish_button/demolish_button"]
+shape = SubResource( 5 )
+
+[node name="repair_button" type="MeshInstance" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1, 0 )
+mesh = ExtResource( 5 )
+skeleton = NodePath("../..")
+software_skinning_transform_normals = false
+material/0 = SubResource( 4 )
+
+[node name="repair_button" type="Area" parent="pivot/repair_button"]
+collision_mask = 0
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="pivot/repair_button/repair_button"]
+shape = SubResource( 6 )
+
+[node name="input_detection" type="Node" parent="." instance=ExtResource( 6 )]
+script = ExtResource( 7 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="input_event" from="pivot/demolish_button/demolish_button" to="." method="_on_demolish_button_input_event"]
+[connection signal="input_event" from="pivot/repair_button/repair_button" to="." method="_on_repair_button_input_event"]
+[connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

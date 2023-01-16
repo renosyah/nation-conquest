@@ -5,6 +5,7 @@ onready var squad_spawn_position :Vector3 = Vector3(0, 15, 0)
 
 var bots :Dictionary = {}
 onready var rule :MatchRule = $rule
+onready var endgame_timer = $endgame_timer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -164,6 +165,12 @@ func _on_rule_wining_team(_team : int):
 func on_team_wining(_team:int):
 	if _team == player_data.player_team:
 		_ui.on_player_win()
+		
+	endgame_timer.start()
+
+func _on_endgame_timer_timeout():
+	.on_exit_game_session()
+
 
 
 

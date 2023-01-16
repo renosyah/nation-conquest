@@ -1,13 +1,25 @@
 extends Spatial
 class_name RtsCamera
 
-onready var _camera = $Camera
+onready var camera = $Camera
+
+func on_orientation_change(screen_orientation :int):
+	match (screen_orientation):
+		#OS.SCREEN_ORIENTATION_LANDSCAPE:
+		0:
+			rotation_degrees.x = -45
+			camera.keep_aspect = Camera.KEEP_HEIGHT
+			
+		#OS.SCREEN_ORIENTATION_PORTRAIT:
+		1:
+			rotation_degrees.x = -60
+			camera.keep_aspect = Camera.KEEP_WIDTH
 
 func set_moving_direction(dir :Vector2):
 	translation -= Vector3(dir.x, 0.0, dir.y)
 	
 func set_zoom(zoom_level :float):
-	_camera.translation.z = zoom_level
+	camera.translation.z = zoom_level
 	
 # will returning position of camera looking at
 # instead of using value facing direction
@@ -15,8 +27,8 @@ func set_zoom(zoom_level :float):
 func get_camera_aiming_at(_crosshair :Vector2, exclude_body :Array = []) -> CameraAimingData:
 	var aiming_data :CameraAimingData = CameraAimingData.new()
 	
-	var ray_from :Vector3 = _camera.project_ray_origin(_crosshair)
-	var ray_dir :Vector3 = _camera.project_ray_normal(_crosshair)
+	var ray_from :Vector3 = camera.project_ray_origin(_crosshair)
+	var ray_dir :Vector3 = camera.project_ray_normal(_crosshair)
 	var ray_cast_to :Vector3 = ray_from + ray_dir * 1000
 	aiming_data.position = ray_cast_to
 		
