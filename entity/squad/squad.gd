@@ -148,13 +148,35 @@ func _network_timmer_timeout() -> void:
 		rset_unreliable("_puppet_velocity", _velocity)
 		rset_unreliable("_puppet_is_moving", is_moving)
 		
+func _on_camera_entered(camera: Camera):
+	._on_camera_entered(camera)
+	
+	for unit in _units:
+		if not is_instance_valid(unit):
+			continue
+			
+		unit.visible = true
+		
+func _on_camera_exited(camera: Camera):
+	._on_camera_exited(camera)
+	
+	for unit in _units:
+		if not is_instance_valid(unit):
+			continue
+			
+		unit.visible = false
+	
 remotesync func _damage_unit(_unit_path :NodePath, _damage :int):
+	if not visible:
+		return
+		
 	var _unit :BaseUnit = get_node_or_null(_unit_path)
 	if not is_instance_valid(_unit):
 		return
 		
 	_hit_particle.display_hit(
-		"-" + str(_damage), color, _unit.global_transform.origin
+		"-" + str(_damage), color,
+		 _unit.global_transform.origin
 	)
 	
 remotesync func _erase_unit(_unit_path :NodePath):

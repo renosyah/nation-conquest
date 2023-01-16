@@ -28,20 +28,18 @@ func in_combat(is_arrive :bool):
 	if is_arrive and _combat_anim_delay_timmer.is_stopped():
 		animation_weapon_state.travel(attack_animation)
 		
-		if not _sound.playing:
+		if not _sound.playing and visible:
 			_sound.stream = hit_sounds[rand_range(0, hit_sounds.size())]
 			_sound.play()
 			
 		_combat_anim_delay_timmer.start()
 		
 func dead() -> void:
-	if _sound.playing:
-		_sound.stop()
+	if not _sound.playing and visible:
+		_sound.stream = dead_sound[rand_range(0, dead_sound.size())]
+		_sound.play()
 		
-	_sound.stream = dead_sound[rand_range(0, dead_sound.size())]
-	_sound.play()
-	
-	yield(_sound, "finished")
+		yield(_sound, "finished")
 	
 	.dead()
 	

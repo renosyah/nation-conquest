@@ -60,7 +60,7 @@ func _ready():
 	_sound = AudioStreamPlayer3D.new()
 	_sound.unit_size = Global.sound_amplified
 	add_child(_sound)
-
+	
 	_higlight = preload("res://assets/unit_highlight/unit_highlight.tscn").instance()
 	add_child(_higlight)
 	_higlight.translation.y -= 0.3
@@ -89,7 +89,7 @@ func _process(delta :float):
 		
 	if not is_on_floor():
 		_velocity.y -= _gravity
-
+	
 	if _velocity != Vector3.ZERO:
 		_velocity = move_and_slide(
 			_velocity, Vector3.UP ,false, 4, deg2rad(60.0), true

@@ -62,7 +62,7 @@ func _on_animation_projectile_release():
 func _arrow_hit():
 	.perform_attack()
 	
-	if _sound.playing:
+	if _sound.playing or not visible:
 		return
 	
 	_sound.stream = hit_sounds[rand_range(0, hit_sounds.size())]
@@ -70,13 +70,11 @@ func _arrow_hit():
 	
 	
 func dead() -> void:
-	if _sound.playing:
-		_sound.stop()
+	if not _sound.playing and visible:
+		_sound.stream = dead_sound[rand_range(0, dead_sound.size())]
+		_sound.play()
 		
-	_sound.stream = dead_sound[rand_range(0, dead_sound.size())]
-	_sound.play()
-	
-	yield(_sound, "finished")
+		yield(_sound, "finished")
 	
 	.dead()
 	

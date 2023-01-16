@@ -369,3 +369,5 @@ monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="AreaDamage"]
 shape = SubResource( 25 )
+
+[connection signal="tree_exiting" from="." to="." method="_on_trebuchet_turret_tree_exiting"]

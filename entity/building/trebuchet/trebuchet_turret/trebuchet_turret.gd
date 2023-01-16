@@ -138,4 +138,7 @@ func _arrow_hit(arrow :BaseProjectile):
 		if body is BaseBuilding or body is BaseUnit:
 			if body.team != team:
 				body.take_damage(attack_damage)
-	
+				
+func _on_trebuchet_turret_tree_exiting():
+	for i in _projectile_pool:
+		i.queue_free()
