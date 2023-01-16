@@ -29,8 +29,8 @@ var _projectile_pool :Array = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	base.set_surface_material(1, material)
-	audio_stream_player_3d.unit_db = Global.sound_amplified
-	audio_stream_player_3_d_2.unit_db = Global.sound_amplified
+	audio_stream_player_3d.unit_size = Global.sound_amplified
+	audio_stream_player_3_d_2.unit_size = Global.sound_amplified
 	
 	audio_stream_player_3_d_2.set_as_toplevel(true)
 	area_damage.set_as_toplevel(true)
