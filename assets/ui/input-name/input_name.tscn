@@ -1,0 +1,164 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/ui/input-name/input_name.gd" type="Script" id=3]
+[ext_resource path="res://assets/ui/input-name/close.png" type="Texture" id=4]
+
+[node name="input_name" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.603922 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -250.0
+margin_top = -190.0
+margin_right = 250.0
+margin_bottom = 190.0
+rect_min_size = Vector2( 200, 200 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 493.0
+margin_bottom = 373.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_right = 486.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer3"]
+margin_right = 80.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 84.0
+margin_top = 20.0
+margin_right = 402.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Hello"
+align = 1
+valign = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer3"]
+visible = false
+margin_left = 322.0
+margin_right = 402.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="button_close" type="Button" parent="Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 406.0
+margin_right = 486.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+icon = ExtResource( 4 )
+flat = true
+expand_icon = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 104.0
+margin_right = 486.0
+margin_bottom = 204.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer2"]
+margin_right = 10.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="choose_color" type="Button" parent="Panel/VBoxContainer/HBoxContainer2"]
+visible = false
+margin_left = 14.0
+margin_right = 114.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="ColorRect" type="ColorRect" parent="Panel/VBoxContainer/HBoxContainer2/choose_color"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="input_name" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainer2"]
+margin_left = 14.0
+margin_right = 472.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+align = 1
+max_length = 8
+placeholder_text = "Your Name"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer2"]
+margin_left = 476.0
+margin_right = 486.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer"]
+margin_top = 208.0
+margin_right = 486.0
+margin_bottom = 248.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 252.0
+margin_right = 486.0
+margin_bottom = 352.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_right = 10.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="continue" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 14.0
+margin_right = 472.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Continue"
+
+[node name="MarginContainer3" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 476.0
+margin_right = 486.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+margin_top = 356.0
+margin_right = 486.0
+margin_bottom = 366.0
+rect_min_size = Vector2( 0, 10 )
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer3/button_close" to="." method="_on_button_close_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer2/choose_color" to="." method="_on_choose_color_pressed"]
+[connection signal="text_changed" from="Panel/VBoxContainer/HBoxContainer2/input_name" to="." method="_on_input_name_text_changed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/continue" to="." method="_on_continue_pressed"]

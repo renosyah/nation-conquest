@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/ui/icon/checkbox_check.png" type="Texture" id=1]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=5]
 [ext_resource path="res://assets/ui/icon/back.png" type="Texture" id=6]
 [ext_resource path="res://addons/SafeArea/SafeArea.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/ui/input-name/input_name.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/ui/icon/rename.png" type="Texture" id=9]
 
 [node name="menu" type="Control"]
 anchor_right = 1.0
@@ -82,39 +84,132 @@ rect_min_size = Vector2( 80, 30 )
 [node name="HBoxContainer2" type="HBoxContainer" parent="SafeArea/VBoxContainer2"]
 margin_top = 146.0
 margin_right = 600.0
-margin_bottom = 226.0
+margin_bottom = 227.0
 
 [node name="MarginContainer2" type="MarginContainer" parent="SafeArea/VBoxContainer2/HBoxContainer2"]
-margin_right = 132.0
-margin_bottom = 80.0
+margin_right = 80.0
+margin_bottom = 81.0
 rect_min_size = Vector2( 80, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SafeArea/VBoxContainer2/HBoxContainer2"]
+margin_left = 84.0
+margin_right = 254.0
+margin_bottom = 81.0
+
+[node name="Label3" type="Label" parent="SafeArea/VBoxContainer2/HBoxContainer2/VBoxContainer"]
+modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+margin_right = 170.0
+margin_bottom = 28.0
+custom_fonts/font = ExtResource( 5 )
+text = "Player Name "
+align = 1
+valign = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="SafeArea/VBoxContainer2/HBoxContainer2/VBoxContainer"]
+margin_top = 32.0
+margin_right = 170.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 0, 5 )
+
+[node name="Label4" type="Label" parent="SafeArea/VBoxContainer2/HBoxContainer2/VBoxContainer"]
+margin_top = 41.0
+margin_right = 170.0
+margin_bottom = 81.0
+custom_fonts/font = ExtResource( 2 )
+text = "Hello"
+valign = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="SafeArea/VBoxContainer2/HBoxContainer2"]
+margin_left = 258.0
+margin_right = 432.0
+margin_bottom = 81.0
+rect_min_size = Vector2( 20, 0 )
 size_flags_horizontal = 3
 
-[node name="Label3" type="Label" parent="SafeArea/VBoxContainer2/HBoxContainer2"]
-margin_left = 136.0
-margin_top = 20.0
-margin_right = 244.0
-margin_bottom = 60.0
-custom_fonts/font = ExtResource( 2 )
+[node name="name_setting" type="Button" parent="SafeArea/VBoxContainer2/HBoxContainer2"]
+margin_left = 436.0
+margin_right = 516.0
+margin_bottom = 81.0
+rect_min_size = Vector2( 80, 80 )
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="SafeArea/VBoxContainer2/HBoxContainer2/name_setting"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+texture = ExtResource( 9 )
+expand = true
+
+[node name="MarginContainer" type="MarginContainer" parent="SafeArea/VBoxContainer2/HBoxContainer2"]
+margin_left = 520.0
+margin_right = 600.0
+margin_bottom = 81.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="MarginContainer8" type="MarginContainer" parent="SafeArea/VBoxContainer2"]
+margin_top = 231.0
+margin_right = 600.0
+margin_bottom = 261.0
+rect_min_size = Vector2( 80, 30 )
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="SafeArea/VBoxContainer2"]
+margin_top = 265.0
+margin_right = 600.0
+margin_bottom = 346.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="SafeArea/VBoxContainer2/HBoxContainer3"]
+margin_right = 80.0
+margin_bottom = 81.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="SafeArea/VBoxContainer2/HBoxContainer3"]
+margin_left = 84.0
+margin_right = 162.0
+margin_bottom = 81.0
+
+[node name="Label3" type="Label" parent="SafeArea/VBoxContainer2/HBoxContainer3/VBoxContainer2"]
+modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+margin_right = 78.0
+margin_bottom = 28.0
+custom_fonts/font = ExtResource( 5 )
 text = "Sound"
 align = 1
 valign = 1
 
-[node name="MarginContainer3" type="MarginContainer" parent="SafeArea/VBoxContainer2/HBoxContainer2"]
-margin_left = 248.0
-margin_right = 380.0
-margin_bottom = 80.0
+[node name="MarginContainer" type="MarginContainer" parent="SafeArea/VBoxContainer2/HBoxContainer3/VBoxContainer2"]
+margin_top = 32.0
+margin_right = 78.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 0, 5 )
+
+[node name="Label4" type="Label" parent="SafeArea/VBoxContainer2/HBoxContainer3/VBoxContainer2"]
+margin_top = 41.0
+margin_right = 78.0
+margin_bottom = 81.0
+custom_fonts/font = ExtResource( 2 )
+text = "SFX"
+valign = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="SafeArea/VBoxContainer2/HBoxContainer3"]
+margin_left = 166.0
+margin_right = 432.0
+margin_bottom = 81.0
 rect_min_size = Vector2( 20, 0 )
 size_flags_horizontal = 3
 
-[node name="sfx_setting" type="Button" parent="SafeArea/VBoxContainer2/HBoxContainer2"]
-margin_left = 384.0
-margin_right = 464.0
-margin_bottom = 80.0
+[node name="sfx_setting" type="Button" parent="SafeArea/VBoxContainer2/HBoxContainer3"]
+margin_left = 436.0
+margin_right = 516.0
+margin_bottom = 81.0
 rect_min_size = Vector2( 80, 80 )
 flat = true
 
-[node name="TextureRect" type="TextureRect" parent="SafeArea/VBoxContainer2/HBoxContainer2/sfx_setting"]
+[node name="TextureRect" type="TextureRect" parent="SafeArea/VBoxContainer2/HBoxContainer3/sfx_setting"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -126,15 +221,14 @@ margin_bottom = 40.0
 texture = ExtResource( 1 )
 expand = true
 
-[node name="MarginContainer" type="MarginContainer" parent="SafeArea/VBoxContainer2/HBoxContainer2"]
-margin_left = 468.0
+[node name="MarginContainer" type="MarginContainer" parent="SafeArea/VBoxContainer2/HBoxContainer3"]
+margin_left = 520.0
 margin_right = 600.0
-margin_bottom = 80.0
+margin_bottom = 81.0
 rect_min_size = Vector2( 80, 0 )
-size_flags_horizontal = 3
 
 [node name="MarginContainer6" type="MarginContainer" parent="SafeArea/VBoxContainer2"]
-margin_top = 230.0
+margin_top = 350.0
 margin_right = 600.0
 margin_bottom = 920.0
 rect_min_size = Vector2( 80, 40 )
@@ -146,5 +240,10 @@ margin_right = 600.0
 margin_bottom = 1024.0
 rect_min_size = Vector2( 0, 100 )
 
+[node name="input_name" parent="." instance=ExtResource( 8 )]
+visible = false
+
 [connection signal="pressed" from="SafeArea/VBoxContainer2/HBoxContainer/exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="SafeArea/VBoxContainer2/HBoxContainer2/sfx_setting" to="." method="_on_sfx_setting_pressed"]
+[connection signal="pressed" from="SafeArea/VBoxContainer2/HBoxContainer2/name_setting" to="." method="_on_name_setting_pressed"]
+[connection signal="pressed" from="SafeArea/VBoxContainer2/HBoxContainer3/sfx_setting" to="." method="_on_sfx_setting_pressed"]
+[connection signal="on_continue" from="input_name" to="." method="_on_input_name_on_continue"]
