@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://entity/building/model/barrel.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://entity/building/trebuchet/body.obj" type="ArrayMesh" id=2]
@@ -6,8 +6,6 @@
 [ext_resource path="res://entity/building/trebuchet/arm.obj" type="ArrayMesh" id=4]
 [ext_resource path="res://entity/building/trebuchet/counterweight.obj" type="ArrayMesh" id=5]
 [ext_resource path="res://entity/building/trebuchet/trebuchet_turret/trebuchet_turret.gd" type="Script" id=6]
-[ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=7]
-[ext_resource path="res://entity/building/trebuchet/particle/boulder_particle.tscn" type="PackedScene" id=8]
 [ext_resource path="res://entity/building/trebuchet/payload_holder.obj" type="ArrayMesh" id=9]
 [ext_resource path="res://entity/building/trebuchet/particle/Rock1.obj" type="ArrayMesh" id=10]
 
@@ -356,11 +354,6 @@ wait_time = 5.0
 one_shot = true
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-
-[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="."]
-
-[node name="hit_particle" parent="." instance=ExtResource( 7 )]
-custom_particle_scene = ExtResource( 8 )
 
 [node name="AreaDamage" type="Area" parent="."]
 collision_mask = 0

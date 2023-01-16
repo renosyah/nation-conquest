@@ -8,6 +8,7 @@ export var target :Vector3
 export var margin :int = 1
 export var curve :bool = true
 export var accuration :float = 1.0
+export var is_static :bool = false
 
 var _trajectory_direction :Vector3
 var _trajectory_aim :Vector3
@@ -18,6 +19,7 @@ func _ready():
 	_arrow_stick = Timer.new()
 	_arrow_stick.wait_time = 1
 	_arrow_stick.one_shot = true
+	_arrow_stick.autostart = false
 	_arrow_stick.connect("timeout", self ,"_arrow_stick_timeout")
 	add_child(_arrow_stick)
 	
@@ -44,25 +46,24 @@ func _add_offset():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var _translation = translation
-	_translation.y = 0
-	
-	var _target = target
-	_target.y = 0
-	
-	var distance :float = _translation.distance_squared_to(_target)
+	var distance :float = translation.distance_to(target)
 	if distance <= margin:
-		emit_signal("hit")
-		set_process(false)
-		_arrow_stick.start()
+		_on_hit()
 		return
 		
 	var arrow_direction :Vector3 = translation.direction_to(_trajectory_aim)
 	translation += arrow_direction * speed * delta
-	look_at(arrow_direction * 100, Vector3.UP)
+	
+	if not is_static:
+		look_at(arrow_direction * 100, Vector3.UP)
 	
 	if curve:
 		_trajectory_aim += _trajectory_direction * speed * delta
+	
+func _on_hit():
+	emit_signal("hit")
+	set_process(false)
+	_arrow_stick.start()
 	
 func _arrow_stick_timeout():
 	visible = false

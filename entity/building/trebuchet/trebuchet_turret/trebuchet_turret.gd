@@ -18,8 +18,6 @@ onready var animation_player = $AnimationPlayer
 onready var firing_delay = $firing_delay
 onready var position_3d = $Position3D
 onready var audio_stream_player_3d = $AudioStreamPlayer3D
-onready var audio_stream_player_3_d_2 = $AudioStreamPlayer3D2
-onready var hit_particle = $hit_particle
 onready var area_damage = $AreaDamage
 
 onready var material :SpatialMaterial = base.get_surface_material(1).duplicate()
@@ -30,9 +28,7 @@ var _projectile_pool :Array = []
 func _ready():
 	base.set_surface_material(1, material)
 	audio_stream_player_3d.unit_size = Global.sound_amplified
-	audio_stream_player_3_d_2.unit_size = Global.sound_amplified
 	
-	audio_stream_player_3_d_2.set_as_toplevel(true)
 	area_damage.set_as_toplevel(true)
 	
 	_projectile_pools()
@@ -57,7 +53,7 @@ func _get_projectile() -> BaseProjectile:
 func _create_projectile() -> BaseProjectile:
 	var arrow = preload("res://entity/projectile/boulder/boulder.tscn").instance()
 	arrow.speed = 36
-	arrow.connect("hit", self ,"_arrow_hit", [arrow])
+	arrow.connect("hit", self ,"_projectile_hit")
 	
 	var last_index = get_tree().get_root().get_child_count() - 1
 	get_tree().get_root().get_child(last_index).add_child(arrow)
@@ -111,15 +107,7 @@ func _on_animation_projectile_release():
 		
 	arrow.fire()
 	
-func _arrow_hit(arrow :BaseProjectile):
-	audio_stream_player_3_d_2.translation = arrow.global_transform.origin
-	audio_stream_player_3_d_2.stream = preload("res://assets/sound/explode3.wav")
-	audio_stream_player_3_d_2.play()
-	
-	hit_particle.display_hit(
-		"", Color(0.156863, 0.156863, 0.156863), arrow.global_transform.origin
-	)
-	
+func _projectile_hit():
 	if not is_instance_valid(attack_to):
 		is_attacking = false
 		return
