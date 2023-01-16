@@ -72,12 +72,17 @@ func _arrow_hit():
 	_sound.play()
 	
 func dead() -> void:
-	if not _sound.playing and visible:
+	if visible:
+		if _sound.playing:
+			_sound.stop()
+			
 		_sound.stream = dead_sound[rand_range(0, dead_sound.size())]
 		_sound.play()
-	
+		
+		visible = false
+		
 		yield(_sound, "finished")
-	
+		
 	.dead()
 	
 func attacking(delta :float):

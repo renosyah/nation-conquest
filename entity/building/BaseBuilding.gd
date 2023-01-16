@@ -71,16 +71,24 @@ remotesync func _start_building():
 	status = status_building
 	_building_timmer.wait_time = building_time
 	_building_timmer.start()
-	set_process(false)
+	_disable_process()
 	
 remotesync func _finish_building():
 	status = status_deployed
-	set_process(false)
+	_disable_process()
 	emit_signal("building_deployed", self)
 	
 remotesync func _take_damage(damage :int, hp_remain :int) -> void:
 	hp = hp_remain
 	emit_signal("building_take_damage", self, damage)
+	
+func _disable_process():
+	set_process(false)
+	
+	if _is_master and is_instance_valid(_network_timmer):
+		_network_timmer.stop()
+		_network_timmer.queue_free()
+		
 	
 func _building_timmer_timeout():
 	if not _is_master:
