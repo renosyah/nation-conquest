@@ -118,22 +118,31 @@ func on_lobby_player_update(players :Array):
 		
 	for player in players:
 		var is_client :bool = player.player_network_unique_id != Network.PLAYER_HOST_ID
-		var item = preload("res://main-menu/ui/item/item.tscn").instance()
+		var is_local_player :bool = NetworkLobbyManager.get_id() == player.player_network_unique_id
 		
 		var player_data :PlayerData = PlayerData.new()
 		player_data.from_dictionary(player.extra)
-		item.data = player_data
 		
+		var item = preload("res://main-menu/ui/item/item.tscn").instance()
+		item.data = player_data
 		item.can_kick = NetworkLobbyManager.is_server() and is_client
-		item.connect("kick", self, "_on_player_kick")
+		item.can_change_color = is_local_player
+		item.can_change_team = is_local_player
+		
+		item.connect("kick", self, "_on_player_kick", [player])
 		item.connect("change_color", self, "_on_change_color")
+		item.connect("change_team", self, "_on_change_team")
 		player_holder.add_child(item)
 		
 		
-func _on_player_kick(player :PlayerData):
-	NetworkLobbyManager.kick_player(player.player_network_unique_id)
+func _on_player_kick(player :NetworkPlayer):
+	if NetworkLobbyManager.is_server():
+		NetworkLobbyManager.kick_player(player.player_network_unique_id)
 	
 func _on_change_color(player :PlayerData):
+	NetworkLobbyManager.update_player_extra_data(player.to_dictionary())
+	
+func _on_change_team(player :PlayerData):
 	NetworkLobbyManager.update_player_extra_data(player.to_dictionary())
 	
 func _on_cancel_pressed():

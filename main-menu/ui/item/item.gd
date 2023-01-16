@@ -1,15 +1,18 @@
 extends Control
 
-signal kick(_data)
+signal kick
 signal change_color(_data)
+signal change_team(_data)
 
-onready var team = $VBoxContainer/HBoxContainer/change_color/team
+onready var team = $VBoxContainer/HBoxContainer/change_team/team
 onready var color = $VBoxContainer/HBoxContainer/change_color/color
 onready var player_name = $VBoxContainer/HBoxContainer/VBoxContainer/player_name
 onready var kick_player = $VBoxContainer/HBoxContainer/panel/kick_player
 
 var data :PlayerData
 var can_kick :bool
+var can_change_color :bool
+var can_change_team :bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,8 +22,22 @@ func _ready():
 	kick_player.visible = can_kick
 
 func _on_kick_player_pressed():
-	emit_signal("kick",data)
+	if not can_kick:
+		return
+		
+	emit_signal("kick")
 
 func _on_change_color_pressed():
+	if not can_change_color:
+		return
+		
 	data.player_color = Color(randf(), randf(), randf(), 1)
 	emit_signal("change_color", data)
+	
+func _on_change_team_pressed():
+	if not can_change_team:
+		return
+		
+	var team :int = data.player_team + 1
+	data.player_team = team if team < 5 else 1
+	emit_signal("change_team", data)

@@ -259,28 +259,28 @@ rect_min_size = Vector2( 24, 0 )
 
 [node name="client_menu_buttons" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control"]
 visible = false
-margin_top = 692.0
+margin_top = 804.0
 margin_right = 400.0
 margin_bottom = 940.0
 
 [node name="ColorRect2" type="ColorRect" parent="CanvasLayer/HBoxContainer/Control/client_menu_buttons"]
 margin_right = 400.0
-margin_bottom = 248.0
+margin_bottom = 136.0
 color = Color( 0.117647, 0.117647, 0.117647, 0.917647 )
 
 [node name="main_menu_buttons" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Control/client_menu_buttons"]
 margin_right = 400.0
-margin_bottom = 248.0
+margin_bottom = 136.0
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control/client_menu_buttons/main_menu_buttons"]
 margin_right = 24.0
-margin_bottom = 248.0
+margin_bottom = 136.0
 rect_min_size = Vector2( 24, 0 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Control/client_menu_buttons/main_menu_buttons"]
 margin_left = 28.0
 margin_right = 372.0
-margin_bottom = 248.0
+margin_bottom = 136.0
 size_flags_horizontal = 3
 
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control/client_menu_buttons/main_menu_buttons/VBoxContainer"]
@@ -289,23 +289,23 @@ margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
 
 [node name="cancel" type="Button" parent="CanvasLayer/HBoxContainer/Control/client_menu_buttons/main_menu_buttons/VBoxContainer"]
-margin_top = 140.0
+margin_top = 28.0
 margin_right = 344.0
-margin_bottom = 220.0
+margin_bottom = 108.0
 rect_min_size = Vector2( 0, 80 )
 custom_fonts/font = ExtResource( 2 )
 text = "Cancel"
 
 [node name="MarginContainer4" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control/client_menu_buttons/main_menu_buttons/VBoxContainer"]
-margin_top = 224.0
+margin_top = 112.0
 margin_right = 344.0
-margin_bottom = 248.0
+margin_bottom = 136.0
 rect_min_size = Vector2( 24, 24 )
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control/client_menu_buttons/main_menu_buttons"]
 margin_left = 376.0
 margin_right = 400.0
-margin_bottom = 248.0
+margin_bottom = 136.0
 rect_min_size = Vector2( 24, 0 )
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/HBoxContainer/Control"]

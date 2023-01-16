@@ -1,7 +1,6 @@
 extends BaseGameplay
 
-onready var player_team :int = Global.player.player_team
-onready var player_color :Color = Global.player.player_color
+onready var player_data :PlayerData = PlayerData.new()
 onready var squad_spawn_position :Vector3 = Vector3(0, 15, 0)
 
 var bots :Dictionary = {}
@@ -9,14 +8,13 @@ onready var rule :MatchRule = $rule
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_ui.player_team = player_team
+	player_data.from_dictionary(NetworkLobbyManager.player_extra_data)
+	_ui.player_team = player_data.player_team
 	
 func on_generate_map_completed():
 	.on_generate_map_completed()
 	
-	var player_id :int = NetworkLobbyManager.get_id()
-	player_color = _player_color[player_id]
-	squad_spawn_position = _player_base_spawn_position[player_id]
+	squad_spawn_position = _player_base_spawn_position[NetworkLobbyManager.get_id()]
 	_camera.translation = squad_spawn_position
 	
 	NetworkLobbyManager.set_host_ready()
@@ -27,8 +25,8 @@ func on_ui_recruit_squad(_squad :SquadData):
 	_squad.player_id = NetworkLobbyManager.get_id()
 	_squad.node_name = GDUUID.v4()
 	_squad.network_master = NetworkLobbyManager.get_id()
-	_squad.color = player_color
-	_squad.team = player_team
+	_squad.color = player_data.player_color
+	_squad.team = player_data.player_team
 	_squad.position = squad_spawn_position + Vector3(0, 5, 0)
 	
 	.spawn_squad(_squad)
@@ -39,8 +37,8 @@ func on_ui_deploy_building(_building_data :BuildingData):
 	_building_data.player_id = NetworkLobbyManager.get_id()
 	_building_data.node_name = GDUUID.v4()
 	_building_data.network_master = NetworkLobbyManager.get_id()
-	_building_data.color = player_color
-	_building_data.team = player_team
+	_building_data.color = player_data.player_color
+	_building_data.team = player_data.player_team
 	_building_data.base_position = squad_spawn_position
 	
 	.on_deploying_building(_building_data)
@@ -59,11 +57,14 @@ func all_player_ready():
 	for player in NetworkLobbyManager.get_players():
 		var base_spawn_position :Vector3 = _player_base_spawn_position[player.player_network_unique_id]
 		var town_center :BuildingData = preload("res://data/building_data/buildings/town_center.tres")
+		var lobby_player_data :PlayerData = PlayerData.new()
+		lobby_player_data.from_dictionary(player.extra)
+		
 		town_center.player_id = player.player_network_unique_id
 		town_center.node_name = GDUUID.v4()
 		town_center.network_master = player.player_network_unique_id
-		town_center.color = _player_color[player.player_network_unique_id]
-		town_center.team = player_team
+		town_center.color = lobby_player_data.player_color
+		town_center.team = lobby_player_data.player_team
 		
 		deploying_buildings.append(
 			.create_deploying_building_payload(
@@ -161,7 +162,7 @@ func _on_rule_wining_team(_team : int):
 	rpc("_on_team_wining", _team)
 	
 func on_team_wining(_team:int):
-	if _team == player_team:
+	if _team == player_data.player_team:
 		_ui.on_player_win()
 
 

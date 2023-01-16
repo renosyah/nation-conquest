@@ -5,7 +5,7 @@
 [ext_resource path="res://main-menu/ui/item/close.png" type="Texture" id=4]
 
 [node name="item" type="MarginContainer"]
-margin_right = 267.0
+margin_right = 400.0
 margin_bottom = 120.0
 rect_min_size = Vector2( 400, 120 )
 mouse_filter = 2
@@ -39,9 +39,37 @@ margin_right = 10.0
 margin_bottom = 92.0
 rect_min_size = Vector2( 10, 0 )
 
-[node name="change_color" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="change_team" type="Button" parent="VBoxContainer/HBoxContainer"]
 margin_left = 14.0
 margin_right = 114.0
+margin_bottom = 92.0
+rect_min_size = Vector2( 100, 0 )
+flat = true
+
+[node name="color" type="ColorRect" parent="VBoxContainer/HBoxContainer/change_team"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 100, 50 )
+mouse_filter = 2
+color = Color( 0.156863, 0.156863, 0.156863, 1 )
+
+[node name="team" type="Label" parent="VBoxContainer/HBoxContainer/change_team"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 3 )
+text = "1"
+align = 1
+valign = 1
+
+[node name="MarginContainer6" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 118.0
+margin_right = 128.0
+margin_bottom = 92.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="change_color" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 132.0
+margin_right = 232.0
 margin_bottom = 92.0
 rect_min_size = Vector2( 100, 0 )
 flat = true
@@ -53,24 +81,16 @@ rect_min_size = Vector2( 100, 50 )
 mouse_filter = 2
 color = Color( 0.396078, 0.396078, 0.396078, 1 )
 
-[node name="team" type="Label" parent="VBoxContainer/HBoxContainer/change_color"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 3 )
-text = "1"
-align = 1
-valign = 1
-
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
-margin_left = 118.0
-margin_right = 128.0
+margin_left = 236.0
+margin_right = 246.0
 margin_bottom = 92.0
 rect_min_size = Vector2( 10, 0 )
 mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
-margin_left = 132.0
-margin_right = 159.0
+margin_left = 250.0
+margin_right = 277.0
 margin_bottom = 92.0
 
 [node name="player_name" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
@@ -80,7 +100,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "..."
 
 [node name="MarginContainer5" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
-margin_left = 163.0
+margin_left = 281.0
 margin_right = 292.0
 margin_bottom = 92.0
 rect_min_size = Vector2( 10, 0 )
@@ -116,5 +136,6 @@ margin_right = 400.0
 margin_bottom = 120.0
 rect_min_size = Vector2( 0, 10 )
 
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/change_team" to="." method="_on_change_team_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/change_color" to="." method="_on_change_color_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/panel/kick_player" to="." method="_on_kick_player_pressed"]
