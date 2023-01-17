@@ -8,7 +8,7 @@
 script = ExtResource( 1 )
 player_id = 0
 building_name = "Stable"
-building_description = "Train Mounted squad"
+building_description = "Train mounted squad"
 price = 40
 building_id = 6
 requirement_ids = [ 0, 1, 3, 4 ]

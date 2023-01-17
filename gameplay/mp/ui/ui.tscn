@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://addons/mini-map/MiniMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gameplay/mp/ui/ui.gd" type="Script" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://assets/ui/menu/menu.tscn" type="PackedScene" id=20]
 [ext_resource path="res://assets/ui/match_result/result.tscn" type="PackedScene" id=21]
 [ext_resource path="res://assets/ui/gameplay/repair_building/repair_building_panel.tscn" type="PackedScene" id=22]
+[ext_resource path="res://assets/ui/gameplay/info_building/info_building_panel.tscn" type="PackedScene" id=23]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -452,6 +453,10 @@ visible = false
 margin_right = 612.0
 
 [node name="repair_building_panel" parent="CanvasLayer/SafeArea" instance=ExtResource( 22 )]
+visible = false
+margin_right = 612.0
+
+[node name="info_building_panel" parent="CanvasLayer/SafeArea" instance=ExtResource( 23 )]
 visible = false
 margin_right = 612.0
 

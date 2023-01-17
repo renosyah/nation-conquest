@@ -32,6 +32,7 @@ onready var building_panel = $CanvasLayer/SafeArea/building_panel
 
 onready var demolish_building_panel = $CanvasLayer/SafeArea/demolish_building_panel
 onready var repair_building_panel = $CanvasLayer/SafeArea/repair_building_panel
+onready var info_building_panel = $CanvasLayer/SafeArea/info_building_panel
 
 onready var select_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/select_all
 onready var unselect_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/unselect_all
@@ -71,6 +72,7 @@ func _ready():
 	
 	recruit_squad_panel.visible = false
 	building_panel.visible = false
+	info_building_panel.visible = false
 	
 	menu.visible = false
 	safe_area.visible = false
@@ -135,6 +137,12 @@ func on_building_repair(_building :BaseBuilding):
 func on_building_demolish(_building :BaseBuilding):
 	selected_building = _building
 	demolish_building_panel.visible = true
+	
+func on_building_info(_building :BaseBuilding):
+	info_building_panel.set_info(
+		_building.building_name, _building.building_description, _building.building_icon
+	)
+	info_building_panel.visible = true
 	
 func on_building_deployed(_building :BaseBuilding):
 	var tower_icon = preload("res://entity/building/archer_tower/tower.png")

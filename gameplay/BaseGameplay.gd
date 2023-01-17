@@ -277,9 +277,11 @@ func on_building_selected(_building :BaseBuilding):
 	_floating_option.building_name = _building.building_name
 	_floating_option.connect("demolish", self, "on_demolish", [_building])
 	_floating_option.connect("repair", self, "on_repair", [_building])
+	_floating_option.connect("info", self, "on_info", [_building])
+	_floating_option.translation = _building.translation + Vector3(0, 6, 0)
+	_floating_option.to_pos = _building.translation + Vector3(0, 9, 0)
 	add_child(_floating_option)
-	_floating_option.translation = _building.translation
-	_floating_option.translation.y += 10
+	
 	
 func on_repair(_building :BaseBuilding):
 	if is_instance_valid(_floating_option):
@@ -294,6 +296,13 @@ func on_demolish(_building :BaseBuilding):
 		_floating_option = null
 		
 	_ui.on_building_demolish(_building)
+	
+func on_info(_building :BaseBuilding):
+	if is_instance_valid(_floating_option):
+		_floating_option.queue_free()
+		_floating_option = null
+		
+	_ui.on_building_info(_building)
 	
 func on_building_deployed(_building :BaseBuilding):
 	_buildings.append(_building)

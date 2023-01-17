@@ -13,6 +13,7 @@ const status_deployed = 2
 export var building_id :int = 0
 export var building_name :String
 export var building_description :String
+export var building_icon :Resource
 export var building_price :int
 export var team :int = 0
 export var color :Color = Color.white

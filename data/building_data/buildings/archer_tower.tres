@@ -8,7 +8,7 @@
 script = ExtResource( 1 )
 player_id = 0
 building_name = "Archer Tower"
-building_description = "Defence tower with archer garrison on top"
+building_description = "Defensive tower and observation platform"
 price = 45
 building_id = 2
 requirement_ids = [ 0, 1 ]

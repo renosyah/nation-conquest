@@ -82,6 +82,7 @@ func spawn(parent :Node) -> BaseBuilding:
 	build.player_id = player_id
 	build.building_name = building_name
 	build.building_description = building_description
+	build.building_icon = icon
 	build.building_price = price
 	build.team = team
 	build.color = color

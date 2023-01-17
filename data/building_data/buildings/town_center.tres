@@ -8,7 +8,7 @@
 script = ExtResource( 1 )
 player_id = 0
 building_name = "Town Center"
-building_description = "Main HQ for faction"
+building_description = "Main HQ and allow to recruit and command squad"
 price = 200
 building_id = 0
 requirement_ids = [ 1 ]

@@ -8,7 +8,7 @@
 script = ExtResource( 1 )
 player_id = 0
 building_name = "Farm"
-building_description = "Main source of income"
+building_description = "Produce food for source of income"
 price = 25
 building_id = 1
 requirement_ids = [ 0 ]

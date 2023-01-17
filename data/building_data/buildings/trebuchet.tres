@@ -8,7 +8,7 @@
 script = ExtResource( 1 )
 player_id = 0
 building_name = "Trebuchet"
-building_description = "Heavy siege weapon"
+building_description = "Heavy siege weapon effective against building and squad"
 price = 125
 building_id = 8
 requirement_ids = [ 0, 5 ]
