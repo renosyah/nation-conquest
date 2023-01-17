@@ -32,6 +32,7 @@ var _velocity :Vector3
 puppet var _puppet_is_moving :bool
 puppet var _puppet_translation :Vector3
 puppet var _puppet_velocity :Vector3
+puppet var _puppet_targets :Array
 
 onready var _input_detection = $input_detection
 onready var _banner = $banner/banner
@@ -100,6 +101,8 @@ func _ready():
 	shape.radius = spotting_range
 	_spotting_collision.shape = shape
 	
+	_spotting_collision.set_deferred("disabled", not _is_master())
+	
 	var delay = Timer.new()
 	delay.wait_time = 1
 	add_child(delay)
@@ -147,6 +150,7 @@ func _network_timmer_timeout() -> void:
 		rset_unreliable("_puppet_translation", global_transform.origin)
 		rset_unreliable("_puppet_velocity", _velocity)
 		rset_unreliable("_puppet_is_moving", is_moving)
+		rset_unreliable("_puppet_targets", _targets)
 		
 func _on_camera_entered(camera: Camera):
 	._on_camera_entered(camera)
@@ -226,8 +230,6 @@ func moving(delta :float) -> void:
 	if is_moving and (not is_assault_mode):
 		return
 		
-	_spotted_target()
-	_attack_targets()
 	
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
@@ -236,6 +238,9 @@ func master_moving(delta :float) -> void:
 		return
 	
 	_velocity = Vector3.ZERO
+	
+	_spotted_target()
+	_attack_targets()
 	
 	if is_moving:
 		var is_arrive :bool = _move_to_position(move_to)
@@ -259,11 +264,15 @@ func puppet_moving(delta :float) -> void:
 	if is_dead:
 		return
 		
+	_targets = _puppet_targets
+	_attack_targets()
+	
 	translation = translation.linear_interpolate(_puppet_translation, 5 * delta)
 	_velocity = _puppet_velocity
 	is_moving = _puppet_is_moving
 	
 	_formation_direction_facing(delta)
+	
 	
 func _formation_direction_facing(delta :float):
 	var _vel = Vector3(_velocity.x, 0 , _velocity.z)
@@ -364,7 +373,7 @@ func _attack_targets():
 		if is_instance_valid(unit):
 			_unit.is_moving = false
 			_unit.is_attacking = true
-			_unit.attack_to = _targets[pos]
+			_unit.attack_to = get_node_or_null(_targets[pos])
 			
 		if pos < _targets.size() - 1:
 			pos += 1
@@ -391,7 +400,7 @@ func _spotted_target():
 			if body.is_dead:
 				continue
 				
-			_targets.append(body)
+			_targets.append(body.get_path())
 			
 		elif body is BaseBuilding:
 			if body.team == team:
@@ -400,7 +409,7 @@ func _spotted_target():
 			if body.is_dead:
 				continue
 				
-			_targets.append(body)
+			_targets.append(body.get_path())
 			
 func _on_squad_tree_exiting():
 	if is_instance_valid(_tap):
