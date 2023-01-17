@@ -145,8 +145,19 @@ func on_building_info(_building :BaseBuilding):
 	info_building_panel.visible = true
 	
 func on_building_deployed(_building :BaseBuilding):
-	var tower_icon = preload("res://entity/building/archer_tower/tower.png")
-	add_minimap_object(_building.get_path(), _building.color, tower_icon)
+	if _building is TownCenter:
+		add_minimap_object(
+			_building.get_path(), 
+			_building.color, 
+			preload("res://assets/ui/icon/map_icon/town_icon.png")
+		)
+		
+	elif _building is ArcherTower:
+		add_minimap_object(
+			_building.get_path(), 
+			_building.color, 
+			preload("res://assets/ui/icon/map_icon/tower.png")
+		)
 	
 	if not is_player_building(_building):
 		return

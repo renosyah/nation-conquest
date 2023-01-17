@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tower.png-7b25b72c19d013c430a5969f02452558.stex"
+path="res://.import/tower.png-edc8dffc9fa34ba0649abf6a442ae414.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entity/building/archer_tower/tower.png"
-dest_files=[ "res://.import/tower.png-7b25b72c19d013c430a5969f02452558.stex" ]
+source_file="res://assets/ui/icon/map_icon/tower.png"
+dest_files=[ "res://.import/tower.png-edc8dffc9fa34ba0649abf6a442ae414.stex" ]
 
 [params]
 
