@@ -10,6 +10,7 @@ var viewSize
 var safeArea
 
 func _ready():
+	connect("resized", self, "_on_SafeArea_resized")
 	calculate()
 
 func calculate():

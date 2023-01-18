@@ -50,9 +50,7 @@ func all_player_ready():
 	.all_player_ready()
 	
 	var deploying_buildings :Array = []
-	
 	var bot_spawn_positions :Array = _map.base_spawn_positions.slice(0, 3)
-	var bot_count :int = bot_spawn_positions.size()
 	
 	# deploy player town center
 	for player in NetworkLobbyManager.get_players():
@@ -74,17 +72,21 @@ func all_player_ready():
 		)
 		
 		rule.add_player(town_center.player_id, town_center.team)
-		
-		bot_count -= 1
 		bot_spawn_positions.erase(base_spawn_position)
 		
 		
-	for i in range(bot_count):
+	for i in range(Global.bots.size()):
+		var bot_data :NetworkPlayer = Global.bots[i]
+		
+		var lobby_bot_data :PlayerData = PlayerData.new()
+		lobby_bot_data.from_dictionary(bot_data.extra)
+		
 		var base_spawn_position :Vector3 = bot_spawn_positions[i]
+		
 		var bot :MPBot = preload("res://gameplay/mp/util/bot/mp_bot.tscn").instance()
-		bot.bot_id = -i + 69
-		bot.bot_color = Color(randf(), randf(), randf(), 1)
-		bot.bot_team = i + 69
+		bot.bot_id = bot_data.player_network_unique_id
+		bot.bot_color = lobby_bot_data.player_color
+		bot.bot_team = lobby_bot_data.player_team
 		bot.connect("bot_recruit_squad", self, "on_bot_recruit_squad")
 		bot.connect("bot_deploying_building", self, "on_bot_deploying_building")
 		bot.connect("bot_surrender", self ,"on_bot_surrender")

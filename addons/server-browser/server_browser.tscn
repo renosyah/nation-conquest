@@ -56,7 +56,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="PanelContainer" type="ColorRect" parent="VBoxContainer"]
-margin_right = 1024.0
+margin_right = 600.0
 margin_bottom = 120.0
 rect_min_size = Vector2( 0, 120 )
 mouse_filter = 2
@@ -94,14 +94,14 @@ __meta__ = {
 
 [node name="margin" type="CenterContainer" parent="VBoxContainer/PanelContainer/HBoxContainer"]
 margin_left = 104.0
-margin_right = 920.0
+margin_right = 496.0
 margin_bottom = 120.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer/margin"]
-margin_left = 354.0
+margin_left = 142.0
 margin_top = 30.0
-margin_right = 461.0
+margin_right = 249.0
 margin_bottom = 90.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
@@ -110,8 +110,8 @@ align = 1
 valign = 1
 
 [node name="refresh" type="Button" parent="VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 924.0
-margin_right = 1024.0
+margin_left = 500.0
+margin_right = 600.0
 margin_bottom = 120.0
 rect_min_size = Vector2( 100, 100 )
 custom_fonts/font = ExtResource( 3 )
@@ -150,8 +150,8 @@ size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 margin_top = 124.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_right = 600.0
+margin_bottom = 1024.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_fonts/font = ExtResource( 3 )

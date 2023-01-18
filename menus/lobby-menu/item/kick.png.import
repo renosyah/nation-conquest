@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/close.png-68e439a940c485c34e45366433fe1898.stex"
+path="res://.import/kick.png-88a56c9ab48c1266b145d10bb408e544.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://main-menu/ui/item/close.png"
-dest_files=[ "res://.import/close.png-68e439a940c485c34e45366433fe1898.stex" ]
+source_file="res://menus/lobby-menu/item/kick.png"
+dest_files=[ "res://.import/kick.png-88a56c9ab48c1266b145d10bb408e544.stex" ]
 
 [params]
 

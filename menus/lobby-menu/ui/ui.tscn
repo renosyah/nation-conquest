@@ -1,0 +1,178 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/ui/icon/back.png" type="Texture" id=2]
+[ext_resource path="res://menus/lobby-menu/ui/ui.gd" type="Script" id=3]
+[ext_resource path="res://assets/ui/icon/host.png" type="Texture" id=4]
+[ext_resource path="res://addons/SafeArea/SafeArea.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=8]
+
+[node name="ui" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LobbyMenuSafeArea" parent="CanvasLayer" instance=ExtResource( 7 )]
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/LobbyMenuSafeArea"]
+margin_right = 600.0
+margin_bottom = 1024.0
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer"]
+margin_right = 600.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 0, 80 )
+mouse_filter = 2
+
+[node name="back" type="Button" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+icon = ExtResource( 2 )
+flat = true
+expand_icon = true
+
+[node name="Label2" type="Label" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer"]
+margin_left = 84.0
+margin_right = 516.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/line_spacing = 1
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 1
+custom_fonts/font = ExtResource( 1 )
+text = "Lobby"
+align = 1
+valign = 1
+
+[node name="add_bot" type="Button" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer"]
+margin_left = 520.0
+margin_right = 600.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+icon = ExtResource( 4 )
+flat = true
+expand_icon = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer"]
+margin_top = 84.0
+margin_right = 600.0
+margin_bottom = 108.0
+rect_min_size = Vector2( 0, 24 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer"]
+margin_top = 112.0
+margin_right = 600.0
+margin_bottom = 1024.0
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2"]
+margin_left = 72.0
+margin_right = 96.0
+margin_bottom = 912.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="Control" type="VBoxContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2"]
+margin_left = 100.0
+margin_right = 500.0
+margin_bottom = 912.0
+rect_min_size = Vector2( 400, 0 )
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control"]
+margin_top = 144.0
+margin_right = 400.0
+margin_bottom = 544.0
+rect_min_size = Vector2( 0, 400 )
+size_flags_vertical = 6
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/MarginContainer"]
+margin_right = 400.0
+margin_bottom = 400.0
+color = Color( 0.117647, 0.117647, 0.117647, 0.917647 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/MarginContainer"]
+margin_right = 400.0
+margin_bottom = 400.0
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/MarginContainer/ScrollContainer"]
+margin_right = 400.0
+size_flags_horizontal = 3
+
+[node name="host_menu_buttons" type="MarginContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control"]
+margin_top = 692.0
+margin_right = 400.0
+margin_bottom = 828.0
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons"]
+margin_right = 400.0
+margin_bottom = 136.0
+color = Color( 0.117647, 0.117647, 0.117647, 0.917647 )
+
+[node name="main_menu_buttons" type="HBoxContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons"]
+margin_right = 400.0
+margin_bottom = 136.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons/main_menu_buttons"]
+margin_right = 24.0
+margin_bottom = 136.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons/main_menu_buttons"]
+margin_left = 28.0
+margin_right = 372.0
+margin_bottom = 136.0
+size_flags_horizontal = 3
+
+[node name="MarginContainer5" type="MarginContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons/main_menu_buttons/VBoxContainer"]
+margin_right = 344.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+
+[node name="play" type="Button" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons/main_menu_buttons/VBoxContainer"]
+margin_top = 28.0
+margin_right = 344.0
+margin_bottom = 108.0
+rect_min_size = Vector2( 0, 80 )
+custom_fonts/font = ExtResource( 8 )
+text = "Play"
+
+[node name="MarginContainer4" type="MarginContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons/main_menu_buttons/VBoxContainer"]
+margin_top = 112.0
+margin_right = 344.0
+margin_bottom = 136.0
+rect_min_size = Vector2( 24, 24 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons/main_menu_buttons"]
+margin_left = 376.0
+margin_right = 400.0
+margin_bottom = 136.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control"]
+margin_top = 832.0
+margin_right = 400.0
+margin_bottom = 912.0
+rect_min_size = Vector2( 0, 80 )
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2"]
+margin_left = 504.0
+margin_right = 528.0
+margin_bottom = 912.0
+rect_min_size = Vector2( 24, 0 )
+
+[connection signal="pressed" from="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer/back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer/add_bot" to="." method="_on_add_bot_pressed"]
+[connection signal="pressed" from="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons/main_menu_buttons/VBoxContainer/play" to="." method="_on_play_pressed"]

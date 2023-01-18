@@ -202,10 +202,10 @@ func on_player_disconnected(_player_network :NetworkPlayer):
 	pass
 	
 func connection_closed():
-	get_tree().change_scene("res://main-menu/main_menu.tscn")
+	to_main_menu()
 	
 func on_host_disconnected():
-	get_tree().change_scene("res://main-menu/main_menu.tscn")
+	to_main_menu()
 	
 func all_player_ready():
 	_ui.loading(false)
@@ -453,6 +453,9 @@ func _process(delta):
 # exit
 func on_exit_game_session():
 	Network.disconnect_from_server()
+	
+func to_main_menu():
+	get_tree().change_scene("res://menus/main-menu/main_menu.tscn")
 	
 ################################################################
 # network utils code

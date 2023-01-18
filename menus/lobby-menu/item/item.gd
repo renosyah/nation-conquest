@@ -4,10 +4,12 @@ signal kick
 signal change_color(_data)
 signal change_team(_data)
 
-onready var team = $VBoxContainer/HBoxContainer/change_team/team
-onready var color = $VBoxContainer/HBoxContainer/change_color/color
-onready var player_name = $VBoxContainer/HBoxContainer/VBoxContainer/player_name
+onready var team = $VBoxContainer/HBoxContainer/HBoxContainer/change_team/team 
+onready var color = $VBoxContainer/HBoxContainer/HBoxContainer/change_color/color
+onready var player_name = $VBoxContainer/HBoxContainer/player_name
 onready var kick_player = $VBoxContainer/HBoxContainer/panel/kick_player
+
+onready var team_container = $VBoxContainer/HBoxContainer/HBoxContainer
 
 var data :PlayerData
 var can_kick :bool
@@ -18,6 +20,10 @@ var can_change_team :bool
 func _ready():
 	team.text = str(data.player_team)
 	color.color = data.player_color
+	
+	if data.player_team == 0:
+		team_container.visible = false
+		
 	player_name.text = data.player_name
 	kick_player.visible = can_kick
 

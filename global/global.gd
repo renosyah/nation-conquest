@@ -38,3 +38,6 @@ func apply_setting_data():
 	
 	emit_signal("on_setting_update")
 	
+################################################################
+# bots
+onready var bots :Array = []

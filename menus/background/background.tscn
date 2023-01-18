@@ -1,27 +1,25 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=62 format=2]
 
-[ext_resource path="res://main-menu/ui/ui.tscn" type="PackedScene" id=1]
-[ext_resource path="res://map/shadermaterial.tres" type="Material" id=2]
-[ext_resource path="res://map/water/water.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/enviroment/enviroment.tscn" type="PackedScene" id=4]
-[ext_resource path="res://main-menu/map.tres" type="ArrayMesh" id=5]
-[ext_resource path="res://entity/building/model/barrel.obj" type="ArrayMesh" id=6]
-[ext_resource path="res://entity/building/farm/farm.obj" type="ArrayMesh" id=7]
-[ext_resource path="res://entity/building/farm/blade.obj" type="ArrayMesh" id=8]
-[ext_resource path="res://entity/weapon/shield.obj" type="ArrayMesh" id=9]
-[ext_resource path="res://entity/building/blacksmith/blacksmith.obj" type="ArrayMesh" id=10]
-[ext_resource path="res://entity/weapon/sword.obj" type="ArrayMesh" id=11]
-[ext_resource path="res://assets/rts-camera/rts_camera.gd" type="Script" id=12]
-[ext_resource path="res://entity/building/model/canopy.obj" type="ArrayMesh" id=13]
-[ext_resource path="res://entity/building/town_center/tower.obj" type="ArrayMesh" id=14]
-[ext_resource path="res://entity/building/model/food_box.obj" type="ArrayMesh" id=15]
-[ext_resource path="res://entity/building/model/food_barrel.obj" type="ArrayMesh" id=16]
-[ext_resource path="res://entity/building/healing_camp/healing_camp.obj" type="ArrayMesh" id=17]
-[ext_resource path="res://entity/building/archer_tower/tower.obj" type="ArrayMesh" id=18]
-[ext_resource path="res://entity/resources/trees/Tree1.obj" type="ArrayMesh" id=19]
-[ext_resource path="res://entity/resources/trees/Tree3.obj" type="ArrayMesh" id=20]
-[ext_resource path="res://entity/resources/trees/Tree4.obj" type="ArrayMesh" id=21]
-[ext_resource path="res://main-menu/main_menu.gd" type="Script" id=22]
+[ext_resource path="res://map/shadermaterial.tres" type="Material" id=1]
+[ext_resource path="res://map/water/water.gd" type="Script" id=2]
+[ext_resource path="res://assets/enviroment/enviroment.tscn" type="PackedScene" id=3]
+[ext_resource path="res://map/water/water.tscn" type="PackedScene" id=4]
+[ext_resource path="res://entity/building/farm/blade.obj" type="ArrayMesh" id=5]
+[ext_resource path="res://menus/main-menu/map.tres" type="ArrayMesh" id=6]
+[ext_resource path="res://entity/building/town_center/tower.obj" type="ArrayMesh" id=7]
+[ext_resource path="res://entity/weapon/sword.obj" type="ArrayMesh" id=8]
+[ext_resource path="res://entity/building/healing_camp/healing_camp.obj" type="ArrayMesh" id=9]
+[ext_resource path="res://entity/resources/trees/Tree3.obj" type="ArrayMesh" id=10]
+[ext_resource path="res://entity/resources/trees/Tree4.obj" type="ArrayMesh" id=11]
+[ext_resource path="res://entity/building/model/barrel.obj" type="ArrayMesh" id=12]
+[ext_resource path="res://entity/building/farm/farm.obj" type="ArrayMesh" id=13]
+[ext_resource path="res://entity/building/model/food_box.obj" type="ArrayMesh" id=14]
+[ext_resource path="res://entity/weapon/shield.obj" type="ArrayMesh" id=15]
+[ext_resource path="res://entity/building/archer_tower/tower.obj" type="ArrayMesh" id=16]
+[ext_resource path="res://entity/resources/trees/Tree1.obj" type="ArrayMesh" id=17]
+[ext_resource path="res://entity/building/model/food_barrel.obj" type="ArrayMesh" id=18]
+[ext_resource path="res://entity/building/blacksmith/blacksmith.obj" type="ArrayMesh" id=19]
+[ext_resource path="res://entity/building/model/canopy.obj" type="ArrayMesh" id=20]
 
 [sub_resource type="SpatialMaterial" id=11]
 flags_vertex_lighting = true
@@ -248,127 +246,115 @@ height = 1.0
 [sub_resource type="Curve" id=43]
 _data = [ Vector2( 0.029703, 0.886364 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.413636 ), 0.0, 0.0, 0, 0 ]
 
-[node name="menu" type="Node"]
-script = ExtResource( 22 )
+[node name="background" type="Spatial"]
 
-[node name="rts_camera" type="Spatial" parent="."]
-transform = Transform( 0.867844, -0.231251, 0.43974, 0, 0.885077, 0.465445, -0.496838, -0.403933, 0.768109, 3.96022, 7.0336, 24.516 )
-script = ExtResource( 12 )
-
-[node name="Camera" type="Camera" parent="rts_camera"]
-transform = Transform( 1, 0, 0, 0, 0.999999, -1.19209e-07, 0, 1.19209e-07, 0.999999, 0, -1.90735e-06, 24 )
-keep_aspect = 0
-current = true
-
-[node name="Spatial" type="Spatial" parent="."]
-
-[node name="tower" type="MeshInstance" parent="Spatial"]
+[node name="tower" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.9206, 4.40039 )
-mesh = ExtResource( 18 )
+mesh = ExtResource( 16 )
 skeleton = NodePath("../..")
 software_skinning_transform_normals = false
 material/0 = SubResource( 11 )
 material/1 = SubResource( 10 )
 material/2 = SubResource( 12 )
 
-[node name="camp" type="Spatial" parent="Spatial"]
+[node name="camp" type="Spatial" parent="."]
 transform = Transform( 0.744624, 0.0734194, 0.663433, -0.00323628, 0.994318, -0.106405, -0.667476, 0.0770845, 0.740631, 4.11184, 6.04773, 30.6504 )
 
-[node name="barrack" type="MeshInstance" parent="Spatial/camp"]
-mesh = ExtResource( 17 )
+[node name="barrack" type="MeshInstance" parent="camp"]
+mesh = ExtResource( 9 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 62 )
 material/1 = SubResource( 63 )
 
-[node name="barrel" type="MeshInstance" parent="Spatial/camp"]
+[node name="barrel" type="MeshInstance" parent="camp"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.09806, 0.344684, 2.05701 )
-mesh = ExtResource( 6 )
+mesh = ExtResource( 12 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 7 )
 material/1 = SubResource( 8 )
 
-[node name="barrel5" type="MeshInstance" parent="Spatial/camp"]
+[node name="barrel5" type="MeshInstance" parent="camp"]
 transform = Transform( -0.386341, 0, -0.922356, 0, 1, 0, 0.922356, 0, -0.386341, 2.71415, 0.301947, 0.153943 )
-mesh = ExtResource( 15 )
+mesh = ExtResource( 14 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 51 )
 material/1 = SubResource( 52 )
 material/2 = SubResource( 19 )
 
-[node name="barrel6" type="MeshInstance" parent="Spatial/camp"]
+[node name="barrel6" type="MeshInstance" parent="camp"]
 transform = Transform( -0.386341, 0, -0.922356, 0, 1, 0, 0.922356, 0, -0.386341, 2.1608, 0.301947, 1.47503 )
-mesh = ExtResource( 16 )
+mesh = ExtResource( 18 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 51 )
 material/1 = SubResource( 52 )
 material/2 = SubResource( 19 )
 
-[node name="towncenter" type="Spatial" parent="Spatial"]
+[node name="towncenter" type="Spatial" parent="."]
 transform = Transform( 0.331387, 0, 0.943495, 0, 1, 0, -0.943495, 0, 0.331387, -2.05023, 6.55944, 21.4697 )
 
-[node name="tower" type="MeshInstance" parent="Spatial/towncenter"]
-mesh = ExtResource( 14 )
+[node name="tower" type="MeshInstance" parent="towncenter"]
+mesh = ExtResource( 7 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 64 )
 material/2 = SubResource( 13 )
 
-[node name="canopy" type="MeshInstance" parent="Spatial/towncenter"]
+[node name="canopy" type="MeshInstance" parent="towncenter"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.454216, 0, 4.41078 )
-mesh = ExtResource( 13 )
+mesh = ExtResource( 20 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 64 )
 
-[node name="canopy2" type="MeshInstance" parent="Spatial/towncenter"]
+[node name="canopy2" type="MeshInstance" parent="towncenter"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.39751, 0, -0.34661 )
-mesh = ExtResource( 13 )
+mesh = ExtResource( 20 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 64 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Spatial/towncenter"]
+[node name="MeshInstance" type="MeshInstance" parent="towncenter"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.70992, 0.238619, 1.53159 )
-mesh = ExtResource( 6 )
+mesh = ExtResource( 12 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 15 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Spatial/towncenter"]
+[node name="MeshInstance2" type="MeshInstance" parent="towncenter"]
 transform = Transform( 0.994487, 0, 0.104858, 0, 1, 0, -0.104858, 0, 0.994487, 0.678184, 0.115803, 5.37234 )
-mesh = ExtResource( 6 )
+mesh = ExtResource( 12 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 15 )
 
-[node name="MeshInstance3" type="MeshInstance" parent="Spatial/towncenter"]
+[node name="MeshInstance3" type="MeshInstance" parent="towncenter"]
 transform = Transform( -8.9407e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -8.9407e-08, 0, -1.3031, -0.0688918, 2.49144 )
-mesh = ExtResource( 6 )
+mesh = ExtResource( 12 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
 material/1 = SubResource( 15 )
 
-[node name="barrel" type="MeshInstance" parent="Spatial/towncenter"]
+[node name="barrel" type="MeshInstance" parent="towncenter"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57077, 0.301947, -0.653062 )
-mesh = ExtResource( 15 )
+mesh = ExtResource( 14 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 65 )
 material/1 = SubResource( 66 )
 material/2 = SubResource( 67 )
 
-[node name="barrel2" type="MeshInstance" parent="Spatial/towncenter"]
+[node name="barrel2" type="MeshInstance" parent="towncenter"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.13848, 0.301947, -0.653063 )
-mesh = ExtResource( 16 )
+mesh = ExtResource( 18 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 65 )
 material/1 = SubResource( 66 )
 material/2 = SubResource( 67 )
 
-[node name="farm" type="Spatial" parent="Spatial"]
+[node name="farm" type="Spatial" parent="."]
 transform = Transform( 0.999599, 0.00641554, -0.0275617, -0.00632355, 0.999974, 0.00342327, 0.027583, -0.00324761, 0.999614, -7.86161, 10.5027, 11.8123 )
 
-[node name="farm" type="MeshInstance" parent="Spatial/farm"]
-mesh = ExtResource( 7 )
+[node name="farm" type="MeshInstance" parent="farm"]
+mesh = ExtResource( 13 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 34 )
 material/1 = SubResource( 35 )
@@ -377,23 +363,23 @@ material/3 = SubResource( 37 )
 material/4 = SubResource( 38 )
 material/5 = SubResource( 39 )
 
-[node name="blade" type="MeshInstance" parent="Spatial/farm"]
+[node name="blade" type="MeshInstance" parent="farm"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.88345, -0.0463936 )
-mesh = ExtResource( 8 )
+mesh = ExtResource( 5 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 40 )
 material/1 = SubResource( 41 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Spatial/farm"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="farm"]
 autoplay = "blade_spin"
 anims/RESET = SubResource( 23 )
 anims/blade_spin = SubResource( 24 )
 
-[node name="blacksmit" type="Spatial" parent="Spatial"]
+[node name="blacksmit" type="Spatial" parent="."]
 transform = Transform( 0.999593, -0.0285148, 0, 0.0283797, 0.994857, -0.0972355, 0.00277265, 0.0971959, 0.995261, 2.5574, 8.56224, 10.7487 )
 
-[node name="barrack" type="MeshInstance" parent="Spatial/blacksmit"]
-mesh = ExtResource( 10 )
+[node name="barrack" type="MeshInstance" parent="blacksmit"]
+mesh = ExtResource( 19 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 44 )
 material/1 = SubResource( 45 )
@@ -401,41 +387,41 @@ material/2 = SubResource( 46 )
 material/3 = SubResource( 47 )
 material/4 = SubResource( 48 )
 
-[node name="barrel" type="MeshInstance" parent="Spatial/blacksmit"]
+[node name="barrel" type="MeshInstance" parent="blacksmit"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.27857, 0.00167227, -1.63462 )
-mesh = ExtResource( 6 )
+mesh = ExtResource( 12 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 68 )
 material/1 = SubResource( 69 )
 
-[node name="barrel3" type="MeshInstance" parent="Spatial/blacksmit"]
+[node name="barrel3" type="MeshInstance" parent="blacksmit"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.669826, -0.0690681, 2.19605 )
-mesh = ExtResource( 6 )
+mesh = ExtResource( 12 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 68 )
 material/1 = SubResource( 69 )
 
-[node name="sword" type="MeshInstance" parent="Spatial/blacksmit"]
+[node name="sword" type="MeshInstance" parent="blacksmit"]
 transform = Transform( 0.704819, 0.709386, -3.10083e-08, 0, -4.37114e-08, -1, -0.709386, 0.704819, -3.08087e-08, 1.9211, 0.0709206, 1.50476 )
 cast_shadow = 0
-mesh = ExtResource( 11 )
+mesh = ExtResource( 8 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 20 )
 material/1 = SubResource( 21 )
 
-[node name="shield" type="MeshInstance" parent="Spatial/blacksmit"]
+[node name="shield" type="MeshInstance" parent="blacksmit"]
 transform = Transform( 1.09612, -1.67288, 7.31238e-08, 0, -8.74228e-08, -2, 1.67288, 1.09612, -4.79129e-08, -1.71621, 0.563656, 0.967956 )
-mesh = ExtResource( 9 )
+mesh = ExtResource( 15 )
 material/0 = SubResource( 22 )
 material/1 = SubResource( 49 )
 
-[node name="shield2" type="MeshInstance" parent="Spatial/blacksmit"]
+[node name="shield2" type="MeshInstance" parent="blacksmit"]
 transform = Transform( -1.70912, -1.03871, 4.54035e-08, 0, -8.74228e-08, -2, 1.03871, -1.70912, 7.47079e-08, -1.71621, 0.563656, -0.390521 )
-mesh = ExtResource( 9 )
+mesh = ExtResource( 15 )
 material/0 = SubResource( 22 )
 material/1 = SubResource( 49 )
 
-[node name="CPUParticles" type="CPUParticles" parent="Spatial/blacksmit"]
+[node name="CPUParticles" type="CPUParticles" parent="blacksmit"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.53354, -0.155875, -2.55959 )
 amount = 4
 lifetime = 0.6
@@ -444,37 +430,34 @@ gravity = Vector3( 0, 5, 0 )
 scale_amount_curve = SubResource( 43 )
 color = Color( 1, 0.462745, 0, 1 )
 
-[node name="land" type="MeshInstance" parent="Spatial"]
-mesh = ExtResource( 5 )
+[node name="land" type="MeshInstance" parent="."]
+mesh = ExtResource( 6 )
 skeleton = NodePath("../..")
-material/0 = ExtResource( 2 )
+material/0 = ExtResource( 1 )
 
-[node name="tree" type="MeshInstance" parent="Spatial"]
+[node name="tree" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.54269, 4.47988, 20.9221 )
-mesh = ExtResource( 19 )
+mesh = ExtResource( 17 )
 skeleton = NodePath("../..")
 
-[node name="tree2" type="MeshInstance" parent="Spatial"]
+[node name="tree2" type="MeshInstance" parent="."]
 transform = Transform( 0.767982, 0, 0.640472, 0, 1, 0, -0.640472, 0, 0.767982, 9.13069, 4.47988, 18.1763 )
-mesh = ExtResource( 20 )
+mesh = ExtResource( 10 )
 skeleton = NodePath("../..")
 
-[node name="tree3" type="MeshInstance" parent="Spatial"]
+[node name="tree3" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.3524, 9.9352, 20.9221 )
-mesh = ExtResource( 19 )
+mesh = ExtResource( 17 )
 skeleton = NodePath("../..")
 
-[node name="tree4" type="MeshInstance" parent="Spatial"]
+[node name="tree4" type="MeshInstance" parent="."]
 transform = Transform( -0.900819, 0, -0.434194, 0, 1, 0, 0.434194, 0, -0.900819, -6.47492, 5.10708, 30.7182 )
-mesh = ExtResource( 21 )
+mesh = ExtResource( 11 )
 skeleton = NodePath("../..")
 
-[node name="water" parent="Spatial" instance=ExtResource( 3 )]
+[node name="water" type="StaticBody" parent="." instance=ExtResource( 4 )]
+collision_layer = 3
+collision_mask = 0
+script = ExtResource( 2 )
 
-[node name="enviroment" parent="." instance=ExtResource( 4 )]
-
-[node name="ui" parent="." instance=ExtResource( 1 )]
-
-[node name="Tween" type="Tween" parent="."]
-
-[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[node name="enviroment" type="Node" parent="." instance=ExtResource( 3 )]

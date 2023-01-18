@@ -31,7 +31,6 @@ var argument :Dictionary = {}
 var _network_player :NetworkPlayer = NetworkPlayer.new()
 var _lobby_players :Array = []
 var _server_advertiser :ServerAdvertiser
-var _exit_delay :Timer
 
 var _is_ready :bool = false
 
@@ -111,12 +110,6 @@ func kick_player(player_network_unique_id :int):
 # player leave from lobby 
 # can be perform by anyone
 func leave():
-	rpc("_request_erase_player_joined", _network_player.player_network_unique_id)
-	
-	_exit_delay.wait_time = 1.5
-	_exit_delay.start()
-	yield(_exit_delay,"timeout")
-	
 	if is_server():
 		_server_advertiser.dismantle()
 	
@@ -137,12 +130,6 @@ func _ready():
 	
 	_server_advertiser = preload("res://addons/LANServerBroadcast/server_advertiser/server_advertiser.tscn").instance()
 	add_child(_server_advertiser)
-	
-	_exit_delay = Timer.new()
-	_exit_delay.one_shot = true
-	_exit_delay.autostart = false
-	_exit_delay.wait_time = 1.0
-	add_child(_exit_delay)
 	
 ################################################################
 # host player section
@@ -197,15 +184,6 @@ remote func _request_update_player_extra_data(_player_network_unique_id :int, _e
 			i["extra"] = _extra
 			break
 			
-	rpc("_update_player_joined", _lobby_players)
-	
-remote func _request_erase_player_joined(_player_network_unique_id :int):
-	for i in _lobby_players:
-		if i["player_network_unique_id"] == _player_network_unique_id:
-			_lobby_players.erase(i)
-			break
-			
-	_server_advertiser.serverInfo["player"] = _lobby_players.size()
 	rpc("_update_player_joined", _lobby_players)
 	
 remotesync func _request_update_player_joined_status(_player_network_unique_id :int, data : Dictionary):
@@ -274,11 +252,15 @@ func _on_player_disconnected(_player_network_unique_id : int):
 			emit_signal("on_player_disconnected", _disconnected_player_network)
 			break
 			
-	for i in _lobby_players:
-		if i["player_network_unique_id"] == _player_network_unique_id:
-			_lobby_players.erase(i)
-			return
-			
+	if is_server():
+		for i in _lobby_players:
+			if i["player_network_unique_id"] == _player_network_unique_id:
+				_lobby_players.erase(i)
+				break
+				
+		_server_advertiser.serverInfo["player"] = _lobby_players.size()
+		rpc("_update_player_joined", _lobby_players)
+	
 func _server_disconnected():
 	configuration = null
 	_lobby_players.clear()
