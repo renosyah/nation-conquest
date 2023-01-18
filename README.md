@@ -23,13 +23,7 @@ is a squad base RTS focus on simplicity and intense gaming experience for mobile
 
 ## Gameplay
 
-<img src="https://raw.githubusercontent.com/renosyah/nation-conquest/master/ss/1.jpg" width="180" height="370" />
-
- 
-<img src="https://raw.githubusercontent.com/renosyah/nation-conquest/master/ss/2.jpg" width="180" height="370" />
-
-
-<img src="https://raw.githubusercontent.com/renosyah/nation-conquest/master/ss/3.jpg" width="180" height="370" />
+<img src="https://raw.githubusercontent.com/renosyah/nation-conquest/master/ss/1.jpg" width="180" height="370" /> <img src="https://raw.githubusercontent.com/renosyah/nation-conquest/master/ss/2.jpg" width="180" height="370" /> <img src="https://raw.githubusercontent.com/renosyah/nation-conquest/master/ss/3.jpg" width="180" height="370" />
 
 
 
