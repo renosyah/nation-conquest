@@ -37,12 +37,19 @@ puppet var _puppet_targets :Array
 onready var _input_detection = $input_detection
 onready var _banner = $banner/banner
 onready var _unit_count = $banner/unit_count
+onready var _squad_owner = $banner/squad_owner
 onready var _hit_particle = $hit_particle
 
 onready var _input_area = $input_area
 
 onready var _spotting_area = $spotting_area
 onready var _spotting_collision = $spotting_area/CollisionShape
+
+onready var _duplicate_squad_count_text_mesh :TextMesh = _unit_count.mesh.duplicate()
+onready var _duplicate_squad_owner_text_mesh :TextMesh = _squad_owner.mesh.duplicate()
+
+onready var _banner_mesh_material :SpatialMaterial = _banner.get_surface_material(0).duplicate()
+onready var _outline_mesh_material :SpatialMaterial = _banner.get_surface_material(1).duplicate()
 
 onready var _pivot = $pivot
 var _tap :Tap
@@ -55,19 +62,20 @@ func _ready():
 	visible = false
 	is_dead = true
 	
-	var banner_mesh_material :SpatialMaterial = _banner.get_surface_material(0).duplicate()
-	var outline_mesh_material :SpatialMaterial = _banner.get_surface_material(1).duplicate()
-	var text_mesh :TextMesh = _unit_count.mesh.duplicate()
-
-	_unit_count.mesh = text_mesh
-	_banner.set_surface_material(0, banner_mesh_material)
-	_banner.set_surface_material(1, outline_mesh_material)
+	_unit_count.mesh = _duplicate_squad_count_text_mesh
+	_squad_owner.mesh = _duplicate_squad_owner_text_mesh
 	
-	(_unit_count.mesh as TextMesh).text = str(max_unit)
-	banner_mesh_material.albedo_color = color
-	banner_mesh_material.albedo_color.a = 0.6
+	_banner.set_surface_material(0, _banner_mesh_material)
+	_banner.set_surface_material(1, _outline_mesh_material)
+	_squad_owner.visible = not _is_master() and not player_name.empty()
 	
-	outline_mesh_material.albedo_color = squad_unselected_color if is_selectable else Color(1,1,1,0)
+	_duplicate_squad_count_text_mesh.text = str(max_unit)
+	_duplicate_squad_owner_text_mesh.text = player_name
+	
+	_banner_mesh_material.albedo_color = color
+	_banner_mesh_material.albedo_color.a = 0.6
+	
+	_outline_mesh_material.albedo_color = squad_unselected_color if is_selectable else Color(1,1,1,0)
 	
 	#_input_area.input_ray_pickable = is_selectable
 	
@@ -193,7 +201,7 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	
 	_reassign_unit_formation()
 	
-	(_unit_count.mesh as TextMesh).text = str(_units.size())
+	_duplicate_squad_count_text_mesh.text = str(_units.size())
 	
 	if _units.empty():
 		is_dead = true
@@ -212,7 +220,7 @@ remotesync func _reinforce_squad(_unit_name :String):
 	_unit.translation = global_transform.origin + Vector3(0, 2, 0)
 	_units.append(_unit)
 	
-	(_unit_count.mesh as TextMesh).text = str(_units.size())
+	_duplicate_squad_count_text_mesh.text = str(_units.size())
 	
 	_reassign_unit_formation()
 	emit_signal("squad_unit_added", self)

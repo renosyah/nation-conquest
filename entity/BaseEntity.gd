@@ -3,6 +3,7 @@ class_name BaseEntity
 
 # owner
 var player_id :int
+var player_name :String
 
 # performace
 var _visibility_notifier :VisibilityNotifier

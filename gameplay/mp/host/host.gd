@@ -24,6 +24,7 @@ func on_ui_recruit_squad(_squad :SquadData):
 	.on_ui_recruit_squad(_squad)
 	
 	_squad.player_id = NetworkLobbyManager.get_id()
+	_squad.player_name = player_data.player_name
 	_squad.node_name = GDUUID.v4()
 	_squad.network_master = NetworkLobbyManager.get_id()
 	_squad.color = player_data.player_color
@@ -80,7 +81,7 @@ func all_player_ready():
 		bot_count -= 1
 		
 	for i in range(Global.bots.size()):
-		if i > bot_count:
+		if i >= bot_count:
 			break
 			
 		var bot_data :NetworkPlayer = Global.bots[i]

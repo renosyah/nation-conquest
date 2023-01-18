@@ -51,11 +51,10 @@ func on_lobby_player_update(players :Array):
 		var item = preload("res://menus/lobby-menu/item/item.tscn").instance()
 		item.data = player_data
 		item.can_kick = NetworkLobbyManager.is_server() and is_client
-		item.can_change_color = is_local_player
+		item.can_change_color = false
 		item.can_change_team = is_local_player
 		
 		item.connect("kick", self, "_on_player_kick", [player])
-		item.connect("change_color", self, "_on_player_update")
 		item.connect("change_team", self, "_on_player_update")
 		player_holder.add_child(item)
 		

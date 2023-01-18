@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://entity/squad/squad.gd" type="Script" id=1]
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=2]
@@ -8,7 +8,7 @@
 [ext_resource path="res://assets/hit_particle/custom_particle/mesh/custom_mesh_particle.tscn" type="PackedScene" id=7]
 [ext_resource path="res://entity/squad/squad_collision.tres" type="Shape" id=8]
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=11]
 render_priority = 1
 flags_transparent = true
 flags_unshaded = true
@@ -16,12 +16,25 @@ flags_no_depth_test = true
 flags_do_not_receive_shadows = true
 params_billboard_mode = 1
 
-[sub_resource type="TextMesh" id=5]
-material = SubResource( 4 )
+[sub_resource type="TextMesh" id=14]
+material = SubResource( 11 )
 flip_faces = true
-text = "4"
+text = "0"
 font = ExtResource( 4 )
-uppercase = true
+
+[sub_resource type="SpatialMaterial" id=10]
+render_priority = 1
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+flags_do_not_receive_shadows = true
+params_billboard_mode = 1
+
+[sub_resource type="TextMesh" id=15]
+material = SubResource( 10 )
+flip_faces = true
+text = "hehe"
+font = ExtResource( 4 )
 
 [sub_resource type="SpatialMaterial" id=6]
 render_priority = 1
@@ -68,14 +81,19 @@ transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.90755, 0 )
 
 [node name="unit_count" type="MeshInstance" parent="banner"]
 cast_shadow = 0
-generate_lightmap = false
-mesh = SubResource( 5 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+software_skinning_transform_normals = false
+
+[node name="squad_owner" type="MeshInstance" parent="banner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.985923, 0 )
+cast_shadow = 0
+mesh = SubResource( 15 )
 skeleton = NodePath("../..")
 software_skinning_transform_normals = false
 
 [node name="banner" type="MeshInstance" parent="banner"]
 cast_shadow = 0
-generate_lightmap = false
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 6 )

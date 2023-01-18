@@ -18,6 +18,7 @@ func on_ui_recruit_squad(_squad :SquadData):
 	.on_ui_recruit_squad(_squad)
 	
 	_squad.player_id = NetworkLobbyManager.get_id()
+	_squad.player_name = player_data.player_name
 	_squad.node_name = GDUUID.v4()
 	_squad.network_master = NetworkLobbyManager.get_id()
 	_squad.color = player_data.player_color

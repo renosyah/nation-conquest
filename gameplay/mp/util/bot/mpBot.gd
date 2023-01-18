@@ -5,17 +5,6 @@ signal bot_recruit_squad(_mpbot, _squad_data)
 signal bot_deploying_building(_mpbot, _building_data)
 signal bot_surrender(_mpbot)
 
-const squad_datas = [
-	preload("res://data/squad_data/squads/pikeman_squad.tres"),
-	preload("res://data/squad_data/squads/maceman_squad.tres"),
-	preload("res://data/squad_data/squads/crossbowman_squad.tres"),
-	preload("res://data/squad_data/squads/archer_squad.tres"),
-	preload("res://data/squad_data/squads/axeman_squad.tres"),
-	preload("res://data/squad_data/squads/militia_squad.tres"),
-	preload("res://data/squad_data/squads/spearman_squad.tres"),
-	preload("res://data/squad_data/squads/swordman_squad.tres"),
-]
-
 export var bot_id :int = -69
 export var bot_team :int = 69
 export var bot_color :Color = Color.white
@@ -100,7 +89,17 @@ func _on_recruit_timer():
 	if bot_squads.size() > max_squads:
 		return
 		
-	var _squads :Array = squad_datas.duplicate()
+	var _squads :Array = [
+		preload("res://data/squad_data/squads/pikeman_squad.tres"),
+		preload("res://data/squad_data/squads/maceman_squad.tres"),
+		preload("res://data/squad_data/squads/crossbowman_squad.tres"),
+		preload("res://data/squad_data/squads/archer_squad.tres"),
+		preload("res://data/squad_data/squads/axeman_squad.tres"),
+		preload("res://data/squad_data/squads/militia_squad.tres"),
+		preload("res://data/squad_data/squads/spearman_squad.tres"),
+		preload("res://data/squad_data/squads/swordman_squad.tres")
+	]
+	
 	_squads.shuffle()
 	
 	var squad :SquadData = null
@@ -118,6 +117,7 @@ func _on_recruit_timer():
 	bot_coin -= squad.price
 	
 	squad.player_id = bot_id
+	squad.player_name = ""
 	squad.node_name = "BOT_SQUAD_" + GDUUID.v4() + "-" + str(bot_id)
 	squad.network_master = Network.PLAYER_HOST_ID
 	squad.color = bot_color

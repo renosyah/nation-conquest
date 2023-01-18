@@ -4,6 +4,7 @@ class_name SquadData
 const squad_scene = preload("res://entity/squad/squad.tscn")
 
 export var player_id :int
+export var player_name :String
 export var squad_name :String
 export var squad_description :String
 export var price :int
@@ -21,6 +22,7 @@ export var is_selectable :bool = false
 
 func from_dictionary(data : Dictionary):
 	player_id = data["player_id"]
+	player_name = data["player_name"]
 	squad_name = data["squad_name"]
 	squad_description = data["squad_description"]
 	price = data["price"]
@@ -40,6 +42,7 @@ func to_dictionary() -> Dictionary :
 	var data = {}
 	data["player_id"] = player_id
 	data["squad_name"] = squad_name
+	data["player_name"] = player_name
 	data["squad_description"] = squad_description
 	data["price"] = price
 	data["requirement_ids"] = requirement_ids
@@ -58,6 +61,7 @@ func to_dictionary() -> Dictionary :
 func spawn(parent :Node) -> Squad:
 	var squad = squad_scene.instance()
 	squad.player_id = player_id
+	squad.player_name = player_name
 	squad.unit = unit
 	squad.team = team
 	squad.color = color
