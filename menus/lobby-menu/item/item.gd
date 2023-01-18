@@ -37,7 +37,7 @@ func _on_change_color_pressed():
 	if not can_change_color:
 		return
 		
-	data.player_color = Color(randf(), randf(), randf(), 1)
+	data.player_color = Utils.COLORS[rand_range(0, Utils.COLORS.size())]
 	emit_signal("change_color", data)
 	
 func _on_change_team_pressed():

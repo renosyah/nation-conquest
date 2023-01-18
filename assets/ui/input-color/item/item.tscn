@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/ui/input-color/item/item.gd" type="Script" id=1]
+[ext_resource path="res://addons/Godot-Touch-Input-Manager/InputManager.gd" type="Script" id=2]
+
+[node name="item" type="ColorRect"]
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 200, 200 )
+mouse_filter = 1
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="input" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[connection signal="gui_input" from="." to="." method="_on_item_gui_input"]
+[connection signal="any_gesture" from="input" to="." method="_on_input_any_gesture"]

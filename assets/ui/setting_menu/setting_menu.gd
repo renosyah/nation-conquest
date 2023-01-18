@@ -4,16 +4,24 @@ const check = preload("res://assets/ui/icon/checkbox_check.png")
 const uncheck = preload("res://assets/ui/icon/checkbox_uncheck.png")
 
 onready var _input_name = $input_name
+onready var _input_color = $input_color
+
 onready var _player_name_ui = $SafeArea/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer2/VBoxContainer/player_name
+onready var _player_color = $SafeArea/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer3/VBoxContainer/player_color
 
 onready var _sfx_sound_setting_icon = $SafeArea/VBoxContainer2/ScrollContainer/VBoxContainer/VBoxContainer3/HBoxContainer3/sfx_setting/TextureRect
 onready var _potrait_setting_icon =  $SafeArea/VBoxContainer2/ScrollContainer/VBoxContainer/VBoxContainer4/HBoxContainer3/HBoxContainer/potrait_setting/TextureRect
 onready var _landscape_setting_icon =  $SafeArea/VBoxContainer2/ScrollContainer/VBoxContainer/VBoxContainer4/HBoxContainer3/HBoxContainer2/landscape_setting/TextureRect
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_input_name.visible = false
+	_input_color.visible = false
+	
 	_player_name_ui.text = Global.player.player_name
+	_player_color.color = Global.player.player_color
+	
 	check_sfx_setting()
 	check_orientation_setting()
 	
@@ -61,3 +69,12 @@ func _on_potrait_setting_pressed():
 	OS.screen_orientation = OS.SCREEN_ORIENTATION_PORTRAIT
 	OS.window_size = Vector2(600, 1024)
 	check_orientation_setting()
+
+func _on_color_setting_pressed():
+	_input_color.visible = true
+
+func _on_input_color_on_pick(_color :Color):
+	Global.player.player_color = _color
+	_player_color.color = Global.player.player_color
+	
+ 

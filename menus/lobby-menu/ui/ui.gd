@@ -2,8 +2,10 @@ extends Control
 
 onready var player_holder = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/ScrollContainer/VBoxContainer
 onready var host_menu_buttons = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons
+onready var play_button = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons/main_menu_buttons/VBoxContainer/play
 
 var bots :Dictionary = {}
+var teams :Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,6 +20,7 @@ func _ready():
 	
 	on_lobby_player_update(NetworkLobbyManager.get_players())
 	host_menu_buttons.visible = NetworkLobbyManager.is_server()
+	play_button.disabled = true
 	
 func _notification(what):
 	match what:
@@ -30,6 +33,8 @@ func _notification(what):
 			return
 	
 func on_lobby_player_update(players :Array):
+	teams.clear()
+	
 	for i in player_holder.get_children():
 		player_holder.remove_child(i)
 		i.queue_free()
@@ -55,6 +60,7 @@ func on_lobby_player_update(players :Array):
 		player_holder.add_child(item)
 		
 		slot_count -= 1
+		teams[player_data.player_team] = 1
 		
 	for key in bots.keys():
 		var network_bot = NetworkPlayer.new()
@@ -75,7 +81,9 @@ func on_lobby_player_update(players :Array):
 		item.connect("change_color", self, "_on_bot_update", [network_bot.player_network_unique_id])
 		item.connect("change_team", self, "_on_bot_update", [network_bot.player_network_unique_id])
 		player_holder.add_child(item)
+		
 		slot_count -= 1
+		teams[bot_data.player_team] = 1
 		
 	for i in range(slot_count):
 		var player_data :PlayerData = PlayerData.new()
@@ -90,6 +98,11 @@ func on_lobby_player_update(players :Array):
 		item.can_change_team = false
 		
 		player_holder.add_child(item)
+		
+		
+	# if all only one team
+	# game is invalid
+	play_button.disabled = (teams.size() == 1)
 		
 func _on_player_kick(player :NetworkPlayer):
 	if NetworkLobbyManager.is_server():

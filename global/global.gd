@@ -14,7 +14,7 @@ onready var player :PlayerData = PlayerData.new()
 
 func _ready():
 	player.player_name = RandomNameGenerator.generate()
-	player.player_color = Color(randf(), randf(), randf(), 1)
+	player.player_color = Utils.COLORS[rand_range(0, Utils.COLORS.size())]
 	player.player_team = 1
 	
 	#player.load_data(player_save_file)
@@ -46,7 +46,7 @@ func create_bot(random_team :bool = false) -> NetworkPlayer:
 	var bot :PlayerData = PlayerData.new()
 	bot.player_name =  RandomNameGenerator.generate() + " (Bot)"
 	bot.player_team = int(rand_range(-69, -100)) if random_team else 1
-	bot.player_color = Color(randf(), randf(), randf(), 1)
+	bot.player_color = Utils.COLORS[rand_range(0, Utils.COLORS.size())]
 	
 	var network_bot = NetworkPlayer.new()
 	network_bot.player_network_unique_id = int(rand_range(-69, -100))
