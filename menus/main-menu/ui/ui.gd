@@ -58,6 +58,10 @@ func _on_host_pressed():
 	
 func on_host_player_connected():
 	if quickplay:
+		Global.bots.clear()
+		for i in range(3):
+			Global.bots.append(Global.create_bot(true))
+			
 		NetworkLobbyManager.argument["seed"] = int(rand_range(-100,100))
 		get_tree().change_scene("res://gameplay/mp/host/host.tscn")
 		return

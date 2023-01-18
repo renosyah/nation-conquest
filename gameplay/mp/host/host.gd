@@ -51,6 +51,7 @@ func all_player_ready():
 	
 	var deploying_buildings :Array = []
 	var bot_spawn_positions :Array = _map.base_spawn_positions.slice(0, 3)
+	var bot_count :int = bot_spawn_positions.size()
 	
 	# deploy player town center
 	for player in NetworkLobbyManager.get_players():
@@ -70,12 +71,18 @@ func all_player_ready():
 				town_center, base_spawn_position, true
 			)
 		)
+		rule.add_player(
+			player.player_network_unique_id, lobby_player_data.player_team
 		
-		rule.add_player(town_center.player_id, town_center.team)
+		)
+		
 		bot_spawn_positions.erase(base_spawn_position)
-		
+		bot_count -= 1
 		
 	for i in range(Global.bots.size()):
+		if i > bot_count:
+			break
+			
 		var bot_data :NetworkPlayer = Global.bots[i]
 		
 		var lobby_bot_data :PlayerData = PlayerData.new()
@@ -91,16 +98,17 @@ func all_player_ready():
 		bot.connect("bot_deploying_building", self, "on_bot_deploying_building")
 		bot.connect("bot_surrender", self ,"on_bot_surrender")
 		add_child(bot)
-		bots[bot.bot_id] = bot
 		
-		rule.add_player(bot.bot_id, bot.bot_team)
+		bots[bot_data.player_network_unique_id] = bot
 		
 		deploying_buildings.append(
 			.create_deploying_building_payload(
 				bot.get_town_center_data(), base_spawn_position, true
 			)
 		)
-		
+		rule.add_player(
+			bot_data.player_network_unique_id, lobby_bot_data.player_team
+		)
 		
 	rule.start()
 	

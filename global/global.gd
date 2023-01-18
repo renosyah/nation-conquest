@@ -41,3 +41,16 @@ func apply_setting_data():
 ################################################################
 # bots
 onready var bots :Array = []
+
+func create_bot(random_team :bool = false) -> NetworkPlayer:
+	var bot :PlayerData = PlayerData.new()
+	bot.player_name =  RandomNameGenerator.generate() + " (Bot)"
+	bot.player_team = int(rand_range(-69, -100)) if random_team else 1
+	bot.player_color = Color(randf(), randf(), randf(), 1)
+	
+	var network_bot = NetworkPlayer.new()
+	network_bot.player_network_unique_id = int(rand_range(-69, -100))
+	network_bot.player_name = bot.player_name
+	network_bot.extra = bot.to_dictionary()
+	
+	return network_bot

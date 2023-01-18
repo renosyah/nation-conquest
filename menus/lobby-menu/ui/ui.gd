@@ -1,6 +1,6 @@
 extends Control
 
-onready var player_holder = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/MarginContainer/ScrollContainer/VBoxContainer 
+onready var player_holder = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/ScrollContainer/VBoxContainer
 onready var host_menu_buttons = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons
 
 var bots :Dictionary = {}
@@ -99,20 +99,15 @@ func _on_player_update(player :PlayerData):
 	NetworkLobbyManager.update_player_extra_data(player.to_dictionary())
 	
 func _on_add_bot_pressed():
-	if bots.size() + NetworkLobbyManager.get_players().size() == 4:
+	if not NetworkLobbyManager.is_server():
 		return
 		
-	var bot :PlayerData = PlayerData.new()
-	bot.player_name =  RandomNameGenerator.generate() + " (Bot)"
-	bot.player_team = 1
-	bot.player_color = Color(randf(), randf(), randf(), 1)
-	
-	var network_bot = NetworkPlayer.new()
-	network_bot.player_network_unique_id = rand_range(-69, -100)
-	network_bot.player_name = bot.player_name
-	network_bot.extra = bot.to_dictionary()
-	
+	if bots.size() + NetworkLobbyManager.get_players().size() >= 4:
+		return
+		
+	var network_bot = Global.create_bot()
 	bots[network_bot.player_network_unique_id] = network_bot.to_dictionary()
+	
 	rpc("_update_bots", bots)
 
 remotesync func _update_bots(_bots :Dictionary):

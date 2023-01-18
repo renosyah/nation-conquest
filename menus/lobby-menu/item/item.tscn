@@ -101,42 +101,26 @@ valign = 1
 
 [node name="MarginContainer5" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 221.0
-margin_right = 422.0
+margin_right = 402.0
 margin_bottom = 92.0
 rect_min_size = Vector2( 10, 0 )
 mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="panel" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
-margin_left = 426.0
+margin_left = 406.0
 margin_right = 486.0
 margin_bottom = 92.0
 rect_min_size = Vector2( 60, 0 )
 
 [node name="kick_player" type="Button" parent="VBoxContainer/HBoxContainer/panel"]
-margin_right = 60.0
+self_modulate = Color( 1, 0, 0, 1 )
+margin_right = 80.0
 margin_bottom = 92.0
+rect_min_size = Vector2( 80, 80 )
+icon = ExtResource( 2 )
 flat = true
-
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer/HBoxContainer/panel/kick_player"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-color = Color( 0.580392, 0, 0, 1 )
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/panel/kick_player"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 40, 40 )
-mouse_filter = 2
-texture = ExtResource( 2 )
-expand = true
+expand_icon = true
 
 [node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 490.0

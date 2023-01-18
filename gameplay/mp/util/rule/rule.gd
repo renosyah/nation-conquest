@@ -26,8 +26,9 @@ func add_player(player_id :int, team :int):
 func add_team_power(team :int):
 	if teams.has(team):
 		teams[team] += 1
-	else:
-		teams[team] = 1
+		return
+	
+	teams[team] = 1
 	
 func player_lose(player_id :int):
 	if not players.has(player_id):
