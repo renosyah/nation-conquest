@@ -15,7 +15,7 @@ onready var base = $base
 
 onready var animation_player = $AnimationPlayer
 onready var firing_delay = $firing_delay
-onready var position_3d = $Position3D
+onready var projectile_release_point = $base/Position3D
 onready var audio_stream_player_3d = $AudioStreamPlayer3D
 onready var area_damage = $AreaDamage
 
@@ -95,7 +95,7 @@ func _on_animation_projectile_release():
 		return
 		
 	var arrow = _get_projectile()
-	arrow.translation = position_3d.global_transform.origin
+	arrow.translation = projectile_release_point.global_transform.origin
 	arrow.accuration = 1.0
 	
 	area_damage.translation = attack_to.global_transform.origin

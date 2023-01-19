@@ -326,8 +326,8 @@ mesh = ExtResource( 10 )
 skeleton = NodePath("../../../..")
 software_skinning_transform_normals = false
 
-[node name="Position3D" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.3645, -8.58133 )
+[node name="Position3D" type="Position3D" parent="base"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.687, -8.58133 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
