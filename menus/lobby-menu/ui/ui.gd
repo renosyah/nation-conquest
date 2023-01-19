@@ -6,6 +6,8 @@ onready var play_button = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxConta
 onready var add_bot = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer/add_bot
 onready var bottom_offset = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/bottom_offset
 
+onready var is_server :bool = NetworkLobbyManager.is_server()
+
 var bots :Dictionary = {}
 var teams :Dictionary = {}
 
@@ -21,9 +23,11 @@ func _ready():
 	NetworkLobbyManager.connect("on_host_ready", self ,"on_host_ready")
 	
 	on_lobby_player_update(NetworkLobbyManager.get_players())
-	host_menu_buttons.visible = NetworkLobbyManager.is_server()
+	host_menu_buttons.visible = is_server
+	add_bot.disabled = not is_server
 	play_button.disabled = true
-	add_bot.disabled = not NetworkLobbyManager.is_server()
+	
+	add_bot.icon = preload("res://assets/ui/icon/host.png") if is_server else null
 	 
 func _notification(what):
 	match what:
@@ -43,7 +47,6 @@ func on_lobby_player_update(players :Array):
 		i.queue_free()
 		
 	var slot_count :int = 4
-	var is_server :bool = NetworkLobbyManager.is_server()
 	
 	for player in players:
 		var is_host_player :bool = player.player_network_unique_id == Network.PLAYER_HOST_ID
@@ -53,11 +56,9 @@ func on_lobby_player_update(players :Array):
 		var player_data :PlayerData = PlayerData.new()
 		player_data.from_dictionary(player.extra)
 		
-		if is_host_player:
-			player_data.player_name = player_data.player_name + " (Host)"
-		
 		var item = preload("res://menus/lobby-menu/item/item.tscn").instance()
 		item.data = player_data
+		item.is_host = is_host_player
 		item.can_kick = is_server and is_client_player
 		item.can_change_color = false
 		item.can_change_team = is_local_player
@@ -81,6 +82,8 @@ func on_lobby_player_update(players :Array):
 		
 		var item = preload("res://menus/lobby-menu/item/item.tscn").instance()
 		item.data = bot_data
+		
+		item.is_host = false
 		item.can_kick = is_server
 		item.can_change_color = is_server
 		item.can_change_team = is_server
@@ -101,6 +104,8 @@ func on_lobby_player_update(players :Array):
 		
 		var item = preload("res://menus/lobby-menu/item/item.tscn").instance()
 		item.data = player_data
+		
+		item.is_host = false
 		item.can_kick = false
 		item.can_change_color = false
 		item.can_change_team = false

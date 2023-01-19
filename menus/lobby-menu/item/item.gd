@@ -10,8 +10,11 @@ onready var player_name = $VBoxContainer/HBoxContainer/player_name
 onready var kick_player = $VBoxContainer/HBoxContainer/panel/kick_player
 
 onready var team_container = $VBoxContainer/HBoxContainer/HBoxContainer
+onready var team_container_color = $VBoxContainer/HBoxContainer/HBoxContainer/change_team/color
+onready var can_change_color_indicator = $VBoxContainer/HBoxContainer/HBoxContainer/change_color/TextureRect
 
 var data :PlayerData
+var is_host :bool
 var can_kick :bool
 var can_change_color :bool
 var can_change_team :bool
@@ -24,9 +27,12 @@ func _ready():
 	if data.player_team == 0:
 		team_container.visible = false
 		
-	player_name.text = data.player_name
+	player_name.text = data.player_name + (" (Host)" if is_host else "")
 	kick_player.visible = can_kick
-
+	
+	team_container_color.visible = can_change_team
+	can_change_color_indicator.visible = can_change_color
+	
 func _on_kick_player_pressed():
 	if not can_kick:
 		return
