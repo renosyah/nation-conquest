@@ -2,6 +2,7 @@ extends Control
 
 onready var title = $CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer2/Control/Label
 onready var main_menu_safe_area = $CanvasLayer/MainMenuSafeArea
+onready var bottom_offset = $CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer2/Control/bottom_offset
 
 onready var server_browser = $CanvasLayer/server_browser
 
@@ -16,7 +17,6 @@ func _ready():
 	
 	main_menu_safe_area.visible = false
 	server_browser.visible = false
- 
 	menu.visible = false
 	
 	get_tree().set_quit_on_go_back(false)
@@ -34,7 +34,7 @@ func _notification(what):
 		MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
 			on_back_pressed()
 			return
-	
+		
 func show_ui():
 	main_menu_safe_area.visible = true
 	tween.interpolate_property(title, "modulate:a", 0, 1, 1.4,Tween.TRANS_LINEAR)

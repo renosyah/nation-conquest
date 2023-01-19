@@ -256,7 +256,7 @@ mouse_filter = 2
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control"]
 margin_top = 213.0
 margin_right = 612.0
-margin_bottom = 746.0
+margin_bottom = 786.0
 mouse_filter = 2
 size_flags_vertical = 3
 alignment = 2
@@ -267,14 +267,14 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2"]
 margin_left = 518.0
 margin_right = 598.0
-margin_bottom = 533.0
+margin_bottom = 573.0
 mouse_filter = 2
 alignment = 1
 
 [node name="open_building" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
-margin_top = 128.0
+margin_top = 148.0
 margin_right = 80.0
-margin_bottom = 208.0
+margin_bottom = 228.0
 rect_min_size = Vector2( 80, 80 )
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -282,9 +282,9 @@ icon = ExtResource( 9 )
 expand_icon = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
-margin_top = 212.0
+margin_top = 232.0
 margin_right = 80.0
-margin_bottom = 306.0
+margin_bottom = 326.0
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/VBoxContainer"]
 margin_right = 80.0
@@ -303,16 +303,16 @@ icon = ExtResource( 24 )
 expand_icon = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
-margin_top = 310.0
+margin_top = 330.0
 margin_right = 80.0
-margin_bottom = 320.0
+margin_bottom = 340.0
 rect_min_size = Vector2( 0, 10 )
 mouse_filter = 2
 
 [node name="select_all" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
-margin_top = 324.0
+margin_top = 344.0
 margin_right = 80.0
-margin_bottom = 404.0
+margin_bottom = 424.0
 rect_min_size = Vector2( 80, 80 )
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -333,14 +333,14 @@ expand_icon = true
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2"]
 margin_left = 602.0
 margin_right = 612.0
-margin_bottom = 533.0
+margin_bottom = 573.0
 rect_min_size = Vector2( 10, 0 )
 mouse_filter = 2
 
 [node name="build_menu" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control"]
 visible = false
 margin_top = 750.0
-margin_right = 600.0
+margin_right = 612.0
 margin_bottom = 970.0
 rect_min_size = Vector2( 0, 220 )
 mouse_filter = 2
@@ -348,13 +348,13 @@ alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/build_menu"]
 margin_top = 28.0
-margin_right = 600.0
+margin_right = 612.0
 margin_bottom = 108.0
 alignment = 1
 
 [node name="rotate_l" type="Button" parent="CanvasLayer/SafeArea/Control/build_menu/HBoxContainer"]
-margin_left = 218.0
-margin_right = 298.0
+margin_left = 224.0
+margin_right = 304.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
 custom_fonts/font = ExtResource( 10 )
@@ -363,8 +363,8 @@ flat = true
 expand_icon = true
 
 [node name="rotate_r" type="Button" parent="CanvasLayer/SafeArea/Control/build_menu/HBoxContainer"]
-margin_left = 302.0
-margin_right = 382.0
+margin_left = 308.0
+margin_right = 388.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
 custom_fonts/font = ExtResource( 10 )
@@ -374,51 +374,46 @@ expand_icon = true
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/build_menu"]
 margin_top = 112.0
-margin_right = 600.0
+margin_right = 612.0
 margin_bottom = 192.0
 alignment = 1
 
 [node name="build_confirm" type="Button" parent="CanvasLayer/SafeArea/Control/build_menu/HBoxContainer2"]
-margin_left = 166.0
-margin_right = 286.0
+margin_left = 172.0
+margin_right = 292.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 120, 80 )
 custom_fonts/font = ExtResource( 10 )
 text = "Build"
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/build_menu/HBoxContainer2"]
-margin_left = 290.0
-margin_right = 310.0
+margin_left = 296.0
+margin_right = 316.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 20, 0 )
 mouse_filter = 2
 
 [node name="build_cancel" type="Button" parent="CanvasLayer/SafeArea/Control/build_menu/HBoxContainer2"]
-margin_left = 314.0
-margin_right = 434.0
+margin_left = 320.0
+margin_right = 440.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 120, 80 )
 custom_fonts/font = ExtResource( 10 )
 text = "Cancel"
 
 [node name="squad_menu" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control"]
-margin_top = 750.0
+margin_top = 790.0
 margin_right = 612.0
 margin_bottom = 970.0
-rect_min_size = Vector2( 0, 220 )
+rect_min_size = Vector2( 0, 180 )
 mouse_filter = 2
 size_flags_horizontal = 3
-
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/squad_menu"]
-margin_right = 612.0
-margin_bottom = 10.0
-rect_min_size = Vector2( 0, 10 )
-mouse_filter = 2
+alignment = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/squad_menu"]
-margin_top = 14.0
+margin_top = 10.0
 margin_right = 612.0
-margin_bottom = 174.0
+margin_bottom = 170.0
 rect_min_size = Vector2( 0, 100 )
 mouse_filter = 2
 size_flags_vertical = 0
@@ -427,10 +422,9 @@ alignment = 1
 [node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/squad_menu/HBoxContainer2"]
 margin_left = 261.0
 margin_right = 261.0
-margin_bottom = 100.0
+margin_bottom = 160.0
 rect_min_size = Vector2( 0, 100 )
 mouse_filter = 2
-size_flags_vertical = 0
 alignment = 1
 
 [node name="add_squad" type="Button" parent="CanvasLayer/SafeArea/Control/squad_menu/HBoxContainer2"]
@@ -443,17 +437,16 @@ text = "+"
 icon_align = 1
 expand_icon = true
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/squad_menu"]
-margin_top = 178.0
-margin_right = 612.0
-margin_bottom = 218.0
-rect_min_size = Vector2( 0, 40 )
-mouse_filter = 2
-
-[node name="fps_ping_displayer" parent="CanvasLayer/SafeArea/Control" instance=ExtResource( 5 )]
+[node name="bottom_offset" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control"]
 margin_top = 974.0
-margin_right = 160.0
+margin_right = 612.0
 margin_bottom = 1024.0
+mouse_filter = 2
+alignment = 2
+
+[node name="fps_ping_displayer" parent="CanvasLayer/SafeArea/Control/bottom_offset" instance=ExtResource( 5 )]
+margin_right = 160.0
+margin_bottom = 50.0
 size_flags_horizontal = 0
 
 [node name="recruit_squad" parent="CanvasLayer/SafeArea" instance=ExtResource( 15 )]

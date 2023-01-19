@@ -3,6 +3,8 @@ extends Control
 onready var player_holder = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/ScrollContainer/VBoxContainer
 onready var host_menu_buttons = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons
 onready var play_button = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons/main_menu_buttons/VBoxContainer/play
+onready var add_bot = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer/add_bot
+onready var bottom_offset = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/bottom_offset
 
 var bots :Dictionary = {}
 var teams :Dictionary = {}
@@ -21,7 +23,8 @@ func _ready():
 	on_lobby_player_update(NetworkLobbyManager.get_players())
 	host_menu_buttons.visible = NetworkLobbyManager.is_server()
 	play_button.disabled = true
-	
+	add_bot.disabled = not NetworkLobbyManager.is_server()
+	 
 func _notification(what):
 	match what:
 		MainLoop.NOTIFICATION_WM_QUIT_REQUEST:

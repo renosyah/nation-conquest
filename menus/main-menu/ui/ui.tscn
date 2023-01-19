@@ -178,7 +178,7 @@ margin_right = 400.0
 margin_bottom = 248.0
 rect_min_size = Vector2( 24, 24 )
 
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer2/Control"]
+[node name="bottom_offset" type="MarginContainer" parent="CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer2/Control"]
 margin_top = 851.0
 margin_right = 400.0
 margin_bottom = 931.0

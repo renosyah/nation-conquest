@@ -24,6 +24,5 @@ func calculate():
 	add_constant_override("margin_bottom", viewSize.y-safeArea.end.y)
 	add_constant_override("margin_right", viewSize.x-safeArea.end.x)
 
-
 func _on_SafeArea_resized():
 	calculate()

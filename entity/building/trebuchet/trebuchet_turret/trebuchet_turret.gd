@@ -13,7 +13,6 @@ export var is_master :bool = false
 
 onready var base = $base
 
-onready var pivot = $base
 onready var animation_player = $AnimationPlayer
 onready var firing_delay = $firing_delay
 onready var position_3d = $Position3D
@@ -32,6 +31,7 @@ func _ready():
 	area_damage.set_as_toplevel(true)
 	
 	_projectile_pools()
+	
 	set_process(true)
 	
 func set_team_color(color :Color):
@@ -73,15 +73,15 @@ func _process(delta):
 		firing_delay.wait_time = attack_delay
 		firing_delay.start()
 		
-	var enemy_pos :Vector3 = attack_to.global_transform.origin
-	var pos = global_transform.origin
-	var to = Vector3(enemy_pos.x, pos.y, enemy_pos.z)
-	var dis = pos.distance_squared_to(to)
+	var enemy_pos :Vector3 = to_local(attack_to.global_transform.origin)
+	var to = Vector3(enemy_pos.x, translation.y, enemy_pos.z)
+	
+	var dis = translation.distance_squared_to(to)
 	if dis < 10.0:
 		return
 		
-	var _transform = pivot.transform.looking_at(pos.direction_to(to) * 100, Vector3.UP)
-	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
+	var _transform :Transform = base.transform.looking_at(translation.direction_to(to) * 100, Vector3.UP)
+	base.transform = base.transform.interpolate_with(_transform, 5 * delta)
 	
 func perform_attack():
 	audio_stream_player_3d.stream = preload("res://assets/sound/arrow_fly.wav")
