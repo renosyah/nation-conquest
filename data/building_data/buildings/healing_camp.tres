@@ -8,7 +8,7 @@
 script = ExtResource( 1 )
 player_id = 0
 building_name = "Healing Camp"
-building_description = "Reinforce squad"
+building_description = "Provide reinforcement to replenish squads number"
 price = 60
 building_id = 7
 requirement_ids = [ 0, 1, 3, 4 ]

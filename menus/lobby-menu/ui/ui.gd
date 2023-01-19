@@ -40,17 +40,22 @@ func on_lobby_player_update(players :Array):
 		i.queue_free()
 		
 	var slot_count :int = 4
-		
+	var is_server :bool = NetworkLobbyManager.is_server()
+	
 	for player in players:
-		var is_client :bool = player.player_network_unique_id != Network.PLAYER_HOST_ID
-		var is_local_player :bool = NetworkLobbyManager.get_id() == player.player_network_unique_id
+		var is_host_player :bool = player.player_network_unique_id == Network.PLAYER_HOST_ID
+		var is_client_player :bool = not is_host_player
+		var is_local_player :bool = player.player_network_unique_id == NetworkLobbyManager.get_id()
 		
 		var player_data :PlayerData = PlayerData.new()
 		player_data.from_dictionary(player.extra)
 		
+		if is_host_player:
+			player_data.player_name = player_data.player_name + " (Host)"
+		
 		var item = preload("res://menus/lobby-menu/item/item.tscn").instance()
 		item.data = player_data
-		item.can_kick = NetworkLobbyManager.is_server() and is_client
+		item.can_kick = is_server and is_client_player
 		item.can_change_color = false
 		item.can_change_team = is_local_player
 		
@@ -62,13 +67,14 @@ func on_lobby_player_update(players :Array):
 		teams[player_data.player_team] = 1
 		
 	for key in bots.keys():
+		if slot_count == 0:
+			break
+			
 		var network_bot = NetworkPlayer.new()
 		network_bot.from_dictionary(bots[key])
 		
 		var bot_data :PlayerData = PlayerData.new()
 		bot_data.from_dictionary(network_bot.extra)
-		
-		var is_server :bool = NetworkLobbyManager.is_server()
 		
 		var item = preload("res://menus/lobby-menu/item/item.tscn").instance()
 		item.data = bot_data

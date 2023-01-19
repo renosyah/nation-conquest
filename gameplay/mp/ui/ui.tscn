@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://addons/mini-map/MiniMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gameplay/mp/ui/ui.gd" type="Script" id=2]
@@ -22,7 +22,8 @@
 [ext_resource path="res://assets/ui/menu/menu.tscn" type="PackedScene" id=20]
 [ext_resource path="res://assets/ui/match_result/result.tscn" type="PackedScene" id=21]
 [ext_resource path="res://assets/ui/gameplay/repair_building/repair_building_panel.tscn" type="PackedScene" id=22]
-[ext_resource path="res://assets/ui/gameplay/info_building/info_building_panel.tscn" type="PackedScene" id=23]
+[ext_resource path="res://assets/ui/gameplay/info_panel/info_panel.tscn" type="PackedScene" id=23]
+[ext_resource path="res://assets/ui/icon/info.png" type="Texture" id=24]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -271,26 +272,47 @@ mouse_filter = 2
 alignment = 1
 
 [node name="open_building" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
-margin_top = 177.0
+margin_top = 128.0
 margin_right = 80.0
-margin_bottom = 257.0
+margin_bottom = 208.0
 rect_min_size = Vector2( 80, 80 )
 size_flags_horizontal = 8
 size_flags_vertical = 4
 icon = ExtResource( 9 )
 expand_icon = true
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
-margin_top = 261.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
+margin_top = 212.0
 margin_right = 80.0
-margin_bottom = 271.0
+margin_bottom = 306.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/VBoxContainer"]
+margin_right = 80.0
+margin_bottom = 10.0
+rect_min_size = Vector2( 0, 10 )
+mouse_filter = 2
+
+[node name="squad_info" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/VBoxContainer"]
+margin_top = 14.0
+margin_right = 80.0
+margin_bottom = 94.0
+rect_min_size = Vector2( 80, 80 )
+size_flags_horizontal = 8
+size_flags_vertical = 4
+icon = ExtResource( 24 )
+expand_icon = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
+margin_top = 310.0
+margin_right = 80.0
+margin_bottom = 320.0
 rect_min_size = Vector2( 0, 10 )
 mouse_filter = 2
 
 [node name="select_all" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
-margin_top = 275.0
+margin_top = 324.0
 margin_right = 80.0
-margin_bottom = 355.0
+margin_bottom = 404.0
 rect_min_size = Vector2( 80, 80 )
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -456,7 +478,7 @@ margin_right = 612.0
 visible = false
 margin_right = 612.0
 
-[node name="info_building_panel" parent="CanvasLayer/SafeArea" instance=ExtResource( 23 )]
+[node name="info_panel" parent="CanvasLayer/SafeArea" instance=ExtResource( 23 )]
 visible = false
 margin_right = 612.0
 
@@ -468,6 +490,7 @@ visible = false
 
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer/main_menu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/open_building" to="." method="_on_open_building_pressed"]
+[connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/VBoxContainer/squad_info" to="." method="_on_squad_info_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/select_all" to="." method="_on_select_all_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/unselect_all" to="." method="_on_unselect_all_pressed"]
 [connection signal="pressed" from="CanvasLayer/SafeArea/Control/build_menu/HBoxContainer2/build_confirm" to="." method="_on_build_confirm_pressed"]

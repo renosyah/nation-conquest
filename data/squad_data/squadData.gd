@@ -6,7 +6,7 @@ const squad_scene = preload("res://entity/squad/squad.tscn")
 export var player_id :int
 export var player_name :String
 export var squad_name :String
-export var squad_description :String
+export (String, MULTILINE) var squad_description :String
 export var price :int
 export var requirement_ids :Array = []
 export var node_name :String
@@ -62,6 +62,9 @@ func spawn(parent :Node) -> Squad:
 	var squad = squad_scene.instance()
 	squad.player_id = player_id
 	squad.player_name = player_name
+	squad.squad_name = squad_name
+	squad.squad_description = squad_description
+	squad.squad_icon = icon
 	squad.unit = unit
 	squad.team = team
 	squad.color = color

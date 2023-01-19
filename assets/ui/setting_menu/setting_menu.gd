@@ -7,7 +7,7 @@ onready var _input_name = $input_name
 onready var _input_color = $input_color
 
 onready var _player_name_ui = $SafeArea/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer2/VBoxContainer/player_name
-onready var _player_color = $SafeArea/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer3/VBoxContainer/player_color
+onready var _player_color = $SafeArea/VBoxContainer2/ScrollContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/color_setting/player_color
 
 onready var _sfx_sound_setting_icon = $SafeArea/VBoxContainer2/ScrollContainer/VBoxContainer/VBoxContainer3/HBoxContainer3/sfx_setting/TextureRect
 onready var _potrait_setting_icon =  $SafeArea/VBoxContainer2/ScrollContainer/VBoxContainer/VBoxContainer4/HBoxContainer3/HBoxContainer/potrait_setting/TextureRect

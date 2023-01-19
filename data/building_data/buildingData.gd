@@ -18,7 +18,7 @@ class_name BuildingData
 
 export var player_id :int
 export var building_name :String
-export var building_description :String
+export (String, MULTILINE) var building_description :String
 export var price :int
 export var building_id :int = 0
 export var requirement_ids :Array = []

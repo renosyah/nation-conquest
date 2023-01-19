@@ -9,6 +9,10 @@ signal squad_unit_dead(_squad)
 signal squad_unit_added(_squad)
 signal squad_dead(_squad)
 
+export var squad_name :String
+export var squad_description :String
+export var squad_icon :Resource
+
 export var unit :Resource
 export var team :int = 0
 export var color :Color = Color.white

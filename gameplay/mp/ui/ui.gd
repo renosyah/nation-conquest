@@ -32,10 +32,11 @@ onready var building_panel = $CanvasLayer/SafeArea/building_panel
 
 onready var demolish_building_panel = $CanvasLayer/SafeArea/demolish_building_panel
 onready var repair_building_panel = $CanvasLayer/SafeArea/repair_building_panel
-onready var info_building_panel = $CanvasLayer/SafeArea/info_building_panel
+onready var info_panel = $CanvasLayer/SafeArea/info_panel
 
 onready var select_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/select_all
 onready var unselect_all = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/unselect_all
+onready var squad_info = $CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/VBoxContainer
 
 onready var player_coin_ui = $CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/coin/HBoxContainer/player_coin
 onready var player_building = $CanvasLayer/SafeArea/Control/HBoxContainer/MarginContainer/building/HBoxContainer/player_building
@@ -72,7 +73,7 @@ func _ready():
 	
 	recruit_squad_panel.visible = false
 	building_panel.visible = false
-	info_building_panel.visible = false
+	info_panel.visible = false
 	
 	menu.visible = false
 	safe_area.visible = false
@@ -83,6 +84,7 @@ func _ready():
 	
 	select_all.visible = true
 	unselect_all.visible = false
+	squad_info.visible = false
 	
 	mini_map.set_enable(false)
 	_update_player_building(false)
@@ -139,10 +141,20 @@ func on_building_demolish(_building :BaseBuilding):
 	demolish_building_panel.visible = true
 	
 func on_building_info(_building :BaseBuilding):
-	info_building_panel.set_info(
-		_building.building_name, _building.building_description, _building.building_icon
+	info_panel.set_info(
+		_building.building_name, 
+		_building.building_description, 
+		_building.building_icon
 	)
-	info_building_panel.visible = true
+	info_panel.visible = true
+	
+func on_squad_info(_squad :Squad):
+	info_panel.set_info(
+		_squad.squad_name, 
+		_squad.squad_description, 
+		_squad.squad_icon
+	)
+	info_panel.visible = true
 	
 func on_building_deployed(_building :BaseBuilding):
 	if _building is TownCenter:
@@ -238,6 +250,9 @@ func on_squad_selected(_squad :Squad, is_selected :bool):
 	squads[_squad].set_selected(is_selected)
 	
 	var any_selected :bool = check_if_squad_selected()
+	var one_selected :bool = check_squad_selected_count() == 1
+	
+	squad_info.visible = one_selected
 	unselect_all.visible = any_selected
 	select_all.visible = not any_selected
 	
@@ -285,12 +300,16 @@ func is_player_have_town_center() -> bool:
 			
 	return false
 	
-func check_if_squad_selected() -> bool:
+func check_squad_selected_count() -> int:
+	var count :int = 0
 	for key in squads:
 		if squads[key].is_selected:
-			return true
+			count += 1
 			
-	return false
+	return count
+	
+func check_if_squad_selected() -> bool:
+	return check_squad_selected_count() > 0
 	
 func selected_all_squad():
 	for key in squads:
@@ -430,6 +449,14 @@ func game_over():
 	unselected_all_squad()
 	control.visible = false
 	result.visible = true
+	
+func _on_squad_info_pressed():
+	for key in squads:
+		if squads[key].is_selected:
+			on_squad_info(key)
+			return
+
+
 
 
 
