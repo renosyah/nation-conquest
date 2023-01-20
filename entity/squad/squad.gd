@@ -13,7 +13,7 @@ export var squad_name :String
 export var squad_description :String
 export var squad_icon :Resource
 
-export var unit :Resource
+export var unit_scene :Resource
 export var team :int = 0
 export var color :Color = Color.white
 export var max_unit :int = 15
@@ -130,7 +130,7 @@ func _ready():
 	is_dead = false
 	
 func _create_unit(unit_name :String) -> BaseUnit:
-	var _unit = unit.instance()
+	var _unit = unit_scene.instance()
 	_unit.name = unit_name
 	_unit.is_master = _is_master()
 	_unit.team = team
@@ -234,14 +234,6 @@ remotesync func _squad_disband():
 	is_dead = true
 	set_process(false)
 	emit_signal("squad_dead", self)
-	
-	
-func moving(delta :float) -> void:
-	.moving(delta)
-	
-	if is_moving and (not is_assault_mode):
-		return
-		
 	
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
@@ -365,15 +357,7 @@ func disband():
 	rpc("_squad_disband")
 
 func _attack_targets():
-	if _units.empty():
-		return
-		
-	if _targets.empty():
-		for _unit in _units:
-			if is_instance_valid(unit):
-				_unit.is_moving = true
-				_unit.is_attacking = false
-				_unit.attack_to = null
+	if _units.empty() or _targets.empty():
 		return
 		
 	if is_moving and is_assault_mode:
@@ -382,13 +366,22 @@ func _attack_targets():
 		
 	var pos :int = 0
 	for _unit in _units:
-		if is_instance_valid(unit):
+		if _is_unit_idle(_unit):
 			_unit.is_moving = false
 			_unit.is_attacking = true
 			_unit.attack_to = get_node_or_null(_targets[pos])
 			
 		if pos < _targets.size() - 1:
 			pos += 1
+	
+func _is_unit_idle(_unit :BaseUnit) -> bool:
+	if not is_instance_valid(_unit):
+		return false
+		
+	if _unit.is_moving:
+		return false
+		
+	return true
 	
 func _spotted_target():
 	_targets.clear()

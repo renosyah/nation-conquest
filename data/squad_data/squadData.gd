@@ -65,7 +65,7 @@ func spawn(parent :Node) -> Squad:
 	squad.squad_name = squad_name
 	squad.squad_description = squad_description
 	squad.squad_icon = icon
-	squad.unit = unit
+	squad.unit_scene = unit
 	squad.team = team
 	squad.color = color
 	squad.max_unit = max_unit

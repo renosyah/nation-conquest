@@ -68,7 +68,6 @@ func _ready():
 	
 	input_ray_pickable = false
 	
-	
 func set_selected(val :bool):
 	_higlight.visible = val
 	
@@ -96,6 +95,13 @@ func _process(delta :float):
 		)
 		
 func attacking(delta :float):
+	if is_instance_valid(squad):
+		if squad.is_moving:
+			is_attacking = false
+			attack_to = null
+			is_moving = true
+			return
+			
 	if not is_attacking:
 		return
 		
@@ -104,13 +110,6 @@ func attacking(delta :float):
 		is_moving = true
 		return
 		
-	if is_instance_valid(squad):
-		if squad.is_moving:
-			is_attacking = false
-			attack_to = null
-			is_moving = true
-			return
-			
 	var is_arrive :bool = false
 	
 	if enable_moving:
@@ -139,7 +138,14 @@ func moving(delta :float):
 	if not is_instance_valid(move_to):
 		return
 		
-	_move_to_position(move_to.global_transform.origin, margin)
+	var is_arrive :bool = _move_to_position(
+		move_to.global_transform.origin, margin
+	)
+	
+	if not is_arrive:
+		return
+		
+	is_moving = false
 	
 func idle(delta :float):
 	pass
