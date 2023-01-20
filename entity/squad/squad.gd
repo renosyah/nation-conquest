@@ -241,22 +241,11 @@ remotesync func _squad_disband():
 func moving(delta :float) -> void:
 	.moving(delta)
 	
-	_banner_pivot.translation.y = global_transform.origin.y + 3
-	var sum_pos :Vector3 = Vector3.ZERO
-	var unit_size :int = 0
-	
-	for _unit in _units:
-		if is_instance_valid(_unit):
-			sum_pos += _unit.global_transform.origin
-			unit_size += 1
-		
-	if sum_pos == Vector3.ZERO or unit_size == 0:
+	if is_dead:
 		return
 	
-	var avg_pos :Vector3 = sum_pos / unit_size
-	_banner_pivot.translation.x = avg_pos.x
-	_banner_pivot.translation.z = avg_pos.z
-	
+	_banner_pivot.translation = _get_avg_units_position(global_transform.origin)
+	_banner_pivot.translation.y = global_transform.origin.y + 3
 	
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
@@ -406,13 +395,27 @@ func _is_unit_idle(_unit :BaseUnit) -> bool:
 		
 	return true
 	
+func _get_avg_units_position(default_pos :Vector3) -> Vector3:
+	var sum_pos :Vector3 = Vector3.ZERO
+	var unit_size :int = 0
+	
+	for _unit in _units:
+		if is_instance_valid(_unit):
+			sum_pos += _unit.global_transform.origin
+			unit_size += 1
+			
+	if unit_size == 0:
+		return default_pos
+		
+	return sum_pos / unit_size
+	
 func _spotted_target():
 	_targets.clear()
 	
 	if _units.empty():
 		return
 		
-	var _unit_size :int = _units.size()
+	var _unit_size :int = unit_size()
 	
 	for body in _spotting_area.get_overlapping_bodies():
 		if _targets.size() > _unit_size:
