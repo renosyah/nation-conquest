@@ -1,7 +1,5 @@
 extends Control
 
-
-
 signal on_pick(_color)
 
 onready var _custom = $VBoxContainer/custom

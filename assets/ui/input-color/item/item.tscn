@@ -10,9 +10,6 @@ rect_min_size = Vector2( 200, 200 )
 mouse_filter = 1
 size_flags_horizontal = 3
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="input" type="Node" parent="."]
 script = ExtResource( 2 )
