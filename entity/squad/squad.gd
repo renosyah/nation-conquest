@@ -64,10 +64,7 @@ onready var _floor_max_angle: float = deg2rad(45.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	visible = false
 	is_dead = true
-	
-	_banner_pivot.set_as_toplevel(true)
 	
 	_unit_count.mesh = _duplicate_squad_count_text_mesh
 	_squad_owner.mesh = _duplicate_squad_owner_text_mesh
@@ -115,7 +112,6 @@ func _ready():
 	var shape :CylinderShape = _spotting_collision.shape.duplicate() as CylinderShape
 	shape.radius = spotting_range
 	_spotting_collision.shape = shape
-	
 	_spotting_collision.set_deferred("disabled", not _is_master())
 	
 	var delay = Timer.new()
@@ -128,8 +124,9 @@ func _ready():
 	
 	for _unit in _units:
 		_unit.set_as_toplevel(true)
+		
+	_banner_pivot.set_as_toplevel(true)
 	
-	visible = true
 	is_dead = false
 	
 func _create_unit(unit_name :String) -> BaseUnit:
