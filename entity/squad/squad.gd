@@ -40,11 +40,12 @@ puppet var _puppet_targets :Array
 
 onready var _input_detection = $input_detection
 onready var _banner = $banner/banner
+onready var _banner_pivot = $banner
 onready var _unit_count = $banner/unit_count
 onready var _squad_owner = $banner/squad_owner
 onready var _hit_particle = $hit_particle
 
-onready var _input_area = $input_area
+onready var _input_area = $banner/input_area
 
 onready var _spotting_area = $spotting_area
 onready var _spotting_collision = $spotting_area/CollisionShape
@@ -65,6 +66,8 @@ onready var _floor_max_angle: float = deg2rad(45.0)
 func _ready():
 	visible = false
 	is_dead = true
+	
+	_banner_pivot.set_as_toplevel(true)
 	
 	_unit_count.mesh = _duplicate_squad_count_text_mesh
 	_squad_owner.mesh = _duplicate_squad_owner_text_mesh
@@ -234,6 +237,26 @@ remotesync func _squad_disband():
 	is_dead = true
 	set_process(false)
 	emit_signal("squad_dead", self)
+	
+func moving(delta :float) -> void:
+	.moving(delta)
+	
+	_banner_pivot.translation.y = global_transform.origin.y + 3
+	var sum_pos :Vector3 = Vector3.ZERO
+	var unit_size :int = 0
+	
+	for _unit in _units:
+		if is_instance_valid(_unit):
+			sum_pos += _unit.global_transform.origin
+			unit_size += 1
+		
+	if sum_pos == Vector3.ZERO or unit_size == 0:
+		return
+	
+	var avg_pos :Vector3 = sum_pos / unit_size
+	_banner_pivot.translation.x = avg_pos.x
+	_banner_pivot.translation.z = avg_pos.z
+	
 	
 func master_moving(delta :float) -> void:
 	.master_moving(delta)

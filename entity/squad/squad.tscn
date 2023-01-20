@@ -77,7 +77,7 @@ shape = ExtResource( 8 )
 [node name="input_detection" parent="." instance=ExtResource( 2 )]
 
 [node name="banner" type="Spatial" parent="."]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.90755, 0 )
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 3, 0 )
 
 [node name="unit_count" type="MeshInstance" parent="banner"]
 cast_shadow = 0
@@ -99,17 +99,17 @@ software_skinning_transform_normals = false
 material/0 = SubResource( 6 )
 material/1 = SubResource( 9 )
 
-[node name="hit_particle" parent="." instance=ExtResource( 5 )]
-custom_particle_scene = ExtResource( 7 )
-
-[node name="input_area" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.908, 0 )
+[node name="input_area" type="Area" parent="banner"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
 collision_mask = 0
 monitorable = false
 
-[node name="CollisionShape2" type="CollisionShape" parent="input_area"]
+[node name="CollisionShape2" type="CollisionShape" parent="banner/input_area"]
 transform = Transform( 1.13162, 0, 0, 0, 0.674199, 0.836378, 0, -0.96984, 0.781783, 0, 0, 0 )
 shape = SubResource( 7 )
+
+[node name="hit_particle" parent="." instance=ExtResource( 5 )]
+custom_particle_scene = ExtResource( 7 )
 
 [node name="spotting_area" type="Area" parent="."]
 collision_mask = 0
@@ -122,4 +122,4 @@ shape = SubResource( 3 )
 
 [connection signal="tree_exiting" from="." to="." method="_on_squad_tree_exiting"]
 [connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
-[connection signal="input_event" from="input_area" to="." method="_on_input_area_input_event"]
+[connection signal="input_event" from="banner/input_area" to="." method="_on_input_area_input_event"]
