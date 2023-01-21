@@ -205,7 +205,7 @@ func _move_to_position(_at :Vector3, _margin :float) -> bool:
 	if distance <= _margin:
 		return true
 	
-	var _speed_modifer = speed * distance if is_moving else speed
+	var _speed_modifer = speed * distance if is_moving and distance > 0 else speed
 	if not _stun_delay_timmer.is_stopped():
 		_speed_modifer = _speed_modifer * 0.25
 		

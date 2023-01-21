@@ -219,6 +219,12 @@ remotesync func _erase_unit(_unit_path :NodePath):
 		
 		
 remotesync func _reinforce_squad(_unit_name :String):
+	for _unit in _units:
+		if not is_instance_valid(_unit):
+			continue
+			
+		_unit.hp = _unit.max_hp
+	
 	var _unit = _create_unit(_unit_name)
 	_unit.set_as_toplevel(true)
 	_unit.translation = global_transform.origin + Vector3(0, 2, 0)
