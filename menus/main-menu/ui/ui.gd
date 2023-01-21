@@ -58,9 +58,15 @@ func _on_host_pressed():
 	
 func on_host_player_connected():
 	if quickplay:
+		var unused_colors :Array = Utils.COLORS.duplicate()
+		unused_colors.erase(Global.player.player_color)
+		
 		Global.bots.clear()
+		
 		for i in range(3):
-			Global.bots.append(Global.create_bot(true))
+			var bot = Global.create_bot(true, unused_colors)
+			unused_colors.erase(bot.extra["player_color"])
+			Global.bots.append(bot)
 			
 		NetworkLobbyManager.argument["seed"] = int(rand_range(-100,100))
 		get_tree().change_scene("res://gameplay/mp/host/host.tscn")

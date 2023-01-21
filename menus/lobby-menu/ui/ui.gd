@@ -62,6 +62,7 @@ func on_lobby_player_update(players :Array):
 		item.can_kick = is_server and is_client_player
 		item.can_change_color = false
 		item.can_change_team = is_local_player
+		item.can_difficulty = false
 		
 		item.connect("kick", self, "_on_player_kick", [player])
 		item.connect("change_team", self, "_on_player_update")
@@ -77,20 +78,23 @@ func on_lobby_player_update(players :Array):
 		var network_bot = NetworkPlayer.new()
 		network_bot.from_dictionary(bots[key])
 		
-		var bot_data :PlayerData = PlayerData.new()
+		var bot_data :BotPlayerData = BotPlayerData.new()
 		bot_data.from_dictionary(network_bot.extra)
 		
 		var item = preload("res://menus/lobby-menu/item/item.tscn").instance()
 		item.data = bot_data
 		
+		item.is_bot = true
 		item.is_host = false
 		item.can_kick = is_server
 		item.can_change_color = is_server
 		item.can_change_team = is_server
+		item.can_difficulty = is_server
 		
 		item.connect("kick", self, "_on_bot_kick", [network_bot])
 		item.connect("change_color", self, "_on_bot_update", [network_bot.player_network_unique_id])
 		item.connect("change_team", self, "_on_bot_update", [network_bot.player_network_unique_id])
+		item.connect("change_difficulty", self, "_on_bot_update", [network_bot.player_network_unique_id])
 		player_holder.add_child(item)
 		
 		slot_count -= 1
@@ -109,6 +113,7 @@ func on_lobby_player_update(players :Array):
 		item.can_kick = false
 		item.can_change_color = false
 		item.can_change_team = false
+		item.can_difficulty = false
 		
 		player_holder.add_child(item)
 		
@@ -147,7 +152,7 @@ func _on_bot_kick(bot :NetworkPlayer):
 		bots.erase(bot.player_network_unique_id)
 		rpc("_update_bots", bots)
 		
-func _on_bot_update(bot :PlayerData, id :int):
+func _on_bot_update(bot :BotPlayerData, id :int):
 	bots[id]["extra"] = bot.to_dictionary()
 	rpc("_update_bots", bots)
 	

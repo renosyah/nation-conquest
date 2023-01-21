@@ -86,12 +86,16 @@ func all_player_ready():
 			
 		var bot_data :NetworkPlayer = Global.bots[i]
 		
-		var lobby_bot_data :PlayerData = PlayerData.new()
+		var lobby_bot_data :BotPlayerData = BotPlayerData .new()
 		lobby_bot_data.from_dictionary(bot_data.extra)
 		
 		var base_spawn_position :Vector3 = bot_spawn_positions[i]
 		
 		var bot :MPBot = preload("res://gameplay/mp/util/bot/mp_bot.tscn").instance()
+		var bot_config :Dictionary = bot.bot_difficulty_configs[lobby_bot_data.bot_difficulty]
+		for key in bot_config.keys():
+			bot[key] = bot_config[key]
+		
 		bot.bot_id = bot_data.player_network_unique_id
 		bot.bot_color = lobby_bot_data.player_color
 		bot.bot_team = lobby_bot_data.player_team

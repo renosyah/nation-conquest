@@ -5,6 +5,41 @@ signal bot_recruit_squad(_mpbot, _squad_data)
 signal bot_deploying_building(_mpbot, _building_data)
 signal bot_surrender(_mpbot)
 
+const bot_difficulty_configs :Dictionary = {
+	BotPlayerData.difficulty_easy : {
+		"recruit_time" :15,
+		"build_time" : 10,
+		"action_time" : 4,
+		"max_squads" : 3,
+		"max_buildings" : 6,
+		"uperhand_coin" : 50
+	},
+	BotPlayerData.difficulty_medium : {
+		"recruit_time" :13,
+		"build_time" : 8,
+		"action_time" : 4,
+		"max_squads" : 3,
+		"max_buildings" : 7,
+		"uperhand_coin" : 80
+	},
+	BotPlayerData.difficulty_hard : {
+		"recruit_time" :12,
+		"build_time" : 7,
+		"action_time" : 3,
+		"max_squads" : 4,
+		"max_buildings" : 7,
+		"uperhand_coin" : 100
+	},
+	BotPlayerData.difficulty_insane : {
+		"recruit_time" :10,
+		"build_time" : 5,
+		"action_time" : 2,
+		"max_squads" : 5,
+		"max_buildings" : 8,
+		"uperhand_coin" : 120
+	}
+}
+
 export var bot_id :int = -69
 export var bot_team :int = 69
 export var bot_color :Color = Color.white
@@ -15,6 +50,8 @@ export var action_time :float = 2
 
 export var max_squads :int = 3
 export var max_buildings :int = 8
+
+export var uperhand_coin :int = 100
 
 var is_bot_surrender :bool = false
 
@@ -137,6 +174,9 @@ func _on_build_timer():
 	if bot_buildings.size() > max_buildings:
 		return
 		
+	if building_to_build != null:
+		return
+		
 	var _buildings :Array = [
 		preload("res://data/building_data/buildings/farm.tres"),
 		preload("res://data/building_data/buildings/archer_tower.tres"),
@@ -149,7 +189,6 @@ func _on_build_timer():
 	
 	_buildings.shuffle()
 	
-	building_to_build = null
 	for s in _buildings:
 		if _is_max_out_building_count(s.building_id, s.max_building_count):
 			continue
@@ -187,11 +226,13 @@ func start_find_placement(_building :BaseBuilding, ignores :Array = [], exceptio
 	
 func _on_placement_found(_building :BaseBuilding, _pos :Vector3):
 	bot_coin -= building_to_build.price
+	building_to_build = null
 	
 	_building.translation = _pos
 	_building.start_building()
 	
 func _on_placement_not_found(_building :BaseBuilding):
+	building_to_build = null
 	_building.demolish()
 	
 func _on_action_timer():
@@ -227,7 +268,7 @@ func _on_action_timer():
 	squad.set_attack_to(target.translation)
 	
 func _on_uperhand_timer():
-	bot_coin += 100
+	bot_coin += uperhand_coin
 	
 func on_squad_spawn(_squad:Squad):
 	if is_bot_surrender:

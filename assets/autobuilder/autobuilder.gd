@@ -55,7 +55,7 @@ func _process(delta):
 	rotation_pivot.rotate_y(deg2rad(60) * delta)
 	
 	h_pivot.translation = h_pivot.translation.linear_interpolate(
-		_radius, 15 * delta
+		_radius, 1 * delta
 	)
 	if h_pivot.translation.is_equal_approx(_radius):
 		_radius = Vector3(-radius, 0, 0)
