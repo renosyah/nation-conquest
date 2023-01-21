@@ -15,6 +15,7 @@ func _ready():
 	setup_camera()
 	setup_enviroment()
 	setup_sound()
+	init_army_formation()
 	
 	set_process(true)
 	
@@ -403,13 +404,22 @@ remotesync func _on_squad_dead(_squad_path :NodePath):
 	
 ################################################################
 # squad move orders
+
+var army_formation :ArmyFormation
+
+func init_army_formation():
+	army_formation = preload("res://assets/army_formation/army_formation.tscn").instance()
+	add_child(army_formation)
+	
 func _order_move_to(_pos :Vector3):
 	if _selected_squad.empty():
 		return
+		
+	army_formation.start_point = _selected_squad[0].global_transform.origin
+	army_formation.destination_point = _pos
+	army_formation.squad_count = _selected_squad.size()
 	
-	var formation = Utils.get_formation_box(
-		_pos, _selected_squad.size(), 5
-	)
+	var formation :Array = army_formation.get_formation()
 	for i in range(_selected_squad.size()):
 		if is_instance_valid(_selected_squad[i]):
 			_selected_squad[i].set_move_to(formation[i], true)

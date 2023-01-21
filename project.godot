@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://entity/building/archer_tower/archer_tower.gd"
 }, {
 "base": "Spatial",
+"class": "ArmyFormation",
+"language": "GDScript",
+"path": "res://assets/army_formation/army_formation.gd"
+}, {
+"base": "Spatial",
 "class": "AutoBuilder",
 "language": "GDScript",
 "path": "res://assets/autobuilder/autobuilder.gd"
@@ -311,6 +316,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "ArcherTower": "",
+"ArmyFormation": "",
 "AutoBuilder": "",
 "Barrack": "",
 "BaseBuilding": "",
