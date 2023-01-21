@@ -29,6 +29,8 @@ var autobuilder :AutoBuilder
 
 var bot_coin :int = 100
 
+var building_to_build :BuildingData
+
 var recruit_timer :Timer
 var build_timer :Timer
 var action_timer :Timer
@@ -147,7 +149,7 @@ func _on_build_timer():
 	
 	_buildings.shuffle()
 	
-	var bot_building :BuildingData = null
+	building_to_build = null
 	for s in _buildings:
 		if _is_max_out_building_count(s.building_id, s.max_building_count):
 			continue
@@ -156,23 +158,21 @@ func _on_build_timer():
 			continue
 			
 		if bot_coin > s.price:
-			bot_building = s.duplicate()
+			building_to_build = s.duplicate()
 			break
 		
-	if bot_building == null:
+	if building_to_build == null:
 		return
 		
-	bot_coin -= bot_building.price
+	building_to_build.player_id = bot_id
+	building_to_build.node_name = "BOT_BUILDING_" + GDUUID.v4() + "-" + str(bot_id)
+	building_to_build.network_master = Network.PLAYER_HOST_ID
+	building_to_build.color = bot_color
+	building_to_build.team = bot_team
+	building_to_build.base_position = bot_town_center.translation
+	building_to_build.max_distance_from_base = 24
 	
-	bot_building.player_id = bot_id
-	bot_building.node_name = "BOT_BUILDING_" + GDUUID.v4() + "-" + str(bot_id)
-	bot_building.network_master = Network.PLAYER_HOST_ID
-	bot_building.color = bot_color
-	bot_building.team = bot_team
-	bot_building.base_position = bot_town_center.translation
-	bot_building.max_distance_from_base = 24
-	
-	emit_signal("bot_deploying_building", self, bot_building)
+	emit_signal("bot_deploying_building", self, building_to_build)
 	
 	
 func start_find_placement(_building :BaseBuilding, ignores :Array = [], exceptions :Array = []):
@@ -186,6 +186,8 @@ func start_find_placement(_building :BaseBuilding, ignores :Array = [], exceptio
 	autobuilder.find_placement()
 	
 func _on_placement_found(_building :BaseBuilding, _pos :Vector3):
+	bot_coin -= building_to_build.price
+	
 	_building.translation = _pos
 	_building.start_building()
 	
