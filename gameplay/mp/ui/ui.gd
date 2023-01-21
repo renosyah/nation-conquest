@@ -54,7 +54,7 @@ var buildings = []
 var building_rotation :float = 0
 var building_deploying :BuildingData
 
-var player_coin :int = 1000
+var player_coin :int = 100
 var player_team :int = 1
 
 onready var player_id :int = NetworkLobbyManager.get_id()
