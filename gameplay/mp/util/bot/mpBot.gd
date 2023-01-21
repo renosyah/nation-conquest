@@ -14,7 +14,9 @@ export var build_time :float = 10
 export var action_time :float = 2
 
 export var max_squads :int = 3
-export var max_buildings :int = 4
+export var max_buildings :int = 8
+
+var is_bot_surrender :bool = false
 
 var enemy_squads :Array = []
 var enemy_buildings :Array = []
@@ -147,6 +149,9 @@ func _on_build_timer():
 	
 	var bot_building :BuildingData = null
 	for s in _buildings:
+		if _is_max_out_building_count(s.building_id, s.max_building_count):
+			continue
+			
 		if not _is_building_ids_in_buildings(s.requirement_ids):
 			continue
 			
@@ -223,6 +228,9 @@ func _on_uperhand_timer():
 	bot_coin += 100
 	
 func on_squad_spawn(_squad:Squad):
+	if is_bot_surrender:
+		return
+		
 	if _squad.team == bot_team:
 		if _squad.player_id == bot_id:
 			bot_squads.append(_squad)
@@ -230,6 +238,9 @@ func on_squad_spawn(_squad:Squad):
 		enemy_squads.append(_squad)
 	
 func on_squad_dead(_squad :Squad):
+	if is_bot_surrender:
+		return
+		
 	if _squad.team == bot_team:
 		if _squad.player_id == bot_id and bot_squads.has(_squad):
 			bot_squads.erase(_squad)
@@ -238,8 +249,10 @@ func on_squad_dead(_squad :Squad):
 			enemy_squads.erase(_squad)
 			
 	
-	
 func on_building_deployed(_building :BaseBuilding):
+	if is_bot_surrender:
+		return
+		
 	if _building.team == bot_team:
 		if _building.player_id == bot_id:
 			if _building.name == "bot-town-center-" + str(bot_id):
@@ -255,6 +268,9 @@ func on_building_deployed(_building :BaseBuilding):
 		enemy_buildings.append(_building)
 		
 func on_building_destroyed(_building :BaseBuilding):
+	if is_bot_surrender:
+		return
+		
 	if _building.team == bot_team:
 		if _building.name == "bot-town-center-" + str(bot_id):
 			bot_town_center = null
@@ -271,10 +287,28 @@ func on_harvest_time(_building :Farm, _amount :int):
 	bot_coin += _amount
 
 func surrender():
+	is_bot_surrender = true
+	
+	for squad in bot_squads:
+		if not is_instance_valid(squad):
+			continue
+			
+		squad.disband()
+		
+	for building in bot_buildings:
+		if not is_instance_valid(building):
+			continue
+			
+		if building is TownCenter:
+			continue
+			
+		building.demolish()
+		
 	action_timer.stop()
 	build_timer.stop()
 	recruit_timer.stop()
 	uperhand_timer.stop()
+	
 	emit_signal("bot_surrender", self)
 
 func is_bot_have_farm() -> bool:
@@ -286,6 +320,21 @@ func is_bot_have_farm() -> bool:
 			return true
 			
 	return false
+	
+func _is_max_out_building_count(building_id :int, max_building_count :int):
+	if bot_buildings.empty():
+		return false
+		
+	if max_building_count == -1:
+		return false
+		
+	var count :int = 0
+	for bot_building in bot_buildings:
+		if bot_building.building_id == building_id:
+			count += 1
+		
+	# exceed quota
+	return max_building_count == count
 	
 func _is_building_ids_in_buildings(building_ids :Array) -> bool:
 	if bot_buildings.empty():

@@ -23,4 +23,5 @@ max_hp = 350
 building_time = 14
 base_position = Vector3( 0, 0, 0 )
 max_distance_from_base = 24
+max_building_count = 1
 is_selectable = false

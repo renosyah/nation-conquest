@@ -33,6 +33,7 @@ export var max_hp :int = 500
 export var building_time :int = 10
 export var base_position :Vector3
 export var max_distance_from_base :int = 24
+export var max_building_count :int = 1
 export var is_selectable :bool = false
 
 func from_dictionary(data : Dictionary):
