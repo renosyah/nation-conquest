@@ -1,13 +1,10 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://entity/building/healing_camp/healing_camp.gd" type="Script" id=1]
 [ext_resource path="res://entity/building/model/barrel.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://entity/building/healing_camp/area_healing.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/hit_particle/custom_particle/text/custom_text_particle.tscn" type="PackedScene" id=6]
 [ext_resource path="res://entity/building/healing_camp/healing_camp.obj" type="ArrayMesh" id=7]
-[ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=8]
 [ext_resource path="res://entity/building/model/food_box.obj" type="ArrayMesh" id=9]
 [ext_resource path="res://entity/building/model/food_barrel.obj" type="ArrayMesh" id=10]
 [ext_resource path="res://entity/building/healing_camp/healing_icon.obj" type="ArrayMesh" id=11]
@@ -227,14 +224,8 @@ monitorable = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.82189, 0 )
 shape = SubResource( 58 )
 
-[node name="input_detection" parent="." instance=ExtResource( 8 )]
-
 [node name="hpBar" parent="." instance=ExtResource( 4 )]
 transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21324, 0 )
-
-[node name="hit_particle" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.96226, 0 )
-custom_particle_scene = ExtResource( 6 )
 
 [node name="Tween" type="Tween" parent="."]
 
@@ -246,6 +237,5 @@ autostart = true
 autostart = true
 
 [connection signal="input_event" from="area_build" to="." method="_on_area_build_input_event"]
-[connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
 [connection signal="timeout" from="reinforce_timer" to="." method="_on_reinforce_timer_timeout"]
 [connection signal="timeout" from="area_healing_checker" to="." method="_on_area_healing_checker_timeout"]

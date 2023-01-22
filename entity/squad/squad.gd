@@ -294,7 +294,7 @@ func puppet_moving(delta :float) -> void:
 	
 	
 func _formation_direction_facing(delta :float):
-	var _vel = Vector3(_velocity.x, 0 , _velocity.z)
+	var _vel = Vector3(_velocity.x, 0, _velocity.z)
 	if _vel != Vector3.ZERO:
 		_pivot.look_at(_vel * 100, Vector3.UP)
 		

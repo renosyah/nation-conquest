@@ -1,12 +1,9 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://entity/building/archer_tower/tower.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://entity/building/archer_tower/archer_tower.gd" type="Script" id=2]
 [ext_resource path="res://entity/unit/archer/archer.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/hit_particle/hit_particle.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/hit_particle/custom_particle/text/custom_text_particle.tscn" type="PackedScene" id=6]
-[ext_resource path="res://addons/Godot-Touch-Input-Manager/input_detection.tscn" type="PackedScene" id=8]
 
 [sub_resource type="SpatialMaterial" id=11]
 flags_vertex_lighting = true
@@ -86,8 +83,6 @@ monitorable = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46321, 0 )
 shape = SubResource( 8 )
 
-[node name="input_detection" parent="." instance=ExtResource( 8 )]
-
 [node name="Position3D" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.09719, 0 )
 
@@ -102,13 +97,8 @@ autostart = true
 [node name="hpBar" parent="." instance=ExtResource( 4 )]
 transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.09992, 0 )
 
-[node name="hit_particle" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.34465, 0 )
-custom_particle_scene = ExtResource( 6 )
-
 [node name="Tween" type="Tween" parent="."]
 
 [connection signal="input_event" from="area_build" to="." method="_on_area_build_input_event"]
-[connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
 [connection signal="timeout" from="garrison_replenis_timer" to="." method="_on_garrison_replenis_timer_timeout"]
 [connection signal="timeout" from="agro_timer" to="." method="_on_agro_timer_timeout"]

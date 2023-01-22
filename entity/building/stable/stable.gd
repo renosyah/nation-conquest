@@ -4,9 +4,6 @@ class_name Stable
 onready var _collision_shape = $CollisionShape
 
 onready var _hp_bar = $hpBar
-onready var _hit_particle = $hit_particle
-onready var _input_detection = $input_detection
-
 onready var _mesh_instance = $MeshInstance
 onready var _mesh_instance_2 = $MeshInstance2
 onready var _barrack_2 = $MeshInstance2/barrack2
@@ -63,20 +60,8 @@ func moving(delta :float) -> void:
 	
 remotesync func _take_damage(damage :int, hp_remain :int) -> void:
 	._take_damage(damage, hp_remain)
-	
 	_hp_bar.update_bar(hp, max_hp)
-	_hit_particle.display_hit(
-		"-" + str(damage), Color.white,
-		global_transform.origin
-	)
 	
 func _on_area_build_input_event(camera, event, position, normal, shape_idx):
-	if status != status_deployed:
-		return
-		
-	_input_detection.check_input(event)
+	._on_input_event(camera, event, position, normal, shape_idx)
 	
-func _on_input_detection_any_gesture(sig ,event):
-	if event is InputEventSingleScreenTap:
-		emit_signal("building_selected", self)
-		

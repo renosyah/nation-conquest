@@ -34,6 +34,7 @@ puppet var _puppet_translation :Vector3
 puppet var _puppet_rotation :Vector3
 
 var _building_timmer :Timer
+var _input_detection :Node
 
 ############################################################
 # multiplayer func
@@ -60,6 +61,10 @@ func _ready():
 	_building_timmer.autostart = false
 	_building_timmer.one_shot = true
 	add_child(_building_timmer)
+	
+	_input_detection = preload("res://addons/Godot-Touch-Input-Manager/input_detection.tscn").instance()
+	_input_detection.connect("any_gesture", self, "_on_input_detection_any_gesture")
+	add_child(_input_detection)
 	
 	input_ray_pickable = is_selectable
 	
@@ -151,3 +156,14 @@ remotesync func _dead() -> void:
 	set_process(false)
 	is_dead = true
 	emit_signal("building_destroyed", self)
+	
+func _on_input_event(camera, event, position, normal, shape_idx):
+	if status != status_deployed:
+		return
+		
+	_input_detection.check_input(event)
+	
+func _on_input_detection_any_gesture(sig ,event):
+	if event is InputEventSingleScreenTap:
+		emit_signal("building_selected", self)
+		

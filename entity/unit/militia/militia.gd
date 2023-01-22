@@ -65,7 +65,7 @@ func attacking(delta :float):
 		return
 		
 	var _transform = pivot.transform.looking_at(pos.direction_to(to) * 100, Vector3.UP)
-	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
+	pivot.transform = pivot.transform.interpolate_with(_transform, 0.5 * delta)
 	
 func moving(delta :float):
 	.moving(delta)
@@ -74,7 +74,7 @@ func moving(delta :float):
 		return
 		
 	var _transform = pivot.transform.looking_at(_direction * 100, Vector3.UP)
-	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
+	pivot.transform = pivot.transform.interpolate_with(_transform, 0.5 * delta)
 	
 func idle(delta :float):
 	.idle(delta)
