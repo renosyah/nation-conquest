@@ -124,8 +124,7 @@ func attacking(delta :float):
 func in_combat(is_arrive :bool):
 	if is_arrive and _attack_delay_timmer.is_stopped():
 		perform_attack()
-		var attack_time = attack_delay + rand_range(-0.2, 0.2) - skill
-		_attack_delay_timmer.wait_time = attack_time if attack_time > 0 else 0.1
+		_attack_delay_timmer.wait_time = _randomize_attack_delay()
 		_attack_delay_timmer.start()
 		
 func moving(delta :float):
@@ -216,8 +215,10 @@ func _move_to_position(_at :Vector3, _margin :float) -> bool:
 	_velocity.y = 0
 	
 	return false
-
-
-
+	
+func _randomize_attack_delay() -> float:
+	var fraction = attack_delay * 0.25
+	var attack_time = attack_delay + rand_range(-0.2, fraction) - skill
+	return attack_time if attack_time > 0 else 1
 
 

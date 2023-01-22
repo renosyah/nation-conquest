@@ -58,7 +58,6 @@ func _on_animation_projectile_release():
 	if attack_to.has_method("get_prediction_path"):
 		arrow.target = attack_to.get_prediction_path()
 	else:
-		arrow.enable_fire = true
 		arrow.target = attack_to.global_transform.origin
 		
 	arrow.fire()

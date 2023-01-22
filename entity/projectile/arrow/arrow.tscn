@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://entity/projectile/arrow/arrow.gd" type="Script" id=1]
 [ext_resource path="res://entity/projectile/arrow/arrow.obj" type="ArrayMesh" id=2]
@@ -11,22 +11,7 @@ flags_do_not_receive_shadows = true
 [sub_resource type="SpatialMaterial" id=2]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
-albedo_color = Color( 0.317647, 0.196078, 0, 1 )
-
-[sub_resource type="SpatialMaterial" id=41]
-flags_unshaded = true
-flags_vertex_lighting = true
-flags_disable_ambient_light = true
-vertex_color_use_as_albedo = true
-params_blend_mode = 1
-
-[sub_resource type="SphereMesh" id=44]
-material = SubResource( 41 )
-radius = 0.2
-height = 0.4
-
-[sub_resource type="Curve" id=43]
-_data = [ Vector2( 0.019544, 0.701136 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.219318 ), 0.0, 0.0, 0, 0 ]
+albedo_color = Color( 0.662745, 0.407843, 0, 1 )
 
 [node name="arrow" type="Spatial"]
 script = ExtResource( 1 )
@@ -37,13 +22,3 @@ mesh = ExtResource( 2 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 1 )
 material/1 = SubResource( 2 )
-
-[node name="CPUParticles" type="CPUParticles" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00657773, -0.00568558, -0.222608 )
-emitting = false
-amount = 4
-lifetime = 0.6
-mesh = SubResource( 44 )
-gravity = Vector3( 0, 0, 6 )
-scale_amount_curve = SubResource( 43 )
-color = Color( 1, 0.462745, 0, 1 )
