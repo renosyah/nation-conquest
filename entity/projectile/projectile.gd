@@ -46,7 +46,7 @@ func _add_offset():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var distance :float = translation.distance_to(target)
+	var distance :float = translation.distance_to(_trajectory_aim)
 	if distance <= margin:
 		_on_hit()
 		return
@@ -57,7 +57,7 @@ func _process(delta):
 	if not is_static:
 		look_at(arrow_direction * 100, Vector3.UP)
 	
-	if curve:
+	if curve and _trajectory_aim.y > target.y:
 		_trajectory_aim += _trajectory_direction * speed * delta
 	
 func _on_hit():
