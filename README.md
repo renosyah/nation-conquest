@@ -4,7 +4,7 @@ is a squad base RTS focus on simplicity and intense gaming experience for mobile
 
 
 ## Download
-link : [Square Kingdom from itch.io](https://renosyah.itch.io/colony-conquest-2)
+link : [Colony Conquest 2 from itch.io](https://renosyah.itch.io/colony-conquest-2)
 
 
 ## Feature
