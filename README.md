@@ -3,6 +3,10 @@
 is a squad base RTS focus on simplicity and intense gaming experience for mobile RTS gamer, you build base, train unit, build advance building to train more advance unit then eliminate all opponents team town center
 
 
+## Download
+link : [Square Kingdom from itch.io](https://renosyah.itch.io/colony-conquest-2)
+
+
 ## Feature
 - multiplayer coop or PvP up to 4 player and with bots
 - potrait & landscape support
@@ -19,6 +23,9 @@ is a squad base RTS focus on simplicity and intense gaming experience for mobile
 ## Extenal Asset
 - tree, rock & bush mesh asset from [Simple Nature Pack by quaternius](https://quaternius.com/packs/simplenature.html)
 
+## Cover
+
+<img src="https://raw.githubusercontent.com/renosyah/nation-conquest/master/ss/cover.png" />
 
 
 ## Gameplay
