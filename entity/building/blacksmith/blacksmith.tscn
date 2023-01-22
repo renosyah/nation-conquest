@@ -143,7 +143,7 @@ material/0 = SubResource( 22 )
 material/1 = SubResource( 23 )
 
 [node name="CPUParticles" type="CPUParticles" parent="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.53354, -0.155875, -2.55959 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6399, 0.160558, -1.70473 )
 amount = 4
 lifetime = 0.6
 mesh = SubResource( 42 )

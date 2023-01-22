@@ -184,7 +184,7 @@ hp = 45
 max_hp = 45
 speed = 4
 attack_damage = 15
-attack_delay = 4.5
+attack_delay = 2.5
 skill = 0.5
 unit_role = 3
 

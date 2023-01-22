@@ -22,7 +22,7 @@ func _ready():
 func _create_arrow_pools():
 	for i in range(4):
 		_arrows_pool.append(_create_arrow())
-	
+		
 func _get_arrow() -> BaseProjectile:
 	for arrow in _arrows_pool:
 		if not arrow.visible:
@@ -55,6 +55,7 @@ func _on_animation_projectile_release():
 	if attack_to.has_method("get_prediction_path"):
 		arrow.target = attack_to.get_prediction_path()
 	else:
+		arrow.enable_fire = true
 		arrow.target = attack_to.global_transform.origin
 		
 	arrow.fire()
