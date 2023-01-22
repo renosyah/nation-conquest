@@ -11,7 +11,7 @@ const bot_difficulty_configs :Dictionary = {
 		"build_time" : 10,
 		"action_time" : 4,
 		"max_squads" : 3,
-		"max_buildings" : 6,
+		"max_buildings" : 5,
 		"uperhand_coin" : 50
 	},
 	BotPlayerData.difficulty_medium : {
@@ -19,7 +19,7 @@ const bot_difficulty_configs :Dictionary = {
 		"build_time" : 8,
 		"action_time" : 4,
 		"max_squads" : 3,
-		"max_buildings" : 7,
+		"max_buildings" : 5,
 		"uperhand_coin" : 80
 	},
 	BotPlayerData.difficulty_hard : {
@@ -27,15 +27,15 @@ const bot_difficulty_configs :Dictionary = {
 		"build_time" : 7,
 		"action_time" : 3,
 		"max_squads" : 4,
-		"max_buildings" : 7,
+		"max_buildings" : 6,
 		"uperhand_coin" : 100
 	},
 	BotPlayerData.difficulty_insane : {
 		"recruit_time" :10,
 		"build_time" : 5,
 		"action_time" : 2,
-		"max_squads" : 5,
-		"max_buildings" : 8,
+		"max_squads" : 4,
+		"max_buildings" : 7,
 		"uperhand_coin" : 120
 	}
 }

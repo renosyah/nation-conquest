@@ -41,10 +41,11 @@ func remove_team_power(team :int):
 	if not teams.has(team):
 		return
 		
-	teams[team] -= 1
-	
 	if teams[team] <= 0:
 		teams.erase(team)
+		return
+		
+	teams[team] -= 1
 	
 func _on_Timer_timeout():
 	
