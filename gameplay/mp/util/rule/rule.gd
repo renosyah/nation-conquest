@@ -3,60 +3,56 @@ class_name MatchRule
 
 signal wining_team(_team)
 
-var players :Dictionary = {}
-var teams :Dictionary = {}
-
-onready var timer = $Timer
+var _players :Dictionary = {}
+var _teams :Dictionary = {}
+var _is_over :bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-	
-func start():
-	timer.start()
-	
+
 func add_player(player_id :int, team :int):
-	players[player_id] = {
+	_players[player_id] = {
 		"player_id" :player_id,
 		"team" : team,
 		"lose" : false
 	}
-	add_team_power(team)
+	_add_team_power(team)
+	_is_over = false
 	
-func add_team_power(team :int):
-	if teams.has(team):
-		teams[team] += 1
+func _add_team_power(team :int):
+	if _teams.has(team):
+		_teams[team] += 1
 		return
 	
-	teams[team] = 1
+	_teams[team] = 1
 	
 func player_lose(player_id :int):
-	if not players.has(player_id):
+	if not _players.has(player_id):
 		return
 		
-	players[player_id]["lose"] = true
-	remove_team_power(players[player_id]["team"])
+	_players[player_id]["lose"] = true
+	_remove_team_power(_players[player_id]["team"])
 	
-func remove_team_power(team :int):
-	if not teams.has(team):
+func _remove_team_power(team :int):
+	if not _teams.has(team):
 		return
 		
-	if teams[team] <= 0:
-		teams.erase(team)
+	_teams[team] -= 1
+	
+	if _teams[team] <= 0:
+		_teams.erase(team)
+		
+	_check_wining_team()
+	
+func _check_wining_team():
+	if _is_over:
 		return
 		
-	teams[team] -= 1
-	
-func _on_Timer_timeout():
-	
 	# only one team remain is acceptable
-	if teams.size() == 1:
-		emit_signal("wining_team", teams.keys()[0])
-		return 
-		
-	timer.start()
-	
-	
+	if _teams.size() == 1:
+		_is_over = true
+		emit_signal("wining_team", _teams.keys()[0])
 	
 	
 	

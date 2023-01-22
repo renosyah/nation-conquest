@@ -114,8 +114,6 @@ func all_player_ready():
 		rule.add_player(
 			bot_data.player_network_unique_id, lobby_bot_data.player_team
 		)
-		
-	rule.start()
 	
 	.on_deploying_buildings(deploying_buildings)
 	
