@@ -45,8 +45,10 @@ func on_building_destroyed(_building :BaseBuilding):
 	if not _building is TownCenter:
 		return
 		
-	if _ui.is_player_building(_building):
-		_ui.on_player_lose()
+	if not _ui.is_player_building(_building):
+		return
+		
+	_ui.on_player_lose()
 		
 func on_team_wining(_team:int):
 	.on_team_wining(_team)

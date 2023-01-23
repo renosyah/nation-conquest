@@ -39,23 +39,13 @@ puppet var _puppet_velocity :Vector3
 puppet var _puppet_targets :Array
 
 onready var _input_detection = $input_detection
-onready var _banner = $banner/banner
-onready var _banner_pivot = $banner
-onready var _unit_count = $banner/unit_count
-onready var _squad_owner = $banner/squad_owner
+onready var _squad_banner = $squad_banner
 onready var _hit_particle = $hit_particle
 
-onready var _input_area = $banner/input_area
+onready var _input_area = $squad_banner/input_area
 
 onready var _spotting_area = $spotting_area
 onready var _spotting_collision = $spotting_area/CollisionShape
-
-onready var _duplicate_squad_count_text_mesh :TextMesh = _unit_count.mesh.duplicate()
-onready var _duplicate_squad_owner_text_mesh :TextMesh = _squad_owner.mesh.duplicate()
-
-onready var _banner_mesh_material :SpatialMaterial = _banner.get_surface_material(0).duplicate()
-onready var _outline_mesh_material :SpatialMaterial = _banner.get_surface_material(1).duplicate()
-
 onready var _pivot = $pivot
 var _tap :Tap
 
@@ -66,20 +56,13 @@ onready var _floor_max_angle: float = deg2rad(45.0)
 func _ready():
 	is_dead = true
 	
-	_unit_count.mesh = _duplicate_squad_count_text_mesh
-	_squad_owner.mesh = _duplicate_squad_owner_text_mesh
-	
-	_banner.set_surface_material(0, _banner_mesh_material)
-	_banner.set_surface_material(1, _outline_mesh_material)
-	_squad_owner.visible = not _is_master() and not player_name.empty()
-	
-	_duplicate_squad_count_text_mesh.text = str(max_unit)
-	_duplicate_squad_owner_text_mesh.text = player_name
-	
-	_banner_mesh_material.albedo_color = color
-	_banner_mesh_material.albedo_color.a = 0.6
-	
-	_outline_mesh_material.albedo_color = squad_unselected_color if is_selectable else Color(1,1,1,0)
+	_squad_banner.set_squad_number(max_unit)
+	_squad_banner.set_player_name(
+		player_name if not _is_master() and not player_name.empty() else ""
+	)
+	_squad_banner.set_banner_color(
+		color, squad_unselected_color if is_selectable else Color.transparent
+	)
 	
 	#_input_area.input_ray_pickable = is_selectable
 	
@@ -125,7 +108,7 @@ func _ready():
 	for _unit in _units:
 		_unit.set_as_toplevel(true)
 		
-	_banner_pivot.set_as_toplevel(true)
+	_squad_banner.set_as_toplevel(true)
 	
 	is_dead = false
 	
@@ -205,7 +188,8 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	
 	_reassign_unit_formation()
 	
-	_duplicate_squad_count_text_mesh.text = str(_units.size())
+	_squad_banner.set_squad_number(_units.size())
+	_squad_banner.show_hurt()
 	
 	if _units.empty():
 		is_dead = true
@@ -230,7 +214,7 @@ remotesync func _reinforce_squad(_unit_name :String):
 	_unit.translation = global_transform.origin + Vector3(0, 2, 0)
 	_units.append(_unit)
 	
-	_duplicate_squad_count_text_mesh.text = str(_units.size())
+	_squad_banner.set_squad_number(_units.size())
 	
 	_reassign_unit_formation()
 	emit_signal("squad_unit_added", self)
@@ -246,9 +230,9 @@ func moving(delta :float) -> void:
 	
 	if is_dead:
 		return
-	
-	_banner_pivot.translation = _get_avg_units_position(global_transform.origin)
-	_banner_pivot.translation.y = global_transform.origin.y + 3
+		
+	_squad_banner.translation = _get_avg_units_position(global_transform.origin)
+	_squad_banner.translation.y = global_transform.origin.y + 4
 	
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
@@ -329,8 +313,8 @@ func set_selected(val :bool):
 			
 		_unit.set_selected(val)
 		
-	var color :Color = squad_selected_color if val else squad_unselected_color
-	(_banner.get_surface_material(1) as SpatialMaterial).albedo_color = color
+	var outline_color :Color = squad_selected_color if val else squad_unselected_color
+	_squad_banner.set_banner_color(color, outline_color)
 	
 func set_attack_to(to :Vector3, display_tap :bool = false):
 	var combat_range_offset  = combat_range - 2
@@ -372,7 +356,20 @@ func disband():
 	rpc("_squad_disband")
 
 func _attack_targets():
-	if _units.empty() or _targets.empty():
+	if _units.empty():
+		return
+		
+	if _targets.empty():
+		for _unit in _units:
+			if not is_instance_valid(_unit):
+				continue
+				
+			if not _unit.is_attacking:
+				continue
+				
+			_unit.is_attacking = true
+			_unit.attack_to = null
+			
 		return
 		
 	if is_moving and is_assault_mode:

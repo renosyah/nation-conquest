@@ -58,14 +58,18 @@ func _on_host_pressed():
 	
 func on_host_player_connected():
 	if quickplay:
-		var unused_colors :Array = Utils.COLORS.duplicate()
-		unused_colors.erase(Global.player.player_color)
+		var unused_colors :Array = [
+			Color.red, Color.orange, Color.purple, Color.yellow,
+			Color.blue, Color.cyan, Color.gold, Color.green
+		]
+		unused_colors.shuffle()
 		
 		Global.bots.clear()
 		
 		for i in range(3):
 			var bot = Global.create_bot(true, unused_colors)
 			bot.player_network_unique_id = i + 2
+			bot.extra["player_team"] = i + 2
 			unused_colors.erase(bot.extra["player_color"])
 			Global.bots.append(bot)
 			
