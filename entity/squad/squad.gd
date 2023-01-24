@@ -364,14 +364,8 @@ func _attack_targets():
 		
 	if _targets.empty():
 		for _unit in _units:
-			if not is_instance_valid(_unit):
-				continue
-				
-			if not _unit.is_attacking:
-				continue
-				
-			_unit.is_attacking = true
-			_unit.attack_to = null
+			if is_instance_valid(_unit):
+				_unit.keep_moving()
 			
 		return
 		
@@ -382,9 +376,9 @@ func _attack_targets():
 	var pos :int = 0
 	for _unit in _units:
 		if _is_unit_idle(_unit):
-			_unit.is_moving = false
-			_unit.is_attacking = true
-			_unit.attack_to = get_node_or_null(_targets[pos])
+			_unit.attack_target(
+				get_node_or_null(_targets[pos])
+			)
 			
 		if pos < _targets.size() - 1:
 			pos += 1

@@ -42,6 +42,7 @@ var _higlight :UnitHighlight
 
 onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
 onready var _counter :CounterData = CounterData.new(unit_role, unit_tier, skill)
+onready var _damage_modifier :int = attack_damage
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -94,14 +95,29 @@ func _process(delta :float):
 			_velocity, Vector3.UP ,false, 4, deg2rad(60.0), true
 		)
 		
+func attack_target(_attack_to):
+	if not is_instance_valid(_attack_to):
+		return
+		
+	attack_to = _attack_to
+	is_attacking = true
+	is_moving = false
+	
+	if attack_to is BaseBuilding:
+		_damage_modifier = _counter.get_attack_modifier(
+			attack_to.unit_tier, 
+			attack_to.unit_role,
+			attack_damage
+		)
+	else:
+		_damage_modifier = attack_damage / 2
+	
+func keep_moving():
+	is_attacking = false
+	attack_to = null
+	is_moving = true
+	
 func attacking(delta :float):
-	if is_instance_valid(squad):
-		if squad.is_moving:
-			is_attacking = false
-			attack_to = null
-			is_moving = true
-			return
-			
 	if not is_attacking:
 		return
 		
@@ -110,6 +126,13 @@ func attacking(delta :float):
 		is_moving = true
 		return
 		
+	if is_instance_valid(squad):
+		if squad.is_moving:
+			is_attacking = false
+			attack_to = null
+			is_moving = true
+			return
+			
 	var is_arrive :bool = false
 	
 	if enable_moving:
@@ -163,16 +186,7 @@ func perform_attack():
 	if not is_master:
 		return
 		
-	if attack_to is BaseBuilding:
-		attack_to.take_damage(attack_damage / 2)
-	else:
-		attack_to.take_damage(
-			_counter.get_attack_modifier(
-				attack_to.unit_tier, 
-				attack_to.unit_role,
-				attack_damage
-			)
-		)
+	attack_to.take_damage(_damage_modifier)
 	
 func take_damage(damage :int) -> void:
 	if is_dead:
