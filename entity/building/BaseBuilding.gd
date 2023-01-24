@@ -129,7 +129,7 @@ func take_damage(damage :int) -> void:
 	if is_dead:
 		return
 		
-	hp -= int(damage / 2)
+	hp -= damage
 	if hp < 1:
 		is_dead = true
 		rpc("_dead")

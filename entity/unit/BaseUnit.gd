@@ -164,7 +164,7 @@ func perform_attack():
 		return
 		
 	if attack_to is BaseBuilding:
-		attack_to.take_damage(attack_damage)
+		attack_to.take_damage(attack_damage / 2)
 	else:
 		attack_to.take_damage(
 			_counter.get_attack_modifier(
