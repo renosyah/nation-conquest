@@ -81,7 +81,7 @@ func _process(delta):
 		return
 		
 	var _transform :Transform = base.transform.looking_at(translation.direction_to(to) * 100, Vector3.UP)
-	base.transform = base.transform.interpolate_with(_transform, 1 * delta)
+	base.transform = base.transform.interpolate_with(_transform, 5 * delta)
 	
 func perform_attack():
 	audio_stream_player_3d.stream = preload("res://assets/sound/arrow_fly.wav")
