@@ -13,6 +13,8 @@ albedo_color = Color( 0.607843, 0.607843, 0.607843, 1 )
 
 [node name="shield" type="MeshInstance"]
 transform = Transform( 0.816823, 0, -0.576889, 0, 1, 0, 0.576889, 0, 0.816823, 0.318221, -0.203189, -0.267131 )
+cast_shadow = 0
 mesh = ExtResource( 1 )
+software_skinning_transform_normals = false
 material/0 = SubResource( 22 )
 material/1 = SubResource( 23 )
