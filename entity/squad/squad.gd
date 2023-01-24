@@ -109,6 +109,7 @@ func _ready():
 		_unit.set_as_toplevel(true)
 		
 	_squad_banner.set_as_toplevel(true)
+	_visibility_notifier.set_as_toplevel(true)
 	
 	is_dead = false
 	
@@ -233,6 +234,8 @@ func moving(delta :float) -> void:
 		
 	_squad_banner.translation = _get_avg_units_position(global_transform.origin)
 	_squad_banner.translation.y = global_transform.origin.y + 4
+	
+	_visibility_notifier.translation = _squad_banner.translation
 	
 func master_moving(delta :float) -> void:
 	.master_moving(delta)
