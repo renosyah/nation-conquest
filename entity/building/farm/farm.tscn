@@ -130,6 +130,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0 )
 visible = false
 
 [node name="farm2" type="MeshInstance" parent="MeshInstance2"]
+cast_shadow = 0
 mesh = ExtResource( 2 )
 skeleton = NodePath("../../MeshInstance")
 software_skinning_transform_normals = false
@@ -142,6 +143,7 @@ material/5 = SubResource( 42 )
 
 [node name="blade2" type="MeshInstance" parent="MeshInstance2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.88345, -0.0463936 )
+cast_shadow = 0
 mesh = ExtResource( 3 )
 skeleton = NodePath("../../MeshInstance")
 software_skinning_transform_normals = false

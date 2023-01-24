@@ -55,6 +55,7 @@ material/2 = SubResource( 12 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="."]
 visible = false
+cast_shadow = 0
 mesh = ExtResource( 1 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )

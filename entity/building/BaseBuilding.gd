@@ -98,7 +98,6 @@ func _disable_process():
 		_network_timmer.stop()
 		_network_timmer.queue_free()
 		
-	
 func _building_timmer_timeout():
 	if not _is_master:
 		return

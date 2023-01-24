@@ -74,6 +74,7 @@ material/3 = SubResource( 34 )
 
 [node name="barrel" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.83206, 0.301947, 0.704054 )
+cast_shadow = 0
 mesh = ExtResource( 2 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 7 )
@@ -81,6 +82,7 @@ material/1 = SubResource( 8 )
 
 [node name="barrel3" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.764935, 0.301947, -2.12372 )
+cast_shadow = 0
 mesh = ExtResource( 2 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 7 )
@@ -88,6 +90,7 @@ material/1 = SubResource( 8 )
 
 [node name="barrel2" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.82721, 0.301947, 2.19369 )
+cast_shadow = 0
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 7 )
@@ -99,6 +102,7 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0
 
 [node name="horse" type="Sprite3D" parent="MeshInstance/horse_pivot"]
 transform = Transform( -8.74227e-08, 0, 2, 0, 2, 0, -2, 0, -8.74227e-08, -2.03434, 0.685546, 1.89328 )
+cast_shadow = 0
 modulate = Color( 0.6, 0.239216, 0, 1 )
 alpha_cut = 2
 texture = ExtResource( 11 )
@@ -108,6 +112,7 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.14243
 
 [node name="horse" type="Sprite3D" parent="MeshInstance/horse_pivot2"]
 transform = Transform( -8.74227e-08, 0, 2, 0, 2, 0, -2, 0, -8.74227e-08, 0, 0.450238, -0.212072 )
+cast_shadow = 0
 modulate = Color( 0.180392, 0.180392, 0.180392, 1 )
 alpha_cut = 2
 texture = ExtResource( 10 )
@@ -117,6 +122,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 visible = false
 
 [node name="barrack2" type="MeshInstance" parent="MeshInstance2"]
+cast_shadow = 0
 mesh = ExtResource( 7 )
 skeleton = NodePath("../../MeshInstance")
 software_skinning_transform_normals = false

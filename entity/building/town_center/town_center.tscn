@@ -87,6 +87,7 @@ material/1 = SubResource( 10 )
 
 [node name="MeshInstance" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.70992, 0.238619, 1.53159 )
+cast_shadow = 0
 mesh = ExtResource( 9 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
@@ -94,6 +95,7 @@ material/1 = SubResource( 15 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 0.994487, 0, 0.104858, 0, 1, 0, -0.104858, 0, 0.994487, 0.678184, 0.115803, 5.37234 )
+cast_shadow = 0
 mesh = ExtResource( 9 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
@@ -101,6 +103,7 @@ material/1 = SubResource( 15 )
 
 [node name="MeshInstance3" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( -8.9407e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -8.9407e-08, 0, -1.3031, -0.0688918, 2.49144 )
+cast_shadow = 0
 mesh = ExtResource( 9 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 9 )
@@ -108,6 +111,7 @@ material/1 = SubResource( 15 )
 
 [node name="barrel" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57077, 0.301947, -0.653062 )
+cast_shadow = 0
 mesh = ExtResource( 7 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 7 )
@@ -116,6 +120,7 @@ material/2 = SubResource( 19 )
 
 [node name="barrel2" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.13848, 0.301947, -0.653063 )
+cast_shadow = 0
 mesh = ExtResource( 10 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 7 )
@@ -127,6 +132,7 @@ transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0
 visible = false
 
 [node name="tower" type="MeshInstance" parent="MeshInstance2"]
+cast_shadow = 0
 mesh = ExtResource( 2 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 14 )
@@ -135,6 +141,7 @@ material/2 = SubResource( 14 )
 
 [node name="canopy" type="MeshInstance" parent="MeshInstance2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.454216, 0, 4.41078 )
+cast_shadow = 0
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 14 )
@@ -142,6 +149,7 @@ material/1 = SubResource( 14 )
 
 [node name="canopy2" type="MeshInstance" parent="MeshInstance2"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.39751, 0, -0.34661 )
+cast_shadow = 0
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 14 )

@@ -148,6 +148,7 @@ material/1 = SubResource( 63 )
 
 [node name="barrel" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.09806, 0.344684, 2.05701 )
+cast_shadow = 0
 mesh = ExtResource( 2 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 7 )
@@ -155,6 +156,7 @@ material/1 = SubResource( 8 )
 
 [node name="barrel5" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( -0.386341, 0, -0.922356, 0, 1, 0, 0.922356, 0, -0.386341, 2.71415, 0.301947, 0.153943 )
+cast_shadow = 0
 mesh = ExtResource( 9 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 51 )
@@ -163,6 +165,7 @@ material/2 = SubResource( 19 )
 
 [node name="barrel6" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( -0.386341, 0, -0.922356, 0, 1, 0, 0.922356, 0, -0.386341, 2.1608, 0.301947, 1.47503 )
+cast_shadow = 0
 mesh = ExtResource( 10 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 51 )
@@ -194,6 +197,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 visible = false
 
 [node name="barrack2" type="MeshInstance" parent="MeshInstance2"]
+cast_shadow = 0
 mesh = ExtResource( 7 )
 skeleton = NodePath("../../MeshInstance")
 software_skinning_transform_normals = false
