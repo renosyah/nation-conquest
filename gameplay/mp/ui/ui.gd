@@ -115,10 +115,19 @@ func _on_building_panel_on_construct_building(_building_data :BuildingData):
 	emit_signal("deploy_building", _building_data)
 	
 func _process(delta):
+	if result.visible:
+		return
+		
 	var value = -45 if rotate_l.pressed else 45 if rotate_r.pressed else 0
 	building_rotation += value * delta
 	
-	mini_map.set_zoom(get_camera_zoom())
+	var _camera_zoom :float = get_camera_zoom()
+	mini_map.set_zoom(_camera_zoom)
+	
+	if _camera_zoom < 15:
+		control.visible = false
+	else:
+		control.visible = true
 	
 func on_building_deplyoing(_building :BaseBuilding):
 	if not is_player_building(_building):

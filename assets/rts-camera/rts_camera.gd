@@ -1,6 +1,8 @@
 extends Spatial
 class_name RtsCamera
 
+var default_rotation_degrees :float = -45
+
 onready var camera = $Camera
 
 func on_orientation_change(screen_orientation :int):
@@ -8,11 +10,13 @@ func on_orientation_change(screen_orientation :int):
 		#OS.SCREEN_ORIENTATION_LANDSCAPE:
 		0:
 			rotation_degrees.x = -45
+			default_rotation_degrees = -45
 			camera.keep_aspect = Camera.KEEP_HEIGHT
 			
 		#OS.SCREEN_ORIENTATION_PORTRAIT:
 		1:
-			rotation_degrees.x = -60
+			rotation_degrees.x = -55
+			default_rotation_degrees = -55
 			camera.keep_aspect = Camera.KEEP_WIDTH
 
 func set_moving_direction(dir :Vector2):
@@ -21,6 +25,16 @@ func set_moving_direction(dir :Vector2):
 func set_zoom(zoom_level :float):
 	camera.translation.z = zoom_level
 	
+func _process(delta):
+	if camera.translation.z < 15:
+		rotation_degrees.x = lerp(
+			rotation_degrees.x, -25, 5 * delta
+		)
+	else:
+		rotation_degrees.x = lerp(
+			rotation_degrees.x, default_rotation_degrees, 5 * delta
+		)
+		
 # will returning position of camera looking at
 # instead of using value facing direction
 # this can be use for more accurate aiming
