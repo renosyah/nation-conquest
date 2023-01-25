@@ -9,6 +9,7 @@ albedo_color = Color( 0.458824, 0.25098, 0.0862745, 1 )
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_unshaded = true
+flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.0980392, 0.0980392, 0.0980392, 1 )
 

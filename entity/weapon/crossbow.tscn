@@ -2,12 +2,13 @@
 
 [ext_resource path="res://entity/weapon/crossbow.obj" type="ArrayMesh" id=1]
 
-[sub_resource type="SpatialMaterial" id=20]
+[sub_resource type="SpatialMaterial" id=1]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.435294, 0.223529, 0, 1 )
 
-[sub_resource type="SpatialMaterial" id=21]
+[sub_resource type="SpatialMaterial" id=2]
+flags_unshaded = true
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0, 0, 0, 1 )
@@ -17,5 +18,5 @@ transform = Transform( 1, 0, 0, 0, 0.962341, -0.271844, 0, 0.271844, 0.962341, 0
 cast_shadow = 0
 mesh = ExtResource( 1 )
 software_skinning_transform_normals = false
-material/0 = SubResource( 20 )
-material/1 = SubResource( 21 )
+material/0 = SubResource( 1 )
+material/1 = SubResource( 2 )
