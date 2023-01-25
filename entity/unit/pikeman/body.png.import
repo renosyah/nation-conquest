@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/body2.png-46f93ce1cc80386601b22ae768d2b10c.s3tc.stex"
-path.etc="res://.import/body2.png-46f93ce1cc80386601b22ae768d2b10c.etc.stex"
+path.s3tc="res://.import/body.png-8041cf9e9f5c6d1a8d34b147bcf187b5.s3tc.stex"
+path.etc="res://.import/body.png-8041cf9e9f5c6d1a8d34b147bcf187b5.etc.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://entity/unit/archer_cavalry/body2.png"
-dest_files=[ "res://.import/body2.png-46f93ce1cc80386601b22ae768d2b10c.s3tc.stex", "res://.import/body2.png-46f93ce1cc80386601b22ae768d2b10c.etc.stex" ]
+source_file="res://entity/unit/pikeman/body.png"
+dest_files=[ "res://.import/body.png-8041cf9e9f5c6d1a8d34b147bcf187b5.s3tc.stex", "res://.import/body.png-8041cf9e9f5c6d1a8d34b147bcf187b5.etc.stex" ]
 
 [params]
 

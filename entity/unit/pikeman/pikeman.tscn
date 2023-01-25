@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=2]
 
-[ext_resource path="res://entity/unit/pikeman/body2.png" type="Texture" id=1]
+[ext_resource path="res://entity/unit/pikeman/body.png" type="Texture" id=1]
 [ext_resource path="res://entity/weapon/pike.tscn" type="PackedScene" id=2]
 [ext_resource path="res://entity/unit/spearman/spearman.gd" type="Script" id=3]
 [ext_resource path="res://entity/unit/unit_collision.tres" type="Shape" id=4]

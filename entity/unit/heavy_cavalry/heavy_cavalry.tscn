@@ -215,7 +215,7 @@ modulate = Color( 0.180392, 0.180392, 0.180392, 1 )
 texture = ExtResource( 5 )
 
 [node name="shadle" type="Sprite3D" parent="body/horse_pivot/horse"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.137031, -0.106169, 0.0448347 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0277594, -0.0316222, 0.0448347 )
 cast_shadow = 0
 modulate = Color( 0.47451, 0.47451, 0.47451, 1 )
 double_sided = false
@@ -223,7 +223,7 @@ alpha_cut = 2
 texture = ExtResource( 6 )
 
 [node name="shadle2" type="Sprite3D" parent="body/horse_pivot/horse"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.132902, -0.106169, -0.0242351 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.0236304, -0.0316222, -0.0242351 )
 cast_shadow = 0
 modulate = Color( 0.47451, 0.47451, 0.47451, 1 )
 double_sided = false
