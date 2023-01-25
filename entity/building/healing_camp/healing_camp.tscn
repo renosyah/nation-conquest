@@ -9,12 +9,12 @@
 [ext_resource path="res://entity/building/model/food_barrel.obj" type="ArrayMesh" id=10]
 [ext_resource path="res://entity/building/healing_camp/healing_icon.obj" type="ArrayMesh" id=11]
 
-[sub_resource type="SpatialMaterial" id=62]
+[sub_resource type="SpatialMaterial" id=71]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.490196, 0.490196, 0.490196, 1 )
 
-[sub_resource type="SpatialMaterial" id=63]
+[sub_resource type="SpatialMaterial" id=68]
 flags_unshaded = true
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
@@ -115,7 +115,7 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
 }
 
-[sub_resource type="SpatialMaterial" id=64]
+[sub_resource type="SpatialMaterial" id=70]
 flags_transparent = true
 flags_unshaded = true
 flags_no_depth_test = true
@@ -143,8 +143,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 [node name="barrack" type="MeshInstance" parent="MeshInstance"]
 mesh = ExtResource( 7 )
 software_skinning_transform_normals = false
-material/0 = SubResource( 62 )
-material/1 = SubResource( 63 )
+material/0 = SubResource( 71 )
+material/1 = SubResource( 68 )
 
 [node name="barrel" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.09806, 0.344684, 2.05701 )
@@ -201,8 +201,8 @@ cast_shadow = 0
 mesh = ExtResource( 7 )
 skeleton = NodePath("../../MeshInstance")
 software_skinning_transform_normals = false
-material/0 = SubResource( 64 )
-material/1 = SubResource( 64 )
+material/0 = SubResource( 70 )
+material/1 = SubResource( 70 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.80574, 0 )

@@ -203,7 +203,7 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	emit_signal("squad_unit_dead", self)
 		
 		
-remotesync func _reinforce_squad(_unit_name :String):
+remotesync func _reinforce_squad(_unit_name :String, _from :Vector3):
 	for _unit in _units:
 		if not is_instance_valid(_unit):
 			continue
@@ -212,7 +212,7 @@ remotesync func _reinforce_squad(_unit_name :String):
 	
 	var _unit = _create_unit(_unit_name)
 	_unit.set_as_toplevel(true)
-	_unit.translation = global_transform.origin + Vector3(0, 2, 0)
+	_unit.translation = _from + Vector3(0, 2, 0)
 	_units.append(_unit)
 	
 	_squad_banner.set_squad_number(_units.size())
@@ -343,14 +343,14 @@ func is_in_combat() -> bool:
 func unit_size() -> int:
 	return _units.size()
 	
-func reinforce_squad() -> void:
+func reinforce_squad(_from :Vector3 = global_transform.origin) -> void:
 	if not _is_master:
 		return
 		
 	if unit_size() >= max_unit:
 		return
 		
-	rpc("_reinforce_squad", "unit-" +  GDUUID.v4())
+	rpc("_reinforce_squad", "unit-" +  GDUUID.v4(), _from)
 	
 func disband():
 	if not _is_master:

@@ -86,7 +86,7 @@ func _on_reinforce_timer_timeout():
 			return
 	
 	for squad in squad_to_heal:
-		squad.reinforce_squad()
+		squad.reinforce_squad(global_transform.origin)
 		
 func _on_area_healing_checker_timeout():
 	if status != status_deployed:
