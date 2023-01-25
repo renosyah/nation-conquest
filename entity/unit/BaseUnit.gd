@@ -21,6 +21,7 @@ var squad = null
 
 var _direction :Vector3 = Vector3.ZERO
 var _velocity :Vector3 = Vector3.ZERO
+var _up_direction :Vector3 = Vector3.UP
 
 export var is_attacking :bool = false
 var attack_to = null
@@ -77,8 +78,9 @@ func _process(delta :float):
 	if is_dead:
 		return
 		
-	_velocity = Vector3.ZERO
 	_direction = Vector3.ZERO
+	_up_direction = Vector3.UP
+	_velocity = Vector3.ZERO
 	
 	attacking(delta)
 	moving(delta)
@@ -88,11 +90,13 @@ func _process(delta :float):
 		return
 		
 	if not is_on_floor():
-		_velocity.y -= _gravity
+		_velocity.y = -_gravity
+	else:
+		_up_direction = get_floor_normal()
 	
 	if _velocity != Vector3.ZERO:
 		_velocity = move_and_slide(
-			_velocity, Vector3.UP ,false, 4, deg2rad(60.0), true
+			_velocity, _up_direction, true, 4, deg2rad(45.0), true
 		)
 		
 func attack_target(_attack_to):
@@ -104,13 +108,14 @@ func attack_target(_attack_to):
 	is_moving = false
 	
 	if attack_to is BaseBuilding:
+		_damage_modifier = attack_damage / 2
+		
+	else:
 		_damage_modifier = _counter.get_attack_modifier(
 			attack_to.unit_tier, 
 			attack_to.unit_role,
 			attack_damage
 		)
-	else:
-		_damage_modifier = attack_damage / 2
 	
 func keep_moving():
 	is_attacking = false
@@ -122,15 +127,12 @@ func attacking(delta :float):
 		return
 		
 	if not is_instance_valid(attack_to):
-		is_attacking = false
-		is_moving = true
+		keep_moving()
 		return
 		
 	if is_instance_valid(squad):
 		if squad.is_moving:
-			is_attacking = false
-			attack_to = null
-			is_moving = true
+			keep_moving()
 			return
 			
 	var is_arrive :bool = false
@@ -174,13 +176,11 @@ func idle(delta :float):
 	
 func perform_attack():
 	if not is_instance_valid(attack_to):
-		is_moving = true
-		is_attacking = false
+		keep_moving()
 		return
 		
 	if attack_to.is_dead:
-		is_moving = true
-		is_attacking = false
+		keep_moving()
 		return
 		
 	if not is_master:

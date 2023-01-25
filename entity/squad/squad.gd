@@ -31,7 +31,9 @@ export var is_assault_mode :bool = false
 var _speed :int = 2
 var _units :Array = []
 var _targets :Array = []
+var _direction :Vector3 = Vector3.ZERO
 var _velocity :Vector3
+var _up_direction :Vector3 = Vector3.UP
 
 puppet var _puppet_is_moving :bool
 puppet var _puppet_translation :Vector3
@@ -50,7 +52,6 @@ onready var _pivot = $pivot
 var _tap :Tap
 
 onready var _gravity :float = ProjectSettings.get_setting("physics/3d/default_gravity")
-onready var _floor_max_angle: float = deg2rad(45.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -242,7 +243,9 @@ func master_moving(delta :float) -> void:
 	
 	if is_dead:
 		return
-	
+		
+	_direction = Vector3.ZERO
+	_up_direction = Vector3.UP
 	_velocity = Vector3.ZERO
 	
 	_spotted_target()
@@ -250,16 +253,16 @@ func master_moving(delta :float) -> void:
 	
 	if is_moving:
 		var is_arrive :bool = _move_to_position(move_to)
-		if is_arrive:
-			is_moving = false
-			return
+		is_moving = not is_arrive
 		
 	if not is_on_floor():
-		_velocity.y -= _gravity
+		_velocity.y = -_gravity
+	else:
+		_up_direction = get_floor_normal()
 		
 	if _velocity != Vector3.ZERO:
 		_velocity = move_and_slide(
-			_velocity, Vector3.UP , false, 4, deg2rad(60.0), true
+			_velocity, _up_direction, true, 4, deg2rad(45.0), true
 		)
 		
 	_formation_direction_facing(delta)
@@ -293,8 +296,8 @@ func _move_to_position(_to :Vector3) -> bool:
 	if distance <= margin:
 		return true
 		
-	var direction :Vector3 = pos.direction_to(to)
-	_velocity = direction * _speed
+	_direction = pos.direction_to(to)
+	_velocity = _direction * _speed
 	_velocity.y = 0
 	
 	return false
