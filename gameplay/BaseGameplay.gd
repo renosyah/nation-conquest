@@ -54,7 +54,6 @@ func load_map():
 	_map.generate_map()
 	
 func on_generate_map_completed():
-	
 	# [{"scene", "pos"}]
 	var sync_resources :Array = []
 	var resources_scenes = {
@@ -62,7 +61,11 @@ func on_generate_map_completed():
 		"tree" : preload("res://entity/resources/trees/trees.tscn"),
 		"rock" : preload("res://entity/resources/rock/rock.tscn")
 	}
-		
+	
+	# set camera to highest point in map
+	if is_instance_valid(_camera):
+		_camera.translation.y = _map.base_spawn_positions[4].y
+	
 	if is_server():
 		var index :int = 0
 		var map_base_spawn_positions :Array = _map.base_spawn_positions.slice(0, 3)

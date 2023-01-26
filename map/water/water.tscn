@@ -6,6 +6,8 @@
 size = Vector2( 200, 200 )
 
 [sub_resource type="SpatialMaterial" id=2]
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
 albedo_color = Color( 0, 0.168627, 0.392157, 1 )
 
 [sub_resource type="ConvexPolygonShape" id=3]

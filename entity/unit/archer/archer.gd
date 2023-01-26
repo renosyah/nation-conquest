@@ -35,7 +35,7 @@ func _get_arrow() -> BaseProjectile:
 func _create_arrow() -> BaseProjectile:
 	var arrow = arrow_projectile.instance()
 	arrow.speed = 12
-	arrow.connect("hit", self ,"_arrow_hit")
+	arrow.connect("hit", self ,"_arrow_hit", [arrow])
 	
 	var last_index = get_tree().get_root().get_child_count() - 1
 	get_tree().get_root().get_child(last_index).add_child(arrow)
@@ -59,15 +59,21 @@ func _on_animation_projectile_release():
 		
 	arrow.fire()
 	
-func _arrow_hit():
-	.perform_attack()
-	
-	if _sound.playing or not visible:
+func _arrow_hit(_arrow :BaseProjectile):
+	if not _sound.playing and visible:
+		_sound.stream = hit_sounds[rand_range(0, hit_sounds.size())]
+		_sound.play()
+		
+	if not is_instance_valid(attack_to):
 		return
-	
-	_sound.stream = hit_sounds[rand_range(0, hit_sounds.size())]
-	_sound.play()
-	
+		
+	var _target_pos :Vector3 = attack_to.global_transform.origin * Vector3(1,0,1)
+	var _projectile_pos :Vector3 = _arrow.global_transform.origin * Vector3(1,0,1)
+		
+	if _projectile_pos.distance_squared_to(_target_pos) > 10:
+		return
+		
+	.perform_attack()
 	
 func dead() -> void:
 	if visible:
