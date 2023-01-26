@@ -7,36 +7,36 @@ signal bot_surrender(_mpbot)
 
 const bot_difficulty_configs :Dictionary = {
 	BotPlayerData.difficulty_easy : {
-		"recruit_time" :15,
-		"build_time" : 10,
-		"action_time" : 4,
+		"recruit_time" :25,
+		"build_time" : 20,
+		"action_time" : 8,
+		"max_squads" : 3,
+		"max_buildings" : 5,
+		"uperhand_coin" : 25
+	},
+	BotPlayerData.difficulty_medium : {
+		"recruit_time" :23,
+		"build_time" : 18,
+		"action_time" : 6,
 		"max_squads" : 3,
 		"max_buildings" : 5,
 		"uperhand_coin" : 50
 	},
-	BotPlayerData.difficulty_medium : {
-		"recruit_time" :13,
-		"build_time" : 8,
-		"action_time" : 4,
-		"max_squads" : 3,
-		"max_buildings" : 5,
-		"uperhand_coin" : 80
-	},
 	BotPlayerData.difficulty_hard : {
-		"recruit_time" :12,
-		"build_time" : 7,
-		"action_time" : 3,
+		"recruit_time" :22,
+		"build_time" : 17,
+		"action_time" : 5,
 		"max_squads" : 4,
 		"max_buildings" : 6,
-		"uperhand_coin" : 100
+		"uperhand_coin" : 70
 	},
 	BotPlayerData.difficulty_insane : {
-		"recruit_time" :10,
-		"build_time" : 5,
-		"action_time" : 2,
+		"recruit_time" :20,
+		"build_time" : 15,
+		"action_time" : 4,
 		"max_squads" : 4,
 		"max_buildings" : 7,
-		"uperhand_coin" : 120
+		"uperhand_coin" : 80
 	}
 }
 
@@ -138,10 +138,14 @@ func _on_recruit_timer():
 		preload("res://data/squad_data/squads/axeman_squad.tres"),
 		preload("res://data/squad_data/squads/militia_squad.tres"),
 		preload("res://data/squad_data/squads/spearman_squad.tres"),
-		preload("res://data/squad_data/squads/swordman_squad.tres")
+		preload("res://data/squad_data/squads/swordman_squad.tres"),
+		preload("res://data/squad_data/squads/light_cavalry.tres"),
+		preload("res://data/squad_data/squads/spearman_squad.tres"),
+		preload("res://data/squad_data/squads/archer_cavalry.tres"),
+		preload("res://data/squad_data/squads/heavy_cavalry.tres")
 	]
 	
-	_squads.shuffle()
+	_squads.invert()
 	
 	var squad :SquadData = null
 	for s in _squads:
@@ -187,7 +191,7 @@ func _on_build_timer():
 		preload("res://data/building_data/buildings/stable.tres")
 	]
 	
-	_buildings.shuffle()
+	_buildings.invert()
 	
 	for s in _buildings:
 		if _is_max_out_building_count(s.building_id, s.max_building_count):
@@ -377,7 +381,7 @@ func _is_max_out_building_count(building_id :int, max_building_count :int):
 			count += 1
 		
 	# exceed quota
-	return max_building_count == count
+	return max_building_count <= count
 	
 func _is_building_ids_in_buildings(building_ids :Array) -> bool:
 	if bot_buildings.empty():
