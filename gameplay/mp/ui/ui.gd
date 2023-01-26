@@ -124,10 +124,7 @@ func _process(delta):
 	var _camera_zoom :float = get_camera_zoom()
 	mini_map.set_zoom(_camera_zoom)
 	
-	if _camera_zoom < 15:
-		control.visible = false
-	else:
-		control.visible = true
+	control.visible = _camera_zoom > 12
 	
 func on_building_deplyoing(_building :BaseBuilding):
 	if not is_player_building(_building):

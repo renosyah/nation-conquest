@@ -64,7 +64,7 @@ func on_generate_map_completed():
 	
 	# set camera to highest point in map
 	if is_instance_valid(_camera):
-		_camera.translation.y = _map.base_spawn_positions[4].y
+		_camera.translation.y = _map.base_spawn_positions[4].y + 2
 	
 	if is_server():
 		var index :int = 0

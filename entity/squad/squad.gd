@@ -194,6 +194,7 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	_squad_banner.show_hurt()
 	
 	if _units.empty():
+		_squad_banner.visible = false
 		is_dead = true
 		set_process(false)
 		

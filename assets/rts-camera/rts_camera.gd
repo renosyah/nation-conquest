@@ -26,7 +26,7 @@ func set_zoom(zoom_level :float):
 	camera.translation.z = zoom_level
 	
 func _process(delta):
-	if camera.translation.z < 15:
+	if camera.translation.z < 12:
 		rotation_degrees.x = lerp(
 			rotation_degrees.x, -25, 5 * delta
 		)

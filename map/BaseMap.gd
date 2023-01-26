@@ -120,7 +120,7 @@ func _generate_base_spawn_points(positions_copy :Array) -> Array:
 		# SE
 		Vector3.ZERO,
 		
-		# CENTER
+		# CENTER & HIGHEST POINT IN MAP
 		Vector3.ZERO,
 	]
 	
