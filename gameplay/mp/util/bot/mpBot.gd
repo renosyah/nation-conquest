@@ -8,35 +8,39 @@ signal bot_surrender(_mpbot)
 const bot_difficulty_configs :Dictionary = {
 	BotPlayerData.difficulty_easy : {
 		"recruit_time" :25,
-		"build_time" : 20,
+		"build_time" : 10,
 		"action_time" : 8,
 		"max_squads" : 3,
 		"max_buildings" : 5,
-		"uperhand_coin" : 25
+		"uperhand_coin" : 25,
+		"min_farm_required" : 3
 	},
 	BotPlayerData.difficulty_medium : {
-		"recruit_time" :23,
-		"build_time" : 18,
+		"recruit_time" :22,
+		"build_time" : 8,
 		"action_time" : 6,
 		"max_squads" : 3,
-		"max_buildings" : 5,
-		"uperhand_coin" : 50
+		"max_buildings" : 6,
+		"uperhand_coin" : 50,
+		"min_farm_required" : 3
 	},
 	BotPlayerData.difficulty_hard : {
-		"recruit_time" :22,
-		"build_time" : 17,
+		"recruit_time" :19,
+		"build_time" : 7,
 		"action_time" : 5,
 		"max_squads" : 4,
-		"max_buildings" : 6,
-		"uperhand_coin" : 70
+		"max_buildings" : 7,
+		"uperhand_coin" : 70,
+		"min_farm_required" : 4
 	},
 	BotPlayerData.difficulty_insane : {
-		"recruit_time" :20,
-		"build_time" : 15,
+		"recruit_time" :18,
+		"build_time" : 5,
 		"action_time" : 4,
 		"max_squads" : 4,
-		"max_buildings" : 7,
-		"uperhand_coin" : 80
+		"max_buildings" : 8,
+		"uperhand_coin" : 80,
+		"min_farm_required" : 4
 	}
 }
 
@@ -50,6 +54,7 @@ export var action_time :float = 2
 
 export var max_squads :int = 3
 export var max_buildings :int = 8
+export var min_farm_required :int = 3
 
 export var uperhand_coin :int = 100
 
@@ -105,7 +110,7 @@ func _ready():
 	add_child(action_timer)
 	
 	uperhand_timer = Timer.new()
-	uperhand_timer.wait_time = rand_range(35 - 2, 35 + 2)
+	uperhand_timer.wait_time = rand_range(25 - 2, 25 + 2)
 	uperhand_timer.autostart = true
 	uperhand_timer.one_shot = false
 	uperhand_timer.connect("timeout", self , "_on_uperhand_timer")
@@ -117,7 +122,7 @@ func get_town_center_data() -> BuildingData:
 	town_center.node_name = "bot-town-center-" + str(bot_id)
 	town_center.network_master = Network.PLAYER_HOST_ID
 	town_center.color = bot_color
-	town_center.team =bot_team
+	town_center.team = bot_team
 	return town_center
 
 func _on_recruit_timer():
@@ -191,18 +196,25 @@ func _on_build_timer():
 		preload("res://data/building_data/buildings/stable.tres")
 	]
 	
-	_buildings.invert()
-	
-	for s in _buildings:
-		if _is_max_out_building_count(s.building_id, s.max_building_count):
-			continue
+	if get_bot_farm_count() < min_farm_required:
+		
+		var farm_building = _buildings[0].duplicate()
+		if bot_coin > farm_building.price:
+			building_to_build = farm_building
 			
-		if not _is_building_ids_in_buildings(s.requirement_ids):
-			continue
-			
-		if bot_coin > s.price:
-			building_to_build = s.duplicate()
-			break
+	else:
+		
+		_buildings.invert()
+		for s in _buildings:
+			if _is_max_out_building_count(s.building_id, s.max_building_count):
+				continue
+				
+			if not _is_building_ids_in_buildings(s.requirement_ids):
+				continue
+				
+			if bot_coin > s.price:
+				building_to_build = s.duplicate()
+				break
 		
 	if building_to_build == null:
 		return
@@ -358,15 +370,19 @@ func surrender():
 	
 	emit_signal("bot_surrender", self)
 
-func is_bot_have_farm() -> bool:
+func get_bot_farm_count() -> int:
+	var count :int = 0
 	for building in bot_buildings:
 		if not is_instance_valid(building):
 			continue
 			
 		if building is Farm:
-			return true
+			count += 1
 			
-	return false
+	return count
+
+func is_bot_have_farm() -> bool:
+	return get_bot_farm_count() > 0
 	
 func _is_max_out_building_count(building_id :int, max_building_count :int):
 	if bot_buildings.empty():
