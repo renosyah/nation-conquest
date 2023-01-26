@@ -292,21 +292,21 @@ func on_repair(_building :BaseBuilding):
 		_floating_option.queue_free()
 		_floating_option = null
 		
-	_ui.on_building_repair(_building)
+	_ui.on_building_repair_press(_building)
 	
 func on_demolish(_building :BaseBuilding):
 	if is_instance_valid(_floating_option):
 		_floating_option.queue_free()
 		_floating_option = null
 		
-	_ui.on_building_demolish(_building)
+	_ui.on_building_demolish_press(_building)
 	
 func on_info(_building :BaseBuilding):
 	if is_instance_valid(_floating_option):
 		_floating_option.queue_free()
 		_floating_option = null
 		
-	_ui.on_building_info(_building)
+	_ui.on_building_info_press(_building)
 	
 func on_building_deployed(_building :BaseBuilding):
 	_buildings.append(_building)

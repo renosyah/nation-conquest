@@ -126,6 +126,12 @@ func _process(delta):
 	
 	control.visible = _camera_zoom > 12
 	
+	if is_instance_valid(selected_building) and repair_building_panel.visible:
+		repair_building_panel.set_repair_cost(
+			selected_building.get_repair_price(),
+			player_coin
+		)
+	
 func on_building_deplyoing(_building :BaseBuilding):
 	if not is_player_building(_building):
 		return
@@ -137,16 +143,15 @@ func on_building_deplyoing(_building :BaseBuilding):
 	
 	_update_player_building(true)
 	
-func on_building_repair(_building :BaseBuilding):
+func on_building_repair_press(_building :BaseBuilding):
 	selected_building = _building
-	repair_building_panel.set_repair_cost(selected_building.get_repair_price())
 	repair_building_panel.visible = true
 	
-func on_building_demolish(_building :BaseBuilding):
+func on_building_demolish_press(_building :BaseBuilding):
 	selected_building = _building
 	demolish_building_panel.visible = true
 	
-func on_building_info(_building :BaseBuilding):
+func on_building_info_press(_building :BaseBuilding):
 	info_panel.set_info(
 		_building.building_name, 
 		_building.building_description, 
@@ -154,7 +159,7 @@ func on_building_info(_building :BaseBuilding):
 	)
 	info_panel.visible = true
 	
-func on_squad_info(_squad :Squad):
+func on_squad_info_press(_squad :Squad):
 	info_panel.set_info(
 		_squad.squad_name, 
 		_squad.squad_description, 
@@ -420,12 +425,14 @@ func _on_repair_building_panel_repair():
 	_update_player_coin()
 	
 	selected_building.repair()
+	selected_building = null
 	
 func _on_demolish_building_panel_demolish():
 	if not is_instance_valid(selected_building):
 		return
 		
 	selected_building.demolish()
+	selected_building = null
 	
 func _on_select_all_pressed():
 	selected_all_squad()
@@ -459,7 +466,7 @@ func game_over():
 func _on_squad_info_pressed():
 	for key in squads:
 		if squads[key].is_selected:
-			on_squad_info(key)
+			on_squad_info_press(key)
 			return
 
 
