@@ -414,11 +414,24 @@ func init_army_formation():
 	army_formation = preload("res://assets/army_formation/army_formation.tscn").instance()
 	add_child(army_formation)
 	
+func get_squad_avg_position() -> Vector3:
+	var pos :Vector3 = Vector3.ZERO
+	var count :int = 0
+	
+	for _squad in _selected_squad:
+		if not is_instance_valid(_squad):
+			continue
+			
+		pos += _squad.global_transform.origin
+		count += 1
+		
+	return pos / count
+	
 func _order_move_to(_pos :Vector3):
 	if _selected_squad.empty():
 		return
 		
-	army_formation.start_point = _selected_squad[0].global_transform.origin
+	army_formation.start_point = get_squad_avg_position()
 	army_formation.destination_point = _pos
 	army_formation.squad_count = _selected_squad.size()
 	
