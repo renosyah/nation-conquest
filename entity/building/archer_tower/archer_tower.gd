@@ -109,13 +109,14 @@ remotesync func _spawn_garrison(_node_name :String):
 	_units.append(_unit)
 	
 func _create_unit(unit_name :String) -> BaseUnit:
-	var _unit = unit.instance()
+	var _unit :BaseUnit = unit.instance()
 	_unit.name = unit_name
 	_unit.is_master = _is_master()
 	_unit.team = team
 	_unit.hp = 200
 	_unit.max_hp = 200
 	_unit.attack_range += 2
+	_unit.attack_delay = 3
 	_unit.color = color
 	_unit.enable_moving = false
 	_unit.connect("unit_dead", self, "_unit_dead")

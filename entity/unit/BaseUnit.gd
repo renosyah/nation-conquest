@@ -243,7 +243,7 @@ func _turn_spatial_pivot_to_attack(_spatial :Spatial, delta :float):
 		return
 		
 	# just use enemy origin position
-	# because unit not attack to squad
+	# because unit not attach to squad
 	var to :Vector3 = attack_to.global_transform.origin
 	to.y = translation.y
 	

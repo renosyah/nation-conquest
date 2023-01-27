@@ -1,4 +1,4 @@
-extends "res://entity/unit/archer/archer.gd"
+extends "res://entity/unit/unit_scripts/range_infantry.gd"
 
 func _create_arrow() -> BaseProjectile:
 	#_create_arrow()

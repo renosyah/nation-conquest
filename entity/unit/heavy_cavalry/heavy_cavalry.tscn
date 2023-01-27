@@ -2,7 +2,7 @@
 
 [ext_resource path="res://entity/weapon/sword.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entity/unit/heavy_cavalry/body.png" type="Texture" id=2]
-[ext_resource path="res://entity/unit/light_cavalry/cavalry.gd" type="Script" id=3]
+[ext_resource path="res://entity/unit/unit_scripts/melee_cavalry.gd" type="Script" id=3]
 [ext_resource path="res://entity/unit/unit_collision.tres" type="Shape" id=4]
 [ext_resource path="res://entity/unit/heavy_cavalry/horse.png" type="Texture" id=5]
 [ext_resource path="res://entity/unit/heavy_cavalry/armor.png" type="Texture" id=6]

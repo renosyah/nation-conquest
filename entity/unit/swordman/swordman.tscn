@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://entity/unit/swordman/swordman.gd" type="Script" id=1]
+[ext_resource path="res://entity/unit/unit_scripts/heavy_melee_infantry.gd" type="Script" id=1]
 [ext_resource path="res://entity/weapon/sword.tscn" type="PackedScene" id=2]
 [ext_resource path="res://entity/unit/swordman/body.png" type="Texture" id=3]
 [ext_resource path="res://entity/weapon/shield.tscn" type="PackedScene" id=4]

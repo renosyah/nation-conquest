@@ -1,4 +1,4 @@
-extends "res://entity/unit/light_cavalry/cavalry.gd"
+extends "res://entity/unit/unit_scripts/melee_infantry.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

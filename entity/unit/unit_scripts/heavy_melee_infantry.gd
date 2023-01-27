@@ -1,4 +1,4 @@
-extends "res://entity/unit/militia/militia.gd"
+extends "res://entity/unit/unit_scripts/melee_infantry.gd"
 
 export var shield_hp :int = 100
 

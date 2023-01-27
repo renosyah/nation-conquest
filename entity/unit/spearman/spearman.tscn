@@ -2,7 +2,7 @@
 
 [ext_resource path="res://entity/unit/spearman/body.png" type="Texture" id=1]
 [ext_resource path="res://entity/weapon/spear.tscn" type="PackedScene" id=2]
-[ext_resource path="res://entity/unit/spearman/spearman.gd" type="Script" id=3]
+[ext_resource path="res://entity/unit/unit_scripts/spear_infantry.gd" type="Script" id=3]
 [ext_resource path="res://entity/unit/unit_collision.tres" type="Shape" id=4]
 
 [sub_resource type="Animation" id=2]
