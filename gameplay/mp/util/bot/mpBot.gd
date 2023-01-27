@@ -11,7 +11,7 @@ const bot_difficulty_configs :Dictionary = {
 		"build_time" : 10,
 		"action_time" : 8,
 		"max_squads" : 3,
-		"max_buildings" : 5,
+		"max_buildings" : 7,
 		"uperhand_coin" : 25,
 		"min_farm_required" : 3
 	},
@@ -20,7 +20,7 @@ const bot_difficulty_configs :Dictionary = {
 		"build_time" : 8,
 		"action_time" : 6,
 		"max_squads" : 3,
-		"max_buildings" : 6,
+		"max_buildings" : 7,
 		"uperhand_coin" : 50,
 		"min_farm_required" : 3
 	},
@@ -234,6 +234,8 @@ func start_find_placement(_building :BaseBuilding, ignores :Array = [], exceptio
 	if not is_instance_valid(bot_town_center):
 		return
 		
+	autobuilder.radius = rand_range(8.0, 18.0)
+	autobuilder.duration = rand_range(6.0, 12.0)
 	autobuilder.ignore = ignores
 	autobuilder.exceptions = exceptions
 	autobuilder.translation = bot_town_center.translation
@@ -247,13 +249,29 @@ func _on_placement_found(_building :BaseBuilding, _pos :Vector3):
 	_building.translation = _pos
 	_building.start_building()
 	
+	bot_buildings.append(_building)
+	
 func _on_placement_not_found(_building :BaseBuilding):
 	building_to_build = null
 	_building.demolish()
 	
 func _on_action_timer():
+	if not is_instance_valid(bot_town_center):
+		return
+		
 	if bot_squads.empty():
 		return
+		
+	var healing_camp :HealingCamp = null
+	for building in bot_buildings:
+		if building is HealingCamp:
+			healing_camp = building
+			break
+			
+	if is_instance_valid(healing_camp):
+		for bot_squad in bot_squads:
+			if bot_squad.unit_size() < bot_squad.max_unit:
+				bot_squad.set_move_to(healing_camp.global_transform.origin)
 		
 	var squads_copy :Array = bot_squads.duplicate()
 	squads_copy.shuffle()
@@ -317,6 +335,9 @@ func on_building_deployed(_building :BaseBuilding):
 			if _building.name == "bot-town-center-" + str(bot_id):
 				bot_town_center = _building
 				autobuilder.translation = bot_town_center.translation
+				
+			if _building in bot_buildings:
+				return
 				
 			bot_buildings.append(_building)
 			
