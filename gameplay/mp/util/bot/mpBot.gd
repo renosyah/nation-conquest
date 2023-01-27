@@ -234,8 +234,8 @@ func start_find_placement(_building :BaseBuilding, ignores :Array = [], exceptio
 	if not is_instance_valid(bot_town_center):
 		return
 		
-	autobuilder.radius = rand_range(8.0, 18.0)
-	autobuilder.duration = rand_range(6.0, 12.0)
+	autobuilder.radius = rand_range(6.0, 14.0)
+	autobuilder.duration = rand_range(4.0, 10.0)
 	autobuilder.ignore = ignores
 	autobuilder.exceptions = exceptions
 	autobuilder.translation = bot_town_center.translation
