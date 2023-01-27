@@ -54,38 +54,18 @@ func dead() -> void:
 func attacking(delta :float):
 	.attacking(delta)
 	
-	if not is_attacking:
-		return
-		
-	if not is_instance_valid(attack_to):
-		return
-		
-	var enemy_pos :Vector3 = attack_to.global_transform.origin
-	var pos = global_transform.origin
-	var to = Vector3(enemy_pos.x, pos.y, enemy_pos.z)
-	var dis = pos.distance_squared_to(to)
-	if dis < 10.0:
-		return
-		
-	var _transform = pivot.transform.looking_at(pos.direction_to(to) * 100, Vector3.UP)
-	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
+	._turn_spatial_pivot_to_attack(pivot, delta)
 	
 func moving(delta :float):
 	.moving(delta)
 	
-	if _direction == Vector3.ZERO:
-		return
-		
-	var _transform = pivot.transform.looking_at(_direction * 100, Vector3.UP)
-	pivot.transform = pivot.transform.interpolate_with(_transform, 5 * delta)
-	
-	var _horse_transform = horse_pivot.transform.looking_at(_direction * 100, Vector3.UP)
-	horse_pivot.transform = horse_pivot.transform.interpolate_with(_horse_transform, 5 * delta)
+	._turn_spatial_pivot_to_moving(pivot, delta)
+	._turn_spatial_pivot_to_moving(horse_pivot, delta)
 	
 func idle(delta :float):
 	.idle(delta)
 	
-	var dir = Vector3(_velocity.x, 0, _velocity.z)
+	var dir :Vector3 = _velocity * Vector3(1, 0, 1)
 	if dir == Vector3.ZERO:
 		animation_body_state.travel("idle")
 		return
@@ -93,6 +73,9 @@ func idle(delta :float):
 	animation_body_state.travel("moving")
 	
 func _move_to_position(_at :Vector3, _margin :float) -> bool:
+	# full override dont uncomment
+	#._move_to_position(_at, _margin)
+	
 	var pos :Vector3 = global_transform.origin
 	var to :Vector3 = Vector3(_at.x , pos.y, _at.z)
 	var distance :float = pos.distance_to(to)

@@ -235,4 +235,33 @@ func _randomize_attack_delay() -> float:
 	var attack_time = attack_delay + rand_range(-0.2, fraction) - skill
 	return attack_time if attack_time > 0 else 1
 
-
+func _turn_spatial_pivot_to_attack(_spatial :Spatial, delta :float):
+	if not is_attacking:
+		return
+		
+	if not is_instance_valid(attack_to):
+		return
+		
+	var global_target_pos :Vector3 = attack_to.global_transform.origin
+	var global_pos :Vector3 = global_transform.origin
+	var global_target_pos_y_normalize :Vector3 = Vector3(
+		global_target_pos.x, global_pos.y, global_target_pos.z
+	)
+	var distance_squared :float = global_pos.distance_squared_to(global_target_pos_y_normalize)
+	if distance_squared < 10.0:
+		return
+		
+	var _transform :Transform = _spatial.transform.looking_at(
+		global_pos.direction_to(global_target_pos_y_normalize) * 100, Vector3.UP
+	)
+	_spatial.transform = _spatial.transform.interpolate_with(_transform, 5 * delta)
+	
+func _turn_spatial_pivot_to_moving(_spatial :Spatial, delta :float):
+	if not is_moving:
+		return
+		
+	if _direction == Vector3.ZERO:
+		return
+		
+	var _transform :Transform = _spatial.transform.looking_at(_direction * 100, Vector3.UP)
+	_spatial.transform = _spatial.transform.interpolate_with(_transform, 5 * delta)
