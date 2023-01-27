@@ -73,14 +73,16 @@ func _process(delta):
 		firing_delay.wait_time = attack_delay
 		firing_delay.start()
 		
-	var enemy_pos :Vector3 = to_local(attack_to.global_transform.origin)
-	var to = Vector3(enemy_pos.x, translation.y, enemy_pos.z)
+	var to :Vector3 = to_local(attack_to.global_transform.origin)
+	to.y = translation.y
 	
-	var dis = translation.distance_squared_to(to)
-	if dis < 10.0:
+	var distance_squared :float = translation.distance_squared_to(to)
+	if distance_squared < 10.0:
 		return
 		
-	var _transform :Transform = base.transform.looking_at(translation.direction_to(to) * 100, Vector3.UP)
+	var _transform :Transform = base.transform.looking_at(
+		translation.direction_to(to) * 100, Vector3.UP
+	)
 	base.transform = base.transform.interpolate_with(_transform, 5 * delta)
 	
 func perform_attack():
