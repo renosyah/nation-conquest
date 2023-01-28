@@ -27,11 +27,10 @@ var _projectile_pool :Array = []
 func _ready():
 	base.set_surface_material(1, material)
 	audio_stream_player_3d.unit_size = Global.sound_amplified
-	
 	area_damage.set_as_toplevel(true)
-	
+	firing_delay.wait_time = attack_delay
+	firing_delay.start()
 	_projectile_pools()
-	
 	set_process(true)
 	
 func set_team_color(color :Color):

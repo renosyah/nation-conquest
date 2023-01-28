@@ -70,7 +70,7 @@ transform = Transform( 0.548561, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.24944, 0 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="agro_timer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 5.0
 autostart = true
 
 [connection signal="input_event" from="area_build" to="." method="_on_area_build_input_event"]

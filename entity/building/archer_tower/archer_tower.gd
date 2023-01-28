@@ -21,7 +21,6 @@ onready var _area_build = $area_build
 onready var _tween = $Tween
 
 var _units :Array = []
-var _targets :Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -141,7 +140,38 @@ remotesync func _erase_unit(_unit_path :NodePath):
 	_units.erase(_unit)
 	_unit.queue_free()
 	
-func _attack_targets():
+func _spotted_target() -> Array:
+	var _targets :Array = []
+	var _unit_size = _units.size()
+	
+	for body in _area.get_overlapping_bodies():
+		if _targets.size() > _unit_size:
+			return _targets
+			
+		if body is BaseUnit:
+			if body in _units:
+				continue
+				
+			if body.team == team:
+				continue
+				
+			_targets.append(body.get_path())
+			
+	return _targets
+	
+func _on_agro_timer_timeout():
+	if is_dead:
+		return
+		
+	if status != status_deployed:
+		return
+		
+	if _is_master:
+		var targets :Array = _spotted_target()
+		if not targets.empty():
+			rpc("_attack_targets", targets)
+	
+remotesync func _attack_targets(_targets :Array):
 	if _units.empty():
 		return
 		
@@ -155,39 +185,12 @@ func _attack_targets():
 	var pos :int = 0
 	for unit in _units:
 		if is_instance_valid(unit):
-			unit.is_attacking = true
-			unit.attack_to = _targets[pos]
+			unit.attack_target(
+				get_node_or_null(_targets[pos])
+			)
 			
 		if pos < _targets.size() - 1:
 			pos += 1
 	
-func _spotted_target():
-	_targets.clear()
-	
-	var _unit_size = _units.size()
-	
-	for body in _area.get_overlapping_bodies():
-		if _targets.size() > _unit_size:
-			return
-			
-		if body is BaseUnit:
-			if body in _units:
-				continue
-				
-			if body.team == team:
-				continue
-				
-			_targets.append(body)
-			
-func _on_agro_timer_timeout():
-	if is_dead:
-		return
-		
-	if status != status_deployed:
-		return
-		
-	_spotted_target()
-	_attack_targets()
-
 func _on_area_build_input_event(camera, event, position, normal, shape_idx):
 	._on_input_event(camera, event, position, normal, shape_idx)

@@ -92,7 +92,6 @@ wait_time = 5.0
 autostart = true
 
 [node name="agro_timer" type="Timer" parent="."]
-wait_time = 0.5
 autostart = true
 
 [node name="hpBar" parent="." instance=ExtResource( 4 )]
