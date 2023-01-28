@@ -138,7 +138,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.6, 0.7 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, -0.395286, -0.594756 ), Vector3( 0.269951, -0.395286, 0.0123057 ), Vector3( -0.086973, -0.395286, -0.683224 ) ]
+"values": [ Vector3( 0.25, -0.395, -0.595 ), Vector3( 0.25, -0.395, 0.012 ), Vector3( 0.25, -0.395, -0.683 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("spear:rotation_degrees")
@@ -150,7 +150,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.6, 0.7 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 2.44955e-06, 116.608, -88.236 ), Vector3( 2.39621e-06, 116.608, -88.236 ), Vector3( 2.34288e-06, 116.608, -88.236 ) ]
+"values": [ Vector3( 0, 90, -88.236 ), Vector3( 0, 90, -88.236 ), Vector3( 0, 90, -88.236 ) ]
 }
 
 [sub_resource type="Animation" id=22]
