@@ -168,8 +168,7 @@ func _on_agro_timer_timeout():
 		
 	if _is_master:
 		var targets :Array = _spotted_target()
-		if not targets.empty():
-			rpc("_attack_targets", targets)
+		rpc("_attack_targets", targets)
 	
 remotesync func _attack_targets(_targets :Array):
 	if _units.empty():
