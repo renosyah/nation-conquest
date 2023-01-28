@@ -7,7 +7,7 @@ signal bot_surrender(_mpbot)
 
 const bot_difficulty_configs :Dictionary = {
 	BotPlayerData.difficulty_easy : {
-		"recruit_time" :25,
+		"recruit_time" :18,
 		"build_time" : 10,
 		"action_time" : 8,
 		"max_squads" : 3,
@@ -16,7 +16,7 @@ const bot_difficulty_configs :Dictionary = {
 		"min_farm_required" : 3
 	},
 	BotPlayerData.difficulty_medium : {
-		"recruit_time" :22,
+		"recruit_time" :17,
 		"build_time" : 8,
 		"action_time" : 6,
 		"max_squads" : 3,
@@ -25,7 +25,7 @@ const bot_difficulty_configs :Dictionary = {
 		"min_farm_required" : 3
 	},
 	BotPlayerData.difficulty_hard : {
-		"recruit_time" :19,
+		"recruit_time" :16,
 		"build_time" : 7,
 		"action_time" : 5,
 		"max_squads" : 4,
@@ -34,7 +34,7 @@ const bot_difficulty_configs :Dictionary = {
 		"min_farm_required" : 4
 	},
 	BotPlayerData.difficulty_insane : {
-		"recruit_time" :18,
+		"recruit_time" :14,
 		"build_time" : 5,
 		"action_time" : 4,
 		"max_squads" : 4,
@@ -234,9 +234,12 @@ func start_find_placement(_building :BaseBuilding, ignores :Array = [], exceptio
 	if not is_instance_valid(bot_town_center):
 		return
 		
-	autobuilder.radius = rand_range(6.0, 14.0)
+	autobuilder.radius = rand_range(14.0, 22.0)
 	autobuilder.duration = rand_range(4.0, 10.0)
+	autobuilder.speed = rand_range(0.5, 1.5)
 	autobuilder.ignore = ignores
+	autobuilder.with_direction = randf() < 0.4
+	autobuilder.direction = autobuilder.directions[rand_range(0, autobuilder.directions.size())]
 	autobuilder.exceptions = exceptions
 	autobuilder.translation = bot_town_center.translation
 	autobuilder.building = _building

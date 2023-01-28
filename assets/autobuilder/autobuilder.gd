@@ -4,9 +4,14 @@ class_name AutoBuilder
 signal placement_found(_building ,_pos)
 signal placement_not_found(_building)
 
+const directions = [0, 45, 90, 135, 180, -45, -90, -135]
+
 export var height :float = 20.0
 export var radius :float = 15.0
 export var duration :float = 4.0
+export var speed :float = 1.0
+export var with_direction :bool = false
+export var direction :int = 0
 
 onready var rotation_pivot = $rotation_pivot
 onready var h_pivot = $rotation_pivot/h_pivot
@@ -30,6 +35,10 @@ func find_placement():
 	_radius = Vector3(radius, 0, 0)
 	rotation_pivot.translation.y = height
 	placement_pos = global_transform.origin
+	rotation_pivot.rotation_degrees.y = 0
+	
+	if with_direction:
+		rotation_pivot.rotation_degrees.y = direction
 	
 	timer.wait_time = duration
 	timer.start()
@@ -52,10 +61,11 @@ func _demolish_building():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	rotation_pivot.rotate_y(deg2rad(60) * delta)
+	if not with_direction:
+		rotation_pivot.rotate_y(deg2rad(45) * speed * delta)
 	
 	h_pivot.translation = h_pivot.translation.linear_interpolate(
-		_radius, 1 * delta
+		_radius, speed * delta
 	)
 	if h_pivot.translation.is_equal_approx(_radius):
 		_radius = Vector3(-radius, 0, 0)
