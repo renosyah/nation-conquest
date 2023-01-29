@@ -99,6 +99,7 @@ func all_player_ready():
 		bot.bot_id = bot_data.player_network_unique_id
 		bot.bot_color = lobby_bot_data.player_color
 		bot.bot_team = lobby_bot_data.player_team
+		bot.capture_points = _capture_points
 		bot.connect("bot_recruit_squad", self, "on_bot_recruit_squad")
 		bot.connect("bot_deploying_building", self, "on_bot_deploying_building")
 		bot.connect("bot_surrender", self ,"on_bot_surrender")
@@ -149,6 +150,21 @@ func on_building_destroyed(_building :BaseBuilding):
 		
 	_ui.on_player_lose()
 	rule.player_lose(_building.player_id)
+	
+func on_capture_point_score(_capture_point :CapturePoint, _amount :int):
+	.on_capture_point_score(_capture_point, _amount)
+	
+	for key in bots.keys():
+		bots[key].on_capture_point_score(_capture_point, _amount)
+		
+	if _capture_point.team == player_data.player_team:
+		_ui.on_capture_point_score(_capture_point, _amount)
+	
+func on_point_captured(_capture_point :CapturePoint, _by_team :int):
+	.on_point_captured(_capture_point, _by_team)
+	
+	for key in bots.keys():
+		bots[key].on_point_captured(_capture_point, _by_team)
 	
 # bot deploy squad
 func on_bot_recruit_squad(_mp_bot :MPBot, _squad_data :SquadData):

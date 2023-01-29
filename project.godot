@@ -109,6 +109,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/rts-camera/CameraAimingData.gd"
 }, {
+"base": "Spatial",
+"class": "CaptureIndicator",
+"language": "GDScript",
+"path": "res://assets/capture_indicator/capture_indicator.gd"
+}, {
+"base": "BaseBuilding",
+"class": "CapturePoint",
+"language": "GDScript",
+"path": "res://entity/building/capture_point/capture_point.gd"
+}, {
 "base": "BaseData",
 "class": "CounterData",
 "language": "GDScript",
@@ -340,6 +350,8 @@ _global_script_class_icons={
 "BuildingFloatingOption": "",
 "BuildingIcon": "",
 "CameraAimingData": "",
+"CaptureIndicator": "",
+"CapturePoint": "",
 "CounterData": "",
 "CustomGradientTexture": "",
 "CustomMeshParticle": "",

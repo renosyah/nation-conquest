@@ -63,6 +63,8 @@ var is_bot_surrender :bool = false
 var enemy_squads :Array = []
 var enemy_buildings :Array = []
 
+var capture_points :Array = []
+
 var bot_squads :Array = []
 var bot_buildings :Array = []
 
@@ -295,20 +297,28 @@ func _on_action_timer():
 	if not is_instance_valid(squad):
 		return
 		
-	var targets :Array = enemy_squads + enemy_buildings
+	var targets :Array = capture_points
+	if targets.empty():
+		targets = enemy_squads + enemy_buildings
+		
 	if targets.empty():
 		return
 		
 	var target = targets[rand_range(0, targets.size())]
 	if not is_instance_valid(target):
 		return
+	
+	if target is CapturePoint:
+		squad.set_move_to(target.translation)
 		
-	squad.is_assault_mode = true
-	squad.set_attack_to(target.translation)
+	else:
+		squad.is_assault_mode = true
+		squad.set_attack_to(target.translation)
 	
 func _on_uperhand_timer():
 	bot_coin += uperhand_coin
 	
+################################################################
 func on_squad_spawn(_squad:Squad):
 	if is_bot_surrender:
 		return
@@ -330,7 +340,8 @@ func on_squad_dead(_squad :Squad):
 		if enemy_squads.has(_squad):
 			enemy_squads.erase(_squad)
 			
-	
+################################################################
+
 func on_building_deployed(_building :BaseBuilding):
 	if is_bot_surrender:
 		return
@@ -370,6 +381,19 @@ func on_building_destroyed(_building :BaseBuilding):
 	
 func on_harvest_time(_building :Farm, _amount :int):
 	bot_coin += _amount
+	
+################################################################
+func on_capture_point_score(_capture_point :CapturePoint, _amount :int):
+	if _capture_point.team == bot_team:
+		bot_coin += _amount
+	
+func on_point_captured(_capture_point :CapturePoint, _by_team :int):
+	if _by_team == bot_team:
+		capture_points.erase(_capture_point)
+	else:
+		capture_points.append(_capture_point)
+	
+################################################################
 
 func surrender():
 	is_bot_surrender = true

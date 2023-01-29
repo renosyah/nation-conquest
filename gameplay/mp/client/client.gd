@@ -49,7 +49,13 @@ func on_building_destroyed(_building :BaseBuilding):
 		return
 		
 	_ui.on_player_lose()
-		
+	
+func on_capture_point_score(_capture_point :CapturePoint, _amount :int):
+	.on_capture_point_score(_capture_point, _amount)
+	
+	if _capture_point.team == player_data.player_team:
+		_ui.on_capture_point_score(_capture_point, _amount)
+	
 func on_team_wining(_team:int):
 	.on_team_wining(_team)
 	

@@ -67,6 +67,11 @@ func _process(delta):
 		is_attacking = false
 		return
 		
+	if attack_to.team == team:
+		is_attacking = false
+		attack_to = null
+		return
+		
 	if firing_delay.is_stopped():
 		perform_attack()
 		firing_delay.wait_time = attack_delay

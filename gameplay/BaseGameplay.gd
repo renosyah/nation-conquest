@@ -37,6 +37,7 @@ func on_back_pressed():
 var _map :BaseMap
 var _water :Water
 onready var _resources :Array = []
+onready var _capture_points :Array = []
 
 func load_map():
 	_water = preload("res://map/water/water.tscn").instance()
@@ -56,6 +57,7 @@ func load_map():
 func on_generate_map_completed():
 	# [{"scene", "pos"}]
 	var sync_resources :Array = []
+	var sync_capture_points :Array = []
 	var resources_scenes = {
 		"bush" : preload("res://entity/resources/berry_bush/berry_bush.tscn"),
 		"tree" : preload("res://entity/resources/trees/trees.tscn"),
@@ -75,15 +77,24 @@ func on_generate_map_completed():
 			_player_base_spawn_position[player.player_network_unique_id] = map_base_spawn_positions[index]
 			index += 1
 			
-		for _pos in _map.spawn_positions:
+		var spawn_positions :Array = _map.spawn_positions.duplicate()
+		
+		for i in range(3):
+			var pos = spawn_positions[rand_range(0, spawn_positions.size())]
+			sync_capture_points.append({"node_name": "capture_point_" + str(i + 1), "pos": pos + Vector3(0, 5, 0)})
+			spawn_positions.erase(pos)
+			
+		for _pos in spawn_positions:
 			var _keys = resources_scenes.keys()
 			var _scene = _keys[rand_range(0, _keys.size())]
 			sync_resources.append({"scene":_scene, "pos":_pos})
 			
+		NetworkLobbyManager.argument["sync_capture_points"] = sync_capture_points
 		NetworkLobbyManager.argument["sync_resources"] = sync_resources
 		NetworkLobbyManager.argument["player_base_spawn_position"] = _player_base_spawn_position
 		
 	else:
+		sync_capture_points = NetworkLobbyManager.argument["sync_capture_points"]
 		sync_resources = NetworkLobbyManager.argument["sync_resources"]
 		_player_base_spawn_position = NetworkLobbyManager.argument["player_base_spawn_position"]
 		
@@ -102,11 +113,35 @@ func on_generate_map_completed():
 		instance.translation = pos
 		_resources.append(instance)
 		
+	for sync_capture_point in sync_capture_points:
+		var capture_point = preload("res://entity/building/capture_point/capture_point.tscn").instance()
+		capture_point.name = sync_capture_point["node_name"]
+		capture_point.set_network_master(Network.PLAYER_HOST_ID)
+		capture_point.is_server = is_server()
+		capture_point.translation = sync_capture_point["pos"]
+		capture_point.connect("capture_score", self, "on_capture_point_score")
+		capture_point.connect("point_captured", self, "on_point_captured")
+		add_child(capture_point)
+		_capture_points.append(capture_point)
+		
+		_ui.add_minimap_object(
+			capture_point.get_path(), capture_point.color, preload("res://assets/ui/icon/map_icon/flag.png")
+		)
+		
 	NetworkLobbyManager.set_ready()
 	
 func on_map_click(_pos :Vector3):
 	_order_move_to(_pos)
 	
+func on_capture_point_score(_capture_point :CapturePoint, _amount :int):
+	pass
+	
+func on_point_captured(_capture_point :CapturePoint, _by_team :int):
+	_ui.remove_minimap_object(_capture_point.get_path())
+	_ui.add_minimap_object(
+		_capture_point.get_path(), _capture_point.color, preload("res://assets/ui/icon/map_icon/flag.png")
+	)
+
 ################################################################
 # ui
 var _ui :BaseUi

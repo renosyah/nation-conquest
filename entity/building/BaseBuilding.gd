@@ -123,7 +123,7 @@ func puppet_moving(delta :float) -> void:
 	rotation.x = lerp_angle(rotation.x, _puppet_rotation.x, 5 * delta)
 	rotation.y = lerp_angle(rotation.y, _puppet_rotation.y, 5 * delta)
 	rotation.z = lerp_angle(rotation.z, _puppet_rotation.z, 5 * delta)
-
+	
 func take_damage(damage :int) -> void:
 	if is_dead:
 		return

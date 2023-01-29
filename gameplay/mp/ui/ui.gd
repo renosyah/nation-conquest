@@ -360,7 +360,16 @@ func get_center_screen() -> Vector2:
 func add_minimap_object(object_path :NodePath, color :Color = Color.white, _icon :Resource = preload("res://addons/mini-map/troop.png")):
 	mini_map.add_object(object_path, color, _icon)
 	
+func remove_minimap_object(object_path :NodePath, color :Color = Color.white, _icon :Resource = preload("res://addons/mini-map/troop.png")):
+	mini_map.remove_object(object_path)
+	
 func on_harvest_time(_building :Farm, _amount :int):
+	player_coin += _amount
+	player_coin = clamp(player_coin, 0, 1000)
+		
+	_update_player_coin()
+	
+func on_capture_point_score(_building :CapturePoint, _amount :int):
 	player_coin += _amount
 	player_coin = clamp(player_coin, 0, 1000)
 		
