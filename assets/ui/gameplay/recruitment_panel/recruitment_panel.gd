@@ -7,12 +7,12 @@ const squad_datas = [
 	preload("res://data/squad_data/squads/militia_squad.tres"),
 	preload("res://data/squad_data/squads/spearman_squad.tres"),
 	preload("res://data/squad_data/squads/archer_squad.tres"),
-	preload("res://data/squad_data/squads/axeman_squad.tres"),
+	preload("res://data/squad_data/squads/maceman_squad.tres"),
 	
 	preload("res://data/squad_data/squads/swordman_squad.tres"),
 	preload("res://data/squad_data/squads/pikeman_squad.tres"),
 	preload("res://data/squad_data/squads/crossbowman_squad.tres"),
-	preload("res://data/squad_data/squads/maceman_squad.tres"),
+	preload("res://data/squad_data/squads/sentinel_squad.tres"),
 	
 	preload("res://data/squad_data/squads/light_cavalry.tres"),
 	preload("res://data/squad_data/squads/spear_cavalry.tres"),

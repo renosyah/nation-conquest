@@ -1,15 +1,13 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://entity/weapon/mace.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://entity/weapon/warhammer.obj" type="ArrayMesh" id=1]
 
 [sub_resource type="SpatialMaterial" id=1]
-flags_unshaded = true
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.623529, 0.623529, 0.623529, 1 )
 
 [sub_resource type="SpatialMaterial" id=2]
-flags_unshaded = true
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.396078, 0.396078, 0.396078, 1 )
@@ -19,8 +17,8 @@ flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.560784, 0.305882, 0, 1 )
 
-[node name="mace" type="MeshInstance"]
-transform = Transform( -4.21812e-08, -1.14643e-08, 1, -0.262273, 0.964993, 0, -0.964993, -0.262273, -4.37114e-08, 0, 0, -0.594756 )
+[node name="warhammer" type="MeshInstance"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, 0, -0.594756 )
 cast_shadow = 0
 mesh = ExtResource( 1 )
 software_skinning_transform_normals = false

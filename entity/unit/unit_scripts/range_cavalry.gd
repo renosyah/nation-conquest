@@ -96,6 +96,7 @@ func attacking(delta :float):
 	.attacking(delta)
 	
 	._turn_spatial_pivot_to_attack(pivot, delta)
+	._turn_spatial_pivot_to_attack(horse_pivot, delta)
 	
 func moving(delta :float):
 	.moving(delta)

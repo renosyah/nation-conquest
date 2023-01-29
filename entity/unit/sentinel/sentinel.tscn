@@ -1,8 +1,8 @@
 [gd_scene load_steps=23 format=2]
 
-[ext_resource path="res://entity/weapon/mace.tscn" type="PackedScene" id=1]
+[ext_resource path="res://entity/weapon/warhammer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entity/unit/unit_scripts/melee_infantry.gd" type="Script" id=2]
-[ext_resource path="res://entity/unit/axeman/body.png" type="Texture" id=3]
+[ext_resource path="res://entity/unit/sentinel/body.png" type="Texture" id=3]
 [ext_resource path="res://entity/unit/unit_collision.tres" type="Shape" id=4]
 
 [sub_resource type="Animation" id=2]
@@ -104,7 +104,7 @@ auto_advance = true
 states/idle/node = SubResource( 5 )
 states/idle/position = Vector2( 303, 87 )
 states/swing/node = SubResource( 6 )
-states/swing/position = Vector2( 491, 87.4444 )
+states/swing/position = Vector2( 494, 87 )
 transitions = [ "idle", "swing", SubResource( 7 ), "swing", "idle", SubResource( 8 ) ]
 start_node = "idle"
 
@@ -177,15 +177,19 @@ start_node = "idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=19]
 
-[node name="maceman" type="KinematicBody"]
+[node name="sentinel" type="KinematicBody"]
 collision_layer = 0
 script = ExtResource( 2 )
-hp = 45
-max_hp = 45
+__meta__ = {
+"_editor_description_": ""
+}
+hp = 70
+max_hp = 70
 speed = 4
-attack_damage = 15
-attack_delay = 4.0
+attack_damage = 40
+attack_delay = 5.0
 skill = 0.7
+unit_tier = 1
 unit_role = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -202,6 +206,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.386238, 0 )
 [node name="mace" parent="pivot" instance=ExtResource( 1 )]
 transform = Transform( 0.999999, 0, 0, 0, 0.950324, 0.311257, 0, -0.311256, 0.950325, 0, -0.0710919, -0.408118 )
 skeleton = NodePath("")
+material/0 = null
+material/1 = null
+material/2 = null
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="pivot"]
 autoplay = "idle"
