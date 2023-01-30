@@ -7,39 +7,39 @@ signal bot_surrender(_mpbot)
 
 const bot_difficulty_configs :Dictionary = {
 	BotPlayerData.difficulty_easy : {
-		"recruit_time" :18,
+		"recruit_time" :14,
 		"build_time" : 10,
-		"action_time" : 8,
-		"max_squads" : 3,
-		"max_buildings" : 7,
-		"uperhand_coin" : 25,
-		"min_farm_required" : 3
-	},
-	BotPlayerData.difficulty_medium : {
-		"recruit_time" :17,
-		"build_time" : 8,
 		"action_time" : 6,
 		"max_squads" : 3,
 		"max_buildings" : 7,
 		"uperhand_coin" : 50,
 		"min_farm_required" : 3
 	},
+	BotPlayerData.difficulty_medium : {
+		"recruit_time" :13,
+		"build_time" : 8,
+		"action_time" : 6,
+		"max_squads" : 3,
+		"max_buildings" : 7,
+		"uperhand_coin" : 60,
+		"min_farm_required" : 3
+	},
 	BotPlayerData.difficulty_hard : {
-		"recruit_time" :16,
+		"recruit_time" :12,
 		"build_time" : 7,
 		"action_time" : 5,
 		"max_squads" : 4,
 		"max_buildings" : 7,
-		"uperhand_coin" : 70,
+		"uperhand_coin" : 80,
 		"min_farm_required" : 4
 	},
 	BotPlayerData.difficulty_insane : {
-		"recruit_time" :14,
+		"recruit_time" :8,
 		"build_time" : 5,
 		"action_time" : 4,
 		"max_squads" : 4,
 		"max_buildings" : 8,
-		"uperhand_coin" : 80,
+		"uperhand_coin" : 100,
 		"min_farm_required" : 4
 	}
 }
@@ -309,7 +309,11 @@ func _on_action_timer():
 		return
 		
 	squad.is_assault_mode = true
-	squad.set_attack_to(target.translation)
+	
+	if target is CapturePoint:
+		squad.set_move_to(target.translation)
+	else:
+		squad.set_attack_to(target.translation)
 	
 func _on_uperhand_timer():
 	bot_coin += uperhand_coin
