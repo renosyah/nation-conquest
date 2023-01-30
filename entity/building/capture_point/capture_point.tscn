@@ -8,6 +8,9 @@
 [ext_resource path="res://entity/building/model/food_box.obj" type="ArrayMesh" id=9]
 [ext_resource path="res://entity/building/model/food_barrel.obj" type="ArrayMesh" id=10]
 
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 2.79042, 3.10908, 2.49005 )
+
 [sub_resource type="SpatialMaterial" id=61]
 flags_vertex_lighting = true
 flags_do_not_receive_shadows = true
@@ -51,17 +54,24 @@ flags_no_depth_test = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 1, 1, 1, 0.682353 )
 
-[sub_resource type="BoxShape" id=12]
-extents = Vector3( 2.79042, 3.10908, 2.49005 )
-
 [sub_resource type="CylinderShape" id=58]
 height = 22.0
 radius = 6.0
 
 [node name="capture_point" type="KinematicBody"]
 collision_layer = 0
+collision_mask = 0
 input_ray_pickable = false
 script = ExtResource( 4 )
+
+[node name="RayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
+enabled = true
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.80574, 0 )
+shape = SubResource( 12 )
+disabled = true
 
 [node name="capture_indicator" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.03148, 0 )
@@ -109,10 +119,6 @@ cast_shadow = 0
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false
 material/0 = SubResource( 60 )
-
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.80574, 0 )
-shape = SubResource( 12 )
 
 [node name="capture_area" type="Area" parent="."]
 collision_mask = 0

@@ -18,6 +18,7 @@ onready var capture_area = $capture_area
 onready var flag_pole = $MeshInstance/flag_pole
 onready var flag_pole_material :SpatialMaterial = flag_pole.get_surface_material(1).duplicate()
 onready var capture_indicator = $capture_indicator
+onready var ray_cast = $RayCast
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,9 +30,12 @@ func _ready():
 func moving(delta :float) -> void:
 	.moving(delta)
 	
-	move_and_slide(Vector3.DOWN * 25, Vector3.UP)
+	# move_and_slide(Vector3.DOWN * 25, Vector3.UP)
+	translation += Vector3.DOWN * 15 * delta
 	
-	if is_on_floor():
+	# if is_on_floor():
+	if ray_cast.is_colliding():
+		ray_cast.set_deferred("enabled", false)
 		set_process(false)
 		return
 		

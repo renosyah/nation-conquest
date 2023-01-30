@@ -307,13 +307,9 @@ func _on_action_timer():
 	var target = targets[rand_range(0, targets.size())]
 	if not is_instance_valid(target):
 		return
-	
-	if target is CapturePoint:
-		squad.set_move_to(target.translation)
 		
-	else:
-		squad.is_assault_mode = true
-		squad.set_attack_to(target.translation)
+	squad.is_assault_mode = true
+	squad.set_attack_to(target.translation)
 	
 func _on_uperhand_timer():
 	bot_coin += uperhand_coin
