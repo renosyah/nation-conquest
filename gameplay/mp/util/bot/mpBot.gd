@@ -13,7 +13,7 @@ const bot_difficulty_configs :Dictionary = {
 		"max_squads" : 3,
 		"max_buildings" : 7,
 		"uperhand_coin" : 50,
-		"min_farm_required" : 3
+		"min_farm_required" : 2
 	},
 	BotPlayerData.difficulty_medium : {
 		"recruit_time" :13,
@@ -22,7 +22,7 @@ const bot_difficulty_configs :Dictionary = {
 		"max_squads" : 3,
 		"max_buildings" : 7,
 		"uperhand_coin" : 60,
-		"min_farm_required" : 3
+		"min_farm_required" : 2
 	},
 	BotPlayerData.difficulty_hard : {
 		"recruit_time" :12,
@@ -31,7 +31,7 @@ const bot_difficulty_configs :Dictionary = {
 		"max_squads" : 4,
 		"max_buildings" : 7,
 		"uperhand_coin" : 80,
-		"min_farm_required" : 4
+		"min_farm_required" : 3
 	},
 	BotPlayerData.difficulty_insane : {
 		"recruit_time" :8,
@@ -40,13 +40,33 @@ const bot_difficulty_configs :Dictionary = {
 		"max_squads" : 4,
 		"max_buildings" : 8,
 		"uperhand_coin" : 100,
-		"min_farm_required" : 4
+		"min_farm_required" : 3
 	}
 }
+
+const tier_1_squads :Array = [
+	preload("res://data/squad_data/squads/militia_squad.tres"),
+	preload("res://data/squad_data/squads/spearman_squad.tres"),
+	preload("res://data/squad_data/squads/archer_squad.tres"),
+	preload("res://data/squad_data/squads/maceman_squad.tres")
+]
+const tier_2_squads :Array = [
+	preload("res://data/squad_data/squads/swordman_squad.tres"),
+	preload("res://data/squad_data/squads/pikeman_squad.tres"),
+	preload("res://data/squad_data/squads/crossbowman_squad.tres"),
+	preload("res://data/squad_data/squads/sentinel_squad.tres"),
+]
+const tier_3_squads :Array = [
+	preload("res://data/squad_data/squads/light_cavalry.tres"),
+	preload("res://data/squad_data/squads/spear_cavalry.tres"),
+	preload("res://data/squad_data/squads/archer_cavalry.tres"),
+	preload("res://data/squad_data/squads/heavy_cavalry.tres")
+]
 
 export var bot_id :int = -69
 export var bot_team :int = 69
 export var bot_color :Color = Color.white
+export var bot_difficulty :int = BotPlayerData.difficulty_easy
 
 export var recruit_time :float = 15
 export var build_time :float = 10
@@ -137,23 +157,34 @@ func _on_recruit_timer():
 	if bot_squads.size() > max_squads:
 		return
 		
-	var _squads :Array = [
-	preload("res://data/squad_data/squads/militia_squad.tres"),
-	preload("res://data/squad_data/squads/spearman_squad.tres"),
-	preload("res://data/squad_data/squads/archer_squad.tres"),
-	preload("res://data/squad_data/squads/maceman_squad.tres"),
+	var _squads :Array = []
 	
-	preload("res://data/squad_data/squads/swordman_squad.tres"),
-	preload("res://data/squad_data/squads/pikeman_squad.tres"),
-	preload("res://data/squad_data/squads/crossbowman_squad.tres"),
-	preload("res://data/squad_data/squads/sentinel_squad.tres"),
-	
-	preload("res://data/squad_data/squads/light_cavalry.tres"),
-	preload("res://data/squad_data/squads/spear_cavalry.tres"),
-	preload("res://data/squad_data/squads/archer_cavalry.tres"),
-	preload("res://data/squad_data/squads/heavy_cavalry.tres")
-	]
-	
+	if bot_difficulty == BotPlayerData.difficulty_easy:
+		_squads.append_array(tier_1_squads)
+		
+		if randf() < 0.2:
+			_squads.append_array(tier_2_squads)
+		
+	elif bot_difficulty == BotPlayerData.difficulty_medium:
+		_squads.append_array(tier_1_squads)
+		
+		if randf() < 0.5:
+			_squads.append_array(tier_2_squads)
+		
+	elif bot_difficulty == BotPlayerData.difficulty_hard:
+		_squads.append_array(tier_1_squads)
+		_squads.append_array(tier_2_squads)
+		
+		if randf() < 0.3:
+			_squads.append_array(tier_3_squads)
+		
+	elif bot_difficulty == BotPlayerData.difficulty_insane:
+		_squads.append_array(tier_1_squads)
+		_squads.append_array(tier_2_squads)
+		
+		if randf() < 0.5:
+			_squads.append_array(tier_3_squads)
+		
 	_squads.invert()
 	
 	var squad :SquadData = null

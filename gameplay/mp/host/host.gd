@@ -99,6 +99,7 @@ func all_player_ready():
 		bot.bot_id = bot_data.player_network_unique_id
 		bot.bot_color = lobby_bot_data.player_color
 		bot.bot_team = lobby_bot_data.player_team
+		bot.bot_difficulty = lobby_bot_data.bot_difficulty
 		bot.capture_points = _capture_points.duplicate()
 		bot.connect("bot_recruit_squad", self, "on_bot_recruit_squad")
 		bot.connect("bot_deploying_building", self, "on_bot_deploying_building")
