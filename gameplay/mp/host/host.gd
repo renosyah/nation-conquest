@@ -146,11 +146,12 @@ func on_building_destroyed(_building :BaseBuilding):
 	if not _building is TownCenter:
 		return
 		
+	rule.player_lose(_building.player_id)
+	
 	if not _ui.is_player_building(_building):
 		return
 		
 	_ui.on_player_lose()
-	rule.player_lose(_building.player_id)
 	
 func on_capture_point_score(_capture_point :CapturePoint, _amount :int):
 	.on_capture_point_score(_capture_point, _amount)

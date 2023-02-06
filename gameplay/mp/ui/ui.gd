@@ -456,6 +456,18 @@ func on_player_lose():
 	if result.visible:
 		return
 		
+	for building in buildings:
+		if not is_instance_valid(building):
+			continue
+			
+		building.demolish()
+		
+	for squad in squads.keys():
+		if not is_instance_valid(squad):
+			continue
+			
+		squad.disband()
+		
 	result.set_condition(false)
 	game_over()
 	

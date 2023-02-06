@@ -200,6 +200,7 @@ remotesync func _erase_unit(_unit_path :NodePath):
 		
 		if _is_master:
 			rpc("_squad_disband")
+			
 		return
 		
 	emit_signal("squad_unit_dead", self)
@@ -360,6 +361,9 @@ func disband():
 	if not _is_master:
 		return
 		
+	_squad_banner.visible = false
+	is_dead = true
+	set_process(false)
 	rpc("_squad_disband")
 
 func _attack_targets():

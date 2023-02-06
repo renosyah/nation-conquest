@@ -31,6 +31,9 @@ func player_lose(player_id :int):
 	if not _players.has(player_id):
 		return
 		
+	if _players[player_id]["lose"]:
+		return
+		
 	_players[player_id]["lose"] = true
 	_remove_team_power(_players[player_id]["team"])
 	

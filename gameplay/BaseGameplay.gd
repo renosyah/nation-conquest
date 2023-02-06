@@ -348,16 +348,6 @@ func on_building_deployed(_building :BaseBuilding):
 	_ui.on_building_deployed(_building)
 	
 func on_building_destroyed(_building :BaseBuilding):
-	if not is_server():
-		return
-		
-	rpc("_on_building_destroyed", _building.get_path())
-	
-remotesync func _on_building_destroyed(_building_path :NodePath):
-	var _building :BaseBuilding = get_node_or_null(_building_path)
-	if not is_instance_valid(_building):
-		return
-		
 	if _buildings.has(_building):
 		_buildings.erase(_building)
 		
@@ -411,6 +401,7 @@ func on_squad_selected(_squad :Squad):
 		_squad.set_selected(false)
 		_ui.on_squad_selected(_squad, false)
 		_selected_squad.erase(_squad)
+		
 	else:
 		_squad.set_selected(true)
 		_ui.on_squad_selected(_squad, true)
@@ -421,16 +412,6 @@ func on_squad_selected(_squad :Squad):
 		_sound.play()
 	
 func on_squad_dead(_squad :Squad):
-	if not is_server():
-		return
-		
-	rpc("_on_squad_dead", _squad.get_path())
-	
-remotesync func _on_squad_dead(_squad_path :NodePath):
-	var _squad :Squad = get_node_or_null(_squad_path)
-	if not is_instance_valid(_squad):
-		return
-		
 	if _all_squads.has(_squad):
 		_all_squads.erase(_squad)
 		
