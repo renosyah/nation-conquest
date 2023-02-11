@@ -200,12 +200,13 @@ shape = ExtResource( 4 )
 [node name="body" type="Spatial" parent="."]
 
 [node name="body2" type="Sprite3D" parent="body"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.814109, -0.0182912 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0 )
 cast_shadow = 0
 double_sided = false
 texture = ExtResource( 2 )
 
 [node name="horse_pivot" type="Spatial" parent="body"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0 )
 
 [node name="horse" type="Sprite3D" parent="body/horse_pivot"]
 transform = Transform( -8.74227e-08, 0, 2, 0, 2, 0, -2, 0, -8.74227e-08, 0, 0.450238, -0.212072 )
@@ -229,7 +230,7 @@ alpha_cut = 2
 texture = ExtResource( 6 )
 
 [node name="pivot" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12511, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
 
 [node name="sword" parent="pivot" instance=ExtResource( 1 )]
 transform = Transform( -4.21812e-08, -1.14643e-08, 1, -0.262273, 0.964993, 0, -0.964993, -0.262273, -4.37114e-08, 0, 0, -0.594756 )
