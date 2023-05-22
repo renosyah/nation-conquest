@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/ui/icon/back.png" type="Texture" id=2]
 [ext_resource path="res://menus/lobby-menu/ui/ui.gd" type="Script" id=3]
 [ext_resource path="res://assets/ui/icon/host.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/loading/loading.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/SafeArea/SafeArea.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=8]
 
@@ -122,6 +123,13 @@ margin_top = 580.0
 margin_right = 400.0
 margin_bottom = 660.0
 rect_min_size = Vector2( 0, 80 )
+
+[node name="loading" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control" instance=ExtResource( 5 )]
+visible = false
+margin_top = 540.0
+margin_right = 400.0
+margin_bottom = 660.0
+rect_min_size = Vector2( 200, 120 )
 
 [node name="host_menu_buttons" type="MarginContainer" parent="CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control"]
 margin_top = 664.0

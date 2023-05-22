@@ -162,43 +162,47 @@ func _on_recruit_timer():
 	if bot_difficulty == BotPlayerData.difficulty_easy:
 		_squads.append_array(tier_1_squads)
 		
-		if randf() < 0.2:
+		if randf() < 0.5:
 			_squads.append_array(tier_2_squads)
 		
 	elif bot_difficulty == BotPlayerData.difficulty_medium:
 		_squads.append_array(tier_1_squads)
 		
-		if randf() < 0.5:
+		if randf() < 0.7:
 			_squads.append_array(tier_2_squads)
 		
 	elif bot_difficulty == BotPlayerData.difficulty_hard:
 		_squads.append_array(tier_1_squads)
 		_squads.append_array(tier_2_squads)
 		
-		if randf() < 0.3:
+		if randf() < 0.5:
 			_squads.append_array(tier_3_squads)
 		
 	elif bot_difficulty == BotPlayerData.difficulty_insane:
 		_squads.append_array(tier_1_squads)
 		_squads.append_array(tier_2_squads)
 		
-		if randf() < 0.5:
+		if randf() < 0.7:
 			_squads.append_array(tier_3_squads)
 		
 	_squads.invert()
 	
-	var squad :SquadData = null
+	var squad_to_recruit :Array = []
 	for s in _squads:
 		if not _is_building_ids_in_buildings(s.requirement_ids):
 			continue
 			
 		if bot_coin > s.price:
-			squad = s.duplicate()
+			squad_to_recruit.append(s.duplicate())
 			break
 		
-	if squad == null:
+	if squad_to_recruit.empty():
 		return
 		
+	var squad :SquadData = squad_to_recruit[
+		rand_range(0, squad_to_recruit.size())
+	]
+	
 	bot_coin -= squad.price
 	
 	squad.player_id = bot_id
@@ -421,8 +425,12 @@ func on_capture_point_score(_capture_point :CapturePoint, _amount :int):
 func on_point_captured(_capture_point :CapturePoint, _by_team :int):
 	if _by_team == bot_team:
 		capture_points.erase(_capture_point)
-	else:
-		capture_points.append(_capture_point)
+		return
+	
+	if capture_points.has(_capture_point):
+		return
+		
+	capture_points.append(_capture_point)
 	
 ################################################################
 

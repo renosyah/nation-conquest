@@ -1,0 +1,6 @@
+.gradle
+.idea
+
+/addons/google_auth/credentials.gd
+/android
+export_presets.cfg

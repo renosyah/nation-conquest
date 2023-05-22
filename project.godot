@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "AdmobConfig",
+"language": "GDScript",
+"path": "res://addons/google_admob/AdmobConfig.gd"
+}, {
 "base": "BaseBuilding",
 "class": "ArcherTower",
 "language": "GDScript",
@@ -330,6 +335,7 @@ _global_script_classes=[ {
 "path": "res://map/water/water.gd"
 } ]
 _global_script_class_icons={
+"AdmobConfig": "",
 "ArcherTower": "",
 "ArmyFormation": "",
 "AutoBuilder": "",
@@ -408,12 +414,15 @@ config/icon="res://icn.png"
 Global="*res://global/global.gd"
 Network="*res://addons/network/Network.gd"
 NetworkLobbyManager="*res://addons/network/lobby-manager/NetworkLobbyManager.gd"
+Admob="*res://addons/google_admob/Admob.gd"
 
 [display]
 
 window/size/width=600
 window/size/height=1024
 window/handheld/orientation="portrait"
+window/stretch/mode="2d"
+window/stretch/aspect="expand"
 
 [gui]
 

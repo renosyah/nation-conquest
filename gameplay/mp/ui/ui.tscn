@@ -95,43 +95,44 @@ mouse_filter = 2
 [node name="camera_control" parent="CanvasLayer/SafeArea" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 612.0
+margin_right = 606.0
 margin_bottom = 1024.0
 
 [node name="Control" type="VBoxContainer" parent="CanvasLayer/SafeArea"]
-margin_right = 612.0
+margin_right = 606.0
 margin_bottom = 1024.0
 mouse_filter = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/Control"]
-margin_right = 612.0
+margin_right = 606.0
 margin_bottom = 5.0
 rect_min_size = Vector2( 0, 5 )
 mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control"]
 margin_top = 9.0
-margin_right = 612.0
-margin_bottom = 209.0
-rect_min_size = Vector2( 0, 200 )
+margin_right = 606.0
+margin_bottom = 159.0
 mouse_filter = 2
 
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer"]
 margin_right = 6.0
-margin_bottom = 200.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 6, 0 )
 mouse_filter = 2
 
 [node name="MiniMap" parent="CanvasLayer/SafeArea/Control/HBoxContainer" instance=ExtResource( 1 )]
 margin_left = 10.0
-margin_right = 210.0
+margin_right = 160.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 150, 150 )
 mouse_filter = 2
 camera_offset = Vector2( 0, -10 )
 
 [node name="MarginContainer" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer"]
-margin_left = 214.0
-margin_right = 514.0
-margin_bottom = 200.0
+margin_left = 164.0
+margin_right = 508.0
+margin_bottom = 150.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
@@ -238,8 +239,8 @@ margin_bottom = 50.0
 rect_min_size = Vector2( 30, 0 )
 
 [node name="main_menu" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer"]
-margin_left = 518.0
-margin_right = 598.0
+margin_left = 512.0
+margin_right = 592.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
 size_flags_vertical = 0
@@ -247,16 +248,16 @@ icon = ExtResource( 8 )
 expand_icon = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer"]
-margin_left = 602.0
-margin_right = 612.0
-margin_bottom = 200.0
+margin_left = 596.0
+margin_right = 606.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 10, 0 )
 mouse_filter = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control"]
-margin_top = 213.0
-margin_right = 612.0
-margin_bottom = 786.0
+margin_top = 163.0
+margin_right = 606.0
+margin_bottom = 756.0
 mouse_filter = 2
 size_flags_vertical = 3
 alignment = 2
@@ -265,16 +266,16 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2"]
-margin_left = 518.0
-margin_right = 598.0
-margin_bottom = 573.0
+margin_left = 512.0
+margin_right = 592.0
+margin_bottom = 593.0
 mouse_filter = 2
 alignment = 1
 
 [node name="open_building" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
-margin_top = 148.0
+margin_top = 158.0
 margin_right = 80.0
-margin_bottom = 228.0
+margin_bottom = 238.0
 rect_min_size = Vector2( 80, 80 )
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -282,9 +283,9 @@ icon = ExtResource( 9 )
 expand_icon = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
-margin_top = 232.0
+margin_top = 242.0
 margin_right = 80.0
-margin_bottom = 326.0
+margin_bottom = 336.0
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer/VBoxContainer"]
 margin_right = 80.0
@@ -303,16 +304,16 @@ icon = ExtResource( 24 )
 expand_icon = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
-margin_top = 330.0
+margin_top = 340.0
 margin_right = 80.0
-margin_bottom = 340.0
+margin_bottom = 350.0
 rect_min_size = Vector2( 0, 10 )
 mouse_filter = 2
 
 [node name="select_all" type="Button" parent="CanvasLayer/SafeArea/Control/HBoxContainer2/VBoxContainer"]
-margin_top = 344.0
+margin_top = 354.0
 margin_right = 80.0
-margin_bottom = 424.0
+margin_bottom = 434.0
 rect_min_size = Vector2( 80, 80 )
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -331,9 +332,9 @@ icon = ExtResource( 12 )
 expand_icon = true
 
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/SafeArea/Control/HBoxContainer2"]
-margin_left = 602.0
-margin_right = 612.0
-margin_bottom = 573.0
+margin_left = 596.0
+margin_right = 606.0
+margin_bottom = 593.0
 rect_min_size = Vector2( 10, 0 )
 mouse_filter = 2
 
@@ -402,9 +403,9 @@ custom_fonts/font = ExtResource( 10 )
 text = "Cancel"
 
 [node name="squad_menu" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control"]
-margin_top = 790.0
-margin_right = 612.0
-margin_bottom = 970.0
+margin_top = 760.0
+margin_right = 606.0
+margin_bottom = 940.0
 rect_min_size = Vector2( 0, 180 )
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -412,7 +413,7 @@ alignment = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/squad_menu"]
 margin_top = 10.0
-margin_right = 612.0
+margin_right = 606.0
 margin_bottom = 170.0
 rect_min_size = Vector2( 0, 100 )
 mouse_filter = 2
@@ -420,16 +421,16 @@ size_flags_vertical = 0
 alignment = 1
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/SafeArea/Control/squad_menu/HBoxContainer2"]
-margin_left = 261.0
-margin_right = 261.0
+margin_left = 258.0
+margin_right = 258.0
 margin_bottom = 160.0
 rect_min_size = Vector2( 0, 100 )
 mouse_filter = 2
 alignment = 1
 
 [node name="add_squad" type="Button" parent="CanvasLayer/SafeArea/Control/squad_menu/HBoxContainer2"]
-margin_left = 265.0
-margin_right = 350.0
+margin_left = 262.0
+margin_right = 347.0
 margin_bottom = 160.0
 rect_min_size = Vector2( 85, 160 )
 custom_fonts/font = ExtResource( 11 )
@@ -438,42 +439,44 @@ icon_align = 1
 expand_icon = true
 
 [node name="bottom_offset" type="VBoxContainer" parent="CanvasLayer/SafeArea/Control"]
-margin_top = 974.0
-margin_right = 612.0
+margin_top = 944.0
+margin_right = 606.0
 margin_bottom = 1024.0
+rect_min_size = Vector2( 0, 80 )
 mouse_filter = 2
 alignment = 2
 
 [node name="fps_ping_displayer" parent="CanvasLayer/SafeArea/Control/bottom_offset" instance=ExtResource( 5 )]
+margin_top = 30.0
 margin_right = 160.0
-margin_bottom = 50.0
+margin_bottom = 80.0
 size_flags_horizontal = 0
 
 [node name="recruit_squad" parent="CanvasLayer/SafeArea" instance=ExtResource( 15 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 612.0
+margin_right = 606.0
 margin_bottom = 1024.0
 
 [node name="building_panel" parent="CanvasLayer/SafeArea" instance=ExtResource( 16 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 612.0
+margin_right = 606.0
 margin_bottom = 1024.0
 
 [node name="demolish_building_panel" parent="CanvasLayer/SafeArea" instance=ExtResource( 6 )]
 visible = false
-margin_right = 612.0
+margin_right = 606.0
 
 [node name="repair_building_panel" parent="CanvasLayer/SafeArea" instance=ExtResource( 22 )]
 visible = false
-margin_right = 612.0
+margin_right = 606.0
 
 [node name="info_panel" parent="CanvasLayer/SafeArea" instance=ExtResource( 23 )]
 visible = false
-margin_right = 612.0
+margin_right = 606.0
 
 [node name="menu" parent="CanvasLayer" instance=ExtResource( 20 )]
 visible = false

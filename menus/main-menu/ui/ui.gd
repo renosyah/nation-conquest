@@ -9,6 +9,11 @@ onready var server_browser = $CanvasLayer/server_browser
 onready var menu = $CanvasLayer/menu
 onready var tween = $Tween
 
+onready var loading = $CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer2/Control/loading
+onready var setting_menu = $CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer/setting_menu
+onready var main_menu_buttons = $CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer2/Control/main_menu_buttons
+
+
 var quickplay :bool = false
 
 func _ready():
@@ -19,11 +24,54 @@ func _ready():
 	server_browser.visible = false
 	menu.visible = false
 	
+	loading.visible = true
+	setting_menu.visible = false
+	main_menu_buttons.visible = false
+	
 	get_tree().set_quit_on_go_back(false)
 	get_tree().set_auto_accept_quit(false)
 	
 	NetworkLobbyManager.connect("on_client_player_connected", self,"on_client_player_connected")
 	NetworkLobbyManager.connect("on_host_player_connected", self,"on_host_player_connected")
+	
+	Admob.connect("initialization_finish", self, "_admob_initialization_finish")
+	Admob.connect("banner_loaded", self, "_banner_loaded")
+	Admob.connect("interstitial_closed", self, "_interstitial_finished")
+	Admob.connect("interstitial_failed_to_show", self, "_interstitial_finished")
+	
+func _admob_initialization_finish():
+	loading.visible = false
+	setting_menu.visible = true
+	main_menu_buttons.visible = true
+	
+	if Admob.get_is_banner_loaded():
+		Admob.show_banner()
+	else:
+		Admob.load_banner()
+		
+	if not Admob.get_is_interstitial_loaded():
+		Admob.load_interstitial()
+	
+func _banner_loaded():
+	Admob.show_banner()
+	
+func _interstitial_finished():
+	Admob.show_banner()
+	
+	loading.visible = true
+	setting_menu.visible = false
+	main_menu_buttons.visible = false
+	
+	var timer = Timer.new()
+	timer.wait_time = 3
+	timer.one_shot = true
+	add_child(timer)
+	timer.start()
+	
+	yield(timer, "timeout")
+	timer.queue_free()
+	
+	play_quickplay_game()
 	
 func _notification(what):
 	match what:
@@ -36,6 +84,7 @@ func _notification(what):
 			return
 		
 func show_ui():
+	Admob.initialize()
 	main_menu_safe_area.visible = true
 	tween.interpolate_property(title, "modulate:a", 0, 1, 1.4,Tween.TRANS_LINEAR)
 	tween.start()
@@ -58,24 +107,39 @@ func _on_host_pressed():
 	
 func on_host_player_connected():
 	if quickplay:
-		var unused_colors :Array = Utils.COLORS.duplicate()
-		unused_colors.erase(Global.player.player_color.to_html())
-		unused_colors.shuffle()
-		
-		Global.bots.clear()
-		
-		for i in range(3):
-			var bot = Global.create_bot(true, unused_colors)
-			bot.player_network_unique_id = i + 2
-			bot.extra["player_team"] = i + 2
-			unused_colors.erase(bot.extra["player_color"].to_html())
-			Global.bots.append(bot)
+		if Admob.get_is_interstitial_loaded():
+			Admob.hide_banner()
+			Admob.show_interstitial()
+			return
 			
-		NetworkLobbyManager.argument["seed"] = int(rand_range(-100,100))
-		get_tree().change_scene("res://gameplay/mp/host/host.tscn")
+		play_quickplay_game()
 		return
 		
 	get_tree().change_scene("res://menus/lobby-menu/lobby_menu.tscn")
+	
+func play_quickplay_game():
+	var bot_difficulties = [
+		BotPlayerData.difficulty_easy,
+		BotPlayerData.difficulty_medium,
+		BotPlayerData.difficulty_hard,
+	]
+	var unused_colors :Array = Utils.COLORS.duplicate()
+	unused_colors.erase(Global.player.player_color.to_html())
+	unused_colors.shuffle()
+	
+	Global.bots.clear()
+	
+	for i in range(3):
+		var bot_difficulty :int = bot_difficulties[rand_range(0, bot_difficulties.size())]
+		var bot = Global.create_bot(true, unused_colors, bot_difficulty)
+		bot.player_network_unique_id = i + 2
+		bot.extra["player_team"] = i + 2
+		
+		unused_colors.erase(bot.extra["player_color"].to_html())
+		Global.bots.append(bot)
+		
+	NetworkLobbyManager.argument["seed"] = int(rand_range(-100,100))
+	get_tree().change_scene("res://gameplay/mp/host/host.tscn")
 	
 func _on_join_pressed():
 	server_browser.visible = true

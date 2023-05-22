@@ -5,6 +5,7 @@ onready var host_menu_buttons = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBo
 onready var play_button = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/host_menu_buttons/main_menu_buttons/VBoxContainer/play
 onready var add_bot = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer/add_bot
 onready var bottom_offset = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/bottom_offset
+onready var loading = $CanvasLayer/LobbyMenuSafeArea/VBoxContainer/HBoxContainer2/Control/loading
 
 onready var is_server :bool = NetworkLobbyManager.is_server()
 
@@ -28,7 +29,18 @@ func _ready():
 	play_button.disabled = true
 	
 	add_bot.icon = preload("res://assets/ui/icon/host.png") if is_server else null
-	 
+	
+	Admob.connect("interstitial_closed", self, "_interstitial_finished")
+	Admob.connect("interstitial_failed_to_show", self, "_interstitial_finished")
+	
+	loading.visible = false
+	
+	if not Admob.get_is_interstitial_loaded():
+		Admob.load_interstitial()
+		
+	if Admob.get_is_banner_loaded():
+		Admob.show_banner()
+		
 func _notification(what):
 	match what:
 		MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
@@ -156,7 +168,33 @@ func _on_bot_update(bot :BotPlayerData, id :int):
 	bots[id]["extra"] = bot.to_dictionary()
 	rpc("_update_bots", bots)
 	
+func _interstitial_finished():
+	Admob.show_banner()
+	
+	loading.visible = true
+	host_menu_buttons.visible = false
+	
+	var timer = Timer.new()
+	timer.wait_time = 3
+	timer.one_shot = true
+	add_child(timer)
+	timer.start()
+	
+	yield(timer, "timeout")
+	timer.queue_free()
+	
+	play_multiplayer_game()
+	
+	
 func _on_play_pressed():
+	if Admob.get_is_interstitial_loaded():
+		Admob.hide_banner()
+		Admob.show_interstitial()
+		return
+		
+	play_multiplayer_game()
+	
+func play_multiplayer_game():
 	Global.bots.clear()
 	
 	for key in bots:

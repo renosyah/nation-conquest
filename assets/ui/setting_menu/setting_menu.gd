@@ -57,6 +57,7 @@ func _on_name_setting_pressed():
 func _on_input_name_on_continue(_player_name, html_color):
 	Global.player.player_name = _player_name
 	_player_name_ui.text = Global.player.player_name
+	Global.player.save_data(Global.player_save_file)
 
 func _on_landscape_setting_pressed():
 	Global.setting_data.screen_orientation = 0 #OS.SCREEN_ORIENTATION_LANDSCAPE
@@ -76,5 +77,5 @@ func _on_color_setting_pressed():
 func _on_input_color_on_pick(_color :Color):
 	Global.player.player_color = _color
 	_player_color.color = Global.player.player_color
-	
+	Global.player.save_data(Global.player_save_file)
  

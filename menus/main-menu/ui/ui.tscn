@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://menus/main-menu/ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/icon/setting.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://addons/SafeArea/SafeArea.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/ui/setting_menu/setting_menu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=6]
+[ext_resource path="res://assets/ui/loading/loading.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=8]
 
 [node name="ui" type="Control"]
@@ -26,6 +27,7 @@ mouse_filter = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MainMenuSafeArea/VBoxContainer"]
 margin_right = 600.0
 margin_bottom = 80.0
+rect_min_size = Vector2( 0, 80 )
 mouse_filter = 2
 alignment = 2
 
@@ -91,8 +93,13 @@ valign = 1
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer2/Control"]
 margin_top = 125.0
 margin_right = 400.0
-margin_bottom = 595.0
+margin_bottom = 391.0
 size_flags_vertical = 3
+
+[node name="loading" parent="CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer2/Control" instance=ExtResource( 7 )]
+margin_top = 395.0
+margin_right = 400.0
+margin_bottom = 595.0
 
 [node name="main_menu_buttons" type="MarginContainer" parent="CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer2/Control"]
 margin_top = 599.0
