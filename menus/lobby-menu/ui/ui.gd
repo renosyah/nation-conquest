@@ -23,24 +23,23 @@ func _ready():
 	NetworkLobbyManager.connect("on_kicked_by_host", self, "on_leave")
 	NetworkLobbyManager.connect("on_host_ready", self ,"on_host_ready")
 	
-	on_lobby_player_update(NetworkLobbyManager.get_players())
 	host_menu_buttons.visible = is_server
 	add_bot.disabled = not is_server
 	play_button.disabled = true
 	
 	add_bot.icon = preload("res://assets/ui/icon/host.png") if is_server else null
 	
-	Admob.connect("interstitial_closed", self, "_interstitial_finished")
-	Admob.connect("interstitial_failed_to_show", self, "_interstitial_finished")
-	
 	loading.visible = false
 	
-	if not Admob.get_is_interstitial_loaded():
-		Admob.load_interstitial()
-		
 	if Admob.get_is_banner_loaded():
 		Admob.show_banner()
 		
+	if not NetworkLobbyManager.is_server():
+		rpc_id(NetworkLobbyManager.host_id, "_request_update_bot")
+		
+	else:
+		on_lobby_player_update(NetworkLobbyManager.get_players())
+	
 func _notification(what):
 	match what:
 		MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
@@ -152,7 +151,10 @@ func _on_add_bot_pressed():
 	bots[network_bot.player_network_unique_id] = network_bot.to_dictionary()
 	
 	rpc("_update_bots", bots)
-
+	
+remote func _request_update_bot():
+	rpc("_update_bots", bots)
+	
 remotesync func _update_bots(_bots :Dictionary):
 	if not NetworkLobbyManager.is_server():
 		bots = _bots
@@ -168,33 +170,12 @@ func _on_bot_update(bot :BotPlayerData, id :int):
 	bots[id]["extra"] = bot.to_dictionary()
 	rpc("_update_bots", bots)
 	
-func _interstitial_finished():
-	Admob.show_banner()
-	
-	loading.visible = true
-	host_menu_buttons.visible = false
-	
-	var timer = Timer.new()
-	timer.wait_time = 3
-	timer.one_shot = true
-	add_child(timer)
-	timer.start()
-	
-	yield(timer, "timeout")
-	timer.queue_free()
-	
-	play_multiplayer_game()
-	
-	
 func _on_play_pressed():
-	if Admob.get_is_interstitial_loaded():
-		Admob.hide_banner()
-		Admob.show_interstitial()
-		return
-		
-	play_multiplayer_game()
 	
-func play_multiplayer_game():
+	rpc("_display_loading")
+	
+	yield(get_tree().create_timer(3), "timeout")
+	
 	Global.bots.clear()
 	
 	for key in bots:
@@ -203,13 +184,20 @@ func play_multiplayer_game():
 		
 		Global.bots.append(network_bot)
 		
-	NetworkLobbyManager.argument["seed"] = int(rand_range(-100,100))
+	NetworkLobbyManager.argument["seed"] = int(rand_range(-1000,1000))
 	get_tree().change_scene("res://gameplay/mp/host/host.tscn")
+	
+remotesync func _display_loading():
+	loading.visible = true
+	host_menu_buttons.visible = false
 	
 func on_host_ready():
 	get_tree().change_scene("res://gameplay/mp/client/client.tscn")
 	
 func _on_back_pressed():
+	if loading.visible:
+		return
+		
 	NetworkLobbyManager.leave()
 	
 func on_leave():

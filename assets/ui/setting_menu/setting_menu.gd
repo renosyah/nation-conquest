@@ -54,7 +54,7 @@ func _on_exit_pressed():
 func _on_name_setting_pressed():
 	_input_name.visible = true
 
-func _on_input_name_on_continue(_player_name, html_color):
+func _on_input_name_on_continue(_player_name, _html_color):
 	Global.player.player_name = _player_name
 	_player_name_ui.text = Global.player.player_name
 	Global.player.save_data(Global.player_save_file)

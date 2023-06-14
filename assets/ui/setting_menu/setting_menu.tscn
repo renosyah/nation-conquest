@@ -17,13 +17,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 4 )
 
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.117647, 0.117647, 0.117647, 1 )
+
 [node name="SafeArea" parent="." instance=ExtResource( 7 )]
 mouse_filter = 2
-
-[node name="ColorRect2" type="ColorRect" parent="SafeArea"]
-margin_right = 600.0
-margin_bottom = 1024.0
-color = Color( 0.117647, 0.117647, 0.117647, 1 )
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="SafeArea"]
 margin_right = 600.0

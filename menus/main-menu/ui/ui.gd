@@ -13,7 +13,6 @@ onready var loading = $CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer2
 onready var setting_menu = $CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer/setting_menu
 onready var main_menu_buttons = $CanvasLayer/MainMenuSafeArea/VBoxContainer/HBoxContainer2/Control/main_menu_buttons
 
-
 var quickplay :bool = false
 
 func _ready():
@@ -35,15 +34,15 @@ func _ready():
 	NetworkLobbyManager.connect("on_host_player_connected", self,"on_host_player_connected")
 	
 	Admob.connect("initialization_finish", self, "_admob_initialization_finish")
+	
 	Admob.connect("banner_loaded", self, "_banner_loaded")
+	
+	Admob.connect("interstitial_loaded", self, "_interstitial_ready")
+	Admob.connect("interstitial_failed_to_load", self, "_interstitial_ready")
 	Admob.connect("interstitial_closed", self, "_interstitial_finished")
 	Admob.connect("interstitial_failed_to_show", self, "_interstitial_finished")
 	
 func _admob_initialization_finish():
-	loading.visible = false
-	setting_menu.visible = true
-	main_menu_buttons.visible = true
-	
 	if Admob.get_is_banner_loaded():
 		Admob.show_banner()
 	else:
@@ -51,6 +50,13 @@ func _admob_initialization_finish():
 		
 	if not Admob.get_is_interstitial_loaded():
 		Admob.load_interstitial()
+		
+	_interstitial_ready()
+	
+func _interstitial_ready():
+	loading.visible = false
+	setting_menu.visible = true
+	main_menu_buttons.visible = true
 	
 func _banner_loaded():
 	Admob.show_banner()
@@ -62,16 +68,13 @@ func _interstitial_finished():
 	setting_menu.visible = false
 	main_menu_buttons.visible = false
 	
-	var timer = Timer.new()
-	timer.wait_time = 3
-	timer.one_shot = true
-	add_child(timer)
-	timer.start()
+	yield(get_tree().create_timer(3), "timeout")
 	
-	yield(timer, "timeout")
-	timer.queue_free()
-	
-	play_quickplay_game()
+	if quickplay:
+		play_quickplay_game()
+		return
+		
+	get_tree().change_scene("res://menus/lobby-menu/lobby_menu.tscn")
 	
 func _notification(what):
 	match what:
@@ -106,12 +109,12 @@ func _on_host_pressed():
 	NetworkLobbyManager.init_lobby()
 	
 func on_host_player_connected():
+	if Admob.get_is_interstitial_loaded():
+		Admob.hide_banner()
+		Admob.show_interstitial()
+		return
+		
 	if quickplay:
-		if Admob.get_is_interstitial_loaded():
-			Admob.hide_banner()
-			Admob.show_interstitial()
-			return
-			
 		play_quickplay_game()
 		return
 		
@@ -138,7 +141,7 @@ func play_quickplay_game():
 		unused_colors.erase(bot.extra["player_color"].to_html())
 		Global.bots.append(bot)
 		
-	NetworkLobbyManager.argument["seed"] = int(rand_range(-100,100))
+	NetworkLobbyManager.argument["seed"] = int(rand_range(-1000,1000))
 	get_tree().change_scene("res://gameplay/mp/host/host.tscn")
 	
 func _on_join_pressed():

@@ -1,7 +1,7 @@
 extends Resource
 class_name BaseData
 
-func from_dictionary(data : Dictionary):
+func from_dictionary(_data : Dictionary):
 	pass
 	
 func to_dictionary() -> Dictionary :

@@ -70,8 +70,8 @@ func _on_change_team_pressed():
 	if not can_change_team:
 		return
 		
-	var team :int = data.player_team + 1
-	data.player_team = team if team < 5 else 1
+	var _team :int = data.player_team + 1
+	data.player_team = _team if _team < 5 else 1
 	emit_signal("change_team", data)
 	
 func _on_bot_difficulty_pressed():
