@@ -1,0 +1,62 @@
+colony conquest 2 factions troops : 
+
+imperialism (well ballance)
+	- tier 1
+		- militia (sword)
+		- spearman (spear)
+		- archer (range)
+		- maceman (shock)
+	- tier 2
+		- swordman (sword)
+		- pikeman (spear)
+		- crossbowman (range)
+		- sentinel (shock)
+	- tier 3
+		- sword cavalry (sword) (cav)
+		- spear cavalry (spear) (cav)
+		- archer cavalry (range) (cav)
+		- heavy cavalry (shock) (cav)
+
+colonialism (range focus)
+	- tier 1
+		- farmer (upcomming) (spear) (pitchfork)
+		- mercenary (sword) (nerf swordman)
+		- ranger (range) (buff archer)
+		- -no shock-
+	- tier 2
+		- pikeman (spear) (nerf)
+		- minuteman (upcomming) (range / sword)
+		- fusilier (upcomming) (range / sword)
+		- grenadier (upcomming) (range / shock)
+	- tier 3
+		- cuirassier (sword) (cav) (nerf heavy cavalry)
+		- lancer (spear) (cav) (nerf spear cavalry)
+		- -no range cav-
+		- -no shock cav-
+
+native (melee focus)
+	- tier 1
+		- peasant (upcomming) (sword)
+		- spearman (spear) (buff)
+		- hunter (range) (nerf archer)
+		- axeman (shock)
+	- tier 2
+		- tribesman (upcomming) (sword)
+		- -no spear-
+		- javelineer (upcomming) (range)
+		- flamer (upcomming) (range / shock)
+	- tier 3
+		- sword cavalry (sword) (cav) (buff)
+		- -no spear cav-
+		- shaman (upcomming) (range)
+		- guerillas (upcomming) (range / shock)
+
+
+
+
+
+
+
+
+
+
