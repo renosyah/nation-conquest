@@ -110,7 +110,7 @@ remotesync func _spawn_garrison(_node_name :String):
 func _create_unit(unit_name :String) -> BaseUnit:
 	var _unit :BaseUnit = unit.instance()
 	_unit.name = unit_name
-	_unit.is_master = _is_master()
+	_unit.is_master = _is_network_master()
 	_unit.team = team
 	_unit.hp = 200
 	_unit.max_hp = 200
@@ -123,7 +123,7 @@ func _create_unit(unit_name :String) -> BaseUnit:
 	add_child(_unit)
 	return _unit
 	
-func moving(delta :float) -> void:
+func moving(_delta :float) -> void:
 	if status == status_deploying:
 		can_build = _area_build.get_overlapping_bodies().empty() and translation.distance_to(base_position) < max_distance_from_base
 		_mesh_instance_2_material.albedo_color = Color(1,1,1,0.5) if can_build else Color(1,0,0,0.5)
@@ -175,16 +175,16 @@ remotesync func _attack_targets(_targets :Array):
 		return
 		
 	if _targets.empty():
-		for unit in _units:
-			if is_instance_valid(unit):
-				unit.is_attacking = false
-				unit.attack_to = null
+		for _unit in _units:
+			if is_instance_valid(_unit):
+				_unit.is_attacking = false
+				_unit.attack_to = null
 		return
 		
 	var pos :int = 0
-	for unit in _units:
-		if is_instance_valid(unit):
-			unit.attack_target(
+	for _unit in _units:
+		if is_instance_valid(_unit):
+			_unit.attack_target(
 				get_node_or_null(_targets[pos])
 			)
 			

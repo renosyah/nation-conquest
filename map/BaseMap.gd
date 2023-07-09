@@ -18,6 +18,7 @@ var land_mesh :MeshInstance
 var collision :CollisionShape
 var spawn_positions : Array = []
 var base_spawn_positions : Array = []
+var point_spawn_positions :Array = []
 
 var _input_detection :Node
 var _click_position :Vector3
@@ -77,6 +78,7 @@ func _generate_map():
 	
 	base_spawn_positions = _generate_base_spawn_points(lands[1])
 	spawn_positions = _trim_array(lands[1], 34)
+	point_spawn_positions = _generate_point_spawn_positions(lands[1])
 	
 	var delay = Timer.new()
 	delay.wait_time = 1
@@ -143,6 +145,37 @@ func _generate_base_spawn_points(positions_copy :Array) -> Array:
 	
 	return _spawn_points
 	
+func _generate_point_spawn_positions(positions_copy :Array) -> Array:
+	var distance :float = rand_range(10, 20)
+	
+	var _center_hight_pos :Vector3 = Vector3.ZERO
+	for _pos in positions_copy:
+		if _pos.y < _center_hight_pos.y:
+			_center_hight_pos = _pos
+		
+	var _points :Array = [
+		_center_hight_pos + (Vector3.LEFT * distance),
+		_center_hight_pos + (Vector3.RIGHT * distance),
+		_center_hight_pos + (Vector3.FORWARD * distance),
+		_center_hight_pos + (Vector3.BACK * distance),
+	]
+	
+	var _new_point :Array = []
+	
+	for _point in _points:
+		var _temp_point :Vector3 = positions_copy[0]
+		for _pos in positions_copy:
+			if not _pos in _new_point:
+				var dis_1 = _point.distance_squared_to(_temp_point)
+				var dis_2 = _point.distance_squared_to(_pos)
+				if dis_2 < dis_1:
+					_temp_point = _pos
+			
+		_new_point.append(_temp_point)
+	
+	return _new_point
+	
+	
 	
 func _create_land(noise :NoiseMaker) -> Array:
 	var inland_positions :Array = []
@@ -202,11 +235,11 @@ func _create_land(noise :NoiseMaker) -> Array:
 	return [_land_mesh_instance, inland_positions]
 	
 
-func _input_event(camera, event, position, normal, shape_idx):
+func _input_event(_camera, event, position, _normal, _shape_idx):
 	_click_position = position
 	_input_detection.check_input(event)
 	
-func _on_input_detection_any_gesture(sig ,event):
+func _on_input_detection_any_gesture(_sig ,event):
 	if event is InputEventSingleScreenTap:
 		emit_signal("on_map_click",_click_position)
 	

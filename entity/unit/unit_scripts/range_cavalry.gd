@@ -23,7 +23,7 @@ func _ready():
 	_create_arrow_pools()
 	
 func _create_arrow_pools():
-	for i in range(4):
+	for _i in range(4):
 		_arrows_pool.append(_create_arrow())
 	
 func _get_arrow() -> BaseProjectile:

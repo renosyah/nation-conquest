@@ -29,10 +29,10 @@ func _ready() -> void:
 	
 	_setup_network_timer()
 	
-func _on_camera_entered(camera: Camera):
+func _on_camera_entered(_camera: Camera):
 	visible = true
 	
-func _on_camera_exited(camera: Camera):
+func _on_camera_exited(_camera: Camera):
 	visible = false
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,10 +50,10 @@ func _process(delta :float) -> void:
 func moving(_delta :float) -> void:
 	pass
 	
-func master_moving(delta :float) -> void:
+func master_moving(_delta :float) -> void:
 	pass
 	
-func puppet_moving(delta :float) -> void:
+func puppet_moving(_delta :float) -> void:
 	pass
 	
 ############################################################
@@ -68,7 +68,7 @@ func _is_network_running() -> bool:
 		
 	return true
 	
-func _is_master() -> bool:
+func _is_network_master() -> bool:
 	if not get_tree().network_peer:
 		return false
 		
@@ -79,7 +79,7 @@ func _is_master() -> bool:
 	
 func _setup_network_timer() -> void:
 	_is_online = _is_network_running()
-	_is_master = _is_master()
+	_is_master = _is_network_master()
 	
 	if not _is_master:
 		return

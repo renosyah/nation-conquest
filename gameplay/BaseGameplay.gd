@@ -77,14 +77,13 @@ func on_generate_map_completed():
 			_player_base_spawn_position[player.player_network_unique_id] = map_base_spawn_positions[index]
 			index += 1
 			
-		var spawn_positions :Array = _map.spawn_positions.duplicate()
-		
-		for i in range(3):
-			var pos = spawn_positions[rand_range(0, spawn_positions.size())]
-			sync_capture_points.append({"node_name": "capture_point_" + str(i + 1), "pos": pos + Vector3(0, 5, 0)})
-			spawn_positions.erase(pos)
+		# max capture point is 4
+		var capture_point_index :int = 1
+		for pos in _map.point_spawn_positions:
+			sync_capture_points.append({"node_name": "capture_point_" + str(capture_point_index), "pos": pos + Vector3(0, 5, 0)})
+			capture_point_index += 1
 			
-		for _pos in spawn_positions:
+		for _pos in _map.spawn_positions:
 			var _keys = resources_scenes.keys()
 			var _scene = _keys[rand_range(0, _keys.size())]
 			sync_resources.append({"scene":_scene, "pos":_pos})
@@ -155,7 +154,8 @@ func setup_ui():
 	_ui.connect("recruit_squad", self, "on_ui_recruit_squad")
 	add_child(_ui)
 	
-	_ui.loading(true)
+	#_ui.loading(true)
+	_ui.loading(false)
 	
 func on_main_menu_press():
 	on_exit_game_session()
@@ -247,7 +247,8 @@ func on_host_disconnected():
 	to_main_menu()
 	
 func all_player_ready():
-	_ui.loading(false)
+	#_ui.loading(false)
+	Global.hide_game_transition()
 	
 ################################################################
 var _building_to_build :Dictionary = {}
@@ -497,7 +498,7 @@ func on_exit_game_session():
 	Network.disconnect_from_server()
 	
 func to_main_menu():
-	get_tree().change_scene("res://menus/main-menu/main_menu.tscn")
+	Global.change_scene("res://menus/main-menu/main_menu.tscn")
 	
 ################################################################
 # network utils code

@@ -59,7 +59,7 @@ func _ready():
 	
 	_squad_banner.set_squad_number(max_unit)
 	_squad_banner.set_player_name(
-		player_name if not _is_master() and not player_name.empty() else ""
+		player_name if not _is_network_master() and not player_name.empty() else ""
 	)
 	_squad_banner.set_banner_color(
 		color, squad_unselected_color if is_selectable else Color.transparent
@@ -96,7 +96,7 @@ func _ready():
 	var shape :CylinderShape = _spotting_collision.shape.duplicate() as CylinderShape
 	shape.radius = spotting_range
 	_spotting_collision.shape = shape
-	_spotting_collision.set_deferred("disabled", not _is_master())
+	_spotting_collision.set_deferred("disabled", not _is_network_master())
 	
 	var delay = Timer.new()
 	delay.wait_time = 1
@@ -117,7 +117,7 @@ func _ready():
 func _create_unit(unit_name :String) -> BaseUnit:
 	var _unit = unit_scene.instance()
 	_unit.name = unit_name
-	_unit.is_master = _is_master()
+	_unit.is_master = _is_network_master()
 	_unit.team = team
 	_unit.color = color
 	_unit.connect("unit_dead", self, "_unit_dead")
@@ -285,7 +285,7 @@ func puppet_moving(delta :float) -> void:
 	_formation_direction_facing(delta)
 	
 	
-func _formation_direction_facing(delta :float):
+func _formation_direction_facing(_delta :float):
 	var _vel = Vector3(_velocity.x, 0, _velocity.z)
 	if _vel != Vector3.ZERO:
 		_pivot.look_at(_vel * 100, Vector3.UP)
@@ -304,10 +304,10 @@ func _move_to_position(_to :Vector3) -> bool:
 	
 	return false
 	
-func _on_input_area_input_event(camera, event, position, normal, shape_idx):
+func _on_input_area_input_event(_camera, event, _position, _normal, _shape_idx):
 	_input_detection.check_input(event)
 	
-func _on_input_detection_any_gesture(sig ,event):
+func _on_input_detection_any_gesture(_sig ,event):
 	if event is InputEventSingleScreenTap:
 		emit_signal("squad_selected", self)
 		
@@ -450,13 +450,7 @@ func _spotted_target():
 func _on_squad_tree_exiting():
 	if is_instance_valid(_tap):
 		_tap.queue_free()
-	
-	
-	
-	
-
-
-
+		
 
 
 

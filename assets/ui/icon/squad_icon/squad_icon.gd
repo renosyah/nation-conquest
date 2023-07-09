@@ -45,6 +45,6 @@ func show_squad_heal():
 func _on_squad_icon_gui_input(event):
 	_input_detection.check_input(event)
 
-func _on_input_detection_any_gesture(sig ,event):
+func _on_input_detection_any_gesture(_sig ,event):
 	if event is InputEventSingleScreenTap:
 		emit_signal("on_click", self)

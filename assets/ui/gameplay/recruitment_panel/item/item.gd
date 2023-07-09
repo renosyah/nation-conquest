@@ -41,7 +41,7 @@ func _on_item_gui_input(event):
 		
 	input_detection.check_input(event)
 
-func _on_input_detection_any_gesture(sig ,event):
+func _on_input_detection_any_gesture(_sig ,event):
 	if event is InputEventSingleScreenTap:
 		emit_signal("on_click")
 

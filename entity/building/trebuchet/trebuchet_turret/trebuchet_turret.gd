@@ -37,7 +37,7 @@ func set_team_color(color :Color):
 	material.albedo_color = color
 	
 func _projectile_pools():
-	for i in range(4):
+	for _i in range(4):
 		_projectile_pool.append(_create_projectile())
 	
 func _get_projectile() -> BaseProjectile:

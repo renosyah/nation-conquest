@@ -19,10 +19,10 @@ func _ready() -> void:
 	_visibility_notifier.connect("camera_exited", self , "_on_camera_exited")
 	add_child(_visibility_notifier)
 	
-func _on_camera_entered(camera: Camera):
+func _on_camera_entered(_camera: Camera):
 	visible = true
 	
-func _on_camera_exited(camera: Camera):
+func _on_camera_exited(_camera: Camera):
 	visible = false
 	
 func _create_collision_shape(_mesh :MeshInstance):
@@ -35,3 +35,29 @@ func _create_collision_shape(_mesh :MeshInstance):
 	_mesh.get_child(0).queue_free()
 	
 	collision.rotation_degrees.y = _mesh.rotation_degrees.y
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

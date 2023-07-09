@@ -10,6 +10,6 @@ func _ready():
 func on_ping(_ping :int):
 	ping.text = "Ping : " + str(_ping) + "/ms"
 	
-func _process(delta):
+func _process(_delta):
 	fps.text = "Fps : " +  str(Engine.get_frames_per_second())
 	

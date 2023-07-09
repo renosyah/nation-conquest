@@ -6,7 +6,7 @@ export var max_pool :int = 6
 var particles :Array = []
 
 func _ready():
-	for i in range(max_pool):
+	for _i in range(max_pool):
 		particles.append(_create_particle())
 	
 func _create_particle() -> BaseCustomParticle:

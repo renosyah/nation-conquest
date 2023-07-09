@@ -58,7 +58,7 @@ remotesync func _take_damage(damage :int, hp_remain :int) -> void:
 	_hp_bar.update_bar(hp, max_hp)
 	
 	
-func moving(delta :float) -> void:
+func moving(_delta :float) -> void:
 	if status == status_deploying:
 		can_build = _area_build.get_overlapping_bodies().empty() and translation.distance_to(base_position) < max_distance_from_base
 		_highlight_material.albedo_color = Color(1,1,1,0.5) if can_build else Color(1,0,0,0.5)

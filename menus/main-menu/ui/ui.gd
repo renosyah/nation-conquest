@@ -74,7 +74,7 @@ func _interstitial_finished():
 		play_quickplay_game()
 		return
 		
-	get_tree().change_scene("res://menus/lobby-menu/lobby_menu.tscn")
+	Global.change_scene("res://menus/lobby-menu/lobby_menu.tscn")
 	
 func _notification(what):
 	match what:
@@ -118,7 +118,7 @@ func on_host_player_connected():
 		play_quickplay_game()
 		return
 		
-	get_tree().change_scene("res://menus/lobby-menu/lobby_menu.tscn")
+	Global.change_scene("res://menus/lobby-menu/lobby_menu.tscn")
 	
 func play_quickplay_game():
 	var bot_difficulties = [
@@ -142,7 +142,7 @@ func play_quickplay_game():
 		Global.bots.append(bot)
 		
 	NetworkLobbyManager.argument["seed"] = int(rand_range(-1000,1000))
-	get_tree().change_scene("res://gameplay/mp/host/host.tscn")
+	Global.change_to_game_scene("res://gameplay/mp/host/host.tscn")
 	
 func _on_join_pressed():
 	server_browser.visible = true
@@ -158,10 +158,10 @@ func _on_server_browser_on_join(info):
 	NetworkLobbyManager.init_lobby()
 	
 func on_client_player_connected():
-	get_tree().change_scene("res://menus/lobby-menu/lobby_menu.tscn")
+	Global.change_scene("res://menus/lobby-menu/lobby_menu.tscn")
 	
 func on_host_ready():
-	get_tree().change_scene("res://gameplay/mp/client/client.tscn")
+	Global.change_scene("res://gameplay/mp/client/client.tscn")
 
 func _on_cancel_pressed():
 	NetworkLobbyManager.leave()

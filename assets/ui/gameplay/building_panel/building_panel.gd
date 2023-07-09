@@ -71,7 +71,7 @@ func _is_id_in_buildings(id :int) -> bool:
 func _is_building_valid(_building :BaseBuilding, id:int):
 	return _building.building_id == id and _building.status == BaseBuilding.status_deployed
 	
-func _process(delta):
+func _process(_delta):
 	for i in building_panel_icon_holder.get_children():
 		i.set_lock(
 			not _is_building_ids_in_buildings(i.data.requirement_ids), 

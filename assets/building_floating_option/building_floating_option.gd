@@ -33,19 +33,19 @@ func _process(delta):
 	var _transform = transform.looking_at(cam_pos_xz , Vector3.UP)
 	transform = transform.interpolate_with(_transform, 5 * delta)
 	
-func _on_repair_button_input_event(camera, event, position, normal, shape_idx):
+func _on_repair_button_input_event(_camera, event, _position, _normal, _shape_idx):
 	option = 0
 	_input_detection.check_input(event)
 
-func _on_demolish_button_input_event(camera, event, position, normal, shape_idx):
+func _on_demolish_button_input_event(_camera, event, _position, _normal, _shape_idx):
 	option = 1
 	_input_detection.check_input(event)
 
-func _on_info_button_input_event(camera, event, position, normal, shape_idx):
+func _on_info_button_input_event(_camera, event, _position, _normal, _shape_idx):
 	option = 2
 	_input_detection.check_input(event)
 	
-func _on_input_detection_any_gesture(sig ,event):
+func _on_input_detection_any_gesture(_sig ,event):
 	if event is InputEventSingleScreenTap:
 		match option:
 			0:

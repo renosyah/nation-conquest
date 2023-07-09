@@ -111,7 +111,7 @@ func on_lobby_player_update(players :Array):
 		slot_count -= 1
 		teams[bot_data.player_team] = 1
 		
-	for i in range(slot_count):
+	for _i in range(slot_count):
 		var player_data :PlayerData = PlayerData.new()
 		player_data.player_name = "- Empty Slot -"
 		player_data.player_team = 0
@@ -185,14 +185,14 @@ func _on_play_pressed():
 		Global.bots.append(network_bot)
 		
 	NetworkLobbyManager.argument["seed"] = int(rand_range(-1000,1000))
-	get_tree().change_scene("res://gameplay/mp/host/host.tscn")
+	Global.change_to_game_scene("res://gameplay/mp/host/host.tscn")
 	
 remotesync func _display_loading():
 	loading.visible = true
 	host_menu_buttons.visible = false
 	
 func on_host_ready():
-	get_tree().change_scene("res://gameplay/mp/client/client.tscn")
+	Global.change_to_game_scene("res://gameplay/mp/client/client.tscn")
 	
 func _on_back_pressed():
 	if loading.visible:
@@ -201,7 +201,7 @@ func _on_back_pressed():
 	NetworkLobbyManager.leave()
 	
 func on_leave():
-	get_tree().change_scene("res://menus/main-menu/main_menu.tscn")
+	Global.change_scene("res://menus/main-menu/main_menu.tscn")
 	
 	
 

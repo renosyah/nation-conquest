@@ -86,11 +86,17 @@ func _process(delta :float):
 	moving(delta)
 	idle(delta)
 	
+	if not visible and is_moving:
+		translation = move_to.global_transform.origin
+		translation.y += 0.5
+		return
+	
 	if not enable_moving:
 		return
 		
 	if not is_on_floor():
 		_velocity.y = -_gravity
+		
 	else:
 		_up_direction = get_floor_normal()
 	
@@ -108,7 +114,7 @@ func attack_target(_attack_to):
 	is_moving = false
 	
 	if attack_to is BaseBuilding:
-		_damage_modifier = attack_damage / 2
+		_damage_modifier = int(attack_damage / 2)
 		
 	else:
 		_damage_modifier = _counter.get_attack_modifier(
@@ -122,7 +128,7 @@ func keep_moving():
 	attack_to = null
 	is_moving = true
 	
-func attacking(delta :float):
+func attacking(_delta :float):
 	if not is_attacking:
 		return
 		
@@ -152,7 +158,7 @@ func in_combat(is_arrive :bool):
 		_attack_delay_timmer.wait_time = _randomize_attack_delay()
 		_attack_delay_timmer.start()
 		
-func moving(delta :float):
+func moving(_delta :float):
 	if not enable_moving:
 		return
 		
@@ -171,7 +177,7 @@ func moving(delta :float):
 		
 	is_moving = false
 	
-func idle(delta :float):
+func idle(_delta :float):
 	pass
 	
 func perform_attack():
@@ -218,7 +224,7 @@ func _move_to_position(_at :Vector3, _margin :float) -> bool:
 	if distance <= _margin:
 		return true
 	
-	var _speed_modifer = speed * distance if is_moving and distance > 0 else speed
+	var _speed_modifer :float = float(speed * distance) if is_moving and distance > 0 else float(speed)
 	if not _stun_delay_timmer.is_stopped():
 		_speed_modifer = _speed_modifer * 0.25
 		

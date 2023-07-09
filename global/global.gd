@@ -13,6 +13,8 @@ onready var player :PlayerData = PlayerData.new()
 ################################################################
 
 func _ready():
+	setup_transition()
+	
 	var player_data = SaveLoad.load_save(player_save_file)
 	if player_data == null:
 		player.player_name = RandomNameGenerator.generate()
@@ -61,3 +63,38 @@ func create_bot(random_team :bool = false, unused_color:Array = [], bot_difficul
 	network_bot.extra = bot.to_dictionary()
 	
 	return network_bot
+	
+################################################################
+var transition :CanvasLayer
+var game_transition :CanvasLayer
+
+func setup_transition():
+	transition = preload("res://assets/ui/loading/scene_transition.tscn").instance()
+	add_child(transition)
+	
+	game_transition = preload("res://assets/ui/loading/game_transition.tscn").instance()
+	add_child(game_transition)
+	
+func change_scene(scene :String):
+	transition.change_scene(scene)
+
+func change_to_game_scene(scene :String):
+	game_transition.change_scene(scene)
+
+func hide_game_transition():
+	game_transition.hide_transition()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

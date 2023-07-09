@@ -52,7 +52,7 @@ func _facing_to_destination():
 		
 	translation = destination_point
 	
-func _get_center_formation(default_pos :Vector3, list_positions :Array) -> Vector3:
+func _get_center_formation(_default_pos :Vector3, list_positions :Array) -> Vector3:
 	var sum_pos :Vector3 = Vector3.ZERO
 	for _position in list_positions:
 		sum_pos += _position

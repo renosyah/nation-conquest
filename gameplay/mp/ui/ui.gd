@@ -7,7 +7,7 @@ signal deploy_building(_building)
 signal start_building
 signal cancel_building
 
-onready var loading = $CanvasLayer/loading
+onready var loading_ui = $CanvasLayer/loading
 onready var safe_area = $CanvasLayer/SafeArea
 
 onready var mini_map = $CanvasLayer/SafeArea/Control/HBoxContainer/MiniMap
@@ -77,7 +77,7 @@ func _ready():
 	
 	menu.visible = false
 	safe_area.visible = false
-	loading.visible = true
+	loading_ui.visible = true
 	
 	demolish_building_panel.visible = false
 	repair_building_panel.visible = false
@@ -94,7 +94,7 @@ func _ready():
 func loading(_show :bool):
 	.loading(_show)
 	safe_area.visible = not _show
-	loading.visible = _show
+	loading_ui.visible = _show
 	
 func _on_recruit_squad_on_recruit_squad(_squad_data :SquadData):
 	if player_coin - _squad_data.price < 0:
@@ -360,7 +360,7 @@ func get_center_screen() -> Vector2:
 func add_minimap_object(object_path :NodePath, color :Color = Color.white, _icon :Resource = preload("res://addons/mini-map/troop.png")):
 	mini_map.add_object(object_path, color, _icon)
 	
-func remove_minimap_object(object_path :NodePath, color :Color = Color.white, _icon :Resource = preload("res://addons/mini-map/troop.png")):
+func remove_minimap_object(object_path :NodePath, _color :Color = Color.white, _icon :Resource = preload("res://addons/mini-map/troop.png")):
 	mini_map.remove_object(object_path)
 	
 func on_harvest_time(_building :Farm, _amount :int):

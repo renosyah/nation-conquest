@@ -39,11 +39,11 @@ func moving(delta :float) -> void:
 		set_process(false)
 		return
 		
-func puppet_moving(delta :float) -> void:
+func puppet_moving(_delta :float) -> void:
 	#.puppet_moving(delta)
 	pass
 	
-func take_damage(damage :int) -> void:
+func take_damage(_damage :int) -> void:
 	#.take_damage(damage)
 	pass
 	
