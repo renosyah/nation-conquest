@@ -2,9 +2,7 @@
 
 [ext_resource path="res://entity/resources/trees/trees.gd" type="Script" id=3]
 
-[node name="trees" type="StaticBody"]
-collision_layer = 0
+[node name="trees" type="Spatial"]
 script = ExtResource( 3 )
-type_resource = 1
 
 [node name="MeshInstance" type="MeshInstance" parent="."]

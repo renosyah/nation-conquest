@@ -4,10 +4,14 @@ class_name SquadBanner
 onready var banner = $banner
 onready var viewport = $banner/Viewport
 onready var banner_2d = $banner/Viewport/banner_2d
+onready var visibility_notifier = $VisibilityNotifier
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	banner.texture = viewport.get_texture()
+	
+func _process(delta):
+	visible = visibility_notifier.is_on_screen()
 	
 func set_player_name(_name :String):
 	banner_2d.set_player_name(_name)

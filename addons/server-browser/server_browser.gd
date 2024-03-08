@@ -10,6 +10,7 @@ onready var _server_list = $VBoxContainer/ScrollContainer
 onready var _find_server = $VBoxContainer/Label
 onready var _server_listener = $server_listener
 onready var _error = $VBoxContainer/error
+onready var _ip_input = $VBoxContainer/HBoxContainer/ip_input
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -65,6 +66,29 @@ func _on_server_listener_error_listening(_msg):
 	stop_finding()
 	_error.visible = true
 	_error.text = _msg
+
+
+func _on_ip_join_pressed():
+	if _ip_input.text.empty():
+		return
+		
+	stop_finding()
+	visible = false
+	
+	var info = {
+		"name":"ip",
+		"ip": _ip_input.text,
+		"port" : 31400
+	}
+	
+	emit_signal("on_join", info)
+
+
+
+
+
+
+
 
 
 

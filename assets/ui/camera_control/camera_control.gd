@@ -15,18 +15,13 @@ var last_drag_distance : float = 0.0
 var drag_speed : float = 0.055
 
 func get_moving_direction() -> Vector2:
-	return _moving_direction * _zoom * drag_speed
+	return _moving_direction * (_zoom * 0.080) * drag_speed
 	
 func get_zoom() -> float:
 	return _zoom
 	
 func _process(delta):
-	if Engine.get_frames_per_second() > 25:
-		_moving_direction = _moving_direction.linear_interpolate(
-			Vector2.ZERO, 25 * delta
-		)
-	else:
-		_moving_direction = Vector2.ZERO
+	_moving_direction = _moving_direction.linear_interpolate(Vector2.ZERO, 25 * delta)
 	
 func _draging(event: InputEvent):
 	if event is InputEventScreenTouch:

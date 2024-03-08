@@ -94,16 +94,20 @@ func _process(delta :float):
 	if not enable_moving:
 		return
 		
-	if not is_on_floor():
-		_velocity.y = -_gravity
+	if is_on_floor():
+		_up_direction = get_floor_normal()
+		_velocity.y = 0.0
 		
 	else:
-		_up_direction = get_floor_normal()
+		_up_direction = Vector3.UP
+		_velocity.y = -_gravity
 	
-	if _velocity != Vector3.ZERO:
-		_velocity = move_and_slide(
-			_velocity, _up_direction, true, 4, deg2rad(45.0), true
-		)
+	if is_dead:
+		_velocity = _velocity.linear_interpolate(Vector3.ZERO, 1 * delta)
+		
+	_velocity = move_and_slide(
+		_velocity, _up_direction, true, 4, deg2rad(45.0), true
+	)
 		
 func attack_target(_attack_to):
 	if not is_instance_valid(_attack_to):

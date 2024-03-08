@@ -115,6 +115,7 @@ material/2 = SubResource( 19 )
 
 [node name="MeshInstance" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, -0.495835, 0 )
+layers = 2
 cast_shadow = 0
 mesh = ExtResource( 3 )
 software_skinning_transform_normals = false

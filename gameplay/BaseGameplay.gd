@@ -480,7 +480,7 @@ func on_team_wining(_team:int):
 ################################################################
 # proccess
 func _process(delta):
-	_camera.set_moving_direction(_ui.get_camera_moving_direction() * delta)
+	_camera.set_moving_direction(_ui.get_camera_moving_direction())
 	_camera.set_zoom(_ui.get_camera_zoom())
 	
 	var id = NetworkLobbyManager.get_id()

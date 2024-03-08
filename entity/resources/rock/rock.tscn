@@ -2,9 +2,8 @@
 
 [ext_resource path="res://entity/resources/rock/rock.gd" type="Script" id=1]
 
-[node name="rock" type="StaticBody"]
-collision_layer = 0
+[node name="rock" type="Spatial"]
 script = ExtResource( 1 )
-type_resource = 3
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
+software_skinning_transform_normals = false
